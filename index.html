@@ -597,6 +597,8 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .kvl div{margin:0 0 2px}
 .kvl dt{display:inline;color:var(--muted)}
 .kvl dd{display:inline;margin:0;overflow-wrap:anywhere}
+.kvl .kv-below{margin-bottom:8px} .kvl .kv-below:last-child{margin-bottom:0}
+.kvl .kv-below dt,.kvl .kv-below dd{display:block}
 .gnote{margin:0;font-size:14.5px;line-height:1.5;white-space:pre-wrap}
 .gcard h2.ahead{margin:-4px}  /* recolhido: só o título */
 .gcard.on h2.ahead{margin:-4px -4px 6px}
@@ -1432,11 +1434,14 @@ function dataCardsHtml(o, appr, inClosing = false){
     ['g1', t('client'), [[t('client'), cl?.name], ...(contactName(o) ? [[t('contact'), contactName(o)]] : [])]],
     ...(o.note ? [['gn', t('note_order'), null]] : []),
     ['g2', t('g_neg'), [[t('neg_type'), t('neg_'+o.negType)], [t('safra'), s?.name], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], [t('due'), fmtDate(o.due)],
-      ...(appr ? [[t('order_margin'), `<span class="mt-${semOf(c.margin)}">${fmtPct(c.margin)}</span>`, 1], [t('order_discount'), fmtPct(c.disc), 1]] : []), ...(inClosing ? [] : [[t('doc_type'), o.docType ? t('doc_'+o.docType) : '']])]],
+      ...(appr ? [[t('order_margin'), `<b class="mt-${semOf(c.margin)}">${fmtPct(c.margin)}</b>`, 1], [t('order_discount'), fmtPct(c.disc), 1]] : []), ...(inClosing ? [] : [[t('doc_type'), o.docType ? t('doc_'+o.docType) : '']])]],
     ['g3', t('g_places'), [[t('billing'), billName(o), 0, 1], [t('billing_place'), billPlaceName(o), 0, 1]]]
   ];
   // "Rótulo: valor" na mesma linha, alinhado à esquerda (igual aos cartões da lista)
-  const kvHtml = rows => `<dl class="kvl">${rows.map(([k, v, html]) => `<div><dt>${k}:</dt> <dd>${html ? v : esc(v || '—')}</dd></div>`).join('')}</dl>`;
+  // below = rótulo em cima e valor embaixo (usado em Locais: nomes longos)
+  const kvHtml = rows => `<dl class="kvl">${rows.map(([k, v, html, below]) => below
+    ? `<div class="kv-below"><dt>${k}</dt><dd>${html ? v : esc(v || '—')}</dd></div>`
+    : `<div><dt>${k}:</dt> <dd>${html ? v : esc(v || '—')}</dd></div>`).join('')}</dl>`;
   // cartões recolhidos por padrão; tocar no título abre/fecha (estado em S.openA['g'+n])
   return groups.map(([key, title, rows]) => { const on = !!S.openA[key];
     return `<section class="card gcard ${on ? 'on' : ''}"><h2 class="ahead" data-a="toggle-aitem" data-id="${key}" role="button" tabindex="0" aria-expanded="${on}"><span class="chev ${on ? 'on' : ''}">${IC.chev}</span>${title}</h2>${on ? (rows ? kvHtml(rows) : `<p class="gnote">${esc(o.note)}</p>`) : ''}</section>`; }).join('');
