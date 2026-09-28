@@ -200,6 +200,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 
 /* chips e status */
 .co-chips{display:flex;gap:8px;margin:10px 0 0}
+.co-gap{height:12px}
 .co-chip{flex:1;min-height:38px;border:0;border-radius:10px;background:var(--gray-soft);color:var(--text);font-weight:600;font-size:14.5px;cursor:pointer}
 .co-chip.on{background:var(--primary-soft);color:var(--primary)}
 .days-mon{font-size:13.5px;font-weight:700;color:var(--text);text-align:center;margin:20px 0 6px;line-height:1.2}  /* mesmo espaço busca→mês e dias→cartão */
@@ -1402,17 +1403,16 @@ const byRecent = (a, b) => b.date.localeCompare(a.date) || b.number - a.number;
 const searchMatch = o => { const q = (S.q || '').toLowerCase().trim(); return !q || String(o.number).includes(q) || (CLIENT(o.clientId)?.name || '').toLowerCase().includes(q); };
 function viewApprovals(){
   // Para aprovação: da menor margem para a maior (os piores primeiro)
-  if(!S.day) S.day = today();
-  const q = (S.q || '').trim();
-  const list = DB.orders.filter(o => o.status === 'aprovacao' && searchMatch(o) && advMatch(o) && (q || o.date === S.day)
+  // sem filtro de dia: mostra todos os pedidos em análise (filtro por empresa, busca e filtro avançado)
+  const list = DB.orders.filter(o => o.status === 'aprovacao' && searchMatch(o) && advMatch(o)
       && (!S.compF || SELLER(o.sellerId)?.company === S.compF))
     .sort((a, b) => (orderCalc(a).margin ?? 1) - (orderCalc(b).margin ?? 1) || byRecent(a, b));
   // filtro por empresa: tocar marca; tocar de novo volta a mostrar as duas
   const compChips = `<div class="co-chips">${Object.entries(COMPANIES).map(([id, name]) => `<button type="button" class="co-chip ${S.compF === id ? 'on' : ''}" data-a="comp-filter" data-c="${id}" aria-pressed="${S.compF === id}">${esc(name)}</button>`).join('')}</div>`;
   return `${searchRow()}
     ${compChips}
-    ${dayStrip()}
-    ${list.length ? list.map(o => orderCard(o, true, true)).join('') : `<div class="empty">${t(q ? 'empty_appr' : 'empty_day')}</div>`}`;
+    <div class="co-gap"></div>
+    ${list.length ? list.map(o => orderCard(o, true, true)).join('') : `<div class="empty">${t('empty_appr')}</div>`}`;
 }
 
 /* ---------- Detalhe (somente leitura / aprovação) ---------- */
