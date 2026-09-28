@@ -335,15 +335,15 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-kv dd{margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ocard{position:relative}
 /* enviar: só o símbolo, no canto de baixo à direita, à mesma distância da borda que a etiqueta tem do topo */
-/* canto de baixo do cartão: o enviar — mesmo ícone (traço) do resto do app, em preto */
-.oc-acts{position:absolute;right:13px;bottom:13px;display:flex;align-items:center;gap:16px}
+/* canto de baixo do cartão: PDF (vermelho) e enviar (azul), juntos — mesmos ícones (traço) do resto do app */
+.oc-acts{position:absolute;right:13px;bottom:13px;display:flex;align-items:center;gap:8px}
 .oc-pdf{position:relative;width:24px;height:24px;color:var(--bad);display:grid;place-items:center;cursor:pointer}  /* relatório (PDF): vermelho */
-.oc-pdf::before{content:"";position:absolute;inset:-8px}
+.oc-pdf::before{content:"";position:absolute;inset:-6px -4px -6px -8px}
 .oc-pdf svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.oc-send{position:relative;width:24px;height:24px;color:var(--text);display:grid;place-items:center;cursor:pointer}
-.oc-send::before{content:"";position:absolute;inset:-8px}  /* área de toque maior */
+.oc-send{position:relative;width:24px;height:24px;color:var(--info);display:grid;place-items:center;cursor:pointer}  /* enviar: azul */
+.oc-send::before{content:"";position:absolute;inset:-6px -8px -6px -4px}  /* área de toque maior */
 .oc-send svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ocard .oc-kv > div:last-child{padding-right:72px}  /* o valor não passa por baixo do PDF e do enviar */
+.ocard .oc-kv > div:last-child{padding-right:64px}  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .st-ico.sm{width:32px;height:32px;border-radius:9px;margin:-2px 0 0 8px}  /* na linha do nome, à direita */
