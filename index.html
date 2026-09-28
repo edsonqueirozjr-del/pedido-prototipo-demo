@@ -580,6 +580,7 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 /* produto aberto no fechamento/pedido: mesma fonte dos cartões de dados (rótulo 14 cinza, valor 14 médio) */
 .metrics.soft div span{font-size:14px;margin-bottom:1px}
 .metrics.soft div b{font-size:14px;font-weight:500}
+.metrics.soft.strong div b{font-weight:700}  /* aprovação: respostas em negrito */
 .aitem .name{font-size:14px}
 .aitem .act-sub{font-size:14px}
 .it-kv{margin-top:0}
@@ -597,8 +598,6 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .kvl div{margin:0 0 2px}
 .kvl dt{display:inline;color:var(--muted)}
 .kvl dd{display:inline;margin:0;overflow-wrap:anywhere}
-.ap-kvl{margin-top:12px}
-.ap-sep{border:0;border-top:1px solid var(--border);margin:8px 0}
 .kvl .kv-below{margin-bottom:8px} .kvl .kv-below:last-child{margin-bottom:0}
 .kvl .kv-below dt,.kvl .kv-below dd{display:block}
 .gnote{margin:0;font-size:14.5px;line-height:1.5;white-space:pre-wrap}
@@ -1410,17 +1409,20 @@ function itemsHtml(o, appr){
     }
     if(!S.openA[it.id]) return `<div class="aitem ${low ? 'low' : ''}">${head}</div>`;
     return `<div class="aitem open ${low ? 'low' : ''}">${head}
-      ${(() => { const kv = (k, v) => `<div><dt>${k}:</dt> <dd>${v}</dd></div>`;   // "Rótulo: valor", igual aos cartões de dados
-        return `<dl class="kvl ap-kvl">
-        ${kv(t('cost'), fmtMoney(ic.cost, o.currency))}${kv(t('practiced'), fmtMoney(ic.price, o.currency))}
-        ${kv(t('qty'), `${fmtNum(ic.qty)} ${p.um}`)}${kv(t('order_total'), fmtMoney(ic.total, o.currency))}
-        ${kv(t('tprice'), fmtMoney(ic.table, o.currency))}${kv(t('discount'), ic.adj ? pctDisc(ic.price / ic.adj - 1) : '—')}
-        ${it.note ? kv(t('note_prod'), esc(it.note)) : ''}
-        <hr class="ap-sep">
-        ${kv(t('delivery_unit'), esc(UNIT(it.deliveryUnit)?.name || '—'))}${kv(t('delivery_date'), fmtDate(it.deliveryDate))}
-        ${it.deliveryPlace ? kv(t('delivery_place'), placeLinkById(o, it.deliveryPlace)) : ''}
-        ${it.noteDeliv ? kv(t('note_deliv'), esc(it.noteDeliv)) : ''}
-      </dl>`; })()}</div>`;
+      <div class="metrics soft strong">
+        <div><span>${t('cost')}</span><b>${fmtMoney(ic.cost, o.currency)}</b></div>
+        <div><span>${t('practiced')}</span><b>${fmtMoney(ic.price, o.currency)}</b></div>
+        <div><span>${t('qty')}</span><b>${fmtNum(ic.qty)} ${p.um}</b></div>
+        <div><span>${t('order_total')}</span><b>${fmtMoney(ic.total, o.currency)}</b></div>
+        <div><span>${t('tprice')}</span><b>${fmtMoney(ic.table, o.currency)}</b></div>
+        <div><span>${t('discount')}</span><b>${ic.adj ? pctDisc(ic.price / ic.adj - 1) : '—'}</b></div>
+        ${noteP}
+        <div class="full msep"></div>
+        <div><span>${t('delivery_unit')}</span><b>${esc(UNIT(it.deliveryUnit)?.name || '—')}</b></div>
+        <div><span>${t('delivery_date')}</span><b>${fmtDate(it.deliveryDate)}</b></div>
+        ${it.deliveryPlace ? `<div class="full"><span>${t('delivery_place')}</span><b>${placeLinkById(o, it.deliveryPlace)}</b></div>` : ''}
+        ${noteD}
+      </div></div>`;
   }).join('');
 }
 // dados do pedido em 4 cartões: Pedido, Cliente, Negociação, Locais (3º item = HTML, 4º = valor na linha de baixo)
