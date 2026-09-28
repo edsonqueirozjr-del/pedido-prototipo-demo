@@ -191,7 +191,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .af-h{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 2px 8px}
 .af-h:first-child{margin-top:0}
 .btn.soft{background:var(--primary-soft);border-color:transparent;color:var(--primary)}  /* salvar */
-.btn.info{background:var(--info);border-color:var(--info);color:#fff}  /* enviar */
+.btn.info{background:var(--info);border-color:var(--info);color:#fff}  /* enviar: sempre azul */
+.btn.pdf{background:var(--bad);border-color:var(--bad);color:#fff}  /* gerar PDF: vermelho */
+.icon-btn.pdf-ic{color:var(--bad)}
+.btn.gray svg{color:var(--text)}
 .actionbar .btn.ghost{background:var(--gray-soft);border-color:transparent}  /* Voltar: cinza claro, sem contorno */
 .btn.fix{background:var(--fix);border-color:var(--fix);color:#fff}
 .btn.ghost{background:transparent}
@@ -719,7 +722,7 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 /* relatório do pedido: páginas A4 (SVG) na tela; na impressão só as páginas, uma por folha */
 .rpt-pages{padding:2px 0 8px}
 .rpt-pg{background:#fff;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.08);margin:0 0 14px;overflow:hidden}
-.rpt-pg svg{display:block;width:100%;height:auto}
+.rpt-pg svg{display:block;width:100%;height:auto;stroke:none;fill:none}
 #print{display:none}
 @media print{
   @page{size:A4;margin:0}
@@ -728,7 +731,7 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
   #print{display:block}
   #print .rpt-pp{width:210mm;height:297mm;overflow:hidden;break-after:page;page-break-after:always}
   #print .rpt-pp:last-child{break-after:auto;page-break-after:auto}
-  #print svg{display:block;width:210mm;height:297mm}
+  #print svg{display:block;width:210mm;height:297mm;stroke:none;fill:none}
 }
 /* prévia do PDF (versão publicada) */
 @media (min-width:600px){ main{padding-top:16px} }
@@ -1007,6 +1010,7 @@ const IC = {
   unlock:'<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.6-1.8"/></svg>',
   printer:'<svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg>',
   download:'<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>',
+  pdf:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="17.8" text-anchor="middle" font-size="6.8" font-weight="800" font-family="Arial,Helvetica,sans-serif" fill="currentColor" stroke="none" letter-spacing="-.2">PDF</text></svg>',
   x:'<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   edit:'<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
   alert:'<svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>'
@@ -1611,9 +1615,9 @@ function viewDone(){
       <div class="done-tot"><span>${t('order_total')}</span><b>${fmtMoney(c.total, o.currency)}</b></div>
       <dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
     </section>
-    <button class="btn primary block done-btn" data-a="send-order">${IC.send}${t('send_order')}</button>
-    <button class="btn block done-btn" data-a="gen-pdf">${IC.file}${t('gen_pdf')}</button>
-    <button class="btn block done-btn" data-a="done-back">${IC.back}${t(S.doneKind === 'approved' ? 'back_appr' : 'back_orders')}</button>
+    <button class="btn info block done-btn" data-a="send-order">${IC.send}${t('send_order')}</button>
+    <button class="btn pdf block done-btn" data-a="gen-pdf">${IC.pdf}${t('gen_pdf')}</button>
+    <button class="btn gray block done-btn" data-a="done-back">${IC.back}${t(S.doneKind === 'approved' ? 'back_appr' : 'back_orders')}</button>
   </div>`;
 }
 function viewDetail(){
@@ -1625,7 +1629,7 @@ function viewDetail(){
   // em aprovação, o histórico vem antes dos dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
-  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span><button class="icon-btn" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.file}</button></div>
+  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button></div>
     <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
@@ -1766,7 +1770,7 @@ function step3(){
 function viewEditor(){
   const o = S.draft;
   // fixo no topo: "Pedido nº X" e, no Cabeçalho, a data movimento + situação (nas outras etapas, o valor total); as etapas rolam com a tela
-  return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><button class="icon-btn" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.file}</button></div>
+  return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button></div>
     ${S.step === 1 ? `<div class="card ed-mov"><div class="kv3 solo two"><div class="kv-left"><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div></div>` : ''}
 </div>
     <nav class="steps">${[1,2,3].map(n => `<div class="st ${S.step === n ? 'on' : S.step > n ? 'done' : ''}" aria-current="${S.step === n ? 'step' : 'false'}">
@@ -1780,7 +1784,7 @@ function viewEditor(){
 function actionBar(){
   // relatório: Voltar, baixar o PDF e Enviar (imprimir fica no topo)
   if(S.view === 'report') return `<div class="actionbar"><button class="btn ghost" data-a="rpt-back">${IC.back}${t('back')}</button>
-    ${CAN_PRINT ? `<button class="btn soft" data-a="rpt-pdf">${IC.download}PDF</button>` : ''}<button class="btn info" data-a="rpt-share">${IC.send}${t('send_btn')}</button></div>`;
+    ${CAN_PRINT ? `<button class="btn pdf" data-a="rpt-pdf">${IC.download}PDF</button>` : ''}<button class="btn info" data-a="rpt-share">${IC.send}${t('send_btn')}</button></div>`;
   // Cabeçalho: arrastar para a direita = Próximo; Produtos: esquerda = Voltar, direita = Próximo
   // Próximo só aparece quando a etapa está completa
   // Voltar sempre; Próximo/Finalizar só com a etapa completa; no Fechamento o disquete (Salvar) fica no meio
@@ -1803,7 +1807,7 @@ function actionBar(){
   }
   if(S.view === 'editor') return `<div class="actionbar">
     ${S.step === 1 ? ''   // cabeçalho: só Próximo (sair é pela seta do topo)
-      : `<button class="btn ghost" data-a="prev">${t('back')}</button>
+      : `<button class="btn ghost" data-a="prev">${IC.back}${t('back')}</button>
     ${S.step === 3 && !validate(S.draft).length ? `<button class="btn" data-a="save">${t('save')}</button>` : ''}`}
     ${S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}</button>` : `<button class="btn primary" data-a="finalize">${t('finalize')}</button>`}</div>`;
   if(S.view === 'detail'){
@@ -1977,7 +1981,8 @@ function modal({title, titleHtml = '', body = '', buttons = [], sheet = false}){
 }
 // perguntas de confirmação: só o título e os botões (sem texto explicativo embaixo)
 async function ask(title, msg, buttons){ const r = await modal({title, body: '', buttons}); return r && r.v; }
-const BACK_BTN = () => ({label: t('back'), value: 'no'});
+// Voltar: sempre cinza claro e com o símbolo de voltar
+const BACK_BTN = () => ({label: t('back'), value: 'no', kind: 'gray', icon: IC.back});
 let toastTimer;
 function toast(msg, kind = ''){
   const el = document.getElementById('toast');
@@ -2937,8 +2942,8 @@ function viewReport(){
 async function sendMenu(o, withGen){
   if(!o) return;
   if(CAN_PRINT) loadPdfLib().catch(() => {});   // já vai carregando, para o PDF sair na hora
-  const body = `<div class="send-opts">${withGen ? `<button type="button" class="btn block" data-m="gen">${IC.file}${t('gen_pdf')}</button>` : ''}
-    <button type="button" class="btn block primary" data-m="pdf">${IC.send}${t('send_pdf')}</button>
+  const body = `<div class="send-opts">${withGen ? `<button type="button" class="btn pdf block" data-m="gen">${IC.pdf}${t('gen_pdf')}</button>` : ''}
+    <button type="button" class="btn block info" data-m="pdf">${IC.send}${t('send_pdf')}</button>
     <button type="button" class="btn block wa" data-m="wa">${IC.chat}${t('send_wa')}</button></div>`;
   const r = await modal({title: withGen ? t('order_n', o.number) : t('send_how'), body, buttons: [BACK_BTN()]}), v = r && r.v;
   if(v === 'gen') return openReport(o);
@@ -2949,7 +2954,7 @@ async function sendMenu(o, withGen){
 // antes de enviar um pedido que ainda não foi aprovado: "Este pedido ainda não foi aprovado. Enviar mesmo assim?"
 async function okToSend(o){
   if(!o || o.status === 'aprovado') return !!o;
-  return await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'primary', icon: IC.send}]) === 'yes';
+  return await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'info', icon: IC.send}]) === 'yes';
 }
 // enviar o relatório em PDF: menu de compartilhar do celular (WhatsApp, e-mail…); sem ele (computador), baixa o arquivo
 async function sendPdf(o){
