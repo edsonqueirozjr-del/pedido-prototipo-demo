@@ -584,6 +584,10 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .flag{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:12px;font-weight:800;color:var(--bad)}
 
 .ahead{cursor:pointer;margin:-4px;padding:4px;border-radius:8px}
+.kvl{margin:0;font-size:14px;line-height:1.5}
+.kvl div{margin:0 0 2px}
+.kvl dt{display:inline;color:var(--muted)}
+.kvl dd{display:inline;margin:0;overflow-wrap:anywhere}
 .gnote{margin:0;font-size:14.5px;line-height:1.5;white-space:pre-wrap}
 .gcard h2.ahead{margin:-4px}  /* recolhido: só o título */
 .gcard.on h2.ahead{margin:-4px -4px 6px}
@@ -1422,7 +1426,8 @@ function dataCardsHtml(o, appr, inClosing = false){
       ...(appr ? [[t('order_margin'), `<span class="mt-${semOf(c.margin)}">${fmtPct(c.margin)}</span>`, 1], [t('order_discount'), fmtPct(c.disc), 1]] : []), ...(inClosing ? [] : [[t('doc_type'), o.docType ? t('doc_'+o.docType) : '']])]],
     ['g3', t('g_places'), [[t('billing'), billName(o), 0, 1], [t('billing_place'), billPlaceName(o), 0, 1]]]
   ];
-  const kvHtml = rows => `<dl class="kv">${rows.map(([k, v, html, below]) => `<dt class="${below ? 'full' : ''}">${k}</dt><dd class="${below ? 'full' : ''}">${html ? v : esc(v || '—')}</dd>`).join('')}</dl>`;
+  // "Rótulo: valor" na mesma linha, alinhado à esquerda (igual aos cartões da lista)
+  const kvHtml = rows => `<dl class="kvl">${rows.map(([k, v, html]) => `<div><dt>${k}:</dt> <dd>${html ? v : esc(v || '—')}</dd></div>`).join('')}</dl>`;
   // cartões recolhidos por padrão; tocar no título abre/fecha (estado em S.openA['g'+n])
   return groups.map(([key, title, rows]) => { const on = !!S.openA[key];
     return `<section class="card gcard ${on ? 'on' : ''}"><h2 class="ahead" data-a="toggle-aitem" data-id="${key}" role="button" tabindex="0" aria-expanded="${on}"><span class="chev ${on ? 'on' : ''}">${IC.chev}</span>${title}</h2>${on ? (rows ? kvHtml(rows) : `<p class="gnote">${esc(o.note)}</p>`) : ''}</section>`; }).join('');
