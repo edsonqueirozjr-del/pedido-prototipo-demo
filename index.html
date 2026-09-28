@@ -59,6 +59,8 @@ main{padding:12px 16px 132px}
 .ed-title{display:grid;grid-template-columns:40px 1fr 40px;margin:0}
 .ed-title h1{text-align:center}
 .edhead .totbar{margin-top:10px}
+.det-top{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 12px;padding:6px 16px 12px}
+.det-top .page-head{margin-bottom:10px}
 .totstick{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + var(--edh,0px) - 1px);z-index:7;background:var(--bg);margin:-12px -16px 0;padding:12px 16px 12px}
 .back{margin-left:-8px}
 
@@ -233,6 +235,9 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .radio-chips input:checked+span{border-color:var(--primary-soft);background:var(--primary-soft);color:var(--primary)}
 .radio-chips.invalid span{border-color:var(--bad)}
 .radio-chips input:focus-visible+span{box-shadow:0 0 0 3px var(--primary-soft)}
+.af-chips .afc{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;min-height:38px;padding:0 6px;border:1px solid transparent;border-radius:10px;background:var(--gray-soft);color:var(--text);font:inherit;font-weight:600;font-size:14.5px;cursor:pointer}
+.af-chips .afc.on{border-color:var(--primary-soft);background:var(--primary-soft);color:var(--primary)}
+.af-chips .afc:disabled{opacity:.45;cursor:default}
 .radio-chips input:disabled+span{opacity:.45;cursor:default}
 .radio-chips label{min-width:0}
 .radio-chips span{padding:0 6px;font-size:14.5px;text-align:center}
@@ -1182,6 +1187,10 @@ function fakeSignature(seedN){
   return c.toDataURL('image/png');
 }
 // lista de produtos: título solto + cada produto é um cartão próprio
+// aprovação: "Produtos · N" como cartão recolhível (fechado ao abrir o pedido); aberto mostra os produtos soltos abaixo
+const itemsBlockFold = (o, items) => { const on = !!S.openA.gp;
+  return `<section class="card gcard ${on ? 'on' : ''}"><h2 class="ahead" data-a="toggle-aitem" data-id="gp" role="button" tabindex="0" aria-expanded="${on}"><span class="chev ${on ? 'on' : ''}">${IC.chev}</span>${t('items')}${itemCount(o)}</h2></section>
+    ${on ? `<div class="items-loose">${items || `<div class="muted">${t('no_items')}</div>`}</div>` : ''}`; };
 const itemsBlock = (o, items) => `<div class="items-title">${t('items')}${itemCount(o)}</div><div class="items-loose">${items || `<div class="muted">${t('no_items')}</div>`}</div>`;
 const showSem = () => S.view === 'editor' && S.isNew;
 const EDITABLE = ['aberto','correcao'];  // situações que o vendedor ainda pode editar
@@ -1524,14 +1533,13 @@ function viewDetail(){
   const items = itemsHtml(o, appr);
   // em aprovação, o histórico vem antes dos dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
-  // topo fixo: voltar, nº, situação e a faixa do valor total (igual à etapa Itens)
-  // só a faixa do valor total fica fixa; voltar/nº/situação rolam com a tela
-  return `<div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span></div>
-    <div class="totstick"><div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
+  // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
+  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span></div>
+    <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
     ${dataCards}
-    ${itemsBlock(o, items)}
+    ${appr ? itemsBlockFold(o, items) : itemsBlock(o, items)}
     ${sigCard(o, false)}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? '' : histCard}`;
 }
@@ -2038,16 +2046,20 @@ const ACT = {
   advfilter: async () => {
     const a = S.adv, sel = (id, list, val, lbl = x => x.name) => `<select id="${id}">${opts(list, val, lbl)}</select>`;
     const prodsOf = act => PRODUCTS.filter(p => !act || p.active === act);
+    // botões de escolha (iguais aos do pedido): tocar marca, tocar de novo desmarca
+    const chips = (id, list, val, lbl, dis = () => false) => `<div class="radio-chips af-chips" id="${id}" data-v="${val || ''}">${list.map(x =>
+      `<button type="button" class="afc ${val === x.id ? 'on' : ''}" data-v="${x.id}" ${dis(x) ? 'disabled' : ''}>${esc(lbl(x))}</button>`).join('')}</div>`;
+    const chipField = (label, id, html) => `<div class="field"><span class="lbl">${label}</span>${html}</div>`;
     // um filtro por linha, sem títulos, na ordem: quem vendeu → cliente e negociação → produtos → valor
     const body = `<div class="advgrid">
-      ${field(t('company'), sel('af-company', Object.entries(COMPANIES).map(([id, name]) => ({id, name})), a.company), 'af-company')}
+      ${chipField(t('company'), 'af-company', chips('af-company', Object.entries(COMPANIES).map(([id, name]) => ({id, name})), a.company, x => x.name))}
       ${field(t('seller'), sel('af-seller', SELLERS, a.sellerId), 'af-seller')}
       ${field(t('unit'), sel('af-unit', UNITS, a.unit), 'af-unit')}
       ${field(t('client'), sel('af-client', CLIENTS, a.clientId), 'af-client')}
       ${field(t('safra'), sel('af-safra', SAFRAS, a.safraId), 'af-safra')}
-      ${field(t('currency'), sel('af-cur', CURRENCIES.map(c => ({id: c})), a.currency, x => t('cur_'+x.id)), 'af-cur')}
-      ${field(t('neg_type'), sel('af-neg', NEG_TYPES.map(n => ({id: n})), a.negType, x => t('neg_'+x.id)), 'af-neg')}
-      ${field(t('cond'), sel('af-cond', CONDS.map(c => ({id: c})), a.cond, x => t('cond_'+x.id)), 'af-cond')}
+      ${chipField(t('currency'), 'af-cur', chips('af-cur', CURRENCIES.map(c => ({id: c})), a.currency, x => t('cur_'+x.id)))}
+      ${chipField(t('neg_type'), 'af-neg', chips('af-neg', NEG_TYPES.map(n => ({id: n})), a.negType, x => t('neg_'+x.id), x => x.id !== 'normal'))}
+      ${chipField(t('cond'), 'af-cond', chips('af-cond', CONDS.map(c => ({id: c})), a.cond, x => t('cond_'+x.id)))}
       ${field(t('active'), sel('af-active', ACTIVES, a.active), 'af-active')}
       ${field(t('product'), sel('af-prod', prodsOf(a.active), a.productId), 'af-prod')}
       <div class="grid2">
@@ -2057,11 +2069,15 @@ const ACT = {
       </div>`;
     const pr = modal({title: t('adv_filter'), body, sheet: true, buttons: [{label: t('clear'), value: 'clear', kind: 'gray', icon: IC.eraser}, {label: t('apply'), value: 'ok', kind: 'primary', icon: IC.filter}]});
     const ov = document.getElementById('overlay'); let got = null;
+    ov.querySelectorAll('.af-chips').forEach(g => g.addEventListener('click', e => { const b = e.target.closest('.afc'); if(!b || b.disabled) return;
+      const off = g.dataset.v === b.dataset.v; g.dataset.v = off ? '' : b.dataset.v;
+      g.querySelectorAll('.afc').forEach(x => x.classList.toggle('on', !off && x === b)); }));
     // escolher o princípio ativo deixa na lista de produtos só os dele
     ov.querySelector('#af-active').addEventListener('change', e => { const ps = ov.querySelector('#af-prod'), cur = ps.value;
       ps.innerHTML = opts(prodsOf(e.target.value), prodsOf(e.target.value).some(p => p.id === cur) ? cur : ''); });
     ov.addEventListener('click', e => { if(e.target.closest('[data-m="ok"]')){
-      const v = id => ov.querySelector('#' + id).value, num = id => { const x = v(id).trim(); return x === '' ? '' : parseDec(x); };
+      const v = id => { const el = ov.querySelector('#' + id); return el.classList.contains('af-chips') ? el.dataset.v : el.value; },
+        num = id => { const x = v(id).trim(); return x === '' ? '' : parseDec(x); };
       got = {clientId: v('af-client'), company: v('af-company'), sellerId: v('af-seller'), safraId: v('af-safra'), currency: v('af-cur'), unit: v('af-unit'),
         negType: v('af-neg'), cond: v('af-cond'), active: v('af-active'), productId: v('af-prod'), min: num('af-min'), max: num('af-max')};
     } }, true);
