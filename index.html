@@ -2050,8 +2050,10 @@ const ACT = {
       ${field(t('cond'), sel('af-cond', CONDS.map(c => ({id: c})), a.cond, x => t('cond_'+x.id)), 'af-cond')}
       ${field(t('active'), sel('af-active', ACTIVES, a.active), 'af-active')}
       ${field(t('product'), sel('af-prod', prodsOf(a.active), a.productId), 'af-prod')}
+      <div class="grid2">
       ${field(t('value_min'), `<input id="af-min" type="text" inputmode="decimal" value="${a.min !== '' ? fmtNum(a.min, 2) : ''}" placeholder="0,00">`, 'af-min')}
       ${field(t('value_max'), `<input id="af-max" type="text" inputmode="decimal" value="${a.max !== '' ? fmtNum(a.max, 2) : ''}" placeholder="0,00">`, 'af-max')}
+      </div>
       </div>`;
     const pr = modal({title: t('adv_filter'), body, sheet: true, buttons: [{label: t('clear'), value: 'clear', kind: 'gray', icon: IC.eraser}, {label: t('apply'), value: 'ok', kind: 'primary', icon: IC.filter}]});
     const ov = document.getElementById('overlay'); let got = null;
