@@ -115,16 +115,19 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .grid2 .stepper-in .icon-btn{height:42px}
 .grid2 .stepper-in .icon-btn{width:30px}
 .grid2 .stepper-in input{padding-left:4px;padding-right:4px}
-.grid2 .money span{left:9px;font-size:14px}
-.grid2 .money input{padding-left:32px;padding-right:6px}
-.grid2 .money[data-c=USD] input{padding-left:42px}
+/* cifrão com a mesma fonte, tamanho e cor do valor (como a unidade na quantidade) */
+.grid2 .money span{left:11px;font-size:16px;color:var(--text)}
+.grid2 .money:not(.tot):has(input:disabled) span{color:var(--muted)}
+.grid2 .money input{padding-left:35px;padding-right:6px}
+.grid2 .money[data-c=USD] input{padding-left:47px}
+.grid2 .money.has-pct span{font-size:15px}
 .pr-row{display:flex;align-items:center;gap:2px}
 .pr-row .money{flex:1;min-width:0}
 /* estoque e histórico de preço: só o símbolo, sem formato de botão (igual ao pino) */
 .iconbare{flex:none;border:0 !important;background:none !important;box-shadow:none !important;padding:0;width:36px;min-height:44px;display:grid;place-items:center;color:var(--primary);cursor:pointer}
 .iconbare svg{width:24px;height:24px}
 .grid2 .money.tot span{font-size:16px;font-weight:700;color:var(--text)}  /* cifrão igual ao valor */
-.grid2 .money.tot input{padding-left:34px} .grid2 .money.tot[data-c=USD] input{padding-left:44px}
+.grid2 .money.tot input{padding-left:37px} .grid2 .money.tot[data-c=USD] input{padding-left:50px}
 .money.tot input{font-size:16px;font-weight:700;color:var(--text);-webkit-text-fill-color:var(--text);opacity:1}
 .money{position:relative}
 .money span{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);pointer-events:none}
@@ -1604,7 +1607,7 @@ function viewEditor(){
 </div>
     <nav class="steps">${[1,2,3].map(n => `<div class="st ${S.step === n ? 'on' : S.step > n ? 'done' : ''}" aria-current="${S.step === n ? 'step' : 'false'}">
       <span class="dot">${S.step > n ? IC.tick : n}</span><span>${t('step'+n)}</span></div>`).join('')}</nav>
-    ${S.step === 2 ? `<div class="totfree">${totBarHtml(o)}</div>` : S.step === 3 ? `<div class="totstick">${totBarHtml(o)}</div>` : ''}
+    ${S.step >= 2 ? `<div class="totstick">${totBarHtml(o)}</div>` : ''}
     ${o.approverNote ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     <div class="step-body ${S.anim ? 'in-' + S.anim : ''}" id="step-body">${S.step === 1 ? step1() : S.step === 2 ? step2() : step3()}</div>`;
 }
