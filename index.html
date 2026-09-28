@@ -2343,7 +2343,12 @@ document.addEventListener('change', async e => {
       break;
     }
     case 'due': o.due = v; o.items.forEach(x => recalcItem(o, x)); if(v && v < o.date) toast(t('e_due_past'), 'warn'); break;
-    case 'priceTableId': o.priceTableId = v; o.items.forEach(x => { x.manual = false; recalcItem(o, x); }); break;
+    case 'priceTableId': {
+      // com produtos já lançados, confirma antes (os preços são refeitos pela nova tabela, inclusive os digitados)
+      if(o.items.some(x => x.productId) &&
+        await ask(t('c_table_t'), t('c_table_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'primary'}]) !== 'yes'){ render(); return; }
+      o.priceTableId = v; o.items.forEach(x => { x.manual = false; recalcItem(o, x); }); break;
+    }
     case 'billing': { const old = o.billing; o.billing = v; o.items.forEach(x => { if(!x.deliveryPlace || x.deliveryPlace === old) x.deliveryPlace = v; }); break; }
     case 'itemPlace': it.deliveryPlace = v; break;
     case 'negType': case 'note': case 'docType': case 'deliveryPlace': case 'billingPlace': case 'contact': o[f] = v; break;
