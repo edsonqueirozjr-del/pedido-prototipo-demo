@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barra do aprovador · 10 modelos</title>
+<style>
+:root{
+  --bg:#f2f4f1; --surface:#fff; --surface-2:#f7f8f6; --border:#dfe4dd; --text:#18211b; --muted:#637068;
+  --primary:#1f7a4a; --primary-soft:#e2f2e9; --bad:#d23c3c; --bad-soft:#fce4e4; --fix:#d2691e; --fix-soft:#fbe8d9;
+  --info:#2f6fd6; --info-soft:#e3ecfb; --lock:#7b4bc4; --lock-soft:#efe6fa; --gray-soft:#eceeed; --ok-soft:#e1f4e8; --ok:#1c9a52;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header.pg{padding:20px 16px 6px;max-width:1180px;margin:0 auto}
+header.pg h1{margin:0 0 4px;font-size:22px}
+header.pg p{margin:0;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(330px,100%),1fr));gap:22px;padding:16px;max-width:1180px;margin:0 auto}
+.model{display:flex;flex-direction:column;gap:8px;min-width:0}
+.mh{display:flex;align-items:center;gap:10px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:var(--text);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+.mh b{font-size:16px}
+.tag{margin-left:auto;font-size:12px;font-weight:700;color:var(--primary);background:var(--primary-soft);padding:3px 9px;border-radius:11px}
+.desc{margin:0;color:var(--muted);font-size:13.5px}
+/* celular */
+.phone{position:relative;width:100%;max-width:360px;border:1px solid var(--border);border-radius:22px;overflow:hidden;background:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.07)}
+.scr{padding:10px 14px 0;min-height:230px}
+.top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.top svg{width:22px;height:22px}
+.top h2{margin:0;font-size:18px;flex:1;white-space:nowrap}
+.chip{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:12px;font-size:13px;font-weight:700;background:var(--lock-soft);color:var(--lock);white-space:nowrap}
+.card{background:var(--surface);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.tot{display:flex;align-items:center;gap:8px}
+.tot small{font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--muted)}
+.tot b{margin-left:auto;font-size:16px;white-space:nowrap}
+.tot small{white-space:nowrap}
+.mg{font-size:12px;font-weight:700;background:var(--ok-soft);color:var(--ok);padding:2px 8px;border-radius:10px}
+.ln{height:9px;border-radius:5px;background:var(--gray-soft);margin:6px 0}
+.ln.w6{width:60%} .ln.w8{width:80%} .ln.w4{width:40%}
+.ct{font-weight:700;font-size:14px;margin-bottom:4px}
+/* barra de baixo */
+.bar{background:var(--surface);border-top:1px solid var(--border);padding:10px 12px 12px;display:flex;gap:8px}
+.bar.col{flex-direction:column}
+.row{display:flex;gap:8px}
+.btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 8px;border-radius:11px;border:1px solid var(--border);background:var(--surface);font:inherit;font-weight:600;font-size:15px;white-space:nowrap;color:var(--text)}
+.btn svg{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.pri{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.fix{background:var(--fix);border-color:var(--fix);color:#fff}
+.btn.edit{background:var(--info-soft);border-color:transparent;color:var(--info)}
+.btn.gray{background:var(--gray-soft);border-color:transparent}
+.btn.o-fix{color:var(--fix);border-color:var(--fix-soft)} .btn.o-bad{color:var(--bad);border-color:var(--bad-soft)} .btn.o-edit{color:var(--info);border-color:var(--info-soft)}
+.btn.sq{flex:0 0 48px;padding:0}
+.btn.sm{font-size:13px;gap:3px;padding:0 4px;min-width:0}
+.btn.sm svg{width:16px;height:16px}
+.btn.stack{flex-direction:column;gap:3px;min-height:56px;font-size:12px;padding:6px 2px}
+.btn.stack svg{width:20px;height:20px}
+.ic-top{margin-left:2px;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--info-soft);color:var(--info)}
+.ic-top svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fab{position:absolute;right:14px;bottom:84px;width:52px;height:52px;border-radius:50%;background:var(--info);color:#fff;display:grid;place-items:center;box-shadow:0 4px 14px rgba(47,111,214,.35)}
+.fab svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tabs{background:var(--surface);border-top:1px solid var(--border);display:flex;padding:8px 6px 10px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:600}
+.tab i{width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
+.tab svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tab.e i{background:var(--info-soft);color:var(--info)} .tab.f i{background:var(--fix-soft);color:var(--fix)} .tab.r i{background:var(--bad-soft);color:var(--bad)} .tab.a i{background:var(--primary);color:#fff}
+.split{flex:1;display:flex}
+.split .btn:first-child{border-radius:11px 0 0 11px}
+.split .btn:last-child{flex:0 0 46px;border-radius:0 11px 11px 0;border-left:1px solid rgba(255,255,255,.35)}
+/* "ao tocar": janela de baixo */
+.after{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 2px 0}
+.sheet{width:100%;max-width:360px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.sheet .grab{width:36px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 2px}
+.sheet h3{margin:0 0 2px;font-size:16px}
+footer.pg{max-width:1180px;margin:0 auto;padding:4px 16px 28px;color:var(--muted);font-size:13.5px}
+footer.pg b{color:var(--text)}
+</style>
+</head>
+<body>
+<header class="pg">
+  <h1>Barra do aprovador · 10 modelos</h1>
+  <p>Correção, Reprovar e Aprovar + o novo botão <b>Editar</b> (o aprovador edita o próprio pedido).</p>
+</header>
+<main class="grid" id="grid"></main>
+<footer class="pg"><b>Editar</b>, em qualquer modelo: abre o pedido nas 3 etapas (Cabeçalho, Produtos, Fechamento), como na digitação; ao salvar, volta para a aprovação e o histórico registra "Editado pelo aprovador".</footer>
+<script>
+const I = {
+  edit:'<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>',
+  x:'<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  tick:'<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m15 18-6-6 6-6"/></svg>',
+  dots:'<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg>',
+  down:'<svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>',
+  gavel:'<svg viewBox="0 0 24 24"><path d="M9 11 3 17l2 2 6-6"/><path d="m12 8 4 4"/><path d="m14 6 4 4"/><path d="M11 9 15 5l4 4-4 4Z"/></svg>'
+};
+const B = (cls, ic, txt) => `<button class="btn ${cls}">${ic ? I[ic] : ''}${txt || ''}</button>`;
+// tela de aprovação (topo) — o topo pode receber um botão extra (modelo 4)
+const screen = (extraTop = '') => `<div class="scr">
+  <div class="top">${I.back}<h2>Nº Pedido 10035</h2><span class="chip">Bloqueado</span>${extraTop}</div>
+  <div class="card tot"><small>VALOR TOTAL</small><b>BRL 145.742,00</b><span class="mg">18,4%</span></div>
+  <div class="card"><div class="ct">Produtos · 3</div><div class="ln w8"></div><div class="ln w6"></div><div class="ln w4"></div></div>
+</div>`;
+const sheet = (title, rows) => `<div class="after">Ao tocar</div><div class="sheet"><div class="grab"></div><h3>${title}</h3>${rows}</div>`;
+const M = [
+  {n:'Quatro lado a lado', d:'Os quatro botões na mesma linha, ícone em cima e rótulo embaixo. Tudo à vista, com um toque.',
+   bar:`<div class="bar">${B('stack edit','edit','Editar')}${B('stack fix','undo','Correção')}${B('stack bad','x','Reprovar')}${B('stack pri','tick','Aprovar')}</div>`},
+  {n:'Editar em cima', d:'A barra de hoje continua igual; "Editar pedido" entra numa linha própria acima dela.',
+   bar:`<div class="bar col">${B('edit','edit','Editar pedido')}<div class="row">${B('fix sm','undo','Correção')}${B('bad sm','x','Reprovar')}${B('pri sm','tick','Aprovar')}</div></div>`},
+  {n:'Editar só com o ícone', d:'Um quadrado com o lápis à esquerda e os três botões de hoje. Ocupa pouco e não muda o costume.', tag:'Sugestão',
+   bar:`<div class="bar">${B('edit sq','edit')}${B('fix sm','undo','Correção')}${B('bad sm','x','Reprovar')}${B('pri sm','tick','Aprovar')}</div>`},
+  {n:'Editar no topo', d:'O lápis fica no topo do pedido, ao lado da situação. A barra de baixo continua só com as três decisões.',
+   top:`<span class="ic-top">${I.edit}</span>`,
+   bar:`<div class="bar">${B('fix sm','undo','Correção')}${B('bad sm','x','Reprovar')}${B('pri sm','tick','Aprovar')}</div>`},
+  {n:'Aprovar em destaque', d:'Aprovar ocupa a linha inteira (é o mais usado); embaixo Editar, Correção e Reprovar, mais discretos.',
+   bar:`<div class="bar col">${B('pri','tick','Aprovar')}<div class="row">${B('o-edit sm','edit','Editar')}${B('o-fix sm','undo','Correção')}${B('o-bad sm','x','Reprovar')}</div></div>`},
+  {n:'Aprovar + "Mais"', d:'Só dois botões: Aprovar e "Mais". O "Mais" abre Editar, Correção e Reprovar.',
+   bar:`<div class="bar">${B('gray','dots','Mais')}${B('pri','tick','Aprovar')}</div>`,
+   after: sheet('Pedido 10035', `${B('edit','edit','Editar pedido')}${B('fix','undo','Pedir correção')}${B('bad','x','Reprovar')}`)},
+  {n:'Botão "Decidir"', d:'Um botão só na barra. Ao tocar, abre as quatro opções grandes, uma embaixo da outra.',
+   bar:`<div class="bar">${B('pri','gavel','Decidir')}</div>`,
+   after: sheet('O que fazer com o pedido?', `${B('pri','tick','Aprovar')}${B('fix','undo','Pedir correção')}${B('bad','x','Reprovar')}${B('edit','edit','Editar pedido')}`)},
+  {n:'Botão flutuante', d:'Um círculo azul com o lápis flutua acima da barra, no canto direito. A barra fica igual à de hoje.',
+   fab:true,
+   bar:`<div class="bar">${B('fix sm','undo','Correção')}${B('bad sm','x','Reprovar')}${B('pri sm','tick','Aprovar')}</div>`},
+  {n:'Barra de ícones', d:'Estilo barra de navegação: quatro círculos coloridos com o nome embaixo. Leve e sem blocos de cor.',
+   bar:`<div class="tabs"><div class="tab e"><i>${I.edit}</i>Editar</div><div class="tab f"><i>${I.undo}</i>Correção</div><div class="tab r"><i>${I.x}</i>Reprovar</div><div class="tab a"><i>${I.tick}</i>Aprovar</div></div>`},
+  {n:'Grade 2 × 2', d:'Quatro botões grandes em duas linhas, com o nome inteiro. Mais fácil de acertar o toque.',
+   bar:`<div class="bar col"><div class="row">${B('edit','edit','Editar')}${B('fix','undo','Correção')}</div><div class="row">${B('bad','x','Reprovar')}${B('pri','tick','Aprovar')}</div></div>`}
+];
+document.getElementById('grid').innerHTML = M.map((m, i) => `<section class="model">
+  <div class="mh"><span class="num">${i + 1}</span><b>${m.n}</b>${m.tag ? `<span class="tag">${m.tag}</span>` : ''}</div>
+  <p class="desc">${m.d}</p>
+  <div class="phone">${screen(m.top || '')}${m.fab ? `<div class="fab">${I.edit}</div>` : ''}${m.bar}</div>
+  ${m.after || ''}
+</section>`).join('');
+</script>
+</body>
+</html>
