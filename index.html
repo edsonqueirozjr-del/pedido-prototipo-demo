@@ -230,8 +230,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .actionbar .btn svg{width:20px;height:20px;flex:none}
 .actionbar .btn[data-a=prev] svg,.actionbar .btn[data-a=next] svg{stroke-width:2.4}
 .actionbar .btn.icon{flex:0 0 46px}
-.actionbar.row4 .btn:not(.icon){font-size:14.5px;gap:4px;padding:0 4px;min-width:0}
-.actionbar.row4 .btn svg{width:19px;height:19px}
+.btn.ico-only{background:transparent;border-color:transparent;padding:0}
+.actionbar .btn.ico-only{flex:0 0 46px}
+.actionbar .btn.ico-only svg{width:31px;height:31px}
+.btn.ico-pdf{color:var(--bad)} .btn.ico-wa{color:#25d366}
 /* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
 .btn.edit-sq{background:transparent;border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: só o lápis (cor da correção), sem fundo */
 .actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
@@ -1850,8 +1852,8 @@ function actionBar(){
       <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
-    // pedido fechado: dois "Enviar" — um com o ícone PDF (vermelho), outro com o do WhatsApp (verde)
-    return `<div class="actionbar row4"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}">${IC.pdf}${t('send_btn')}</button><button class="btn wa" data-a="send-wa-o" aria-label="${t('send_wa')}">${IC.wa}${t('send_btn')}</button>
+    // pedido fechado: Voltar e Reabrir largos; PDF (vermelho) e WhatsApp (verde) só com o ícone, para tocar
+    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn icon ico-only ico-pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}" title="${t('send_pdf')}">${IC.pdf}</button><button class="btn icon ico-only ico-wa" data-a="send-wa-o" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button>
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
   return '';
