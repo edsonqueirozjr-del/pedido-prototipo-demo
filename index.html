@@ -65,14 +65,14 @@ main{padding:12px 16px 132px}
 .page-head .grow{margin-left:auto}
 .page-head.center{justify-content:center}
 .edhead{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 14px;padding:10px 16px 10px;border-bottom:1px solid var(--border)}
-.ed-title{display:grid;grid-template-columns:72px 1fr 72px;margin:0}
+.ed-title{display:grid;grid-template-columns:80px 1fr 80px;margin:0}
 .ed-title .back{justify-self:start}
 .ed-title > span:last-child,.ed-title > .icon-btn:last-child{justify-self:end}
 .top-acts{display:flex;align-items:center;gap:0}
 .top-acts .icon-btn{width:38px}
-.top-acts .icon-btn svg{width:25px;height:25px}
+.top-acts .icon-btn svg{width:26px;height:26px}
 .icon-btn.wa-ic{color:#25d366}
-.ed-title h1{text-align:center}
+.ed-title h1{text-align:center;white-space:nowrap;font-size:19px;min-width:0}
 .edhead .totbar{margin-top:10px}
 .edhead .ed-mov{margin:10px 0 0}
 .det-top{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 12px;padding:6px 16px 12px}
@@ -80,7 +80,7 @@ main{padding:12px 16px 132px}
 .det-top .page-head h1{white-space:nowrap;font-size:18px;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .det-top .top-acts{margin-right:-2px}
 .det-top .top-acts .icon-btn{width:31px}
-.det-top .top-acts .icon-btn svg{width:24px;height:24px}
+.det-top .top-acts .icon-btn svg{width:25px;height:25px}
 .det-top .page-head .grow .chip{font-size:13px;padding:0 9px}  /* nº do pedido numa linha só, mesmo com o ícone PDF */
 .det-top .page-head .icon-btn:not(.back){margin-right:-6px}
 .totstick{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + var(--edh,0px) - 1px);z-index:7;background:var(--bg);margin:-12px -16px 0;padding:12px 16px 12px}
@@ -232,8 +232,12 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .actionbar .btn.icon{flex:0 0 46px}
 .btn.ico-only{background:transparent;border-color:transparent;padding:0}
 .actionbar .btn.ico-only{flex:0 0 46px}
-.actionbar .btn.ico-only svg{width:31px;height:31px}
+.actionbar .btn.ico-only svg{width:34px;height:34px}
 .btn.ico-pdf{color:var(--bad)} .btn.ico-wa{color:#25d366}
+/* risquinho discreto entre o PDF e o WhatsApp */
+.icsep{flex:none;align-self:center;width:1px;height:22px;background:var(--border)}
+.actionbar .icsep{height:28px}
+.top-acts .icsep{height:20px;margin:0 2px}
 /* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
 .btn.edit-sq{background:transparent;border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: só o lápis (cor da correção), sem fundo */
 .actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
@@ -349,14 +353,14 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .ocard{position:relative}
 /* enviar: só o símbolo, no canto de baixo à direita, à mesma distância da borda que a etiqueta tem do topo */
 /* canto de baixo do cartão: PDF (vermelho) e WhatsApp (verde), juntos — mesmo traço dos ícones do app */
-.oc-acts{position:absolute;right:13px;bottom:13px;display:flex;align-items:center;gap:8px}
-.oc-pdf{position:relative;width:28px;height:28px;color:var(--bad);display:grid;place-items:center;cursor:pointer}  /* relatório (PDF): vermelho */
+.oc-acts{position:absolute;right:13px;bottom:13px;display:flex;align-items:center;gap:10px}
+.oc-pdf{position:relative;width:31px;height:31px;color:var(--bad);display:grid;place-items:center;cursor:pointer}  /* relatório (PDF): vermelho */
 .oc-pdf::before{content:"";position:absolute;inset:-6px -4px -6px -8px}
-.oc-pdf svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.oc-wa{position:relative;width:28px;height:28px;color:#25d366;display:grid;place-items:center;cursor:pointer}  /* WhatsApp: verde */
+.oc-pdf svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.oc-wa{position:relative;width:31px;height:31px;color:#25d366;display:grid;place-items:center;cursor:pointer}  /* WhatsApp: verde */
 .oc-wa::before{content:"";position:absolute;inset:-6px -8px -6px -4px}  /* área de toque maior */
-.oc-wa svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ocard .oc-kv > div:last-child{padding-right:72px}  /* o valor não passa por baixo do PDF e do enviar */
+.oc-wa svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ocard .oc-kv > div:last-child{padding-right:88px}  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .st-ico.sm{width:32px;height:32px;border-radius:9px;margin:-2px 0 0 8px}  /* na linha do nome, à direita */
@@ -1474,7 +1478,7 @@ function orderCard(o, showMargin, inAppr = false){
         <div><dt>${t('neg_type')}:</dt> <dd>${t('neg_'+o.negType)}</dd></div>
         <div><dt>${t('safra')}:</dt> <dd>${esc(SAFRA(o.safraId)?.name || '—')}</dd></div>
         <div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(c.total, o.currency)}</dd></div>
-      </dl>${inAppr ? '' : `<span class="oc-acts"><span class="oc-pdf" role="button" tabindex="0" data-a="card-pdf" data-id="${o.id}" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</span><span class="oc-wa" role="button" tabindex="0" data-a="card-wa" data-id="${o.id}" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</span></span>`}</div>`;
+      </dl>${inAppr ? '' : `<span class="oc-acts"><span class="oc-pdf" role="button" tabindex="0" data-a="card-pdf" data-id="${o.id}" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</span><span class="icsep" aria-hidden="true"></span><span class="oc-wa" role="button" tabindex="0" data-a="card-wa" data-id="${o.id}" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</span></span>`}</div>`;
   return `<button class="card ocard" data-a="open" data-id="${o.id}"><div class="oc-wrap">${main}</div></button>`;
 }
 // filtro avançado
@@ -1661,7 +1665,7 @@ function viewDetail(){
   // em aprovação, o histórico vem antes dos dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
-  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>` : ''}</div>
+  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>` : ''}</div>
     <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
@@ -1803,7 +1807,7 @@ function viewEditor(){
   const o = S.draft;
   // ícone PDF (relatório) só aparece com o pedido completo — tudo o que o PDF usa preenchido
   // fixo no topo: "Pedido nº X" e, no Cabeçalho, a data movimento + situação (nas outras etapas, o valor total); as etapas rolam com a tela
-  return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1>${validate(o).length ? '<span></span>' : `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>`}</div>
+  return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1>${validate(o).length ? '<span></span>' : `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>`}</div>
     ${S.step === 1 ? `<div class="card ed-mov"><div class="kv3 solo two"><div class="kv-left"><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div></div>` : ''}
 </div>
     <nav class="steps">${[1,2,3].map(n => `<div class="st ${S.step === n ? 'on' : S.step > n ? 'done' : ''}" aria-current="${S.step === n ? 'step' : 'false'}">
@@ -1853,7 +1857,7 @@ function actionBar(){
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
     // pedido fechado: Voltar e Reabrir largos; PDF (vermelho) e WhatsApp (verde) só com o ícone, para tocar
-    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn icon ico-only ico-pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}" title="${t('send_pdf')}">${IC.pdf}</button><button class="btn icon ico-only ico-wa" data-a="send-wa-o" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button>
+    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn icon ico-only ico-pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}" title="${t('send_pdf')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="btn icon ico-only ico-wa" data-a="send-wa-o" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button>
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
   return '';
