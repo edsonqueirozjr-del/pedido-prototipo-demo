@@ -70,7 +70,10 @@ main{padding:12px 16px 132px}
 .edhead .totbar{margin-top:10px}
 .edhead .ed-mov{margin:10px 0 0}
 .det-top{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 12px;padding:6px 16px 12px}
-.det-top .page-head{margin-bottom:10px}
+.det-top .page-head{margin-bottom:10px;gap:6px}
+.det-top .page-head h1{white-space:nowrap;font-size:18px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.det-top .page-head .grow .chip{font-size:13px;padding:0 9px}  /* nº do pedido numa linha só, mesmo com o ícone PDF */
+.det-top .page-head .icon-btn:not(.back){margin-right:-6px}
 .totstick{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + var(--edh,0px) - 1px);z-index:7;background:var(--bg);margin:-12px -16px 0;padding:12px 16px 12px}
 .back{margin-left:-8px}
 
@@ -217,6 +220,11 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .actionbar .btn svg{width:20px;height:20px;flex:none}
 .actionbar .btn[data-a=prev] svg,.actionbar .btn[data-a=next] svg{stroke-width:2.4}
 .actionbar .btn.icon{flex:0 0 46px}
+/* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
+.btn.edit-sq{background:var(--info-soft);border-color:transparent;color:var(--info);padding:0}
+.actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
+.actionbar.appr4 .btn svg{width:18px;height:18px}
+.actionbar.appr4 .btn.icon svg{width:21px;height:21px}
 .actionbar .savebtn{flex:0 0 52px;color:var(--primary);border:0;background:none;box-shadow:none}  /* só o disquete, sem contorno */
 .actionbar .savebtn svg{width:32px;height:32px;stroke-width:1.8}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:560px;z-index:14;display:flex;background:var(--surface);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom)}
@@ -326,7 +334,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-kv dd{margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ocard{position:relative}
 /* enviar: só o símbolo, no canto de baixo à direita, à mesma distância da borda que a etiqueta tem do topo */
-.oc-send{position:absolute;right:13px;bottom:13px;width:24px;height:24px;display:grid;place-items:center;color:var(--text);cursor:pointer}
+.oc-send{position:absolute;right:13px;bottom:13px;width:24px;height:24px;display:grid;place-items:center;color:var(--info);cursor:pointer}  /* enviar: azul */
 .oc-send::before{content:"";position:absolute;inset:-10px}  /* área de toque maior */
 .oc-send svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
@@ -879,7 +887,7 @@ pt:{
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
   neg_normal:'Normal', neg_bonif:'Bonificação', safra:'Projeto', currency:'Moeda',
-  cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', reopen:'Reabrir', c_reopen_t:'Reabrir o pedido?', c_reopen_m:'O pedido sai da aprovação e volta para Em aberto para você editar. Depois é preciso finalizar de novo.', t_reopened:'Pedido reaberto para edição', h_reopened:'Pedido reaberto', qty_min:'Quantidade mínima', qty_max:'Quantidade máxima', company:'Empresa', af_who:'Quem vendeu', af_client:'Cliente e negociação', af_value:'Valor', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente no projeto do pedido.', credit_leg2:'Valores em BRL; pedidos em USD convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', approved_title:'Pedido aprovado!', approved_msg:'O pedido nº {0} foi aprovado.', back_appr:'Voltar para aprovação', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
+  cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', reopen:'Reabrir', c_reopen_t:'Reabrir o pedido?', c_reopen_m:'O pedido sai da aprovação e volta para Em aberto para você editar. Depois é preciso finalizar de novo.', t_reopened:'Pedido reaberto para edição', h_reopened:'Pedido reaberto', h_edited_appr:'Editado pelo aprovador', t_edited_appr:'Alterações salvas', n_edited:'Seu pedido {0} foi editado pelo aprovador', qty_min:'Quantidade mínima', qty_max:'Quantidade máxima', company:'Empresa', af_who:'Quem vendeu', af_client:'Cliente e negociação', af_value:'Valor', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente no projeto do pedido.', credit_leg2:'Valores em BRL; pedidos em USD convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', approved_title:'Pedido aprovado!', approved_msg:'O pedido nº {0} foi aprovado.', back_appr:'Voltar para aprovação', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
   cond_avista:'À vista', cond_30d:'30 dias', cond_safra:'Prazo projeto', cur_BRL:'BRL', cur_USD:'USD',
   credit:'Limite de crédito', credit_total:'Limite total', credit_used:'Utilizado', credit_avail:'Limite disponível', this_order:'Este pedido', no_orders:'Sem pedidos',
   price_table:'Tabela de preço', active:'Princípio ativo', product:'Produto', stock:'Estoque', qty:'Quantidade', price:'Preço praticado',
@@ -926,7 +934,7 @@ es:{
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
   neg_normal:'Normal', neg_bonif:'Bonificación', safra:'Proyecto', currency:'Moneda',
-  cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', reopen:'Reabrir', c_reopen_t:'¿Reabrir el pedido?', c_reopen_m:'El pedido sale de la aprobación y vuelve a Abierto para que lo edite. Después hay que finalizarlo de nuevo.', t_reopened:'Pedido reabierto para edición', h_reopened:'Pedido reabierto', qty_min:'Cantidad mínima', qty_max:'Cantidad máxima', company:'Empresa', af_who:'Quién vendió', af_client:'Cliente y negociación', af_value:'Valor', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en el proyecto del pedido.', credit_leg2:'Valores en BRL; pedidos en USD convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', approved_title:'¡Pedido aprobado!', approved_msg:'El pedido nº {0} fue aprobado.', back_appr:'Volver a aprobación', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
+  cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', reopen:'Reabrir', c_reopen_t:'¿Reabrir el pedido?', c_reopen_m:'El pedido sale de la aprobación y vuelve a Abierto para que lo edite. Después hay que finalizarlo de nuevo.', t_reopened:'Pedido reabierto para edición', h_reopened:'Pedido reabierto', h_edited_appr:'Editado por el aprobador', t_edited_appr:'Cambios guardados', n_edited:'Su pedido {0} fue editado por el aprobador', qty_min:'Cantidad mínima', qty_max:'Cantidad máxima', company:'Empresa', af_who:'Quién vendió', af_client:'Cliente y negociación', af_value:'Valor', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en el proyecto del pedido.', credit_leg2:'Valores en BRL; pedidos en USD convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', approved_title:'¡Pedido aprobado!', approved_msg:'El pedido nº {0} fue aprobado.', back_appr:'Volver a aprobación', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
   cond_avista:'Al contado', cond_30d:'30 días', cond_safra:'Plazo proyecto', cur_BRL:'BRL', cur_USD:'USD',
   credit:'Límite de crédito', credit_total:'Límite total', credit_used:'Utilizado', credit_avail:'Límite disponible', this_order:'Este pedido', no_orders:'Sin pedidos',
   price_table:'Tabla de precios', active:'Principio activo', product:'Producto', stock:'Stock', qty:'Cantidad', price:'Precio practicado',
@@ -1638,7 +1646,7 @@ function viewDetail(){
     ${sigCard(o, false, S.profile === 'vendedor')}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? '' : histCard}`;
 }
-const HIST_TONE = {created:'gray', saved:'gray', signed:'ok', reopened:'warn', finalized:'lock', approved:'ok', rejected:'bad', correction:'warn'};
+const HIST_TONE = {created:'gray', saved:'gray', signed:'ok', reopened:'warn', finalized:'lock', approved:'ok', rejected:'bad', correction:'warn', edited_appr:'info'};
 function histHtml(o){
   // do mais recente para o mais antigo, pela data e hora de cada evento
   return `<ol class="timeline">${[...o.history].sort((a, b) => (b.at || '').localeCompare(a.at || '')).map(h => `<li class="tl-${HIST_TONE[h.action] || 'gray'}">
@@ -1791,8 +1799,9 @@ function actionBar(){
   if(S.view === 'editor'){
     const ok = S.step < 3 ? !stepErrors(S.draft, S.step).length : !validate(S.draft).length;
     return `<div class="actionbar"><button class="btn ghost" data-a="prev">${IC.back}${t('back')}</button>
-      ${S.step === 3 && ok ? `<button class="btn soft" data-a="save">${IC.save}${t('save')}</button>` : ''}
-      ${ok ? (S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}${IC.fwd}</button>` : `<button class="btn primary" data-a="finalize">${IC.tick}${t('finalize')}</button>`) : ''}</div>`;
+      ${S.apprEdit ? (ok ? (S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}${IC.fwd}</button>` : `<button class="btn primary" data-a="appr-save">${IC.save}${t('save')}</button>`) : '')
+      : `${S.step === 3 && ok ? `<button class="btn soft" data-a="save">${IC.save}${t('save')}</button>` : ''}
+      ${ok ? (S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}${IC.fwd}</button>` : `<button class="btn primary" data-a="finalize">${IC.tick}${t('finalize')}</button>`) : ''}`}</div>`;
   }
   if(S.view === 'editor' && S.step < 3){
     const ok = !stepErrors(S.draft, S.step).length;
@@ -1812,7 +1821,8 @@ function actionBar(){
     ${S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}</button>` : `<button class="btn primary" data-a="finalize">${t('finalize')}</button>`}</div>`;
   if(S.view === 'detail'){
     const o = ORDER(S.orderId); if(!o) return '';
-    if(S.profile === 'aprovador' && o.status === 'aprovacao') return `<div class="actionbar">
+    if(S.profile === 'aprovador' && o.status === 'aprovacao') return `<div class="actionbar appr4">
+      <button class="btn edit-sq icon" data-a="appr-edit" aria-label="${t('edit')}" title="${t('edit')}">${IC.edit}</button>
       <button class="btn fix" data-a="fix">${IC.undo}${t('request_fix')}</button>
       <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
@@ -2011,10 +2021,10 @@ function openNotifs(){
 const draftChanged = () => !S.draft0 || JSON.stringify(S.draft) !== S.draft0;
 async function leaveEditor(){
   if(S.view !== 'editor') return true;
-  if(!draftChanged()){ S.draft = null; return true; }
+  if(!draftChanged()){ S.draft = null; S.apprEdit = false; return true; }
   const r = await ask(t('discard_q'), t('discard_m'), [BACK_BTN(), {label: t('discard'), value: 'yes', kind: 'danger'}]);
   if(r !== 'yes') return false;
-  S.draft = null; return true;
+  S.draft = null; S.apprEdit = false; return true;
 }
 
 // campo da quantidade do tamanho exato do número, para número + unidade ficarem juntos no meio do campo
@@ -2432,7 +2442,19 @@ const ACT = {
     if(changed && await ask(t('c_cancel_t'), '', [{label: t('no'), value: 'no'}, {label: t('yes'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
     const wasNew = S.isNew; S.draft = null; S.draft0 = null;
     if(!wasNew && changed) toast(t('t_discarded'));
+    if(S.apprEdit){ S.apprEdit = false; S.view = 'detail'; render(); window.scrollTo(0, 0); return; }
     go(S.listView || 'list');
+  },
+  // aprovador edita o pedido: abre nas 3 etapas; no Fechamento só Salvar (sem Finalizar); o pedido continua Bloqueado
+  'appr-edit': () => { const o = ORDER(S.orderId); if(!o || o.status !== 'aprovacao') return;
+    S.draft = clone(o); S.draft0 = JSON.stringify(S.draft); S.isNew = false; S.apprEdit = true; S.open = {}; S.step = 1; S.errStep = 0; go('editor'); },
+  'appr-save': async () => {
+    const o = S.draft; if(!o) return;
+    if(draftChanged()){
+      addHist(o, 'edited_appr', APPROVER); commit(o);
+      notify({to: 'vendedor', sellerId: o.sellerId, type: 'edited', orderId: o.id}); persist(); toast(t('t_edited_appr'), 'ok');
+    }
+    S.orderId = o.id; S.draft = null; S.draft0 = null; S.apprEdit = false; S.openA = {}; S.view = 'detail'; render(); window.scrollTo(0, 0);
   },
   approve: () => decide(ORDER(S.orderId), 'approve'),
   reject: () => decide(ORDER(S.orderId), 'reject'),
