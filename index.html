@@ -193,6 +193,9 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .nav .badge{top:2px;right:calc(50% - 22px)}
 
 /* chips e status */
+.co-chips{display:flex;gap:8px;margin:10px 0 0}
+.co-chip{flex:1;min-height:38px;border:0;border-radius:10px;background:var(--gray-soft);color:var(--text);font-weight:600;font-size:14.5px;cursor:pointer}
+.co-chip.on{background:var(--primary-soft);color:var(--primary)}
 .days-mon{font-size:13.5px;font-weight:700;color:var(--text);text-align:center;margin:20px 0 6px;line-height:1.2}  /* mesmo espaço busca→mês e dias→cartão */
 .days-wrap{margin:0 0 12px}
 .days{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0 6px}
@@ -1391,9 +1394,13 @@ function viewApprovals(){
   // Para aprovação: da menor margem para a maior (os piores primeiro)
   if(!S.day) S.day = today();
   const q = (S.q || '').trim();
-  const list = DB.orders.filter(o => o.status === 'aprovacao' && searchMatch(o) && advMatch(o) && (q || o.date === S.day))
+  const list = DB.orders.filter(o => o.status === 'aprovacao' && searchMatch(o) && advMatch(o) && (q || o.date === S.day)
+      && (!S.compF || SELLER(o.sellerId)?.company === S.compF))
     .sort((a, b) => (orderCalc(a).margin ?? 1) - (orderCalc(b).margin ?? 1) || byRecent(a, b));
+  // filtro por empresa: tocar marca; tocar de novo volta a mostrar as duas
+  const compChips = `<div class="co-chips">${Object.entries(COMPANIES).map(([id, name]) => `<button type="button" class="co-chip ${S.compF === id ? 'on' : ''}" data-a="comp-filter" data-c="${id}" aria-pressed="${S.compF === id}">${esc(name)}</button>`).join('')}</div>`;
   return `${searchRow()}
+    ${compChips}
     ${dayStrip()}
     ${list.length ? list.map(o => orderCard(o, true, true)).join('') : `<div class="empty">${t(q ? 'empty_appr' : 'empty_day')}</div>`}`;
 }
@@ -1971,6 +1978,7 @@ const ACT = {
   },
   tab: b => { S.listView = b.dataset.v; go(b.dataset.v); },
   filter: b => { S.filter = b.dataset.s; render(); },
+  'comp-filter': b => { S.compF = S.compF === b.dataset.c ? '' : b.dataset.c; render(); },
   day: b => { S.day = b.dataset.d; S.dayScroll = document.getElementById('days')?.scrollLeft; render(); },
   mine: () => { S.mine = !S.mine; render(); },
   open: b => openOrder(b.dataset.id),
