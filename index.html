@@ -1466,7 +1466,8 @@ function viewDetail(){
 }
 const HIST_TONE = {created:'gray', saved:'gray', signed:'ok', finalized:'info', approved:'ok', rejected:'bad', correction:'warn'};
 function histHtml(o){
-  return `<ol class="timeline">${[...o.history].reverse().map(h => `<li class="tl-${HIST_TONE[h.action] || 'gray'}">
+  // do mais recente para o mais antigo, pela data e hora de cada evento
+  return `<ol class="timeline">${[...o.history].sort((a, b) => (b.at || '').localeCompare(a.at || '')).map(h => `<li class="tl-${HIST_TONE[h.action] || 'gray'}">
     <span class="tl-dot"></span>
     <div class="tl-body"><div class="tl-title">${t('h_'+h.action)}</div>
       <div class="tl-meta">${fmtDT(h.at)} · ${esc(h.action === 'finalized' ? APPROVER : h.user)}</div>
