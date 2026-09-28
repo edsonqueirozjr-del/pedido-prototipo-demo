@@ -89,9 +89,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .kv3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border);text-align:center}
 .kv3.solo{margin:0;padding:0;border:0}
 /* vendedor, empresa e unidade: só texto, igual à data movimento (vêm preenchidos e não mudam) */
-.ro-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 8px}
+.ro-grid{display:grid;grid-template-columns:1fr;gap:14px}  /* um embaixo do outro */
 .ro-grid > div{display:flex;flex-direction:column;min-width:0}
-.ro-grid .full{grid-column:1/-1}
 .ro-grid span{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:4px;white-space:nowrap}
 .ro-grid b{font-weight:400;font-size:16px;overflow-wrap:anywhere}
 .kv3.two{grid-template-columns:1fr 1fr}
@@ -785,7 +784,8 @@ const SAFRAS = [
 ];
 const DOC_TYPES = ['transf','pix','boleto'];
 const CONDS = ['avista','30d','safra'];
-const NEG_TYPES = ['normal','barter','bonif']; // só "normal" habilitado
+const NEG_TYPES = ['normal','bonif'];
+// bonificação: pedido sem data de vencimento
 const CURRENCIES = ['BRL','USD'];
 const CUR_SYM = {BRL: 'R$', USD: 'US$'};   // símbolo antes do valor nos campos de preço
 // catálogo: produtos publicados em somaxagro.com/brasil/produtos (preço/custo são fictícios)
@@ -845,8 +845,8 @@ pt:{
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Unidade', client:'Cliente', neg_type:'Tipo de negociação',
-  neg_normal:'Normal', neg_barter:'Barter', neg_bonif:'Bonificação', safra:'Safra', currency:'Moeda',
-  cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', reopen:'Abrir', c_reopen_t:'Abrir o pedido?', c_reopen_m:'O pedido sai da aprovação e volta para Em aberto para você editar. Depois é preciso finalizar de novo.', t_reopened:'Pedido aberto para edição', h_reopened:'Pedido reaberto', qty_min:'Quantidade mínima', qty_max:'Quantidade máxima', company:'Empresa', af_who:'Quem vendeu', af_client:'Cliente e negociação', af_value:'Valor', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (R$)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente na safra do pedido.', credit_leg2:'Valores em reais; pedidos em dólar convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
+  neg_normal:'Normal', neg_bonif:'Bonificação', safra:'Safra', currency:'Moeda',
+  cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', reopen:'Reabrir', c_reopen_t:'Reabrir o pedido?', c_reopen_m:'O pedido sai da aprovação e volta para Em aberto para você editar. Depois é preciso finalizar de novo.', t_reopened:'Pedido reaberto para edição', h_reopened:'Pedido reaberto', qty_min:'Quantidade mínima', qty_max:'Quantidade máxima', company:'Empresa', af_who:'Quem vendeu', af_client:'Cliente e negociação', af_value:'Valor', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (R$)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente na safra do pedido.', credit_leg2:'Valores em reais; pedidos em dólar convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
   cond_avista:'À vista', cond_30d:'30 dias', cond_safra:'Prazo safra', cur_BRL:'Real (R$)', cur_USD:'Dólar (US$)',
   credit:'Limite de crédito', credit_total:'Limite total', credit_used:'Utilizado', credit_avail:'Limite disponível', this_order:'Este pedido', no_orders:'Sem pedidos',
   price_table:'Tabela de preço', active:'Princípio ativo', product:'Produto', stock:'Estoque', qty:'Quantidade', price:'Preço praticado',
@@ -892,8 +892,8 @@ es:{
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Unidad', client:'Cliente', neg_type:'Tipo de negociación',
-  neg_normal:'Normal', neg_barter:'Barter', neg_bonif:'Bonificación', safra:'Zafra', currency:'Moneda',
-  cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', reopen:'Abrir', c_reopen_t:'¿Abrir el pedido?', c_reopen_m:'El pedido sale de la aprobación y vuelve a Abierto para que lo edite. Después hay que finalizarlo de nuevo.', t_reopened:'Pedido abierto para edición', h_reopened:'Pedido reabierto', qty_min:'Cantidad mínima', qty_max:'Cantidad máxima', company:'Empresa', af_who:'Quién vendió', af_client:'Cliente y negociación', af_value:'Valor', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (R$)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en la zafra del pedido.', credit_leg2:'Valores en reales; pedidos en dólares convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
+  neg_normal:'Normal', neg_bonif:'Bonificación', safra:'Zafra', currency:'Moneda',
+  cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', reopen:'Reabrir', c_reopen_t:'¿Reabrir el pedido?', c_reopen_m:'El pedido sale de la aprobación y vuelve a Abierto para que lo edite. Después hay que finalizarlo de nuevo.', t_reopened:'Pedido reabierto para edición', h_reopened:'Pedido reabierto', qty_min:'Cantidad mínima', qty_max:'Cantidad máxima', company:'Empresa', af_who:'Quién vendió', af_client:'Cliente y negociación', af_value:'Valor', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (R$)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en la zafra del pedido.', credit_leg2:'Valores en reales; pedidos en dólares convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
   cond_avista:'Al contado', cond_30d:'30 días', cond_safra:'Plazo zafra', cur_BRL:'Real (R$)', cur_USD:'Dólar (US$)',
   credit:'Límite de crédito', credit_total:'Límite total', credit_used:'Utilizado', credit_avail:'Límite disponible', this_order:'Este pedido', no_orders:'Sin pedidos',
   price_table:'Tabla de precios', active:'Principio activo', product:'Producto', stock:'Stock', qty:'Cantidad', price:'Precio practicado',
@@ -1001,7 +1001,7 @@ function hash(str){ let h = 2166136261; for(const ch of str){ h ^= ch.charCodeAt
 let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 25) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 26) return d; }catch(e){} const s = seed(); persist(s); return s; }
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1017,6 +1017,7 @@ const movDT = o => { const h = (o.history || []).find(x => x.action === 'created
 const toBRL = (v, cur) => cur === 'USD' ? v * RATE : v;
 
 /* ---------- Regras de cálculo ---------- */
+const isBonif = o => o.negType === 'bonif';
 function dueFor(cond, safraId, base){
   if(cond === 'avista') return base;
   if(cond === '30d') return addDays(base, 30);
@@ -1213,7 +1214,7 @@ const itemsBlockFold = (o, items) => S.openA.gp
 const itemsBlock = (o, items) => `<div class="items-title">${t('items')}${itemCount(o)}</div><div class="items-loose">${items || `<div class="muted">${t('no_items')}</div>`}</div>`;
 const showSem = () => S.view === 'editor' && S.isNew;
 const EDITABLE = ['aberto','correcao'];  // situações que o vendedor ainda pode editar
-const canEdit = o => S.profile === 'vendedor' && EDITABLE.includes(o.status) && o.sellerId === ME;
+const canEdit = o => S.profile === 'vendedor' && EDITABLE.includes(o.status);
 
 // escolher o produto já define o princípio ativo, recalcula o preço e a quantidade mínima
 function setProduct(o, it, pid){
@@ -1226,7 +1227,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:25, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:26, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1269,12 +1270,14 @@ function seed(){
     ['s6','c10','SV2627','BRL','safra','aprovacao', 3, [['azp-20',800],['imi-1',100,.93],['ful-20',1200]]]
   ];
   const at = (d, hm) => new Date(d + 'T' + hm + ':00').toISOString();
+  const BONIF = ['o10', 'o18', 'o21', 'o29'];   // ~10% dos exemplos são bonificação (sem vencimento)
   db.seq = 10001 + defs.length;
   defs.forEach((d, i) => {
     const [sid, cid, saf, cur, cond, st, ago, items] = d;
     const date = addDays(today(), -ago), seller = SELLER(sid);
-    const o = {id:'o'+(i+1), number:10001+i, date, sellerId:sid, unit:seller.unit, clientId:cid, negType:'normal',
-      safraId:saf, currency:cur, cond, due:dueFor(cond, saf, date), billing:placesOf(cid)[0].id, note:'',
+    const bonif = BONIF.includes('o' + (i + 1));
+    const o = {id:'o'+(i+1), number:10001+i, date, sellerId:sid, unit:seller.unit, clientId:cid, negType:bonif ? 'bonif' : 'normal',
+      safraId:saf, currency:cur, cond, due:bonif ? '' : dueFor(cond, saf, date), billing:placesOf(cid)[0].id, note:'',
       priceTableId:saf+'-'+cur, contact:contactsOf(cid)[0].id, items:[], docType:DOC_TYPES[i%3], billingPlace:placesOf(cid)[0].id, deliveryPlace:placesOf(cid)[i % placesOf(cid).length].id, status:st, history:[], approverNote:''};
     const seen = new Set();
     items.map(([op, q, f]) => [PMAP[op] || op, q, f]).filter(([pid]) => !seen.has(pid) && seen.add(pid)).forEach(([pid, qty, f], j) => {
@@ -1518,7 +1521,7 @@ function dataCardsHtml(o, appr, inClosing = false){
     ['g0', t('g_order'), [[t('mov_date'), movDT(o)], [t('seller'), SELLER(o.sellerId).name], [t('company'), companyOf(o)], [t('unit'), UNIT(o.unit).name]]],
     ['g1', t('client'), [[t('client'), cl?.name], ...(contactName(o) ? [[t('contact'), contactName(o)]] : [])]],
     ...(o.note ? [['gn', t('note_order'), null]] : []),
-    ['g2', t('g_neg'), [[t('neg_type'), t('neg_'+o.negType)], [t('safra'), s?.name], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], [t('due'), fmtDate(o.due)],
+    ['g2', t('g_neg'), [[t('neg_type'), t('neg_'+o.negType)], [t('safra'), s?.name], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], ...(isBonif(o) ? [] : [[t('due'), fmtDate(o.due)]]),
       ...(appr ? [[t('order_margin'), `<b class="mt-${semOf(c.margin)}">${fmtPct(c.margin)}</b>`, 1], [t('order_discount'), fmtPct(c.disc), 1]] : []), ...(inClosing ? [] : [[t('doc_type'), o.docType ? t('doc_'+o.docType) : '']])]],
     ['g3', t('g_places'), [[t('billing'), billName(o), 0, 1], [t('billing_place'), billPlaceName(o), 0, 1]]]
   ];
@@ -1536,7 +1539,7 @@ function viewDone(){
   const o = ORDER(S.orderId); if(!o) return '';
   const c = orderCalc(o), cl = CLIENT(o.clientId), n = o.items.filter(it => it.productId).length;
   const rows = [[t('client'), esc(cl?.name || '—')], [t('safra'), esc(SAFRA(o.safraId)?.name || '—')], [t('cond'), o.cond ? t('cond_'+o.cond) : '—'],
-    [t('due'), fmtDate(o.due)], [t('items'), fmtNum(n)], [t('status'), chip(o.status)]];
+    ...(isBonif(o) ? [] : [[t('due'), fmtDate(o.due)]]), [t('items'), fmtNum(n)], [t('status'), chip(o.status)]];
   return `<div class="done-view">
     <div class="done-ic">${IC.tick}</div>
     <h1>${t(S.doneKind === 'saved' ? 'saved_title' : 'done_title')}</h1>
@@ -1565,7 +1568,7 @@ function viewDetail(){
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
     ${dataCards}
     ${itemsBlockFold(o, items)}
-    ${sigCard(o, false, S.profile === 'vendedor' && o.sellerId === ME)}
+    ${sigCard(o, false, S.profile === 'vendedor')}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? '' : histCard}`;
 }
 const HIST_TONE = {created:'gray', saved:'gray', signed:'ok', reopened:'warn', finalized:'info', approved:'ok', rejected:'bad', correction:'warn'};
@@ -1582,7 +1585,7 @@ function histHtml(o){
 function condDue(sfx){
   const o = S.draft;
   return `<div class="field"><span class="lbl">${t('cond')}</span><div class="radio-chips" id="f-cond${sfx}">${CONDS.map(c => `<label><input type="radio" name="f-cond${sfx}" data-f="cond" value="${c}" ${o.cond === c ? 'checked' : ''}><span>${t('cond_'+c)}</span></label>`).join('')}</div></div>
-    ${field(t('due'), dateField('f-due'+sfx, 'due', o.due, t('due'), {disabled: o.cond !== 'safra'}), 'f-due'+sfx)}`;
+    ${isBonif(o) ? '' : field(t('due'), dateField('f-due'+sfx, 'due', o.due, t('due'), {disabled: o.cond !== 'safra'}), 'f-due'+sfx)}`;
 }
 // limite de crédito: só um botão; ao tocar abre a tabela (limite, utilizado, este pedido, disponível) da safra escolhida
 function creditCard(o){
@@ -1594,7 +1597,7 @@ function step1(){
   const o = S.draft;
   return `<section class="card">
     <div class="ro-grid">
-      <div class="full" id="f-seller"><span>${t('seller')}</span><b>${esc(SELLER(o.sellerId).name)}</b></div>
+      <div id="f-seller"><span>${t('seller')}</span><b>${esc(SELLER(o.sellerId).name)}</b></div>
       <div id="f-company"><span>${t('company')}</span><b>${esc(companyOf(o))}</b></div>
       <div id="f-unit"><span>${t('unit')}</span><b>${esc(UNIT(o.unit)?.name || '')}</b></div>
     </div>
@@ -1605,7 +1608,7 @@ function step1(){
   </section>
   <section class="card">
     <div class="field"><span class="lbl">${t('currency')}</span><div class="radio-chips" id="f-cur">${CURRENCIES.map(c => `<label><input type="radio" name="f-cur" data-f="currency" value="${c}" ${o.currency === c ? 'checked' : ''}><span>${t('cur_'+c)}</span></label>`).join('')}</div></div>
-    <div class="field"><span class="lbl">${t('neg_type')}</span><div class="radio-chips" id="f-neg">${NEG_TYPES.map(n => `<label><input type="radio" name="f-neg" data-f="negType" value="${n}" ${o.negType === n ? 'checked' : ''} ${n !== 'normal' ? 'disabled' : ''}><span>${t('neg_'+n)}</span></label>`).join('')}</div></div>
+    <div class="field"><span class="lbl">${t('neg_type')}</span><div class="radio-chips" id="f-neg">${NEG_TYPES.map(n => `<label><input type="radio" name="f-neg" data-f="negType" value="${n}" ${o.negType === n ? 'checked' : ''}><span>${t('neg_'+n)}</span></label>`).join('')}</div></div>
     ${field(t('safra'), `<select id="f-safra" data-f="safraId">${opts(SAFRAS, o.safraId)}</select>`, 'f-safra')}
   </section>
   ${creditCard(o)}
@@ -1741,7 +1744,7 @@ function actionBar(){
       <button class="btn fix" data-a="fix">${IC.undo}${t('request_fix')}</button>
       <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
-    const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao' && o.sellerId === ME;
+    const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
     return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn soft" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn info" data-a="share">${IC.send}${t('send_btn')}</button>
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
@@ -1957,8 +1960,8 @@ function stepErrors(o, n){
   }
   if(n === 2){
     if(!o.cond) add(t('cond'), 'f-cond2');
-    if(!o.due) add(t('due'), 'f-due2');
-    if(o.due && o.due < o.date) add(t('e_due_past'), 'f-due2');
+    if(!isBonif(o) && !o.due) add(t('due'), 'f-due2');
+    if(!isBonif(o) && o.due && o.due < o.date) add(t('e_due_past'), 'f-due2');
     if(!o.priceTableId) add(t('price_table'), 'f-table');
     if(!o.items.length) add(t('e_items'), null);
     o.items.forEach((it, i) => {
@@ -2096,7 +2099,7 @@ const ACT = {
       ${field(t('client'), sel('af-client', CLIENTS, a.clientId), 'af-client')}
       ${field(t('safra'), sel('af-safra', SAFRAS, a.safraId), 'af-safra')}
       ${chipField(t('currency'), 'af-cur', chips('af-cur', CURRENCIES.map(c => ({id: c})), a.currency, x => t('cur_'+x.id)))}
-      ${chipField(t('neg_type'), 'af-neg', chips('af-neg', NEG_TYPES.map(n => ({id: n})), a.negType, x => t('neg_'+x.id), x => x.id !== 'normal'))}
+      ${chipField(t('neg_type'), 'af-neg', chips('af-neg', NEG_TYPES.map(n => ({id: n})), a.negType, x => t('neg_'+x.id)))}
       ${chipField(t('cond'), 'af-cond', chips('af-cond', CONDS.map(c => ({id: c})), a.cond, x => t('cond_'+x.id)))}
       ${field(t('active'), sel('af-active', ACTIVES, a.active), 'af-active')}
       ${field(t('product'), sel('af-prod', prodsOf(a.active), a.productId), 'af-prod')}
@@ -2447,7 +2450,7 @@ document.addEventListener('change', async e => {
       o[f] = v;
       const tb = TABLES.find(x => x.safraId === o.safraId && x.currency === o.currency);
       o.priceTableId = tb ? tb.id : '';
-      if(o.cond) o.due = dueFor(o.cond, o.safraId, o.date);
+      if(o.cond && !isBonif(o)) o.due = dueFor(o.cond, o.safraId, o.date);
       o.items.forEach(x => { x.manual = false; recalcItem(o, x); });
       if(f === 'safraId') creditToast();
       break;
@@ -2459,7 +2462,7 @@ document.addEventListener('change', async e => {
         if(r !== 'keep' && r !== 'recalc'){ render(); return; }
         recalc = r === 'recalc';
       }
-      o.cond = v; o.due = dueFor(v, o.safraId, o.date);
+      o.cond = v; o.due = isBonif(o) ? '' : dueFor(v, o.safraId, o.date);
       o.items.forEach(x => { if(recalc) x.manual = false; recalcItem(o, x); });
       break;
     }
@@ -2472,7 +2475,8 @@ document.addEventListener('change', async e => {
     }
     case 'billing': { const old = o.billing; o.billing = v; o.items.forEach(x => { if(!x.deliveryPlace || x.deliveryPlace === old) x.deliveryPlace = v; }); break; }
     case 'itemPlace': it.deliveryPlace = v; break;
-    case 'negType': case 'note': case 'docType': case 'deliveryPlace': case 'billingPlace': case 'contact': o[f] = v; break;
+    case 'negType': o.negType = v; o.due = isBonif(o) || !o.cond ? '' : dueFor(o.cond, o.safraId, o.date); o.items.forEach(x => recalcItem(o, x)); break;
+    case 'note': case 'docType': case 'deliveryPlace': case 'billingPlace': case 'contact': o[f] = v; break;
     case 'itemGroup': {
       // já tem produto que não é dessa linha: confirma antes de limpar
       if(v && PROD(it.productId) && PROD(it.productId).group !== v &&
@@ -2513,7 +2517,7 @@ function printOrder(o){
   const c = orderCalc(o), cl = CLIENT(o.clientId) || {}, s = SAFRA(o.safraId);
   const kv = [[t('client'), cl.name], [t('client_doc'), cl.doc], [t('city'), cl.city], [t('seller'), SELLER(o.sellerId).name], [t('company'), companyOf(o)],
     [t('unit'), UNIT(o.unit).name], [t('neg_type'), t('neg_'+o.negType)], [t('safra'), s?.name], [t('currency'), t('cur_'+o.currency)],
-    [t('cond'), o.cond ? t('cond_'+o.cond) : ''], [t('due'), fmtDate(o.due)], [t('billing'), billName(o)],
+    [t('cond'), o.cond ? t('cond_'+o.cond) : ''], ...(isBonif(o) ? [] : [[t('due'), fmtDate(o.due)]]), [t('billing'), billName(o)],
     [t('doc_type'), o.docType ? t('doc_'+o.docType) : ''], [t('billing_place'), billPlaceName(o)], [t('status'), t('st_'+o.status)]];
   document.getElementById('print').innerHTML = `
     <div class="ph"><div><h1>${t('pdf_title')} ${o.number}</h1><div>${t('mov_date')}: ${movDT(o)}</div></div>
@@ -2561,7 +2565,7 @@ async function buildPdf(o){
   // dados em duas colunas
   const kv = [[t('client'), cl.name], ...(contactName(o) ? [[t('contact'), contactName(o)]] : []), [t('client_doc'), cl.doc], [t('city'), cl.city], [t('mov_date'), movDT(o)],
     [t('seller'), SELLER(o.sellerId).name], [t('company'), companyOf(o)], [t('unit'), UNIT(o.unit).name], [t('neg_type'), t('neg_'+o.negType)], [t('safra'), sf?.name],
-    [t('currency'), t('cur_'+o.currency)], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], [t('due'), fmtDate(o.due)],
+    [t('currency'), t('cur_'+o.currency)], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], ...(isBonif(o) ? [] : [[t('due'), fmtDate(o.due)]]),
     [t('billing'), billName(o)], [t('doc_type'), o.docType ? t('doc_'+o.docType) : ''], [t('billing_place'), billPlaceName(o)]].map(([k, v]) => [k, v || '—']);
   const half = Math.ceil(kv.length / 2), rows = [];
   for(let i = 0; i < half; i++) rows.push([kv[i][0], kv[i][1], kv[i + half]?.[0] || '', kv[i + half]?.[1] || '']);
