@@ -1053,7 +1053,7 @@ function hash(str){ let h = 2166136261; for(const ch of str){ h ^= ch.charCodeAt
 let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, me:ME})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 27) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 28) return d; }catch(e){} const s = seed(); persist(s); return s; }
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1282,7 +1282,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:27, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:28, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1380,6 +1380,9 @@ function seed(){
       billingPlace: b.billingPlace, deliveryPlace: b.deliveryPlace, status: 'aprovado', history: [], approverNote: '', past: true};
     b.items.forEach((bit, j) => {
       if((j + k) % 4 === 3) return;   // nem todo produto aparece em todo pedido antigo
+      // no pedido antigo do meio, a outra embalagem do mesmo princípio ativo (para o histórico mostrar os botões dos produtos)
+      const alt = k === 1 && PRODUCTS.find(x => x.id !== bit.productId && x.active === PROD(bit.productId).active);
+      if(alt) bit = {...bit, productId: alt.id};
       const pr = PROD(bit.productId), qty = Math.max(pr.pack, Math.round(bit.qty * (.35 + ((j + k) % 4) * .2) / pr.pack) * pr.pack);
       const it = {...bit, id: uid(), qty, manual: false, note: '', noteDeliv: '', deliveryDate: addDays(date, 20 + j * 4)};
       recalcItem(o, it);
@@ -2282,18 +2285,27 @@ const ACT = {
       </tbody><tfoot><tr><td>${t('available')}</td><td class="av ${neg ? 'neg' : ''}">${fmtMoney(avail)}</td></tr></tfoot></table>`;
     modal({title: t('credit'), body, sheet: true});
   },
+  // histórico de preço: título igual ao do estoque (produto e, embaixo, o princípio ativo); em cima, botões com os
+  // produtos do mesmo princípio ativo que têm histórico para este cliente, projeto e moeda (o do pedido primeiro)
   pricehist: b => {
-    const o = S.draft, it = o.items[+b.dataset.i], p = PROD(it.productId); if(!p) return;
-    const rows = priceHistRows(o, it);
-    // tabela no mesmo estilo do estoque: pedido/data, quantidade, preço praticado e desconto; no fim, total e preço médio
+    const o = S.draft, it = o.items[+b.dataset.i], p0 = PROD(it.productId); if(!p0) return;
+    const rowsOf = p => priceHistRows(o, {...it, productId: p.id});
+    const sibs = [p0, ...PRODUCTS.filter(p => p.id !== p0.id && p.active === p0.active && rowsOf(p).length)];
     const head = `<div class="stk-sub">${esc(CLIENT(o.clientId)?.name || '')} · ${esc(SAFRA(o.safraId)?.name || '')} · ${o.currency}</div>`;
-    const qty = rows.reduce((a, r) => a + r.ic.qty, 0), val = rows.reduce((a, r) => a + r.ic.total, 0);
-    const body = head + (rows.length ? `<table class="stk ph-tb">
+    const title = p => `<span class="stk-t"><b>${esc(p.name)}</b><small>${esc(ACTIVE(p.active).name)}</small></span>`;
+    // tabela no mesmo estilo do estoque: data, quantidade e preço praticado; no fim, total e preço médio
+    const table = p => { const rows = rowsOf(p), qty = rows.reduce((a, r) => a + r.ic.qty, 0), val = rows.reduce((a, r) => a + r.ic.total, 0);
+      return rows.length ? `<table class="stk ph-tb">
       <thead><tr><th>${t('date')}</th><th>${t('qty_short')}</th><th>${t('price')}</th></tr></thead>
       <tbody>${rows.map(({x, ic}) => `<tr><td>${fmtDate(x.date)}</td><td>${fmtNum(ic.qty)}</td><td class="av">${fmtMoney(ic.price, x.currency)}</td></tr>`).join('')}</tbody>
       <tfoot><tr><td>${t('avg_price')}</td><td>${fmtNum(qty)}</td><td class="av">${fmtMoney(qty ? val / qty : 0, o.currency)}</td></tr></tfoot>
-      </table>` : `<div class="empty">${t('no_price_hist')}</div>`);
-    modal({title: `${ACTIVE(p.active).name} / ${p.name}`, titleHtml: `<u class="act">${esc(ACTIVE(p.active).name)} /</u> ${esc(p.name)}`, body, sheet: true});
+      </table>` : `<div class="empty">${t('no_price_hist')}</div>`; };
+    const chips = sibs.length > 1 ? `<div class="stk-chips">${sibs.map(p => `<button type="button" class="fchip ${p.id === p0.id ? 'on' : ''}" data-p="${p.id}">${esc(p.name)}</button>`).join('')}</div>` : '';
+    modal({title: p0.name, titleHtml: title(p0), body: `${head}${chips}<div class="stk-box">${table(p0)}</div>`, sheet: true});
+    const ov = document.getElementById('overlay');
+    ov.querySelector('.stk-chips')?.addEventListener('click', e => { const bt = e.target.closest('[data-p]'), p = bt && PROD(bt.dataset.p); if(!p) return;
+      ov.querySelectorAll('.stk-chips [data-p]').forEach(x => x.classList.toggle('on', x === bt));
+      ov.querySelector('.stk-box').innerHTML = table(p); ov.querySelector('.dlg-head h3').innerHTML = title(p); });
   },
   // assinatura na tela: desenha no canvas com o dedo/caneta
   sign: async () => {
