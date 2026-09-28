@@ -247,6 +247,13 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .af-chips .afc{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;min-height:38px;padding:0 6px;border:1px solid transparent;border-radius:10px;background:var(--gray-soft);color:var(--text);font:inherit;font-weight:600;font-size:14.5px;cursor:pointer}
 .af-chips .afc.on{border-color:var(--primary-soft);background:var(--primary-soft);color:var(--primary)}
 .af-chips .afc:disabled{opacity:.45;cursor:default}
+/* margem: cada botão na cor do semáforo; marcado ganha a borda da cor */
+.af-marg .afc.mc-bad{background:var(--bad-soft);color:var(--bad)} .af-marg .afc.mc-mid{background:var(--warn-soft);color:var(--warn)} .af-marg .afc.mc-good{background:var(--ok-soft);color:var(--ok)}
+.af-marg .afc.on{border:1.5px solid currentColor}
+/* campo em % (símbolo no fim) */
+.pct-in{position:relative}
+.pct-in input{padding-right:30px}
+.pct-in span{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);pointer-events:none}
 .radio-chips input:disabled+span{opacity:.45;cursor:default}
 /* com uma opção marcada, as outras ficam apagadas */
 .radio-chips:has(input:checked) input:not(:checked):not(:disabled)+span,
@@ -857,7 +864,7 @@ pt:{
   doc_type:'Documento de cobrança', doc_transf:'Transferência', doc_pix:'PIX', doc_boleto:'Boleto',
   delivery_place:'Local de entrega',
   summary:'Resumo', products:'Produtos', order_total:'Valor total', cancel:'Cancelar', save:'Salvar', finalize:'Finalizar',
-  next:'Próximo', back:'Voltar', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Fechar', clear:'Limpar', available:'Disponível', sign_collect:'Coletar assinatura', sign_title:'Assinatura do cliente', sign_hint:'Peça ao cliente para assinar na área abaixo com a caneta do celular.', sign_clear:'Limpar', sign_redo:'Refazer', sign_remove:'Remover', sign_saved:'Assinatura salva', sign_empty:'Assine antes de confirmar', signed_at:'Assinado em', h_signed:'Assinatura coletada', delivery_data:'Dados de entrega', note_prod:'Observação do produto', note_deliv:'Observação da entrega', billing_place:'Local de cobrança', g_order:'Pedido', g_neg:'Negociação', g_places:'Locais', hint_disc:'Desconto em relação ao preço tabela', hint_margin:'Margem do produto', contact:'Contato', price_hist:'Histórico de preço', no_price_hist:'Nenhum pedido aprovado deste produto para este cliente, safra e moeda.', remove_location:'Remover localização', location_removed:'Localização removida', pdf_making:'Gerando PDF…', pdf_fail:'Não foi possível gerar o PDF', pick_on_map:'Escolher no mapa', tap_map:'Toque no mapa para marcar', map_hint3:'Use sua localização, escolha no mapa ou cole as coordenadas.', map_off:'Mapa indisponível', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', location:'Localização de entrega', coords:'Coordenadas', my_location:'Minha localização', open_map:'Abrir no mapa', map_hint:'Toque no mapa para marcar. Arraste o pino para ajustar.', map_hint_link:'Cole as coordenadas ou um link do Google Maps.', geo_off:'Localização indisponível', coords_invalid:'Coordenadas inválidas', location_saved:'Localização salva',
+  next:'Próximo', back:'Voltar', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Fechar', clear:'Limpar', available:'Disponível', sign_collect:'Coletar assinatura', sign_title:'Assinatura do cliente', sign_hint:'Peça ao cliente para assinar na área abaixo com a caneta do celular.', sign_clear:'Limpar', sign_redo:'Refazer', sign_remove:'Remover', sign_saved:'Assinatura salva', sign_empty:'Assine antes de confirmar', signed_at:'Assinado em', h_signed:'Assinatura coletada', delivery_data:'Dados de entrega', note_prod:'Observação do produto', note_deliv:'Observação da entrega', billing_place:'Local de cobrança', g_order:'Pedido', g_neg:'Negociação', g_places:'Locais', hint_disc:'Desconto em relação ao preço tabela', hint_margin:'Margem do produto', contact:'Contato', price_hist:'Histórico de preço', no_price_hist:'Nenhum pedido aprovado deste produto para este cliente, safra e moeda.', remove_location:'Remover localização', location_removed:'Localização removida', pdf_making:'Gerando PDF…', pdf_fail:'Não foi possível gerar o PDF', pick_on_map:'Escolher no mapa', tap_map:'Toque no mapa para marcar', map_hint3:'Use sua localização, escolha no mapa ou cole as coordenadas.', map_off:'Mapa indisponível', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', af_marg:'Margem', disc_min:'Desconto mínimo', disc_max:'Desconto máximo', location:'Localização de entrega', coords:'Coordenadas', my_location:'Minha localização', open_map:'Abrir no mapa', map_hint:'Toque no mapa para marcar. Arraste o pino para ajustar.', map_hint_link:'Cole as coordenadas ou um link do Google Maps.', geo_off:'Localização indisponível', coords_invalid:'Coordenadas inválidas', location_saved:'Localização salva',
   margin:'Margem', discount:'Desconto', cost:'Custo', practiced:'Preço praticado', tprice:'Preço tabela', total_cost:'Custo total',
   low_margin:'Margem abaixo do mínimo', order_margin:'Margem do pedido', order_discount:'Desconto do pedido', disc_total:'Desconto total', disc_pct:'Percentual desconto',
   sem_good:'Boa', sem_mid:'Razoável', sem_bad:'Ruim', approve:'Aprovar', reject:'Reprovar', request_fix:'Correção',
@@ -869,7 +876,7 @@ pt:{
   n_correction:'Correção solicitada no pedido {0}',
   c_save_t:'Salvar pedido?', c_save_m:'O pedido ficará em aberto e não seguirá para aprovação.',
   c_fin_t:'Finalizar pedido?', c_fin_m:'O pedido será enviado para aprovação e não poderá mais ser editado.',
-  c_cancel_t:'Tem certeza que quer cancelar?', c_cancel_new:'O pedido não será gravado.', discard_m2:'As alterações não serão gravadas.', yes:'Sim', no:'Não', c_cancel_edit:'Descartar as alterações ou cancelar o pedido?',
+  c_cancel_t:'Tem certeza que quer voltar?', c_cancel_new:'O pedido não será gravado.', discard_m2:'As alterações não serão gravadas.', yes:'Sim', no:'Não', c_cancel_edit:'Descartar as alterações ou cancelar o pedido?',
   discard:'Descartar alterações',
   c_del_t:'Excluir produto?', c_del_m:'Tem certeza que deseja excluir {0}?', new_item:'Novo produto', remove:'Excluir',
   c_cond_t:'Preço alterado', c_cond_m:'Há produtos com preço alterado. Recalcular pela tabela ou manter o preço informado?',
@@ -904,7 +911,7 @@ es:{
   doc_type:'Documento de cobro', doc_transf:'Transferencia', doc_pix:'PIX', doc_boleto:'Boleto',
   delivery_place:'Lugar de entrega',
   summary:'Resumen', products:'Productos', order_total:'Valor total', cancel:'Cancelar', save:'Guardar', finalize:'Finalizar',
-  next:'Siguiente', back:'Volver', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Cerrar', clear:'Borrar', available:'Disponible', sign_collect:'Recoger firma', sign_title:'Firma del cliente', sign_hint:'Pida al cliente que firme en el área de abajo con el lápiz del celular.', sign_clear:'Borrar', sign_redo:'Rehacer', sign_remove:'Quitar', sign_saved:'Firma guardada', sign_empty:'Firme antes de confirmar', signed_at:'Firmado el', h_signed:'Firma recogida', delivery_data:'Datos de entrega', note_prod:'Observación del producto', note_deliv:'Observación de la entrega', billing_place:'Lugar de cobro', g_order:'Pedido', g_neg:'Negociación', g_places:'Lugares', hint_disc:'Descuento respecto al precio de tabla', hint_margin:'Margen del producto', contact:'Contacto', price_hist:'Historial de precio', no_price_hist:'Ningún pedido aprobado de este producto para este cliente, zafra y moneda.', remove_location:'Quitar ubicación', location_removed:'Ubicación eliminada', pdf_making:'Generando PDF…', pdf_fail:'No fue posible generar el PDF', pick_on_map:'Elegir en el mapa', tap_map:'Toque el mapa para marcar', map_hint3:'Use su ubicación, elija en el mapa o pegue las coordenadas.', map_off:'Mapa no disponible', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', location:'Ubicación de entrega', coords:'Coordenadas', my_location:'Mi ubicación', open_map:'Abrir en el mapa', map_hint:'Toque el mapa para marcar. Arrastre el pin para ajustar.', map_hint_link:'Pegue las coordenadas o un enlace de Google Maps.', geo_off:'Ubicación no disponible', coords_invalid:'Coordenadas inválidas', location_saved:'Ubicación guardada',
+  next:'Siguiente', back:'Volver', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Cerrar', clear:'Borrar', available:'Disponible', sign_collect:'Recoger firma', sign_title:'Firma del cliente', sign_hint:'Pida al cliente que firme en el área de abajo con el lápiz del celular.', sign_clear:'Borrar', sign_redo:'Rehacer', sign_remove:'Quitar', sign_saved:'Firma guardada', sign_empty:'Firme antes de confirmar', signed_at:'Firmado el', h_signed:'Firma recogida', delivery_data:'Datos de entrega', note_prod:'Observación del producto', note_deliv:'Observación de la entrega', billing_place:'Lugar de cobro', g_order:'Pedido', g_neg:'Negociación', g_places:'Lugares', hint_disc:'Descuento respecto al precio de tabla', hint_margin:'Margen del producto', contact:'Contacto', price_hist:'Historial de precio', no_price_hist:'Ningún pedido aprobado de este producto para este cliente, zafra y moneda.', remove_location:'Quitar ubicación', location_removed:'Ubicación eliminada', pdf_making:'Generando PDF…', pdf_fail:'No fue posible generar el PDF', pick_on_map:'Elegir en el mapa', tap_map:'Toque el mapa para marcar', map_hint3:'Use su ubicación, elija en el mapa o pegue las coordenadas.', map_off:'Mapa no disponible', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', af_marg:'Margen', disc_min:'Descuento mínimo', disc_max:'Descuento máximo', location:'Ubicación de entrega', coords:'Coordenadas', my_location:'Mi ubicación', open_map:'Abrir en el mapa', map_hint:'Toque el mapa para marcar. Arrastre el pin para ajustar.', map_hint_link:'Pegue las coordenadas o un enlace de Google Maps.', geo_off:'Ubicación no disponible', coords_invalid:'Coordenadas inválidas', location_saved:'Ubicación guardada',
   margin:'Margen', discount:'Descuento', cost:'Costo', practiced:'Precio practicado', tprice:'Precio tabla', total_cost:'Costo total',
   low_margin:'Margen bajo el mínimo', order_margin:'Margen del pedido', order_discount:'Descuento del pedido', disc_total:'Descuento total', disc_pct:'Porcentaje de descuento',
   sem_good:'Buena', sem_mid:'Razonable', sem_bad:'Mala', approve:'Aprobar', reject:'Rechazar', request_fix:'Corrección',
@@ -916,7 +923,7 @@ es:{
   n_correction:'Corrección solicitada en el pedido {0}',
   c_save_t:'¿Guardar pedido?', c_save_m:'El pedido quedará abierto y no seguirá a aprobación.',
   c_fin_t:'¿Finalizar pedido?', c_fin_m:'El pedido será enviado a aprobación y ya no podrá editarse.',
-  c_cancel_t:'¿Seguro que quiere cancelar?', c_cancel_new:'El pedido no se guardará.', discard_m2:'Los cambios no se guardarán.', yes:'Sí', no:'No', c_cancel_edit:'¿Descartar los cambios o cancelar el pedido?',
+  c_cancel_t:'¿Seguro que quiere volver?', c_cancel_new:'El pedido no se guardará.', discard_m2:'Los cambios no se guardarán.', yes:'Sí', no:'No', c_cancel_edit:'¿Descartar los cambios o cancelar el pedido?',
   discard:'Descartar cambios',
   c_del_t:'¿Eliminar producto?', c_del_m:'¿Seguro que desea eliminar {0}?', new_item:'Nuevo producto', remove:'Eliminar',
   c_cond_t:'Precio modificado', c_cond_m:'Hay productos con precio modificado. ¿Recalcular por la tabla o mantener el precio informado?',
@@ -1385,11 +1392,14 @@ function orderCard(o, showMargin, inAppr = false){
   return `<button class="card ocard" data-a="open" data-id="${o.id}"><div class="oc-wrap">${main}</div></button>`;
 }
 // filtro avançado
-const ADV0 = () => ({clientId: '', company: '', sellerId: '', safraId: '', currency: '', unit: '', negType: '', cond: '', active: '', productId: '', qmin: '', qmax: '', min: '', max: ''});
-const advCount = () => Object.values(S.adv).filter(v => v !== '').length;
+const ADV0 = () => ({marg: '', dmin: '', dmax: '', clientId: '', company: '', sellerId: '', safraId: '', currency: '', unit: '', negType: '', cond: '', active: '', productId: '', qmin: '', qmax: '', min: '', max: ''});
+// margem e desconto: só o aprovador vê e usa
+const ADV_APPR = ['marg', 'dmin', 'dmax'];
+const advCount = () => Object.entries(S.adv).filter(([k, v]) => v !== '' && (S.profile === 'aprovador' || !ADV_APPR.includes(k))).length;
 function advMatch(o){
-  const a = S.adv, tot = orderCalc(o).total;
-  return (!a.clientId || o.clientId === a.clientId) && (!a.safraId || o.safraId === a.safraId) && (!a.currency || o.currency === a.currency)
+  const a = S.adv, c = orderCalc(o), tot = c.total, dp = Math.round(c.disc * 1000) / 10;   // desconto em %, como aparece na tela
+  return (S.profile !== 'aprovador' || ((!a.marg || semOf(c.margin) === a.marg) && (a.dmin === '' || dp >= +a.dmin) && (a.dmax === '' || dp <= +a.dmax)))
+    && (!a.clientId || o.clientId === a.clientId) && (!a.safraId || o.safraId === a.safraId) && (!a.currency || o.currency === a.currency)
     && (!a.unit || o.unit === a.unit) && (!a.sellerId || o.sellerId === a.sellerId)
     && (!a.company || SELLER(o.sellerId)?.company === a.company) && (!a.negType || o.negType === a.negType) && (!a.cond || o.cond === a.cond)
     // princípio ativo / produto: o pedido tem pelo menos um produto com ele
@@ -2023,7 +2033,7 @@ async function decide(o, kind){
 function openOrder(id){
   const o = ORDER(id); if(!o) return;
   S.orderId = id; S.openA = {};
-  if(canEdit(o)){ S.draft = clone(o); S.isNew = false; S.open = {}; S.step = 1; S.errStep = 0; go('editor'); }
+  if(canEdit(o)){ S.draft = clone(o); S.draft0 = JSON.stringify(S.draft); S.isNew = false; S.open = {}; S.step = 1; S.errStep = 0; go('editor'); }
   else go('detail');
 }
 const ACT = {
@@ -2054,6 +2064,7 @@ const ACT = {
     S.draft = {id: uid(), number: DB.seq++, date: today(), sellerId: ME, unit: me.unit, clientId: '', negType: 'normal', safraId: '',
       currency: 'BRL', cond: '', due: '', billing: '', contact: '', note: '', signature: '', signedAt: '', priceTableId: '', items: [], docType: '', billingPlace: '', deliveryPlace: '',
       status: 'aberto', history: [], approverNote: ''};
+    S.draft0 = JSON.stringify(S.draft);
     persist(); S.isNew = true; S.open = {}; S.step = 1; go('editor');
   },
   edit: () => { S.draft = clone(ORDER(S.orderId)); S.isNew = false; S.open = {}; S.step = 1; go('editor'); },
@@ -2091,8 +2102,19 @@ const ACT = {
     const chips = (id, list, val, lbl, dis = () => false) => `<div class="radio-chips af-chips" id="${id}" data-v="${val || ''}">${list.map(x =>
       `<button type="button" class="afc ${val === x.id ? 'on' : ''}" data-v="${x.id}" ${dis(x) ? 'disabled' : ''}>${esc(lbl(x))}</button>`).join('')}</div>`;
     const chipField = (label, id, html) => `<div class="field"><span class="lbl">${label}</span>${html}</div>`;
+    // margem: três botões nas cores do semáforo (mesmos limites das etiquetas)
+    const pc = x => Math.round(x * 100) + '%';
+    const margs = [{id: 'bad', l: '< ' + pc(MARGIN_MID)}, {id: 'mid', l: pc(MARGIN_MID) + ' – ' + pc(MARGIN_GOOD)}, {id: 'good', l: '≥ ' + pc(MARGIN_GOOD)}];
+    const pctIn = (id, val) => `<div class="pct-in"><input id="${id}" type="text" inputmode="decimal" value="${val !== '' ? fmtNum(val, 1) : ''}" placeholder="0,0"><span>%</span></div>`;
+    const apprF = S.profile === 'aprovador' ? `
+      <div class="field"><span class="lbl">${t('af_marg')}</span><div class="radio-chips af-chips af-marg" id="af-marg" data-v="${a.marg}">${margs.map(m =>
+        `<button type="button" class="afc mc-${m.id} ${a.marg === m.id ? 'on' : ''}" data-v="${m.id}">${m.l}</button>`).join('')}</div></div>
+      <div class="grid2">
+      ${field(t('disc_min'), pctIn('af-dmin', a.dmin), 'af-dmin')}
+      ${field(t('disc_max'), pctIn('af-dmax', a.dmax), 'af-dmax')}
+      </div>` : '';
     // um filtro por linha, sem títulos, na ordem: quem vendeu → cliente e negociação → produtos → valor
-    const body = `<div class="advgrid">
+    const body = `<div class="advgrid">${apprF}
       ${chipField(t('company'), 'af-company', chips('af-company', Object.entries(COMPANIES).map(([id, name]) => ({id, name})), a.company, x => x.name))}
       ${field(t('seller'), sel('af-seller', SELLERS, a.sellerId), 'af-seller')}
       ${field(t('unit'), sel('af-unit', UNITS, a.unit), 'af-unit')}
@@ -2121,9 +2143,9 @@ const ACT = {
     ov.querySelector('#af-active').addEventListener('change', e => { const ps = ov.querySelector('#af-prod'), cur = ps.value;
       ps.innerHTML = opts(prodsOf(e.target.value), prodsOf(e.target.value).some(p => p.id === cur) ? cur : ''); });
     ov.addEventListener('click', e => { if(e.target.closest('[data-m="ok"]')){
-      const v = id => { const el = ov.querySelector('#' + id); return el.classList.contains('af-chips') ? el.dataset.v : el.value; },
+      const v = id => { const el = ov.querySelector('#' + id); if(!el) return ''; return el.classList.contains('af-chips') ? el.dataset.v : el.value; },
         num = id => { const x = v(id).trim(); return x === '' ? '' : parseDec(x); };
-      got = {clientId: v('af-client'), company: v('af-company'), sellerId: v('af-seller'), safraId: v('af-safra'), currency: v('af-cur'), unit: v('af-unit'),
+      got = {marg: v('af-marg'), dmin: num('af-dmin'), dmax: num('af-dmax'), clientId: v('af-client'), company: v('af-company'), sellerId: v('af-seller'), safraId: v('af-safra'), currency: v('af-cur'), unit: v('af-unit'),
         negType: v('af-neg'), cond: v('af-cond'), active: v('af-active'), productId: v('af-prod'), qmin: num('af-qmin'), qmax: num('af-qmax'), min: num('af-min'), max: num('af-max')};
     } }, true);
     const r = await pr; if(!r) return;
@@ -2311,11 +2333,12 @@ const ACT = {
     commit(o); notify({to: 'aprovador', type: 'pending', orderId: o.id}); persist();
     S.draft = null; S.orderId = o.id; S.doneKind = 'sent'; go('done');
   },
-  // Cancelar = abandonar a digitação/edição (não muda a situação do pedido)
+  // Voltar da 1ª etapa = abandonar a digitação/edição (não muda a situação do pedido); só pergunta se algo foi alterado
   cancel: async () => {
-    if(await ask(t('c_cancel_t'), S.isNew ? t('c_cancel_new') : t('discard_m2'), [{label: t('no'), value: 'no'}, {label: t('yes'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
-    const wasNew = S.isNew; S.draft = null;
-    if(!wasNew) toast(t('t_discarded'));
+    const changed = !S.draft0 || JSON.stringify(S.draft) !== S.draft0;
+    if(changed && await ask(t('c_cancel_t'), '', [{label: t('no'), value: 'no'}, {label: t('yes'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
+    const wasNew = S.isNew; S.draft = null; S.draft0 = null;
+    if(!wasNew && changed) toast(t('t_discarded'));
     go(S.listView || 'list');
   },
   approve: () => decide(ORDER(S.orderId), 'approve'),
