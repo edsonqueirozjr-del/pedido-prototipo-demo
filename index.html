@@ -196,6 +196,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .btn.soft{background:var(--primary-soft);border-color:transparent;color:var(--primary)}  /* salvar */
 .btn.info{background:var(--info);border-color:var(--info);color:#fff}  /* enviar: sempre azul */
 .btn.pdf{background:var(--bad);border-color:var(--bad);color:#fff}  /* gerar PDF: vermelho */
+.btn.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}  /* reabrir: mesma cor da etiqueta Em aberto */
 .icon-btn.pdf-ic{color:var(--bad)}
 .btn.gray svg{color:var(--text)}
 .actionbar .btn.ghost{background:var(--gray-soft);border-color:transparent}  /* Voltar: cinza claro, sem contorno */
@@ -221,7 +222,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .actionbar .btn[data-a=prev] svg,.actionbar .btn[data-a=next] svg{stroke-width:2.4}
 .actionbar .btn.icon{flex:0 0 46px}
 /* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
-.btn.edit-sq{background:var(--info-soft);border-color:transparent;color:var(--info);padding:0}
+.btn.edit-sq{background:var(--fix-soft);border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: cor da correção */
 .actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
 .actionbar.appr4 .btn svg{width:18px;height:18px}
 .actionbar.appr4 .btn.icon svg{width:21px;height:21px}
@@ -1828,7 +1829,7 @@ function actionBar(){
       <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
-    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn soft" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn info" data-a="share">${IC.send}${t('send_btn')}</button>
+    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn info" data-a="share">${IC.send}${t('send_btn')}</button>
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
   return '';
@@ -2473,7 +2474,7 @@ const ACT = {
   // pedido bloqueado (em aprovação): o vendedor tira da aprovação e volta a editar
   reopen: async () => {
     const o = ORDER(S.orderId); if(!o || o.status !== 'aprovacao') return;
-    if(await ask(t('c_reopen_t'), t('c_reopen_m'), [BACK_BTN(), {label: t('reopen'), value: 'yes', kind: 'primary', icon: IC.unlock}]) !== 'yes') return;
+    if(await ask(t('c_reopen_t'), t('c_reopen_m'), [BACK_BTN(), {label: t('reopen'), value: 'yes', kind: 'warn', icon: IC.unlock}]) !== 'yes') return;
     o.status = 'aberto'; addHist(o, 'reopened'); persist(); toast(t('t_reopened'), 'ok'); openOrder(o.id);
   },
   // botão do cartão da lista: enviar/compartilhar o pedido
