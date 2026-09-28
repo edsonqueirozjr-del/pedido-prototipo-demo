@@ -1526,7 +1526,7 @@ function itemCard(o, it, i){
         : p || it.activeId ? `<u class="act act-sub">${esc(ACTIVE(p ? p.active : it.activeId).name)}</u>` : ''}
 </span>
       ${p && showSem() ? sem(ic.margin) : ''}
-      ${open ? `<button class="icon-btn del" data-a="del-item" data-i="${i}" aria-label="${t('remove')}">${IC.trash}</button>` : ''}</div>`;   // lixeira só com o produto aberto
+      <button class="icon-btn del" data-a="del-item" data-i="${i}" aria-label="${t('remove')}">${IC.trash}</button></div>`;   // lixeira antes da setinha (aberto ou fechado)
   if(!open) return `<section class="card item closed">${head}</section>`;
   const grpOpts = [...new Set(PRODUCTS.map(x => x.group))].map(g => ({id: g, name: g}));
   const actOpts = ACTIVES.filter(a => PRODUCTS.some(x => x.active === a.id && (!it.group || x.group === it.group)));
