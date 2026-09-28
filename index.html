@@ -1638,7 +1638,7 @@ function viewDetail(){
   // em aprovação, o histórico vem antes dos dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
-  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button></div>
+  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button>` : ''}</div>
     <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
@@ -2485,7 +2485,8 @@ const ACT = {
   // gerar PDF: abre o relatório (de lá baixa, imprime ou envia)
   'gen-pdf': () => openReport(ORDER(S.orderId)),
   // Enviar (pedido aberto e relatório): o PDF
-  share: async () => { const o = ORDER(S.orderId); if(o && await okToSend(o)) sendPdf(o); },
+  // Enviar do pedido aberto: mesmo menu do cartão (Gerar PDF · Enviar PDF · Enviar no WhatsApp)
+  share: () => sendMenu(ORDER(S.orderId), true),
   'notif-open': async b => {
     if(closeOverlay) closeOverlay();
     if(!(await leaveEditor())) return;
