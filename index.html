@@ -1883,7 +1883,7 @@ function creditToast(){
 async function decide(o, kind){
   const cfg = {
     approve: {title: t('c_approve_t', o.number), btn: {label: t('approve'), kind: 'primary'}, note: t('comment_opt'), st: 'aprovado', h: 'approved', n: 'approved', msg: 't_approved'},
-    reject:  {title: t('c_reject_t', o.number),  btn: {label: t('reject'),  kind: 'danger'}, note: t('comment_opt'), st: 'reprovado', h: 'rejected', n: 'rejected', msg: 't_rejected'},
+    reject:  {title: t('c_reject_t', o.number),  btn: {label: t('reject'),  kind: 'danger', req: true}, note: t('comment'), st: 'reprovado', h: 'rejected', n: 'rejected', msg: 't_rejected'},
     fix:     {title: t('c_fix_t', o.number),     btn: {label: t('request_fix'), kind: 'fix', req: true}, note: t('comment'), st: 'correcao', h: 'correction', n: 'correction', msg: 't_fix'}
   }[kind];
   const r = await modal({title: cfg.title, body: `<label class="lbl" for="m-note">${cfg.note}</label><textarea id="m-note" rows="3"></textarea>`,
