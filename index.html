@@ -86,6 +86,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .kv3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border);text-align:center}
 .kv3.solo{margin:0;padding:0;border:0}
 .kv3.two{grid-template-columns:1fr 1fr}
+.page-head .grow .chip{font-size:14px;height:26px;padding:0 11px;border-radius:13px}  /* etiqueta do título 2px maior */
 .kv3 > div.st-only{justify-content:center;align-self:center}  /* só a etiqueta, centralizada na altura */
 .kv3 .chip{font-size:15px;font-weight:600;height:26px;padding:0 12px;border-radius:13px}  /* etiqueta com fonte normal, mesmo formato */
 /* campo bloqueado (vendedor): cadeado dentro do campo */
@@ -103,7 +104,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .sem-lg{width:14px;height:14px}
 .tb-right{display:flex;align-items:center;gap:8px;min-width:0}
 .totbar .tb-lbl{white-space:nowrap}
-.tb-right .mbadge + .tb-val{font-size:21px}
+.tb-right:has(.mbadge) .tb-val{font-size:21px}
 .h2cnt{margin-left:auto}
 .pricegrid{display:grid;grid-template-columns:1fr 1fr 46px;gap:8px;align-items:end;margin-bottom:12px}
 .pricegrid .field{margin-bottom:0}
@@ -510,7 +511,9 @@ html.lockscroll main{padding-bottom:12px}
 /* assinatura */
 .sig-box{border:1px dashed var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
 .sig-box canvas{display:block;touch-action:none;cursor:crosshair}
-.sig-img{display:block;width:100%;max-width:340px;margin:0 0 8px;mix-blend-mode:multiply}  /* sem moldura: o fundo branco some no cartão */
+.sig-wrap{max-width:300px;margin:0 auto 4px}
+.sig-img{display:block;width:100%;margin:0;mix-blend-mode:multiply}
+.sig-name{border-top:1.5px solid var(--text);text-align:center;padding-top:6px;font-size:14px;font-weight:600}  /* linha da assinatura + nome do cliente */  /* sem moldura: o fundo branco some no cartão */
 html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}  /* escuro: traço claro, sem retângulo branco */
 .sig .maprow{margin-top:10px}
 /* tela do mapa */
@@ -570,8 +573,12 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .aitem .name{font-size:14px}
 .aitem .act-sub{font-size:14px}
 .it-kv{margin-top:0}
+.it-kv > div:first-child dd{color:var(--muted)}  /* princípio ativo (1ª linha, sem rótulo) no cinza dos rótulos */
 .ih-txt:has(.it-kv) b,.ih-txt:has(.it-kv) .name{line-height:1.5}
-.ih-txt .oc-head .name{font-weight:700}  /* nome com o mesmo espaçamento das linhas de baixo */
+.ih-txt .oc-head .name{font-weight:700}
+/* aprovação: etiqueta da margem solta no canto (fora da linha), sem afastar o princípio ativo */
+.oc-head.mhead{position:relative;display:block;padding-right:64px;line-height:1.5}
+.oc-head.mhead .st-tag{position:absolute;right:0;top:0;float:none;margin:0}  /* nome com o mesmo espaçamento das linhas de baixo */
 .act-sub{display:block;font-size:13px;color:var(--muted);margin-top:1px}  /* princípio ativo na linha de baixo */
 .flag{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:12px;font-weight:800;color:var(--bad)}
 
@@ -771,7 +778,7 @@ pt:{
   app:'Pedidos', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Vendedor', approver:'Aprovador',
   profile_switched:'Perfil: {0}', search:'Buscar cliente ou nº', all:'Todos', mine:'Meus',
   st_aberto:'Não finalizado', st_correcao:'Correção', st_aprovacao:'Em análise', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
-  order_n:'Pedido nº {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
+  order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Unidade', client:'Cliente', neg_type:'Tipo de negociação',
   neg_normal:'Normal', neg_barter:'Barter', neg_bonif:'Bonificação', safra:'Safra', currency:'Moeda',
   cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (R$)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente na safra do pedido.', credit_leg2:'Valores em reais; pedidos em dólar convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
@@ -818,7 +825,7 @@ es:{
   app:'Pedidos', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Vendedor', approver:'Aprobador',
   profile_switched:'Perfil: {0}', search:'Buscar cliente o nº', all:'Todos', mine:'Míos',
   st_aberto:'No finalizado', st_correcao:'Corrección', st_aprovacao:'En análisis', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
-  order_n:'Pedido nº {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
+  order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Unidad', client:'Cliente', neg_type:'Tipo de negociación',
   neg_normal:'Normal', neg_barter:'Barter', neg_bonif:'Bonificación', safra:'Zafra', currency:'Moneda',
   cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (R$)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en la zafra del pedido.', credit_leg2:'Valores en reales; pedidos en dólares convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
@@ -927,7 +934,7 @@ function hash(str){ let h = 2166136261; for(const ch of str){ h ^= ch.charCodeAt
 let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 23) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 24) return d; }catch(e){} const s = seed(); persist(s); return s; }
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1109,8 +1116,8 @@ const hasStock = pid => !!pid && stockFor(pid).some(r => r.phys > 0);
 // assinatura do cliente: imagem salva no pedido (PNG em data URL)
 function sigCard(o, editable){
   if(o.signature) return `<section class="card sig"><h2>${t('sign_title')}</h2>
-      <img class="sig-img" src="${o.signature}" alt="${t('sign_title')}">
-      <div class="muted small">${t('signed_at')} ${fmtDT(o.signedAt)}</div>
+      <div class="sig-wrap"><img class="sig-img" src="${o.signature}" alt="${t('sign_title')}">
+        <div class="sig-name">${esc(CLIENT(o.clientId)?.name || '')}</div></div>
       ${editable ? `<div class="maprow"><button type="button" class="btn sm" data-a="sign">${t('sign_redo')}</button><button type="button" class="btn sm ghost" data-a="sign-remove">${t('sign_remove')}</button></div>` : ''}
     </section>`;
   return editable ? `<button class="btn block addbtn" data-a="sign">${IC.pen}${t('sign_collect')}</button>` : '';
@@ -1123,7 +1130,7 @@ function fakeSignature(seedN){
     const y = 120 + Math.sin(x / 28 + seedN) * 38 * Math.sin(x / 140) + Math.cos(x / 9 + seedN) * 6;
     x === 40 ? g.moveTo(x, y) : g.lineTo(x, y);
   }
-  g.stroke(); g.beginPath(); g.moveTo(60, 170); g.lineTo(540, 176); g.lineWidth = 2; g.stroke();
+  g.stroke();   // sem linha de base: a linha fica no cartão, com o nome do cliente embaixo
   return c.toDataURL('image/png');
 }
 // lista de produtos: título solto + cada produto é um cartão próprio
@@ -1143,7 +1150,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:23, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:24, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1350,7 +1357,7 @@ function itemsHtml(o, appr){
     const head = appr
       ? `<div class="row ahead" data-a="toggle-aitem" data-id="${it.id}" role="button" tabindex="0" aria-expanded="${!!S.openA[it.id]}">
           <span class="chev ${S.openA[it.id] ? 'on' : ''}">${IC.chev}</span>
-          <span class="ih-txt"><span class="oc-head"><span class="chip st-tag ${semOf(ic.margin) ? 'mb-' + semOf(ic.margin) : ''}">${fmtPct(ic.margin)}</span><span class="name">${esc(p.name)}</span></span>
+          <span class="ih-txt"><span class="oc-head mhead"><span class="chip st-tag ${semOf(ic.margin) ? 'mb-' + semOf(ic.margin) : ''}">${fmtPct(ic.margin)}</span><span class="name">${esc(p.name)}</span></span>
             ${S.openA[it.id] ? `<u class="act act-sub">${esc(ACTIVE(p.active).name)}</u>`
               // aprovação, recolhido: margem ao lado do nome; embaixo princípio ativo, quantidade e valor (um por linha)
               : `<dl class="oc-kv it-kv"><div><dd>${esc(ACTIVE(p.active).name)}</dd></div><div><dt>${t('qty')}:</dt> <dd>${fmtNum(ic.qty)} ${p.um}</dd></div><div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(ic.total, o.currency)}</dd></div></dl>`}</span></div>`
@@ -1370,7 +1377,8 @@ function itemsHtml(o, appr){
         <div><span>${t('qty')}</span><b>${fmtNum(ic.qty)} ${p.um}</b></div>
         <div><span>${t('order_total')}</span><b>${fmtMoney(ic.total, o.currency)}</b></div>
         <div><span>${t('tprice')}</span><b>${fmtMoney(ic.table, o.currency)}</b></div>
-        <div><span>${t('price')}</span><b>${fmtMoney(ic.price, o.currency)}${ic.adj ? ` <span class="pct-tab" data-a="hint" data-h="disc">${pctDisc(ic.price / ic.adj - 1)}</span>` : ''}</b></div>
+        <div><span>${t('price')}</span><b>${fmtMoney(ic.price, o.currency)}</b></div>
+        <div><span>${t('discount')}</span><b>${ic.adj ? pctDisc(ic.price / ic.adj - 1) : '—'}</b></div>
       </div>
       ${(() => { const k = 'v' + it.id, dOpen = !!S.openD[k];   // dados de entrega atrás de um botão (fechado por padrão)
         return `<button type="button" class="deliv-btn in-item ${dOpen ? 'on' : ''}" data-a="toggle-deliv" data-id="${k}" aria-expanded="${dOpen}">
@@ -1386,7 +1394,7 @@ function itemsHtml(o, appr){
     return `<div class="aitem open ${low ? 'low' : ''}">${head}
       <div class="metrics soft">
         <div><span>${t('cost')}</span><b>${fmtMoney(ic.cost, o.currency)}</b></div>
-        <div><span>${t('practiced')}</span><b>${fmtMoney(ic.price, o.currency)} <span class="pct-tab mt-${semOf(ic.margin)}" data-a="hint" data-h="margin">${fmtPct(ic.margin)}</span></b></div>
+        <div><span>${t('practiced')}</span><b>${fmtMoney(ic.price, o.currency)}</b></div>
         <div><span>${t('qty')}</span><b>${fmtNum(ic.qty)} ${p.um}</b></div>
         <div><span>${t('order_total')}</span><b>${fmtMoney(ic.total, o.currency)}</b></div>
         <div><span>${t('tprice')}</span><b>${fmtMoney(ic.table, o.currency)}</b></div>
@@ -1447,8 +1455,8 @@ function viewDetail(){
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo: voltar, nº, situação e a faixa do valor total (igual à etapa Itens)
   // só a faixa do valor total fica fixa; voltar/nº/situação rolam com a tela
-  return `<div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${o.number}</h1><span class="grow">${chip(o.status)}</span></div>
-    <div class="totstick"><div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right">${appr ? mBadge(c.margin) : ''}<b class="tb-val">${fmtMoney(c.total, o.currency)}</b></span></div></div>
+  return `<div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span></div>
+    <div class="totstick"><div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
     ${dataCards}
