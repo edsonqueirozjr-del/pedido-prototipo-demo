@@ -2656,7 +2656,7 @@ function loadPdfLib(){
    o cabeçalho da tabela se repete na página seguinte e título de seção não fica sozinho no fim da página. */
 const RP = {W: 210, H: 297, M: 14, TOP2: 30, BOTTOM: 278,
   INK: [24, 33, 27], TXT: [62, 72, 66], MUTED: [112, 122, 116], SOFT: [146, 154, 149], LINE: [224, 229, 226], PAPER: [247, 248, 247]};
-const RP_BRAND = {somax: [39, 91, 59], corteva: [23, 93, 227]};   // cores tiradas das logos
+const RP_BRAND = {somax: [39, 91, 59], corteva: [39, 91, 59]};   // verde da Somax (tirado da logo) — também nos pedidos da Corteva
 const RP_ST = {aberto: [184, 126, 0], correcao: [200, 98, 26], aprovacao: [123, 75, 196], aprovado: [28, 140, 76], reprovado: [200, 56, 56]};
 // condições gerais de venda: texto padrão, sai em todos os pedidos
 const TERMS = {
@@ -2758,7 +2758,7 @@ function reportPages(o){
     // Corteva: logo completa da Corteva junto com a logo completa da Somax
     img(LOGOS.corteva_full, M, 12.4, 48.5, 9.6);
     line(M + 52.5, 11.5, M + 52.5, 27.5, LINE, .3);
-    img(LOGOS.somax_full, M + 56.5, 11.6, 30.5, 11.5);
+    img(LOGOS.somax_full, M + 56.5, 10.2, 38.5, 14.5);   // logo da Somax um pouco maior
     text(`${t('unit')} ${UNIT(o.unit)?.name || ''}`, M, 27.2, {size: 7.8, color: MUTED});
   } else if(co === 'somax' && LOGOS.somax_full){
     // Somax: logo completa (símbolo + nome) e a filial embaixo
