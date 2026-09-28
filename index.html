@@ -121,6 +121,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 /* estoque e histórico de preço: só o símbolo, sem formato de botão (igual ao pino) */
 .iconbare{flex:none;border:0 !important;background:none !important;box-shadow:none !important;padding:0;width:36px;min-height:44px;display:grid;place-items:center;color:var(--primary);cursor:pointer}
 .iconbare svg{width:24px;height:24px}
+.grid2 .money.tot span{font-size:16px;font-weight:700;color:var(--text)}  /* cifrão igual ao valor */
+.grid2 .money.tot input{padding-left:34px} .grid2 .money.tot[data-c=USD] input{padding-left:44px}
 .money.tot input{font-size:16px;font-weight:700;color:var(--text);-webkit-text-fill-color:var(--text);opacity:1}
 .money{position:relative}
 .money span{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);pointer-events:none}
@@ -316,7 +318,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .stepper-in:has(input.invalid){border-color:var(--bad)}
 .stepper-in .qv{flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
 .stepper-in .qv input{flex:none;max-width:100%;text-align:right;padding-left:0;padding-right:0}
-.stepper-in .qum{font-style:normal;font-size:14px;color:var(--muted);margin-left:3px}
+.stepper-in .qum{font-style:normal;font-size:16px;color:var(--text);margin-left:4px}  /* unidade igual ao número, logo ao lado */
 .stepper-in input{border:0 !important;background:transparent;box-shadow:none;min-height:42px}
 .stepper-in input{text-align:center;min-width:0}
 .stepper-in .icon-btn{flex:none;width:40px;height:44px;border:0;background:transparent;color:var(--text)}
