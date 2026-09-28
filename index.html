@@ -207,13 +207,15 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .co-gap{height:12px}
 .co-chip{flex:1;min-height:38px;border:0;border-radius:10px;background:var(--gray-soft);color:var(--text);font-weight:600;font-size:14.5px;cursor:pointer}
 .co-chip.on{background:var(--primary-soft);color:var(--primary)}
-.days-mon{font-size:13.5px;font-weight:700;color:var(--text);text-align:center;margin:20px 0 6px;line-height:1.2}  /* mesmo espaço busca→mês e dias→cartão */
-.days-wrap{margin:0 0 12px}
+/* mês fixo no começo da linha dos dias (não rola); muda quando o mês muda */
+.days-wrap{display:flex;align-items:flex-end;gap:4px;margin:16px 0 12px}
+.days-mon{flex:none;width:44px;height:34px;margin-bottom:10px;display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--text);white-space:nowrap}
+.days{flex:1;min-width:0}
 .days{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0 6px}
 .days::-webkit-scrollbar{display:none}
 .day{flex:0 0 calc(100% / 7);display:flex;flex-direction:column;align-items:center;gap:5px;padding:4px 0;border:0;background:none;cursor:pointer;scroll-snap-align:start;position:relative}  /* 7 dias por tela */
 .day .dw{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
-.day .dn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border)}
+.day .dn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border)}
 .day.today .dn{border-color:var(--primary);color:var(--primary)}
 .day.on .dn{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
 .day.on .dw{color:var(--primary)}
@@ -1398,12 +1400,12 @@ function viewList(){
 // faixa de dias: dia da semana abreviado em cima e o número na bolinha; hoje no fim, dias anteriores arrastando para o lado
 const WD = {pt: ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'], es: ['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB']};
 // "Setembro de 2026" — acompanha o dia do meio da faixa ao arrastar
-function monthLabel(iso){ const m = new Intl.DateTimeFormat(loc(), {month: 'long', year: 'numeric'}).format(new Date(iso + 'T00:00:00')); return m.charAt(0).toUpperCase() + m.slice(1); }
+function monthLabel(iso){ const d = new Date(iso + 'T00:00:00'), m = new Intl.DateTimeFormat(loc(), {month: 'short'}).format(d).replace('.', '');
+  return m.charAt(0).toUpperCase() + m.slice(1, 3) + '/' + String(d.getFullYear()).slice(2); }   // ex.: Set/26
 function dayStrip(){
   const t0 = today(), n = 60;
   const days = Array.from({length: n}, (_, k) => addDays(t0, k - n + 1));
-  return `<div class="days-mon" id="days-mon">${monthLabel(S.day)}</div>
-    <div class="days-wrap">
+  return `<div class="days-wrap"><div class="days-mon" id="days-mon">${monthLabel(S.day)}</div>
     <div class="days" id="days">${days.map(d => { const dt = new Date(d + 'T00:00:00');
       return `<button type="button" class="day ${d === S.day ? 'on' : ''} ${d === t0 ? 'today' : ''} ${dt.getDate() === 1 ? 'm1' : ''}" data-a="day" data-d="${d}" aria-pressed="${d === S.day}">
         <span class="dw">${WD[S.lang === 'es' ? 'es' : 'pt'][dt.getDay()]}</span><span class="dn">${dt.getDate()}</span></button>`; }).join('')}</div></div>`;
