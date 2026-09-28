@@ -335,12 +335,13 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-kv dd{margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ocard{position:relative}
 /* enviar: só o símbolo, no canto de baixo à direita, à mesma distância da borda que a etiqueta tem do topo */
-/* canto de baixo do cartão: logo da empresa do pedido e, à direita, o enviar (azul sólido), do mesmo tamanho */
+/* canto de baixo do cartão: logo da empresa do pedido e, à direita, o enviar (avião azul preenchido), do mesmo tamanho */
 .oc-acts{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:8px}
 .oc-logo{width:34px;height:34px;object-fit:contain}
-.oc-send{position:relative;width:34px;height:34px;border-radius:10px;background:var(--info);color:#fff;display:grid;place-items:center;cursor:pointer}
+.oc-send{position:relative;width:34px;height:34px;color:var(--info);display:grid;place-items:center;cursor:pointer}  /* enviar: avião azul preenchido, sem fundo */
 .oc-send::before{content:"";position:absolute;inset:-6px}  /* área de toque maior */
-.oc-send svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.oc-send svg{width:34px;height:34px;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.oc-send svg .b{fill:currentColor;stroke:currentColor;stroke-width:.8}
 .ocard .oc-kv > div:last-child{padding-right:84px}  /* o valor não passa por baixo da logo e do enviar */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -1009,6 +1010,8 @@ const IC = {
   dragx:'<svg viewBox="0 0 24 24"><path d="m9 17-5-5 5-5"/><path d="m15 7 5 5-5 5"/></svg>',
   share:'<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>',
   send:'<svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>',
+  // avião de papel preenchido: asa em cima, corte fino saindo da ponta e recorte em "V" embaixo
+  sendSolid:'<svg viewBox="0.4 1.7 23 20.6"><path class="b" d="M23 2.35 1 8l2.5 2.8L17.36 5.98 5.27 12.4l.65 6.47 2.98-2.01 4.83 4.84Z"/></svg>',
   phone:'<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>',
   mail:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
   chat:'<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5Z"/></svg>',
@@ -1455,7 +1458,7 @@ function orderCard(o, showMargin, inAppr = false){
         <div><dt>${t('neg_type')}:</dt> <dd>${t('neg_'+o.negType)}</dd></div>
         <div><dt>${t('safra')}:</dt> <dd>${esc(SAFRA(o.safraId)?.name || '—')}</dd></div>
         <div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(c.total, o.currency)}</dd></div>
-      </dl>${inAppr ? '' : `<span class="oc-acts">${LOGOS[SELLER(o.sellerId)?.company] ? `<img class="oc-logo" src="${LOGOS[SELLER(o.sellerId).company]}" alt="${esc(companyOf(o))}">` : ''}<span class="oc-send" role="button" tabindex="0" data-a="card-share" data-id="${o.id}" aria-label="${t('send_btn')}" title="${t('send_btn')}">${IC.send}</span></span>`}</div>`;
+      </dl>${inAppr ? '' : `<span class="oc-acts">${LOGOS[SELLER(o.sellerId)?.company] ? `<img class="oc-logo" src="${LOGOS[SELLER(o.sellerId).company]}" alt="${esc(companyOf(o))}">` : ''}<span class="oc-send" role="button" tabindex="0" data-a="card-share" data-id="${o.id}" aria-label="${t('send_btn')}" title="${t('send_btn')}">${IC.sendSolid}</span></span>`}</div>`;
   return `<button class="card ocard" data-a="open" data-id="${o.id}"><div class="oc-wrap">${main}</div></button>`;
 }
 // filtro avançado
