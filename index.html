@@ -615,7 +615,7 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .timeline{list-style:none;margin:0;padding:0}
 .timeline li{position:relative;display:grid;grid-template-columns:12px 1fr;gap:12px;padding-bottom:16px;--tl:var(--gray);--tls:var(--gray-soft)}
 .timeline li:last-child{padding-bottom:0}
-.timeline li:not(:last-child)::before{content:"";position:absolute;left:5px;top:18px;bottom:2px;width:2px;border-radius:1px;background:var(--border)}
+.timeline li:not(:last-child)::before{content:"";position:absolute;left:5px;top:16px;bottom:-4px;width:2px;background:var(--border)}  /* liga a bolinha até a próxima */
 .timeline .tl-ok{--tl:var(--ok);--tls:var(--ok-soft)} .timeline .tl-bad{--tl:var(--bad);--tls:var(--bad-soft)}
 .timeline .tl-warn{--tl:var(--warn);--tls:var(--warn-soft)} .timeline .tl-info{--tl:var(--info);--tls:var(--info-soft)}
 .tl-dot{width:12px;height:12px;border-radius:50%;margin-top:4px;background:var(--surface);border:2px solid var(--tl)}
