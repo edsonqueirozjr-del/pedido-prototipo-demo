@@ -161,6 +161,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .btn.primary{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
 .btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.soft{background:var(--primary-soft);border-color:transparent;color:var(--primary)}  /* salvar */
 .btn.info{background:var(--info);border-color:var(--info);color:#fff}  /* enviar */
 .actionbar .btn.ghost{background:var(--gray-soft);border-color:transparent}  /* Voltar: cinza claro, sem contorno */
 .btn.fix{background:var(--fix);border-color:var(--fix);color:#fff}
@@ -1620,7 +1621,7 @@ function actionBar(){
   if(S.view === 'editor'){
     const ok = S.step < 3 ? !stepErrors(S.draft, S.step).length : !validate(S.draft).length;
     return `<div class="actionbar"><button class="btn ghost" data-a="prev">${IC.back}${t('back')}</button>
-      ${S.step === 3 && ok ? `<button class="btn icon savebtn" data-a="save" aria-label="${t('save')}" title="${t('save')}">${IC.save}</button>` : ''}
+      ${S.step === 3 && ok ? `<button class="btn soft" data-a="save">${IC.save}${t('save')}</button>` : ''}
       ${ok ? (S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}${IC.fwd}</button>` : `<button class="btn primary" data-a="finalize">${IC.tick}${t('finalize')}</button>`) : ''}</div>`;
   }
   if(S.view === 'editor' && S.step < 3){
