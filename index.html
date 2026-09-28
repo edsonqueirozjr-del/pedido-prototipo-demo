@@ -212,7 +212,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .radio-chips{display:flex;gap:8px;flex-wrap:wrap}
 .radio-chips label{flex:1;min-width:90px}
 .radio-chips input{position:absolute;opacity:0;pointer-events:none;width:0;height:0;min-height:0}
-.radio-chips span{display:flex;align-items:center;justify-content:center;min-height:38px;border:1px solid var(--border);border-radius:10px;font-weight:600;cursor:pointer;background:var(--surface)}
+.radio-chips span{display:flex;align-items:center;justify-content:center;min-height:38px;border:1px solid transparent;border-radius:10px;font-weight:600;cursor:pointer;background:var(--gray-soft)}  /* não marcado: cinza claro, sem borda */
 .radio-chips input:checked+span{border-color:var(--primary-soft);background:var(--primary-soft);color:var(--primary)}
 .radio-chips.invalid span{border-color:var(--bad)}
 .radio-chips input:focus-visible+span{box-shadow:0 0 0 3px var(--primary-soft)}
