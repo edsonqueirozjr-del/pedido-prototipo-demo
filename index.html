@@ -59,6 +59,7 @@ main{padding:12px 16px 132px}
 .ed-title{display:grid;grid-template-columns:40px 1fr 40px;margin:0}
 .ed-title h1{text-align:center}
 .edhead .totbar{margin-top:10px}
+.edhead .ed-mov{margin:10px 0 0}
 .det-top{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 12px;padding:6px 16px 12px}
 .det-top .page-head{margin-bottom:10px}
 .totstick{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + var(--edh,0px) - 1px);z-index:7;background:var(--bg);margin:-12px -16px 0;padding:12px 16px 12px}
@@ -87,6 +88,12 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .hint.bad{color:var(--bad)}
 .kv3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border);text-align:center}
 .kv3.solo{margin:0;padding:0;border:0}
+/* vendedor, empresa e unidade: só texto, igual à data movimento (vêm preenchidos e não mudam) */
+.ro-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 8px}
+.ro-grid > div{display:flex;flex-direction:column;min-width:0}
+.ro-grid .full{grid-column:1/-1}
+.ro-grid span{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:4px;white-space:nowrap}
+.ro-grid b{font-weight:400;font-size:16px;overflow-wrap:anywhere}
 .kv3.two{grid-template-columns:1fr 1fr}
 .kv3 > div.kv-left{align-items:flex-start;text-align:left}  /* data movimento alinhada à esquerda */
 .page-head .grow .chip{font-size:14px;height:26px;padding:0 11px;border-radius:13px}  /* etiqueta do título 2px maior */
@@ -347,7 +354,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .stepper-in{display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:10px;background:var(--surface);min-height:44px}
 .stepper-in:has(input.invalid){border-color:var(--bad)}
 .stepper-in .qv{flex:1;min-width:0;display:flex;align-items:center;justify-content:center}
-.stepper-in .qv input{flex:none;max-width:100%;text-align:right;padding-left:0;padding-right:0}
+.stepper-in .qv input{flex:none;max-width:100%;text-align:center;padding-left:0 !important;padding-right:0 !important}
 .stepper-in .qum{font-style:normal;font-size:16px;color:var(--text);margin-left:4px}  /* unidade igual ao número, logo ao lado */
 .stepper-in input{border:0 !important;background:transparent;box-shadow:none;min-height:42px}
 .stepper-in input{text-align:center;min-width:0}
@@ -355,7 +362,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .stepper-in .icon-btn svg{width:22px;height:22px}
 .stepper-in .icon-btn:disabled{opacity:.4}
 /* risquinho vertical separando o − e o + da quantidade */
-.stepper-in .icon-btn{position:relative}
+.stepper-in .icon-btn{position:relative;padding:0}
 .stepper-in .icon-btn:first-child::after,.stepper-in .icon-btn:last-child::before{content:"";position:absolute;top:22%;bottom:22%;width:1px;background:var(--border)}
 .stepper-in .icon-btn:first-child::after{right:0} .stepper-in .icon-btn:last-child::before{left:0}
 @media (prefers-reduced-motion:reduce){.chev{transition:none}}
@@ -396,22 +403,18 @@ html.lockscroll main{padding-bottom:12px}
 /* tela de escolha do produto */
 #overlay.tall .dlg{height:88vh;display:flex;flex-direction:column}
 #overlay.tall .dlg-body{flex:1;min-height:0;display:flex;flex-direction:column}
-.pp-search{position:relative;margin-bottom:8px}
-.pp-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted)}
-.pp-search input{padding-left:38px}
 .pp-chips{display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -18px 6px;padding:0 18px 2px}
 .pp-chips::-webkit-scrollbar{display:none}
 .pp-chips .fchip{height:30px;font-size:12.5px}
 .pp-fl{flex:none;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:2px}
 .pp-list{flex:1;overflow:auto;overscroll-behavior:contain;margin:0 -18px;padding:0 18px}
 .pp-gh{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 2px 6px}
-.pp-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);cursor:pointer}
+.pp-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:3px 10px;width:100%;text-align:left;padding:11px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);cursor:pointer;font-size:14px}
+.pp-row .pp-pr,.pp-row .pp-st{justify-self:end;white-space:nowrap}
 .pp-row.on{border-color:var(--primary-soft);background:var(--primary-soft)}
-.pp-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.pp-main b{font-size:15px}
-.pp-sub{font-size:12.5px;color:var(--muted)}
-.pp-side{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:14px}
-.pp-st{font-size:11.5px;font-weight:600;color:var(--ok)} .pp-st.neg{color:var(--bad)} .pp-st.none{color:var(--muted);font-weight:500}
+.pp-sub{color:var(--muted)}
+.pp-sub .act{font-size:inherit}
+.pp-st{font-weight:600;color:var(--ok)} .pp-st.neg{color:var(--bad)} .pp-st.none{color:var(--muted);font-weight:500}
 .pp-empty{text-align:center;padding:24px 0}
 /* estoque */
 .stk-sub{font-size:13px;color:var(--muted);margin:-4px 0 10px}
@@ -616,6 +619,10 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 /* aprovação: etiqueta da margem solta no canto (fora da linha), sem afastar o princípio ativo */
 .oc-head.mhead{position:relative;display:block;padding-right:64px;line-height:1.5}
 .oc-head.mhead .st-tag{position:absolute;right:0;top:0;float:none;margin:0}  /* nome com o mesmo espaçamento das linhas de baixo */
+/* aberto: a etiqueta fica no meio da altura do título (nome + princípio ativo) e um pouco maior */
+.ahead.aopen .ih-txt{position:relative;padding-right:74px}
+.ahead.aopen .oc-head.mhead{position:static;padding-right:0}
+.ahead.aopen .oc-head.mhead .st-tag{top:50%;transform:translateY(-50%);height:26px;padding:0 11px;font-size:14px;border-radius:13px}
 .act-sub{display:block;font-size:13px;color:var(--muted);margin-top:1px}  /* princípio ativo na linha de baixo */
 .flag{display:inline-flex;align-items:center;gap:4px;margin-top:8px;font-size:12px;font-weight:800;color:var(--bad)}
 
@@ -1449,7 +1456,7 @@ function itemsHtml(o, appr){
   return o.items.filter(it => it.productId).map((it, i) => {
     const ic = itemCalc(o, it), p = PROD(it.productId), low = ic.margin != null && ic.margin < MARGIN_MID;
     const head = appr
-      ? `<div class="row ahead" data-a="toggle-aitem" data-id="${it.id}" role="button" tabindex="0" aria-expanded="${!!S.openA[it.id]}">
+      ? `<div class="row ahead ${S.openA[it.id] ? 'aopen' : ''}" data-a="toggle-aitem" data-id="${it.id}" role="button" tabindex="0" aria-expanded="${!!S.openA[it.id]}">
           <span class="chev ${S.openA[it.id] ? 'on' : ''}">${IC.chev}</span>
           <span class="ih-txt"><span class="oc-head mhead"><span class="chip st-tag ${semOf(ic.margin) ? 'mb-' + semOf(ic.margin) : ''}">${fmtPct(ic.margin)}</span><span class="name">${esc(p.name)}</span></span>
             ${S.openA[it.id] ? `<u class="act act-sub">${esc(ACTIVE(p.active).name)}</u>`
@@ -1586,12 +1593,11 @@ function creditCard(o){
 function step1(){
   const o = S.draft;
   return `<section class="card">
-    <div class="kv3 solo two"><div class="kv-left"><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div>
-  </section>
-  <section class="card">
-    ${field(t('seller'), `<input id="f-seller" type="text" value="${esc(SELLER(o.sellerId).name)}" disabled>`, 'f-seller')}
-    ${field(t('company'), `<input id="f-company" type="text" value="${esc(companyOf(o))}" disabled>`, 'f-company')}
-    ${field(t('unit'), `<input id="f-unit" type="text" value="${esc(UNIT(o.unit)?.name || '')}" disabled>`, 'f-unit')}
+    <div class="ro-grid">
+      <div class="full" id="f-seller"><span>${t('seller')}</span><b>${esc(SELLER(o.sellerId).name)}</b></div>
+      <div id="f-company"><span>${t('company')}</span><b>${esc(companyOf(o))}</b></div>
+      <div id="f-unit"><span>${t('unit')}</span><b>${esc(UNIT(o.unit)?.name || '')}</b></div>
+    </div>
   </section>
   <section class="card">
     ${field(t('client'), `<select id="f-client" data-f="clientId">${opts(CLIENTS, o.clientId)}</select>`, 'f-client')}
@@ -1630,10 +1636,11 @@ function itemCard(o, it, i){
   const grpOpts = [...new Set(PRODUCTS.map(x => x.group))].map(g => ({id: g, name: g}));
   const actOpts = ACTIVES.filter(a => PRODUCTS.some(x => x.active === a.id && (!it.group || x.group === it.group)));
   return `<section class="card item">${head}
+    <!-- ordem: linha → princípio ativo → produto -->
+    <div class="field"><span class="lbl">${t('stock_group_f')}</span><div class="radio-chips" id="g-${it.id}">${grpOpts.map(g => `<label><input type="radio" name="g-${it.id}" data-f="itemGroup" data-i="${i}" value="${esc(g.id)}" ${it.group === g.id ? 'checked' : ''}><span>${esc(g.name)}</span></label>`).join('')}</div></div>
+    ${field(t('active'), `<select id="a-${it.id}" data-f="activeId" data-i="${i}">${opts(actOpts, it.activeId || '')}</select>`, 'a-'+it.id)}
     ${field(t('product'), `<div class="sel-in ${p && hasStock(p.id) ? 'has-stk' : ''}"><button type="button" id="p-${it.id}" class="pickfield" data-a="pickprod" data-i="${i}">${p ? esc(p.name) : `<span class="muted">${t('pick_product')}</span>`}</button>
       ${p && hasStock(p.id) ? `<button type="button" class="inbtn" data-a="stock" data-i="${i}" aria-label="${t('stock')}" title="${t('stock')}">${IC.box}</button>` : ''}</div>`, 'p-'+it.id)}
-    ${field(t('active'), `<select id="a-${it.id}" data-f="activeId" data-i="${i}">${opts(actOpts, it.activeId || '')}</select>`, 'a-'+it.id)}
-    <div class="field"><span class="lbl">${t('stock_group_f')}</span><div class="radio-chips" id="g-${it.id}">${grpOpts.map(g => `<label><input type="radio" name="g-${it.id}" data-f="itemGroup" data-i="${i}" value="${esc(g.id)}" ${it.group === g.id ? 'checked' : ''}><span>${esc(g.name)}</span></label>`).join('')}</div></div>
     <!-- duas colunas iguais: quantidade | preço tabela · preço praticado | total -->
     <div class="grid2">
       <div class="field"><label class="lbl" for="q-${it.id}">${t('qty')}</label>
@@ -1690,8 +1697,9 @@ function step3(){
 }
 function viewEditor(){
   const o = S.draft;
-  // fixo no topo: só "Pedido nº X" (e, na etapa Itens, o valor total); as etapas rolam com a tela
+  // fixo no topo: "Pedido nº X" e, no Cabeçalho, a data movimento + situação (nas outras etapas, o valor total); as etapas rolam com a tela
   return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span></span></div>
+    ${S.step === 1 ? `<div class="card ed-mov"><div class="kv3 solo two"><div class="kv-left"><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div></div>` : ''}
 </div>
     <nav class="steps">${[1,2,3].map(n => `<div class="st ${S.step === n ? 'on' : S.step > n ? 'done' : ''}" aria-current="${S.step === n ? 'step' : 'false'}">
       <span class="dot">${S.step > n ? IC.tick : n}</span><span>${t('step'+n)}</span></div>`).join('')}</nav>
@@ -1817,6 +1825,7 @@ function render(){
       let touched = false; strip.addEventListener('pointerdown', () => touched = true, {once: true});
       if(window.ResizeObserver) new ResizeObserver(() => { if(!touched) toSel(); }).observe(strip); }
   }
+  document.querySelectorAll('.qv input').forEach(fitQty);
   if(S.view === 'editor' && S.errStep === S.step) stepErrors(S.draft, S.step).forEach(x => x.id && document.getElementById(x.id)?.classList.add('invalid'));
   const eh = document.getElementById('edhead');
   document.documentElement.style.setProperty('--edh', eh ? eh.offsetHeight + 'px' : '0px');
@@ -1926,6 +1935,13 @@ async function leaveEditor(){
   const r = await ask(t('discard_q'), t('discard_m'), [BACK_BTN(), {label: t('discard'), value: 'yes', kind: 'danger'}]);
   if(r !== 'yes') return false;
   S.draft = null; return true;
+}
+
+// campo da quantidade do tamanho exato do número, para número + unidade ficarem juntos no meio do campo
+const fitCtx = document.createElement('canvas').getContext('2d');
+function fitQty(el){
+  const cs = getComputedStyle(el); fitCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  el.style.width = Math.ceil(fitCtx.measureText(el.value || '0').width) + 2 + 'px';
 }
 
 /* ---------- Ações ---------- */
@@ -2244,32 +2260,22 @@ const ACT = {
     if(await ask(t('c_del_t'), t('c_del_m', p ? `${p.name} · ${ACTIVE(p.active).name}` : t('new_item')), [BACK_BTN(), {label: t('remove'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
     S.draft.items.splice(i, 1); render();
   },
-  // tela de escolha do produto: busca por produto ou princípio ativo, agrupado por princípio ativo
+  // tela de escolha do produto: lista agrupada pela linha (sem busca)
   pickprod: async b => {
     const o = S.draft, it = o.items[+b.dataset.i], tb = TABLE(o.priceTableId);
     const row = p => {
       const price = tb && tb.prices[p.id], st = hasStock(p.id) ? stockFor(p.id).reduce((a, r) => a + r.avail, 0) : null;
       return `<button type="button" class="pp-row ${p.id === it.productId ? 'on' : ''}" data-m="${p.id}" data-grp="${esc(p.group)}" data-act="${p.active}" data-s="${esc([p.name, ACTIVE(p.active).name, p.group].join(' ').toLowerCase())}">
-        <span class="pp-main"><b>${esc(p.name)}</b><span class="pp-sub"><u class="act">${esc(ACTIVE(p.active).name)}</u></span>
-          <span class="pp-sub">${esc(p.formName || '')}${p.form ? ` (${p.form})` : ''}</span></span>
-        <span class="pp-side">${price ? `<b>${fmtMoney(price, o.currency)}</b>` : ''}<span class="pp-st ${st == null ? 'none' : st > 0 ? '' : 'neg'}">${st == null ? t('no_stock') : `${t('stock_avail')} ${fmtNum(st)} ${p.um}`}</span></span></button>`;
+        <b class="pp-nm">${esc(p.name)}</b><b class="pp-pr">${price ? fmtMoney(price, o.currency) : ''}</b>
+        <span class="pp-sub"><u class="act">${esc(ACTIVE(p.active).name)}</u></span><span class="pp-st ${st == null ? 'none' : st > 0 ? '' : 'neg'}">${st == null ? t('no_stock') : `${fmtNum(st)} ${p.um}`}</span></button>`;
     };
     // só os produtos do grupo de estoque e do princípio ativo escolhidos no card (quando escolhidos)
     const pool = PRODUCTS.filter(p => (!it.group || p.group === it.group) && (!it.activeId || p.active === it.activeId));
     const groups = [...new Set(pool.map(p => p.group))].map(g => ({g, ps: pool.filter(p => p.group === g)}));
-    const body = `<div class="pp-search">${IC.search}<input id="pp-q" type="search" placeholder="${t('search_prod')}" autocomplete="off"></div>
-      <div class="pp-list">${groups.map(g => `<div class="pp-grp"><div class="pp-gh">${esc(g.g)}</div>${g.ps.map(row).join('')}</div>`).join('')}
-      <div class="pp-empty muted" hidden>${t('no_results')}</div></div>`;
+    const body = `<div class="pp-list">${groups.map(g => `<div class="pp-grp"><div class="pp-gh">${esc(g.g)}</div>${g.ps.map(row).join('')}</div>`).join('')}
+      ${pool.length ? '' : `<div class="pp-empty muted">${t('no_results')}</div>`}</div>`;
     const pr = modal({title: t('pick_product'), body, sheet: true});
-    const ov = document.getElementById('overlay'); ov.classList.add('tall');
-    const apply = () => {
-      const q = ov.querySelector('#pp-q').value.toLowerCase().trim(); let any = false;
-      ov.querySelectorAll('.pp-grp').forEach(g => { let n = 0;
-        g.querySelectorAll('.pp-row').forEach(r => { const ok = !q || r.dataset.s.includes(q); r.hidden = !ok; if(ok) n++; });
-        g.hidden = !n; if(n) any = true; });
-      ov.querySelector('.pp-empty').hidden = any;
-    };
-    ov.querySelector('#pp-q').addEventListener('input', apply);
+    document.getElementById('overlay').classList.add('tall');
     const r = await pr;
     if(!r || !PROD(r.v)) return;
     setProduct(o, it, r.v); render();
@@ -2419,6 +2425,7 @@ document.addEventListener('click', async e => {
 
 document.addEventListener('input', e => {
   if(e.target.matches('[data-search]')){ S.q = e.target.value; render(); }
+  if(e.target.matches('.qv input')) fitQty(e.target);
   // máscara de dinheiro no preço praticado: os dígitos entram pela direita (3250 → 32,50)
   if(e.target.matches('[data-f="price"]')){
     const digits = e.target.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
