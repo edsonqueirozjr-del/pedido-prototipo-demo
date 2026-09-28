@@ -444,11 +444,11 @@ html.lockscroll main{padding-bottom:12px}
 .ct-acts{display:flex;gap:8px}
 .ct-acts .btn{flex:1;text-decoration:none;color:inherit}
 .ct-acts .btn svg{width:18px;height:18px}
-.btn.wa{background:#25d366;border-color:#25d366;color:#fff}
+.btn.wa{background:#25d366;border-color:#25d366;color:#fff}  /* enviar: sempre o verde e o símbolo do WhatsApp */
 .send-opts{display:flex;flex-direction:column;gap:8px}
 .send-opts .btn{min-height:48px}
 .wa-msg{min-height:300px;font:14.5px/1.45 inherit;white-space:pre-wrap}
-.wa-other{margin-top:2px}
+.wa-other{margin-top:2px;background:#25d366;border-color:#25d366;color:#fff}
 /* tela de escolha do produto */
 #overlay.tall .dlg{height:88vh;display:flex;flex-direction:column}
 #overlay.tall .dlg-body{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -1634,7 +1634,7 @@ function viewDone(){
       <div class="done-tot"><span>${t('order_total')}</span><b>${fmtMoney(c.total, o.currency)}</b></div>
       <dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
     </section>
-    <button class="btn info block done-btn" data-a="send-order">${IC.send}${t('send_order')}</button>
+    <button class="btn wa block done-btn" data-a="send-order">${IC.wa}${t('send_order')}</button>
     <button class="btn pdf block done-btn" data-a="gen-pdf">${IC.pdf}${t('gen_pdf')}</button>
     <button class="btn gray block done-btn" data-a="done-back">${IC.back}${t(S.doneKind === 'approved' ? 'back_appr' : 'back_orders')}</button>
   </div>`;
@@ -1804,7 +1804,7 @@ function viewEditor(){
 function actionBar(){
   // relatório: Voltar, baixar o PDF e Enviar (imprimir fica no topo)
   if(S.view === 'report') return `<div class="actionbar"><button class="btn ghost" data-a="rpt-back">${IC.back}${t('back')}</button>
-    ${CAN_PRINT ? `<button class="btn pdf" data-a="rpt-pdf">${IC.download}PDF</button>` : ''}<button class="btn info" data-a="rpt-share">${IC.send}${t('send_btn')}</button></div>`;
+    ${CAN_PRINT ? `<button class="btn pdf" data-a="rpt-pdf">${IC.download}PDF</button>` : ''}<button class="btn wa" data-a="rpt-share">${IC.wa}${t('send_btn')}</button></div>`;
   // Cabeçalho: arrastar para a direita = Próximo; Produtos: esquerda = Voltar, direita = Próximo
   // Próximo só aparece quando a etapa está completa
   // Voltar sempre; Próximo/Finalizar só com a etapa completa; no Fechamento o disquete (Salvar) fica no meio
@@ -1839,7 +1839,7 @@ function actionBar(){
       <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
-    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn info" data-a="share">${IC.send}${t('send_btn')}</button>
+    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn wa" data-a="share">${IC.wa}${t('send_btn')}</button>
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
   return '';
@@ -2988,8 +2988,8 @@ async function sendMenu(o, withGen){
   if(!o) return;
   if(CAN_PRINT) loadPdfLib().catch(() => {});   // já vai carregando, para o PDF sair na hora
   const body = `<div class="send-opts">${withGen ? `<button type="button" class="btn pdf block" data-m="gen">${IC.pdf}${t('gen_pdf')}</button>` : ''}
-    <button type="button" class="btn block info" data-m="pdf">${IC.send}${t('send_pdf')}</button>
-    <button type="button" class="btn block wa" data-m="wa">${IC.chat}${t('send_wa')}</button></div>`;
+    <button type="button" class="btn block wa" data-m="pdf">${IC.wa}${t('send_pdf')}</button>
+    <button type="button" class="btn block wa" data-m="wa">${IC.wa}${t('send_wa')}</button></div>`;
   const r = await modal({title: withGen ? t('order_n', o.number) : t('send_how'), body, buttons: [BACK_BTN()]}), v = r && r.v;
   if(v === 'gen') return openReport(o);
   if(v !== 'pdf' && v !== 'wa') return;
@@ -3001,14 +3001,14 @@ async function pdfMenu(o){
   if(!o) return;
   if(CAN_PRINT) loadPdfLib().catch(() => {});
   const body = `<div class="send-opts"><button type="button" class="btn pdf block" data-m="gen">${IC.pdf}${t('gen_pdf')}</button>
-    <button type="button" class="btn info block" data-m="pdf">${IC.send}${t('send_pdf')}</button></div>`;
+    <button type="button" class="btn wa block" data-m="pdf">${IC.wa}${t('send_pdf')}</button></div>`;
   const r = await modal({title: t('order_n', o.number), body, buttons: [BACK_BTN()]}), v = r && r.v;
   if(v === 'gen') openReport(o); else if(v === 'pdf' && await okToSend(o)) sendPdf(o);
 }
 // antes de enviar um pedido que ainda não foi aprovado: "Este pedido ainda não foi aprovado. Enviar mesmo assim?"
 async function okToSend(o){
   if(!o || o.status === 'aprovado') return !!o;
-  return await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'info', icon: IC.send}]) === 'yes';
+  return await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'wa', icon: IC.wa}]) === 'yes';
 }
 // enviar o relatório em PDF: menu de compartilhar do celular (WhatsApp, e-mail…); sem ele (computador), baixa o arquivo
 async function sendPdf(o){
@@ -3061,8 +3061,8 @@ function waEdit(o){
     <div class="ct-list">${cts.map(x => `<div class="ct">
       <div class="ct-who"><b>${esc(x.label)}</b>${x.id === o.contact ? `<span class="chip st-aprovado">${t('order_contact')}</span>` : ''}</div>
       <div class="ct-lines"><span>${IC.phone}${x.phone}</span></div>
-      <div class="ct-acts"><button type="button" class="btn wa" data-wa="${x.wa}">${IC.chat}WhatsApp</button></div></div>`).join('')}
-      <button type="button" class="btn block wa-other" data-wa="">${IC.chat}${t('wa_other')}</button></div>`;
+      <div class="ct-acts"><button type="button" class="btn wa" data-wa="${x.wa}">${IC.wa}WhatsApp</button></div></div>`).join('')}
+      <button type="button" class="btn block wa-other" data-wa="">${IC.wa}${t('wa_other')}</button></div>`;
   modal({title: t('wa_msg'), sheet: true, body});
   const ov = document.getElementById('overlay');
   ov.addEventListener('click', e => { const b = e.target.closest('[data-wa]'); if(!b) return;
