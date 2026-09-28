@@ -1893,7 +1893,8 @@ function modal({title, titleHtml = '', body = '', buttons = [], sheet = false}){
     const first = ov.querySelector('#m-note'); if(first) setTimeout(() => first.focus(), 50);
   });
 }
-async function ask(title, msg, buttons){ const r = await modal({title, body: msg ? `<p>${esc(msg)}</p>` : '', buttons}); return r && r.v; }
+// perguntas de confirmação: só o título e os botões (sem texto explicativo embaixo)
+async function ask(title, msg, buttons){ const r = await modal({title, body: '', buttons}); return r && r.v; }
 const BACK_BTN = () => ({label: t('back'), value: 'no'});
 let toastTimer;
 function toast(msg, kind = ''){
