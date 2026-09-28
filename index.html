@@ -65,13 +65,21 @@ main{padding:12px 16px 132px}
 .page-head .grow{margin-left:auto}
 .page-head.center{justify-content:center}
 .edhead{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 14px;padding:10px 16px 10px;border-bottom:1px solid var(--border)}
-.ed-title{display:grid;grid-template-columns:40px 1fr 40px;margin:0}
+.ed-title{display:grid;grid-template-columns:72px 1fr 72px;margin:0}
+.ed-title .back{justify-self:start}
+.ed-title > span:last-child,.ed-title > .icon-btn:last-child{justify-self:end}
+.top-acts{display:flex;align-items:center;gap:0}
+.top-acts .icon-btn{width:36px}
+.icon-btn.wa-ic{color:#25d366}
 .ed-title h1{text-align:center}
 .edhead .totbar{margin-top:10px}
 .edhead .ed-mov{margin:10px 0 0}
 .det-top{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 12px;padding:6px 16px 12px}
 .det-top .page-head{margin-bottom:10px;gap:6px}
 .det-top .page-head h1{white-space:nowrap;font-size:18px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.det-top .top-acts{margin-right:-2px}
+.det-top .top-acts .icon-btn{width:30px}
+.det-top .top-acts .icon-btn svg{width:21px;height:21px}
 .det-top .page-head .grow .chip{font-size:13px;padding:0 9px}  /* nº do pedido numa linha só, mesmo com o ícone PDF */
 .det-top .page-head .icon-btn:not(.back){margin-right:-6px}
 .totstick{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + var(--edh,0px) - 1px);z-index:7;background:var(--bg);margin:-12px -16px 0;padding:12px 16px 12px}
@@ -222,10 +230,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .actionbar .btn[data-a=prev] svg,.actionbar .btn[data-a=next] svg{stroke-width:2.4}
 .actionbar .btn.icon{flex:0 0 46px}
 /* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
-.btn.edit-sq{background:var(--fix-soft);border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: cor da correção */
+.btn.edit-sq{background:transparent;border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: só o lápis (cor da correção), sem fundo */
 .actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
 .actionbar.appr4 .btn svg{width:18px;height:18px}
-.actionbar.appr4 .btn.icon svg{width:21px;height:21px}
+.actionbar.appr4 .btn.icon svg{width:27px;height:27px}
 .actionbar .savebtn{flex:0 0 52px;color:var(--primary);border:0;background:none;box-shadow:none}  /* só o disquete, sem contorno */
 .actionbar .savebtn svg{width:32px;height:32px;stroke-width:1.8}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:560px;z-index:14;display:flex;background:var(--surface);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom)}
@@ -1648,7 +1656,7 @@ function viewDetail(){
   // em aprovação, o histórico vem antes dos dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
-  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button>` : ''}</div>
+  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>` : ''}</div>
     <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
@@ -1790,7 +1798,7 @@ function viewEditor(){
   const o = S.draft;
   // ícone PDF (relatório) só aparece com o pedido completo — tudo o que o PDF usa preenchido
   // fixo no topo: "Pedido nº X" e, no Cabeçalho, a data movimento + situação (nas outras etapas, o valor total); as etapas rolam com a tela
-  return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1>${validate(o).length ? '<span></span>' : `<button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button>`}</div>
+  return `<div class="edhead" id="edhead"><div class="page-head ed-title"><button class="icon-btn back" data-a="prev" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1>${validate(o).length ? '<span></span>' : `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>`}</div>
     ${S.step === 1 ? `<div class="card ed-mov"><div class="kv3 solo two"><div class="kv-left"><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div></div>` : ''}
 </div>
     <nav class="steps">${[1,2,3].map(n => `<div class="st ${S.step === n ? 'on' : S.step > n ? 'done' : ''}" aria-current="${S.step === n ? 'step' : 'false'}">
@@ -2483,6 +2491,8 @@ const ACT = {
   pdf: () => openReport(ORDER(S.orderId)),
   // relatório do pedido: abre a tela com as páginas; de lá imprime, baixa o PDF ou envia
   'rpt-open': () => openReport(S.view === 'editor' ? S.draft : ORDER(S.orderId)),
+  // WhatsApp do topo (ao lado do PDF): mensagem editável e escolha do contato
+  'top-wa': async () => { const o = S.view === 'editor' ? S.draft : ORDER(S.orderId); if(o && await okToSend(o)) waEdit(o); },
   'rpt-back': () => { const b = S.rpt?.back || S.listView || 'list'; S.rpt = null; S.view = b; render(); window.scrollTo(0, 0); },
   'rpt-print': () => { const r = S.rpt; if(!r) return;
     document.getElementById('print').innerHTML = r.svgs.map(x => `<div class="rpt-pp">${x}</div>`).join(''); window.print(); },
