@@ -335,14 +335,14 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-kv dd{margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ocard{position:relative}
 /* enviar: só o símbolo, no canto de baixo à direita, à mesma distância da borda que a etiqueta tem do topo */
-/* canto de baixo do cartão: PDF (vermelho) e enviar (azul), juntos — mesmos ícones (traço) do resto do app */
+/* canto de baixo do cartão: PDF (vermelho) e WhatsApp (verde), juntos — mesmo traço dos ícones do app */
 .oc-acts{position:absolute;right:13px;bottom:13px;display:flex;align-items:center;gap:8px}
 .oc-pdf{position:relative;width:24px;height:24px;color:var(--bad);display:grid;place-items:center;cursor:pointer}  /* relatório (PDF): vermelho */
 .oc-pdf::before{content:"";position:absolute;inset:-6px -4px -6px -8px}
 .oc-pdf svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.oc-send{position:relative;width:24px;height:24px;color:var(--info);display:grid;place-items:center;cursor:pointer}  /* enviar: azul */
-.oc-send::before{content:"";position:absolute;inset:-6px -8px -6px -4px}  /* área de toque maior */
-.oc-send svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.oc-wa{position:relative;width:24px;height:24px;color:#25d366;display:grid;place-items:center;cursor:pointer}  /* WhatsApp: verde */
+.oc-wa::before{content:"";position:absolute;inset:-6px -8px -6px -4px}  /* área de toque maior */
+.oc-wa svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ocard .oc-kv > div:last-child{padding-right:64px}  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -1026,6 +1026,7 @@ const IC = {
   printer:'<svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg>',
   download:'<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>',
   pdf:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="17.8" text-anchor="middle" font-size="6.8" font-weight="800" font-family="Arial,Helvetica,sans-serif" fill="currentColor" stroke="none" letter-spacing="-.2">PDF</text></svg>',
+  wa:'<svg viewBox="0 0 24 24"><path d="M3.5 20.5 4.8 16.3A8.5 8.5 0 1 1 8 19.3Z"/><path fill="currentColor" stroke="none" d="M9.2 7.9c.3-.3.8-.3 1 .1l.9 1.7c.2.3.1.7-.2.9l-.6.5c.6 1.3 1.6 2.3 2.9 2.9l.5-.6c.2-.3.6-.4.9-.2l1.7.9c.4.2.4.7.1 1l-.6.7c-.6.6-1.6.7-2.5.3-2.2-1-4-2.8-5-5-.4-.9-.3-1.9.3-2.5Z"/></svg>',
   x:'<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   edit:'<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
   alert:'<svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>'
@@ -1457,7 +1458,7 @@ function orderCard(o, showMargin, inAppr = false){
         <div><dt>${t('neg_type')}:</dt> <dd>${t('neg_'+o.negType)}</dd></div>
         <div><dt>${t('safra')}:</dt> <dd>${esc(SAFRA(o.safraId)?.name || '—')}</dd></div>
         <div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(c.total, o.currency)}</dd></div>
-      </dl>${inAppr ? '' : `<span class="oc-acts"><span class="oc-pdf" role="button" tabindex="0" data-a="card-pdf" data-id="${o.id}" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</span><span class="oc-send" role="button" tabindex="0" data-a="card-share" data-id="${o.id}" aria-label="${t('send_btn')}" title="${t('send_btn')}">${IC.send}</span></span>`}</div>`;
+      </dl>${inAppr ? '' : `<span class="oc-acts"><span class="oc-pdf" role="button" tabindex="0" data-a="card-pdf" data-id="${o.id}" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</span><span class="oc-wa" role="button" tabindex="0" data-a="card-wa" data-id="${o.id}" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</span></span>`}</div>`;
   return `<button class="card ocard" data-a="open" data-id="${o.id}"><div class="oc-wrap">${main}</div></button>`;
 }
 // filtro avançado
@@ -2484,9 +2485,9 @@ const ACT = {
     o.status = 'aberto'; addHist(o, 'reopened'); persist(); toast(t('t_reopened'), 'ok'); openOrder(o.id);
   },
   // botão do cartão da lista: enviar/compartilhar o pedido
-  // cartão da lista: ícone PDF abre o relatório; ícone de enviar: Enviar PDF · Enviar no WhatsApp
-  'card-pdf': b => openReport(ORDER(b.dataset.id)),
-  'card-share': b => sendMenu(ORDER(b.dataset.id), false),
+  // cartão da lista: ícone PDF pergunta Gerar PDF ou Enviar PDF; ícone do WhatsApp abre a mensagem (pedido não aprovado confirma antes)
+  'card-pdf': b => pdfMenu(ORDER(b.dataset.id)),
+  'card-wa': async b => { const o = ORDER(b.dataset.id); if(o && await okToSend(o)) waEdit(o); },
   // enviar pedido: escolhe PDF ou WhatsApp; pedido ainda não aprovado pede confirmação antes
   'send-order': () => sendMenu(ORDER(S.orderId), false),
   // gerar PDF: abre o relatório (de lá baixa, imprime ou envia)
@@ -2982,6 +2983,15 @@ async function sendMenu(o, withGen){
   if(v !== 'pdf' && v !== 'wa') return;
   if(!(await okToSend(o))) return;
   if(v === 'pdf') sendPdf(o); else waEdit(o);
+}
+// PDF do cartão: Gerar PDF (abre o relatório) ou Enviar PDF
+async function pdfMenu(o){
+  if(!o) return;
+  if(CAN_PRINT) loadPdfLib().catch(() => {});
+  const body = `<div class="send-opts"><button type="button" class="btn pdf block" data-m="gen">${IC.pdf}${t('gen_pdf')}</button>
+    <button type="button" class="btn info block" data-m="pdf">${IC.send}${t('send_pdf')}</button></div>`;
+  const r = await modal({title: t('order_n', o.number), body, buttons: [BACK_BTN()]}), v = r && r.v;
+  if(v === 'gen') openReport(o); else if(v === 'pdf' && await okToSend(o)) sendPdf(o);
 }
 // antes de enviar um pedido que ainda não foi aprovado: "Este pedido ainda não foi aprovado. Enviar mesmo assim?"
 async function okToSend(o){
