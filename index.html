@@ -568,6 +568,7 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 /* aprovação */
 .aitem{border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px}
 /* produto aberto: faixa cinza no título */
+.aitem.open.ap .ahead{margin:-6px -6px 12px;border-radius:8px}  /* aprovação: faixa cinza com borda branca em volta */
 .aitem.open .ahead{background:var(--gray-soft);margin:-12px -12px 12px;padding:10px 12px;border-radius:11px 11px 0 0}
 .card.item:not(.closed) .item-head{background:var(--gray-soft);margin:-14px -14px 12px;padding:8px 10px 8px 14px;border-radius:calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0}
 .aitem .name{font-weight:700}
@@ -1408,7 +1409,7 @@ function itemsHtml(o, appr){
       </div>` : ''); })()}</div>`;
     }
     if(!S.openA[it.id]) return `<div class="aitem ${low ? 'low' : ''}">${head}</div>`;
-    return `<div class="aitem open ${low ? 'low' : ''}">${head}
+    return `<div class="aitem open ap ${low ? 'low' : ''}">${head}
       <div class="metrics soft strong">
         <div><span>${t('cost')}</span><b>${fmtMoney(ic.cost, o.currency)}</b></div>
         <div><span>${t('practiced')}</span><b>${fmtMoney(ic.price, o.currency)}</b></div>
