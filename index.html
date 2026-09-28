@@ -318,10 +318,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .st.done .dot{background:var(--primary-soft);border-color:var(--primary);color:var(--primary)}
 .st:focus-visible{outline:none} .st:focus-visible .dot{box-shadow:0 0 0 4px var(--primary-soft),0 0 0 6px var(--primary)}
 .step-body{touch-action:pan-y;will-change:transform}
-.step-body.in-next{animation:inNext .28s cubic-bezier(.2,.8,.2,1)}
-.step-body.in-prev{animation:inPrev .28s cubic-bezier(.2,.8,.2,1)}
-@keyframes inNext{from{transform:translateX(36px);opacity:.3}to{transform:none;opacity:1}}
-@keyframes inPrev{from{transform:translateX(-36px);opacity:.3}to{transform:none;opacity:1}}
+.step-body.in-next{animation:inNext .2s ease-out}  /* troca de etapa suave (sem tranco) */
+.step-body.in-prev{animation:inPrev .2s ease-out}
+@keyframes inNext{from{transform:translateX(10px);opacity:.7}to{transform:none;opacity:1}}
+@keyframes inPrev{from{transform:translateX(-10px);opacity:.7}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.step-body.in-next,.step-body.in-prev{animation:none}.st::before,.st .dot{transition:none}}
 .totbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:0 6px 18px rgba(0,0,0,.06);font-variant-numeric:tabular-nums}
 .totfree{margin:0 0 12px}
