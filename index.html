@@ -86,6 +86,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .kv3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border);text-align:center}
 .kv3.solo{margin:0;padding:0;border:0}
 .kv3.two{grid-template-columns:1fr 1fr}
+.kv3 > div.kv-left{align-items:flex-start;text-align:left}  /* data movimento alinhada à esquerda */
 .page-head .grow .chip{font-size:14px;height:26px;padding:0 11px;border-radius:13px}  /* etiqueta do título 2px maior */
 .kv3 > div.st-only{justify-content:center;align-self:center}  /* só a etiqueta, centralizada na altura */
 .kv3 .chip{font-size:15px;font-weight:600;height:26px;padding:0 12px;border-radius:13px}  /* etiqueta com fonte normal, mesmo formato */
@@ -1495,11 +1496,11 @@ function creditCard(o){
 function step1(){
   const o = S.draft;
   return `<section class="card">
-    <div class="kv3 solo two"><div><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div>
+    <div class="kv3 solo two"><div class="kv-left"><span>${t('mov_date')}</span><b>${movDT(o)}</b></div><div class="st-only">${chip(o.status)}</div></div>
   </section>
   <section class="card">
-    ${field(t('seller'), `<div class="locked-in"><input id="f-seller" type="text" value="${esc(SELLER(o.sellerId).name)}" disabled>${IC.lock}</div>`, 'f-seller')}
-    ${field(t('unit'), `<select id="f-unit" data-f="unit">${opts(UNITS, o.unit, u => u.name, false)}</select>`, 'f-unit')}
+    ${field(t('seller'), `<input id="f-seller" type="text" value="${esc(SELLER(o.sellerId).name)}" disabled>`, 'f-seller')}
+    ${field(t('unit'), `<input id="f-unit" type="text" value="${esc(UNIT(o.unit)?.name || '')}" disabled>`, 'f-unit')}
   </section>
   <section class="card">
     ${field(t('client'), `<select id="f-client" data-f="clientId">${opts(CLIENTS, o.clientId)}</select>`, 'f-client')}
