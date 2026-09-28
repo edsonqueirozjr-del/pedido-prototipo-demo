@@ -69,7 +69,8 @@ main{padding:12px 16px 132px}
 .ed-title .back{justify-self:start}
 .ed-title > span:last-child,.ed-title > .icon-btn:last-child{justify-self:end}
 .top-acts{display:flex;align-items:center;gap:0}
-.top-acts .icon-btn{width:36px}
+.top-acts .icon-btn{width:38px}
+.top-acts .icon-btn svg{width:25px;height:25px}
 .icon-btn.wa-ic{color:#25d366}
 .ed-title h1{text-align:center}
 .edhead .totbar{margin-top:10px}
@@ -78,8 +79,8 @@ main{padding:12px 16px 132px}
 .det-top .page-head{margin-bottom:10px;gap:6px}
 .det-top .page-head h1{white-space:nowrap;font-size:18px;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .det-top .top-acts{margin-right:-2px}
-.det-top .top-acts .icon-btn{width:30px}
-.det-top .top-acts .icon-btn svg{width:21px;height:21px}
+.det-top .top-acts .icon-btn{width:31px}
+.det-top .top-acts .icon-btn svg{width:24px;height:24px}
 .det-top .page-head .grow .chip{font-size:13px;padding:0 9px}  /* nº do pedido numa linha só, mesmo com o ícone PDF */
 .det-top .page-head .icon-btn:not(.back){margin-right:-6px}
 .totstick{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px) + var(--edh,0px) - 1px);z-index:7;background:var(--bg);margin:-12px -16px 0;padding:12px 16px 12px}
@@ -229,6 +230,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .actionbar .btn svg{width:20px;height:20px;flex:none}
 .actionbar .btn[data-a=prev] svg,.actionbar .btn[data-a=next] svg{stroke-width:2.4}
 .actionbar .btn.icon{flex:0 0 46px}
+.actionbar.row4 .btn:not(.icon){font-size:14.5px;gap:4px;padding:0 4px;min-width:0}
+.actionbar.row4 .btn svg{width:19px;height:19px}
 /* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
 .btn.edit-sq{background:transparent;border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: só o lápis (cor da correção), sem fundo */
 .actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
@@ -345,13 +348,13 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 /* enviar: só o símbolo, no canto de baixo à direita, à mesma distância da borda que a etiqueta tem do topo */
 /* canto de baixo do cartão: PDF (vermelho) e WhatsApp (verde), juntos — mesmo traço dos ícones do app */
 .oc-acts{position:absolute;right:13px;bottom:13px;display:flex;align-items:center;gap:8px}
-.oc-pdf{position:relative;width:24px;height:24px;color:var(--bad);display:grid;place-items:center;cursor:pointer}  /* relatório (PDF): vermelho */
+.oc-pdf{position:relative;width:28px;height:28px;color:var(--bad);display:grid;place-items:center;cursor:pointer}  /* relatório (PDF): vermelho */
 .oc-pdf::before{content:"";position:absolute;inset:-6px -4px -6px -8px}
-.oc-pdf svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.oc-wa{position:relative;width:24px;height:24px;color:#25d366;display:grid;place-items:center;cursor:pointer}  /* WhatsApp: verde */
+.oc-pdf svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.oc-wa{position:relative;width:28px;height:28px;color:#25d366;display:grid;place-items:center;cursor:pointer}  /* WhatsApp: verde */
 .oc-wa::before{content:"";position:absolute;inset:-6px -8px -6px -4px}  /* área de toque maior */
-.oc-wa svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ocard .oc-kv > div:last-child{padding-right:64px}  /* o valor não passa por baixo do PDF e do enviar */
+.oc-wa svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ocard .oc-kv > div:last-child{padding-right:72px}  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .st-ico.sm{width:32px;height:32px;border-radius:9px;margin:-2px 0 0 8px}  /* na linha do nome, à direita */
@@ -1847,7 +1850,8 @@ function actionBar(){
       <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
       <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
-    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn wa" data-a="share">${IC.wa}${t('send_btn')}</button>
+    // pedido fechado: dois "Enviar" — um com o ícone PDF (vermelho), outro com o do WhatsApp (verde)
+    return `<div class="actionbar row4"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}">${IC.pdf}${t('send_btn')}</button><button class="btn wa" data-a="send-wa-o" aria-label="${t('send_wa')}">${IC.wa}${t('send_btn')}</button>
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
   return '';
@@ -2515,8 +2519,9 @@ const ACT = {
   // gerar PDF: abre o relatório (de lá baixa, imprime ou envia)
   'gen-pdf': () => openReport(ORDER(S.orderId)),
   // Enviar (pedido aberto e relatório): o PDF
-  // Enviar do pedido aberto: mesmo menu do cartão (Gerar PDF · Enviar PDF · Enviar no WhatsApp)
-  share: () => sendMenu(ORDER(S.orderId), true),
+  // pedido fechado: Enviar PDF e WhatsApp direto (pedido não aprovado confirma antes)
+  'send-pdf-o': async () => { const o = ORDER(S.orderId); if(o && await okToSend(o)) sendPdf(o); },
+  'send-wa-o': async () => { const o = ORDER(S.orderId); if(o && await okToSend(o)) waEdit(o); },
   'notif-open': async b => {
     if(closeOverlay) closeOverlay();
     if(!(await leaveEditor())) return;
