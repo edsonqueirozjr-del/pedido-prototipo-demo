@@ -427,6 +427,10 @@ html.lockscroll main{padding-bottom:12px}
 .ct-acts .btn{flex:1;text-decoration:none;color:inherit}
 .ct-acts .btn svg{width:18px;height:18px}
 .btn.wa{background:#25d366;border-color:#25d366;color:#fff}
+.send-opts{display:flex;flex-direction:column;gap:8px}
+.send-opts .btn{min-height:48px}
+.wa-msg{min-height:300px;font:14.5px/1.45 inherit;white-space:pre-wrap}
+.wa-other{margin-top:2px}
 /* tela de escolha do produto */
 #overlay.tall .dlg{height:88vh;display:flex;flex-direction:column}
 #overlay.tall .dlg-body{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -883,7 +887,7 @@ pt:{
   doc_type:'Documento de cobrança', doc_transf:'Transferência', doc_pix:'PIX', doc_boleto:'Boleto',
   delivery_place:'Local de entrega',
   summary:'Resumo', products:'Produtos', order_total:'Valor total', cancel:'Cancelar', save:'Salvar', finalize:'Finalizar',
-  next:'Próximo', back:'Voltar', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Fechar', clear:'Limpar', available:'Disponível', sign_collect:'Coletar assinatura', sign_title:'Assinatura do cliente', sign_hint:'Peça ao cliente para assinar na área abaixo com a caneta do celular.', sign_clear:'Limpar', sign_redo:'Refazer', sign_remove:'Remover', sign_saved:'Assinatura salva', sign_empty:'Assine antes de confirmar', signed_at:'Assinado em', h_signed:'Assinatura coletada', delivery_data:'Dados de entrega', note_prod:'Observação do produto', note_deliv:'Observação da entrega', billing_place:'Local de cobrança', g_order:'Pedido', g_neg:'Negociação', g_places:'Locais', hint_disc:'Desconto em relação ao preço tabela', hint_margin:'Margem do produto', contact:'Contato', price_hist:'Histórico de preço', no_price_hist:'Nenhum pedido aprovado deste produto para este cliente, projeto e moeda.', remove_location:'Remover localização', location_removed:'Localização removida', pdf_making:'Gerando PDF…', pdf_fail:'Não foi possível gerar o PDF', pick_on_map:'Escolher no mapa', tap_map:'Toque no mapa para marcar', map_hint3:'Use sua localização, escolha no mapa ou cole as coordenadas.', map_off:'Mapa indisponível', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidade', c_send_unappr:'Este pedido ainda não foi aprovado. Enviar mesmo assim?', sh_waiting:'aguardando aprovação', rp_title:'Pedido de venda', rp_no:'Nº', rp_issued:'Emissão', rp_client:'Dados do cliente', rp_delivery:'Dados de entrega', rp_items:'Produtos', rp_code:'Código', rp_desc:'Descrição do produto', rp_qty:'Quantidade', rp_unit_price:'Preço unitário', rp_total_price:'Preço total', rp_pay:'Condição de pagamento', rp_dues:'Vencimentos', rp_term:'Prazo', rp_date:'Data', rp_value:'Valor', rp_days:'{0} dias', rp_no_due:'Bonificação — sem vencimento', rp_no_due_s:'Sem vencimento', rp_bill_both:'Local de faturamento e cobrança', rp_list_value:'Valor de tabela', rp_discount:'Desconto', rp_total:'Valor total do pedido', rp_terms:'Observações / Condições gerais de venda', rp_note:'Observação do pedido', rp_freight:'Tipo de frete', rp_branch:'Filial', rp_forecast:'Previsão de entrega', rp_state:'Estado (UF)', rp_address:'Endereço', rp_district:'Bairro', rp_city:'Cidade', rp_deliv:'Entrega', rp_sign_client:'Assinatura do cliente', rp_seller:'Gestor de Venda', rp_page:'Página {0} de {1}', rp_view:'Relatório do pedido', rp_print:'Imprimir', af_marg:'Margem', af_disc:'Desconto', af_cmp:'Comparação', switch_user:'Trocar usuário', location:'Localização de entrega', coords:'Coordenadas', my_location:'Minha localização', open_map:'Abrir no mapa', map_hint:'Toque no mapa para marcar. Arraste o pino para ajustar.', map_hint_link:'Cole as coordenadas ou um link do Google Maps.', geo_off:'Localização indisponível', coords_invalid:'Coordenadas inválidas', location_saved:'Localização salva',
+  next:'Próximo', back:'Voltar', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Fechar', clear:'Limpar', available:'Disponível', sign_collect:'Coletar assinatura', sign_title:'Assinatura do cliente', sign_hint:'Peça ao cliente para assinar na área abaixo com a caneta do celular.', sign_clear:'Limpar', sign_redo:'Refazer', sign_remove:'Remover', sign_saved:'Assinatura salva', sign_empty:'Assine antes de confirmar', signed_at:'Assinado em', h_signed:'Assinatura coletada', delivery_data:'Dados de entrega', note_prod:'Observação do produto', note_deliv:'Observação da entrega', billing_place:'Local de cobrança', g_order:'Pedido', g_neg:'Negociação', g_places:'Locais', hint_disc:'Desconto em relação ao preço tabela', hint_margin:'Margem do produto', contact:'Contato', price_hist:'Histórico de preço', no_price_hist:'Nenhum pedido aprovado deste produto para este cliente, projeto e moeda.', remove_location:'Remover localização', location_removed:'Localização removida', pdf_making:'Gerando PDF…', pdf_fail:'Não foi possível gerar o PDF', pick_on_map:'Escolher no mapa', tap_map:'Toque no mapa para marcar', map_hint3:'Use sua localização, escolha no mapa ou cole as coordenadas.', map_off:'Mapa indisponível', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidade', send_order:'Enviar pedido', gen_pdf:'Gerar PDF', send_pdf:'Enviar PDF', send_wa:'Enviar no WhatsApp', send_how:'Enviar pedido como?', c_send_unappr:'Este pedido ainda não foi aprovado. Enviar mesmo assim?', wa_msg:'Mensagem do WhatsApp', wa_to:'Enviar para', wa_other:'Outro contato', rp_title:'Pedido de venda', rp_no:'Nº', rp_issued:'Emissão', rp_client:'Dados do cliente', rp_delivery:'Dados de entrega', rp_items:'Produtos', rp_code:'Código', rp_desc:'Descrição do produto', rp_qty:'Quantidade', rp_unit_price:'Preço unitário', rp_total_price:'Preço total', rp_pay:'Condição de pagamento', rp_dues:'Vencimentos', rp_term:'Prazo', rp_date:'Data', rp_value:'Valor', rp_days:'{0} dias', rp_no_due:'Bonificação — sem vencimento', rp_no_due_s:'Sem vencimento', rp_bill_both:'Local de faturamento e cobrança', rp_list_value:'Valor de tabela', rp_discount:'Desconto', rp_total:'Valor total do pedido', rp_terms:'Observações / Condições gerais de venda', rp_note:'Observação do pedido', rp_freight:'Tipo de frete', rp_branch:'Filial', rp_forecast:'Previsão de entrega', rp_state:'Estado (UF)', rp_address:'Endereço', rp_district:'Bairro', rp_city:'Cidade', rp_deliv:'Entrega', rp_sign_client:'Assinatura do cliente', rp_seller:'Gestor de Venda', rp_page:'Página {0} de {1}', rp_view:'Relatório do pedido', rp_print:'Imprimir', af_marg:'Margem', af_disc:'Desconto', af_cmp:'Comparação', switch_user:'Trocar usuário', location:'Localização de entrega', coords:'Coordenadas', my_location:'Minha localização', open_map:'Abrir no mapa', map_hint:'Toque no mapa para marcar. Arraste o pino para ajustar.', map_hint_link:'Cole as coordenadas ou um link do Google Maps.', geo_off:'Localização indisponível', coords_invalid:'Coordenadas inválidas', location_saved:'Localização salva',
   margin:'Margem', discount:'Desconto', cost:'Custo', practiced:'Preço praticado', tprice:'Preço tabela', total_cost:'Custo total',
   low_margin:'Margem abaixo do mínimo', order_margin:'Margem do pedido', order_discount:'Desconto do pedido', disc_total:'Desconto total', disc_pct:'Percentual desconto',
   sem_good:'Boa', sem_mid:'Razoável', sem_bad:'Ruim', approve:'Aprovar', reject:'Reprovar', request_fix:'Correção',
@@ -930,7 +934,7 @@ es:{
   doc_type:'Documento de cobro', doc_transf:'Transferencia', doc_pix:'PIX', doc_boleto:'Boleto',
   delivery_place:'Lugar de entrega',
   summary:'Resumen', products:'Productos', order_total:'Valor total', cancel:'Cancelar', save:'Guardar', finalize:'Finalizar',
-  next:'Siguiente', back:'Volver', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Cerrar', clear:'Borrar', available:'Disponible', sign_collect:'Recoger firma', sign_title:'Firma del cliente', sign_hint:'Pida al cliente que firme en el área de abajo con el lápiz del celular.', sign_clear:'Borrar', sign_redo:'Rehacer', sign_remove:'Quitar', sign_saved:'Firma guardada', sign_empty:'Firme antes de confirmar', signed_at:'Firmado el', h_signed:'Firma recogida', delivery_data:'Datos de entrega', note_prod:'Observación del producto', note_deliv:'Observación de la entrega', billing_place:'Lugar de cobro', g_order:'Pedido', g_neg:'Negociación', g_places:'Lugares', hint_disc:'Descuento respecto al precio de tabla', hint_margin:'Margen del producto', contact:'Contacto', price_hist:'Historial de precio', no_price_hist:'Ningún pedido aprobado de este producto para este cliente, proyecto y moneda.', remove_location:'Quitar ubicación', location_removed:'Ubicación eliminada', pdf_making:'Generando PDF…', pdf_fail:'No fue posible generar el PDF', pick_on_map:'Elegir en el mapa', tap_map:'Toque el mapa para marcar', map_hint3:'Use su ubicación, elija en el mapa o pegue las coordenadas.', map_off:'Mapa no disponible', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidad', c_send_unappr:'Este pedido aún no fue aprobado. ¿Enviar de todos modos?', sh_waiting:'esperando aprobación', rp_title:'Pedido de venta', rp_no:'Nº', rp_issued:'Emisión', rp_client:'Datos del cliente', rp_delivery:'Datos de entrega', rp_items:'Productos', rp_code:'Código', rp_desc:'Descripción del producto', rp_qty:'Cantidad', rp_unit_price:'Precio unitario', rp_total_price:'Precio total', rp_pay:'Condición de pago', rp_dues:'Vencimientos', rp_term:'Plazo', rp_date:'Fecha', rp_value:'Valor', rp_days:'{0} días', rp_no_due:'Bonificación — sin vencimiento', rp_no_due_s:'Sin vencimiento', rp_bill_both:'Lugar de facturación y cobro', rp_list_value:'Valor de lista', rp_discount:'Descuento', rp_total:'Valor total del pedido', rp_terms:'Observaciones / Condiciones generales de venta', rp_note:'Observación del pedido', rp_freight:'Tipo de flete', rp_branch:'Sucursal', rp_forecast:'Previsión de entrega', rp_state:'Departamento', rp_address:'Dirección', rp_district:'Barrio', rp_city:'Ciudad', rp_deliv:'Entrega', rp_sign_client:'Firma del cliente', rp_seller:'Gestor de Venta', rp_page:'Página {0} de {1}', rp_view:'Informe del pedido', rp_print:'Imprimir', af_marg:'Margen', af_disc:'Descuento', af_cmp:'Comparación', switch_user:'Cambiar usuario', location:'Ubicación de entrega', coords:'Coordenadas', my_location:'Mi ubicación', open_map:'Abrir en el mapa', map_hint:'Toque el mapa para marcar. Arrastre el pin para ajustar.', map_hint_link:'Pegue las coordenadas o un enlace de Google Maps.', geo_off:'Ubicación no disponible', coords_invalid:'Coordenadas inválidas', location_saved:'Ubicación guardada',
+  next:'Siguiente', back:'Volver', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Cerrar', clear:'Borrar', available:'Disponible', sign_collect:'Recoger firma', sign_title:'Firma del cliente', sign_hint:'Pida al cliente que firme en el área de abajo con el lápiz del celular.', sign_clear:'Borrar', sign_redo:'Rehacer', sign_remove:'Quitar', sign_saved:'Firma guardada', sign_empty:'Firme antes de confirmar', signed_at:'Firmado el', h_signed:'Firma recogida', delivery_data:'Datos de entrega', note_prod:'Observación del producto', note_deliv:'Observación de la entrega', billing_place:'Lugar de cobro', g_order:'Pedido', g_neg:'Negociación', g_places:'Lugares', hint_disc:'Descuento respecto al precio de tabla', hint_margin:'Margen del producto', contact:'Contacto', price_hist:'Historial de precio', no_price_hist:'Ningún pedido aprobado de este producto para este cliente, proyecto y moneda.', remove_location:'Quitar ubicación', location_removed:'Ubicación eliminada', pdf_making:'Generando PDF…', pdf_fail:'No fue posible generar el PDF', pick_on_map:'Elegir en el mapa', tap_map:'Toque el mapa para marcar', map_hint3:'Use su ubicación, elija en el mapa o pegue las coordenadas.', map_off:'Mapa no disponible', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidad', send_order:'Enviar pedido', gen_pdf:'Generar PDF', send_pdf:'Enviar PDF', send_wa:'Enviar por WhatsApp', send_how:'¿Enviar pedido como?', c_send_unappr:'Este pedido aún no fue aprobado. ¿Enviar de todos modos?', wa_msg:'Mensaje de WhatsApp', wa_to:'Enviar a', wa_other:'Otro contacto', rp_title:'Pedido de venta', rp_no:'Nº', rp_issued:'Emisión', rp_client:'Datos del cliente', rp_delivery:'Datos de entrega', rp_items:'Productos', rp_code:'Código', rp_desc:'Descripción del producto', rp_qty:'Cantidad', rp_unit_price:'Precio unitario', rp_total_price:'Precio total', rp_pay:'Condición de pago', rp_dues:'Vencimientos', rp_term:'Plazo', rp_date:'Fecha', rp_value:'Valor', rp_days:'{0} días', rp_no_due:'Bonificación — sin vencimiento', rp_no_due_s:'Sin vencimiento', rp_bill_both:'Lugar de facturación y cobro', rp_list_value:'Valor de lista', rp_discount:'Descuento', rp_total:'Valor total del pedido', rp_terms:'Observaciones / Condiciones generales de venta', rp_note:'Observación del pedido', rp_freight:'Tipo de flete', rp_branch:'Sucursal', rp_forecast:'Previsión de entrega', rp_state:'Departamento', rp_address:'Dirección', rp_district:'Barrio', rp_city:'Ciudad', rp_deliv:'Entrega', rp_sign_client:'Firma del cliente', rp_seller:'Gestor de Venta', rp_page:'Página {0} de {1}', rp_view:'Informe del pedido', rp_print:'Imprimir', af_marg:'Margen', af_disc:'Descuento', af_cmp:'Comparación', switch_user:'Cambiar usuario', location:'Ubicación de entrega', coords:'Coordenadas', my_location:'Mi ubicación', open_map:'Abrir en el mapa', map_hint:'Toque el mapa para marcar. Arrastre el pin para ajustar.', map_hint_link:'Pegue las coordenadas o un enlace de Google Maps.', geo_off:'Ubicación no disponible', coords_invalid:'Coordenadas inválidas', location_saved:'Ubicación guardada',
   margin:'Margen', discount:'Descuento', cost:'Costo', practiced:'Precio practicado', tprice:'Precio tabla', total_cost:'Costo total',
   low_margin:'Margen bajo el mínimo', order_margin:'Margen del pedido', order_discount:'Descuento del pedido', disc_total:'Descuento total', disc_pct:'Porcentaje de descuento',
   sem_good:'Buena', sem_mid:'Razonable', sem_bad:'Mala', approve:'Aprobar', reject:'Rechazar', request_fix:'Corrección',
@@ -1607,8 +1611,8 @@ function viewDone(){
       <div class="done-tot"><span>${t('order_total')}</span><b>${fmtMoney(c.total, o.currency)}</b></div>
       <dl class="kv">${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
     </section>
-    <button class="btn primary block done-btn" data-a="send-client">${IC.send}${t('send_client')}</button>
-    <button class="btn block done-btn" data-a="share-text">${IC.share}${t('share_order')}</button>
+    <button class="btn primary block done-btn" data-a="send-order">${IC.send}${t('send_order')}</button>
+    <button class="btn block done-btn" data-a="gen-pdf">${IC.file}${t('gen_pdf')}</button>
     <button class="btn block done-btn" data-a="done-back">${IC.back}${t(S.doneKind === 'approved' ? 'back_appr' : 'back_orders')}</button>
   </div>`;
 }
@@ -2436,7 +2440,7 @@ const ACT = {
     document.getElementById('print').innerHTML = r.svgs.map(x => `<div class="rpt-pp">${x}</div>`).join(''); window.print(); },
   'rpt-pdf': async () => { const r = S.rpt; if(!r) return; toast(t('pdf_making'));
     try{ (await rpPdf(r.pages, r.o)).save(rpName(r.o)); }catch(e){ toast(t('pdf_fail'), 'bad'); } },
-  'rpt-share': () => { if(S.rpt) sendPdf(S.rpt.o); },
+  'rpt-share': async () => { if(S.rpt && await okToSend(S.rpt.o)) sendPdf(S.rpt.o); },
   'done-back': () => go(S.listView || 'list'),
   // pedido bloqueado (em aprovação): o vendedor tira da aprovação e volta a editar
   reopen: async () => {
@@ -2445,17 +2449,14 @@ const ACT = {
     o.status = 'aberto'; addHist(o, 'reopened'); persist(); toast(t('t_reopened'), 'ok'); openOrder(o.id);
   },
   // botão do cartão da lista: enviar/compartilhar o pedido
-  'card-share': b => { if(ORDER(b.dataset.id)){ S.orderId = b.dataset.id; ACT.share(); } },
-  // enviar para o cliente: o relatório em PDF; pedido ainda não aprovado pede confirmação antes
-  'send-client': async () => {
-    const o = ORDER(S.orderId); if(!o) return;
-    if(o.status !== 'aprovado' && await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'primary', icon: IC.send}]) !== 'yes') return;
-    sendPdf(o);
-  },
-  // compartilhar pedido: resumo completo em texto, formatado para o WhatsApp (gestor ou cliente)
-  'share-text': () => shareText(ORDER(S.orderId)),
+  // ícone de enviar do cartão da lista: Gerar PDF · Enviar PDF · Enviar no WhatsApp
+  'card-share': b => sendMenu(ORDER(b.dataset.id), true),
+  // enviar pedido: escolhe PDF ou WhatsApp; pedido ainda não aprovado pede confirmação antes
+  'send-order': () => sendMenu(ORDER(S.orderId), false),
+  // gerar PDF: abre o relatório (de lá baixa, imprime ou envia)
+  'gen-pdf': () => openReport(ORDER(S.orderId)),
   // Enviar (pedido aberto e relatório): o PDF
-  share: () => sendPdf(ORDER(S.orderId)),
+  share: async () => { const o = ORDER(S.orderId); if(o && await okToSend(o)) sendPdf(o); },
   'notif-open': async b => {
     if(closeOverlay) closeOverlay();
     if(!(await leaveEditor())) return;
@@ -2468,26 +2469,25 @@ document.addEventListener('click', async e => {
   const b = e.target.closest('[data-a]'); if(!b) return;
   const fn = ACT[b.dataset.a]; if(fn){ e.preventDefault(); await fn(b); }
 });
-/* ---------- Segurar o pedido na lista = gerar PDF ---------- */
+/* ---------- Segurar o produto (digitação) = excluir ---------- */
 (function longPress(){
   let tm = null, fired = false, x0 = 0, y0 = 0;
   const cancel = () => { clearTimeout(tm); tm = null; };
   document.addEventListener('pointerdown', e => {
-    // lista: segurar o pedido abre o relatório; digitação (Produtos): segurar o produto pergunta se quer excluir
-    const card = e.target.closest('.ocard'), item = !card && S.view === 'editor' && e.target.closest('.card.item');
-    if(!card && !item) return;
-    if(item && e.target.closest('input,select,textarea,button:not(.item-head)')) return;
+    // digitação (Produtos): segurar o produto pergunta se quer excluir
+    const item = S.view === 'editor' && e.target.closest('.card.item');
+    if(!item) return;
+    if(e.target.closest('input,select,textarea,button:not(.item-head)')) return;
     fired = false; x0 = e.clientX; y0 = e.clientY; cancel();
     tm = setTimeout(() => { fired = true; tm = null; try{ navigator.vibrate && navigator.vibrate(25); }catch(_){}
-      if(card){ const o = ORDER(card.dataset.id); if(o) openReport(o); return; }
       const id = item.querySelector('.item-head')?.dataset.id, i = S.draft ? S.draft.items.findIndex(x => x.id === id) : -1;
       if(i >= 0) ACT['del-item']({dataset: {i: String(i)}}); }, 550);
   });
   document.addEventListener('pointermove', e => { if(tm && Math.hypot(e.clientX - x0, e.clientY - y0) > 10) cancel(); });
   document.addEventListener('pointerup', cancel); document.addEventListener('pointercancel', cancel);
-  // depois de segurar, o toque não abre o pedido
-  document.addEventListener('click', e => { if(fired && e.target.closest('.ocard,.card.item')){ e.stopPropagation(); e.preventDefault(); fired = false; } }, true);
-  document.addEventListener('contextmenu', e => { if(e.target.closest('.ocard,.card.item .item-head')) e.preventDefault(); });
+  // depois de segurar, o toque não abre/fecha o produto
+  document.addEventListener('click', e => { if(fired && e.target.closest('.card.item')){ e.stopPropagation(); e.preventDefault(); fired = false; } }, true);
+  document.addEventListener('contextmenu', e => { if(e.target.closest('.card.item .item-head')) e.preventDefault(); });
 })();
 
 /* ---------- Arrastar entre etapas ---------- */
@@ -2933,6 +2933,24 @@ function viewReport(){
     <div class="rpt-pages">${r.svgs.map((s, i) => `<div class="rpt-pg" role="img" aria-label="${esc(t('rp_page', i + 1, r.pages.length))}">${s}</div>`).join('')}</div>`;
 }
 
+// menu de envio: (Gerar PDF) · Enviar PDF · Enviar no WhatsApp; pedido não aprovado confirma antes de enviar
+async function sendMenu(o, withGen){
+  if(!o) return;
+  if(CAN_PRINT) loadPdfLib().catch(() => {});   // já vai carregando, para o PDF sair na hora
+  const body = `<div class="send-opts">${withGen ? `<button type="button" class="btn block" data-m="gen">${IC.file}${t('gen_pdf')}</button>` : ''}
+    <button type="button" class="btn block primary" data-m="pdf">${IC.send}${t('send_pdf')}</button>
+    <button type="button" class="btn block wa" data-m="wa">${IC.chat}${t('send_wa')}</button></div>`;
+  const r = await modal({title: withGen ? t('order_n', o.number) : t('send_how'), body, buttons: [BACK_BTN()]}), v = r && r.v;
+  if(v === 'gen') return openReport(o);
+  if(v !== 'pdf' && v !== 'wa') return;
+  if(!(await okToSend(o))) return;
+  if(v === 'pdf') sendPdf(o); else waEdit(o);
+}
+// antes de enviar um pedido que ainda não foi aprovado: "Este pedido ainda não foi aprovado. Enviar mesmo assim?"
+async function okToSend(o){
+  if(!o || o.status === 'aprovado') return !!o;
+  return await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'primary', icon: IC.send}]) === 'yes';
+}
 // enviar o relatório em PDF: menu de compartilhar do celular (WhatsApp, e-mail…); sem ele (computador), baixa o arquivo
 async function sendPdf(o){
   if(!o) return;
@@ -2950,13 +2968,12 @@ async function sendPdf(o){
   }
 }
 // resumo do pedido em texto para o WhatsApp: *negrito* nos títulos e valores, _itálico_ nas observações dos produtos
+// (por padrão sem situação, documento de cobrança, valor de tabela e desconto — a pessoa pode editar antes de enviar)
 function orderText(o){
   const c = orderCalc(o), cl = CLIENT(o.clientId) || {}, sf = SAFRA(o.safraId), items = o.items.filter(it => it.productId);
   const B = x => `*${x}*`, L = [], cur = v => fmtMoney(v, o.currency);
-  const tab = items.reduce((a, it) => { const ic = itemCalc(o, it); return a + (ic.adj || 0) * (ic.qty || 0); }, 0), discV = Math.max(0, tab - c.total);
   const place = id => rpPlace(placesOf(o.clientId).find(x => x.id === id)?.name || '')[0];
-  L.push(B(`${t('pdf_title').toUpperCase()} ${t('rp_no')} ${o.number}`), `${companyOf(o)} · ${t('unit')} ${UNIT(o.unit)?.name || ''}`,
-    `${t('status')}: ${B(t('st_' + o.status))}${o.status === 'aprovacao' ? ` (${t('sh_waiting')})` : ''}`, `${t('mov_date')}: ${movDT(o)}`);
+  L.push(B(`${t('pdf_title').toUpperCase()} ${t('rp_no')} ${o.number}`), `${companyOf(o)} · ${t('unit')} ${UNIT(o.unit)?.name || ''}`, `${t('mov_date')}: ${movDT(o)}`);
   L.push('', B(t('client').toUpperCase()), cl.name || '—');
   if(cl.doc) L.push(`${t('client_doc')}: ${cl.doc}`);
   if(contactName(o)) L.push(`${t('contact')}: ${contactName(o)}`);
@@ -2964,27 +2981,36 @@ function orderText(o){
   L.push('', B(t('g_neg').toUpperCase()), `${t('safra')}: ${sf?.name || '—'}`, `${t('currency')}: ${t('cur_' + o.currency)}`, `${t('neg_type')}: ${t('neg_' + o.negType)}`);
   if(o.cond) L.push(`${t('cond')}: ${t('cond_' + o.cond)}`);
   if(!isBonif(o) && o.due) L.push(`${t('due')}: ${fmtDate(o.due)}`);
-  if(o.docType) L.push(`${t('doc_type')}: ${t('doc_' + o.docType)}`);
   L.push('', B(`${t('items').toUpperCase()} (${items.length})`));
   items.forEach((it, i) => { const p = PROD(it.productId), ic = itemCalc(o, it);
     L.push(`${i + 1}. ${B(p.name)}`, `     ${ACTIVE(p.active).name}`, `     ${fmtNum(ic.qty)} ${p.um} × ${cur(ic.price)} = ${B(cur(ic.total))}`);
     const dv = [it.deliveryDate ? fmtDate(it.deliveryDate) : '', UNIT(it.deliveryUnit)?.name, it.deliveryPlace ? place(it.deliveryPlace) : ''].filter(Boolean).join(' · ');
     if(dv) L.push(`     ${t('rp_deliv')}: ${dv}`);
     if(it.note) L.push(`     _${it.note}_`); });
-  L.push('', `${t('rp_list_value')}: ${cur(tab)}`);
-  if(discV > 0) L.push(`${t('rp_discount')}: - ${cur(discV)} (${fmtPct(tab > 0 ? discV / tab : 0)})`);
-  L.push(B(`${t('rp_total').toUpperCase()}: ${cur(c.total)}`));
+  L.push('', B(`${t('rp_total').toUpperCase()}: ${cur(c.total)}`));
   if(o.note) L.push('', `${B(t('note_order'))}: ${o.note}`);
   L.push('', `${t('seller')}: ${SELLER(o.sellerId)?.name || ''} (${companyOf(o)})`);
   return L.join('\n');
 }
-// compartilhar o resumo: menu do celular; sem ele, abre o WhatsApp com o texto
-async function shareText(o){
+// WhatsApp: a mensagem pronta para editar e, embaixo, para quem enviar — os contatos do cliente (o do pedido primeiro),
+// cada um com o celular e o botão verde do WhatsApp, ou "Outro contato" (a pessoa escolhe a conversa, ex.: o gestor)
+function waEdit(o){
   if(!o) return;
-  const text = orderText(o);
-  if(navigator.share){ try{ await navigator.share({text}); return; }catch(e){ if(e && e.name === 'AbortError') return; } }
-  const a = document.createElement('a'); a.href = 'https://wa.me/?text=' + encodeURIComponent(text); a.target = '_blank'; a.rel = 'noopener';
-  document.body.appendChild(a); a.click(); a.remove();
+  const cts = contactsOf(o.clientId).map(ct => ({...contactInfo(o.clientId, ct), label: ct.name})).sort((a, b) => (b.id === o.contact) - (a.id === o.contact));
+  const body = `<textarea id="wa-msg" class="wa-msg" rows="14" aria-label="${t('wa_msg')}">${esc(orderText(o))}</textarea>
+    <div class="pp-gh">${t('wa_to')}</div>
+    <div class="ct-list">${cts.map(x => `<div class="ct">
+      <div class="ct-who"><b>${esc(x.label)}</b>${x.id === o.contact ? `<span class="chip st-aprovado">${t('order_contact')}</span>` : ''}</div>
+      <div class="ct-lines"><span>${IC.phone}${x.phone}</span></div>
+      <div class="ct-acts"><button type="button" class="btn wa" data-wa="${x.wa}">${IC.chat}WhatsApp</button></div></div>`).join('')}
+      <button type="button" class="btn block wa-other" data-wa="">${IC.chat}${t('wa_other')}</button></div>`;
+  modal({title: t('wa_msg'), sheet: true, body});
+  const ov = document.getElementById('overlay');
+  ov.addEventListener('click', e => { const b = e.target.closest('[data-wa]'); if(!b) return;
+    const text = ov.querySelector('#wa-msg').value; if(!text.trim()) return;
+    const a = document.createElement('a'); a.href = `https://wa.me/${b.dataset.wa}?text=${encodeURIComponent(text)}`; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+    if(closeOverlay) closeOverlay(); });
 }
 
 /* ---------- Início ---------- */
