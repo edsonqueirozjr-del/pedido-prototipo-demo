@@ -163,6 +163,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn.gray{background:var(--gray-soft);border-color:transparent}
 /* janelas de baixo: botões presos no rodapé enquanto o conteúdo rola */
+/* janelas de baixo: topo (barrinha, título, fechar) preso enquanto o conteúdo rola */
+#overlay.sheet .dlg-top{position:sticky;top:-18px;z-index:3;margin:-18px -18px 0;padding:18px 18px 2px;background:var(--surface);border-radius:18px 18px 0 0}
 #overlay.sheet .dlg-foot{position:sticky;bottom:calc(-18px - env(safe-area-inset-bottom));margin:14px -18px calc(-18px - env(safe-area-inset-bottom));padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--border)}
 .dlg-foot .btn svg{width:19px;height:19px}
 .af-h{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 2px 8px}
@@ -1831,8 +1833,8 @@ function modal({title, titleHtml = '', body = '', buttons = [], sheet = false}){
   return new Promise(res => {
     const ov = document.getElementById('overlay');
     ov.className = sheet ? 'sheet open' : 'open'; syncScrollLock();
-    ov.innerHTML = `<div class="dlg" role="dialog" aria-modal="true">${sheet ? '<div class="grab" aria-hidden="true"></div>' : ''}<div class="dlg-head"><h3>${titleHtml || esc(title)}</h3>
-      ${sheet ? `<button class="icon-btn" data-m="__close" aria-label="${t('close')}">${IC.x}</button>` : ''}</div>
+    ov.innerHTML = `<div class="dlg" role="dialog" aria-modal="true"><div class="dlg-top">${sheet ? '<div class="grab" aria-hidden="true"></div>' : ''}<div class="dlg-head"><h3>${titleHtml || esc(title)}</h3>
+      ${sheet ? `<button class="icon-btn" data-m="__close" aria-label="${t('close')}">${IC.x}</button>` : ''}</div></div>
       <div class="dlg-body">${body}</div>
       ${buttons.length ? `<div class="dlg-foot">${buttons.map(b => `<button class="btn ${b.kind || ''}" data-m="${b.value}" ${b.req ? 'data-req="1"' : ''}>${b.icon || ''}${esc(b.label)}</button>`).join('')}</div>` : ''}</div>`;
     const close = v => { ov.className = ''; ov.innerHTML = ''; ov.onclick = null; closeOverlay = null; syncScrollLock(); res(v); };
@@ -2036,22 +2038,18 @@ const ACT = {
   advfilter: async () => {
     const a = S.adv, sel = (id, list, val, lbl = x => x.name) => `<select id="${id}">${opts(list, val, lbl)}</select>`;
     const prodsOf = act => PRODUCTS.filter(p => !act || p.active === act);
-    // um filtro por linha, em grupos: quem vendeu → cliente e negociação → produtos → valor
+    // um filtro por linha, sem títulos, na ordem: quem vendeu → cliente e negociação → produtos → valor
     const body = `<div class="advgrid">
-      <div class="af-h">${t('af_who')}</div>
       ${field(t('company'), sel('af-company', Object.entries(COMPANIES).map(([id, name]) => ({id, name})), a.company), 'af-company')}
       ${field(t('seller'), sel('af-seller', SELLERS, a.sellerId), 'af-seller')}
       ${field(t('unit'), sel('af-unit', UNITS, a.unit), 'af-unit')}
-      <div class="af-h">${t('af_client')}</div>
       ${field(t('client'), sel('af-client', CLIENTS, a.clientId), 'af-client')}
       ${field(t('safra'), sel('af-safra', SAFRAS, a.safraId), 'af-safra')}
       ${field(t('currency'), sel('af-cur', CURRENCIES.map(c => ({id: c})), a.currency, x => t('cur_'+x.id)), 'af-cur')}
       ${field(t('neg_type'), sel('af-neg', NEG_TYPES.map(n => ({id: n})), a.negType, x => t('neg_'+x.id)), 'af-neg')}
       ${field(t('cond'), sel('af-cond', CONDS.map(c => ({id: c})), a.cond, x => t('cond_'+x.id)), 'af-cond')}
-      <div class="af-h">${t('items')}</div>
       ${field(t('active'), sel('af-active', ACTIVES, a.active), 'af-active')}
       ${field(t('product'), sel('af-prod', prodsOf(a.active), a.productId), 'af-prod')}
-      <div class="af-h">${t('af_value')}</div>
       ${field(t('value_min'), `<input id="af-min" type="text" inputmode="decimal" value="${a.min !== '' ? fmtNum(a.min, 2) : ''}" placeholder="0,00">`, 'af-min')}
       ${field(t('value_max'), `<input id="af-max" type="text" inputmode="decimal" value="${a.max !== '' ? fmtNum(a.max, 2) : ''}" placeholder="0,00">`, 'af-max')}
       </div>`;
