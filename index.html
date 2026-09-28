@@ -330,6 +330,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .stepper-in .icon-btn{flex:none;width:40px;height:44px;border:0;background:transparent;color:var(--text)}
 .stepper-in .icon-btn svg{width:22px;height:22px}
 .stepper-in .icon-btn:disabled{opacity:.4}
+/* risquinho vertical separando o − e o + da quantidade */
+.stepper-in .icon-btn{position:relative}
+.stepper-in .icon-btn:first-child::after,.stepper-in .icon-btn:last-child::before{content:"";position:absolute;top:22%;bottom:22%;width:1px;background:var(--border)}
+.stepper-in .icon-btn:first-child::after{right:0} .stepper-in .icon-btn:last-child::before{left:0}
 @media (prefers-reduced-motion:reduce){.chev{transition:none}}
 .prod-row{display:flex;gap:8px;align-items:flex-end}
 .prod-row .field{flex:1;margin-bottom:0}
