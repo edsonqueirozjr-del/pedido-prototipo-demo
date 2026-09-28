@@ -2496,7 +2496,8 @@ const ACT = {
   fix: () => decide(ORDER(S.orderId), 'fix'),
   pdf: () => openReport(ORDER(S.orderId)),
   // relatório do pedido: abre a tela com as páginas; de lá imprime, baixa o PDF ou envia
-  'rpt-open': () => openReport(S.view === 'editor' ? S.draft : ORDER(S.orderId)),
+  // ícone PDF (em qualquer lugar): pergunta Gerar PDF ou Enviar PDF
+  'rpt-open': () => pdfMenu(S.view === 'editor' ? S.draft : ORDER(S.orderId)),
   // WhatsApp do topo (ao lado do PDF): mensagem editável e escolha do contato
   'top-wa': async () => { const o = S.view === 'editor' ? S.draft : ORDER(S.orderId); if(o && await okToSend(o)) waEdit(o); },
   'rpt-back': () => { const b = S.rpt?.back || S.listView || 'list'; S.rpt = null; S.view = b; render(); window.scrollTo(0, 0); },
@@ -2522,7 +2523,7 @@ const ACT = {
   'gen-pdf': () => openReport(ORDER(S.orderId)),
   // Enviar (pedido aberto e relatório): o PDF
   // pedido fechado: Enviar PDF e WhatsApp direto (pedido não aprovado confirma antes)
-  'send-pdf-o': async () => { const o = ORDER(S.orderId); if(o && await okToSend(o)) sendPdf(o); },
+  'send-pdf-o': () => pdfMenu(ORDER(S.orderId)),
   'send-wa-o': async () => { const o = ORDER(S.orderId); if(o && await okToSend(o)) waEdit(o); },
   'notif-open': async b => {
     if(closeOverlay) closeOverlay();
@@ -3013,7 +3014,7 @@ async function sendMenu(o, withGen){
   if(!(await okToSend(o))) return;
   if(v === 'pdf') sendPdf(o); else waEdit(o);
 }
-// PDF do cartão: Gerar PDF (abre o relatório) ou Enviar PDF
+// ícone PDF (cartão, topo do pedido, pedido fechado): Gerar PDF (abre o relatório) ou Enviar PDF
 async function pdfMenu(o){
   if(!o) return;
   if(CAN_PRINT) loadPdfLib().catch(() => {});
