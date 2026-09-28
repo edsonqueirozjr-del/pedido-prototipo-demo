@@ -239,6 +239,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .af-chips .afc.on{border-color:var(--primary-soft);background:var(--primary-soft);color:var(--primary)}
 .af-chips .afc:disabled{opacity:.45;cursor:default}
 .radio-chips input:disabled+span{opacity:.45;cursor:default}
+/* com uma opção marcada, as outras ficam apagadas */
+.radio-chips:has(input:checked) input:not(:checked):not(:disabled)+span,
+.af-chips:has(.afc.on) .afc:not(.on):not(:disabled),
+.co-chips:has(.co-chip.on) .co-chip:not(.on){opacity:.5}
 .radio-chips label{min-width:0}
 .radio-chips span{padding:0 6px;font-size:14.5px;text-align:center}
 
