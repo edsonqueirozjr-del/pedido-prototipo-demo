@@ -535,6 +535,7 @@ html.lockscroll main{padding-bottom:12px}
 .cr-tb td:last-child{white-space:nowrap}
 .cr-btn .chev{transform:none}
 .cr-tb tfoot td:first-child{color:var(--text)}
+.it-toggle{display:flex;align-items:center;cursor:pointer} .it-toggle .chev{margin-left:auto;margin-right:12px}
 .items-title{font-size:15px;font-weight:700;margin:4px 4px 10px}
 .items-loose{margin-bottom:12px}
 .items-loose .aitem{background:var(--surface);box-shadow:var(--shadow);margin-bottom:12px}
@@ -1192,9 +1193,11 @@ function fakeSignature(seedN){
 }
 // lista de produtos: título solto + cada produto é um cartão próprio
 // aprovação: "Produtos · N" como cartão recolhível (fechado ao abrir o pedido); aberto mostra os produtos soltos abaixo
-const itemsBlockFold = (o, items) => { const on = !!S.openA.gp;
-  return `<section class="card gcard ${on ? 'on' : ''}"><h2 class="ahead" data-a="toggle-aitem" data-id="gp" role="button" tabindex="0" aria-expanded="${on}"><span class="chev ${on ? 'on' : ''}">${IC.chev}</span>${t('items')}${itemCount(o)}</h2></section>
-    ${on ? `<div class="items-loose">${items || `<div class="muted">${t('no_items')}</div>`}</div>` : ''}`; };
+// fechado: cartão "Produtos" (sem a quantidade); aberto: volta ao formato normal (título Produtos · N + produtos soltos), com setinha para fechar
+const itemsBlockFold = (o, items) => S.openA.gp
+  ? `<div class="items-title it-toggle" data-a="toggle-aitem" data-id="gp" role="button" tabindex="0" aria-expanded="true">${t('items')}${itemCount(o)}<span class="chev on">${IC.chev}</span></div>
+    <div class="items-loose">${items || `<div class="muted">${t('no_items')}</div>`}</div>`
+  : `<section class="card gcard"><h2 class="ahead" data-a="toggle-aitem" data-id="gp" role="button" tabindex="0" aria-expanded="false"><span class="chev">${IC.chev}</span>${t('items')}</h2></section>`;
 const itemsBlock = (o, items) => `<div class="items-title">${t('items')}${itemCount(o)}</div><div class="items-loose">${items || `<div class="muted">${t('no_items')}</div>`}</div>`;
 const showSem = () => S.view === 'editor' && S.isNew;
 const EDITABLE = ['aberto','correcao'];  // situações que o vendedor ainda pode editar
