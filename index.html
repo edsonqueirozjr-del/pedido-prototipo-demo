@@ -41,15 +41,20 @@ main{padding:12px 16px 132px}
 
 /* topo */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:var(--top);display:flex;align-items:center;gap:8px;padding:0 12px 0 16px;background:var(--surface);border-bottom:1px solid var(--border)}
-.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;margin-right:auto;color:var(--primary)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;margin-right:auto;color:var(--primary);white-space:nowrap}
 .brand span{color:var(--text)}
 .icon-btn{position:relative;display:inline-grid;place-items:center;width:38px;height:38px;border:0;border-radius:10px;background:transparent;cursor:pointer}
 .icon-btn:hover{background:var(--surface-2)}
 .badge{position:absolute;top:3px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--bad);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
 .pill-btn{height:32px;padding:0 10px;border:1px solid var(--border);border-radius:16px;background:var(--surface);font-weight:600;font-size:13px;cursor:pointer}
-.profile-btn{display:flex;align-items:center;gap:6px;height:36px;padding:0 10px 0 4px;border:1px solid var(--border);border-radius:18px;background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600}
+.profile-btn{display:flex;align-items:center;gap:6px;min-width:0;max-width:170px;height:36px;padding:0 10px 0 4px;border:1px solid var(--border);border-radius:18px;background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600}
 .avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:var(--primary-ink);font-size:12px;font-weight:700}
 .profile-btn.appr .avatar{background:var(--info);color:#fff}
+.pb-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* janela do usuário: tema e idioma em cima, depois a troca de usuário */
+.pf-opts{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px 12px;margin:2px 0 6px}
+.pf-opts .lbl{margin:0}
+.pf-opts .af-chips{margin:0}
 .us-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);cursor:pointer;font:inherit}
 .us-row.on{border-color:var(--primary-soft);background:var(--primary-soft)}
 .us-row .avatar{flex:none;width:34px;height:34px;font-size:13px}
@@ -905,7 +910,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 /* ---------- i18n ---------- */
 const I18N = {
 pt:{
-  app:'Pedidos', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
+  app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
   profile_switched:'Entrou como {0}', search:'Buscar cliente ou nº', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
@@ -922,7 +927,7 @@ pt:{
   doc_type:'Documento de cobrança', doc_transf:'Transferência', doc_pix:'PIX', doc_boleto:'Boleto',
   delivery_place:'Local de entrega',
   summary:'Resumo', products:'Produtos', order_total:'Valor total', cancel:'Cancelar', save:'Salvar', finalize:'Finalizar',
-  next:'Próximo', back:'Voltar', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Fechar', clear:'Limpar', available:'Disponível', sign_collect:'Coletar assinatura', sign_title:'Assinatura do cliente', sign_hint:'Peça ao cliente para assinar na área abaixo com a caneta do celular.', sign_clear:'Limpar', sign_redo:'Refazer', sign_remove:'Remover', sign_saved:'Assinatura salva', sign_empty:'Assine antes de confirmar', signed_at:'Assinado em', h_signed:'Assinatura coletada', delivery_data:'Dados de entrega', note_prod:'Observação do produto', note_deliv:'Observação da entrega', billing_place:'Local de cobrança', g_order:'Pedido', g_neg:'Negociação', g_places:'Locais', hint_disc:'Desconto em relação ao preço tabela', hint_margin:'Margem do produto', contact:'Contato', price_hist:'Histórico de preço', no_price_hist:'Nenhum pedido aprovado deste produto para este cliente, projeto e moeda.', remove_location:'Remover localização', location_removed:'Localização removida', pdf_making:'Gerando PDF…', pdf_fail:'Não foi possível gerar o PDF', pick_on_map:'Escolher no mapa', tap_map:'Toque no mapa para marcar', map_hint3:'Use sua localização, escolha no mapa ou cole as coordenadas.', map_off:'Mapa indisponível', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidade', send_order:'Enviar pedido', gen_pdf:'Gerar PDF', send_pdf:'Enviar PDF', send_wa:'Enviar no WhatsApp', send_how:'Enviar pedido como?', c_send_unappr:'Este pedido ainda não foi aprovado. Enviar mesmo assim?', wa_msg:'Mensagem do WhatsApp', wa_to:'Enviar para', wa_other:'Outro contato', rp_title:'Pedido de venda', rp_no:'Nº', rp_issued:'Emissão', rp_client:'Dados do cliente', rp_delivery:'Dados de entrega', rp_items:'Produtos', rp_code:'Código', rp_desc:'Descrição do produto', rp_qty:'Quantidade', rp_unit_price:'Preço unitário', rp_total_price:'Preço total', rp_pay:'Condição de pagamento', rp_dues:'Vencimentos', rp_term:'Prazo', rp_date:'Data', rp_value:'Valor', rp_days:'{0} dias', rp_no_due:'Bonificação — sem vencimento', rp_no_due_s:'Sem vencimento', rp_bill_both:'Local de faturamento e cobrança', rp_list_value:'Valor de tabela', rp_discount:'Desconto', rp_total:'Valor total do pedido', rp_terms:'Observações / Condições gerais de venda', rp_note:'Observação do pedido', rp_freight:'Tipo de frete', rp_branch:'Filial', rp_forecast:'Previsão de entrega', rp_state:'Estado (UF)', rp_address:'Endereço', rp_district:'Bairro', rp_city:'Cidade', rp_deliv:'Entrega', rp_sign_client:'Assinatura do cliente', rp_seller:'Gestor de Venda', rp_page:'Página {0} de {1}', rp_view:'Relatório do pedido', rp_print:'Imprimir', af_marg:'Margem', af_disc:'Desconto', af_cmp:'Comparação', switch_user:'Trocar usuário', location:'Localização de entrega', coords:'Coordenadas', my_location:'Minha localização', open_map:'Abrir no mapa', map_hint:'Toque no mapa para marcar. Arraste o pino para ajustar.', map_hint_link:'Cole as coordenadas ou um link do Google Maps.', geo_off:'Localização indisponível', coords_invalid:'Coordenadas inválidas', location_saved:'Localização salva',
+  next:'Próximo', back:'Voltar', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Fechar', clear:'Limpar', available:'Disponível', sign_collect:'Coletar assinatura', sign_title:'Assinatura do cliente', sign_hint:'Peça ao cliente para assinar na área abaixo com a caneta do celular.', sign_clear:'Limpar', sign_redo:'Refazer', sign_remove:'Remover', sign_saved:'Assinatura salva', sign_empty:'Assine antes de confirmar', signed_at:'Assinado em', h_signed:'Assinatura coletada', delivery_data:'Dados de entrega', note_prod:'Observação do produto', note_deliv:'Observação da entrega', billing_place:'Local de cobrança', g_order:'Pedido', g_neg:'Negociação', g_places:'Locais', hint_disc:'Desconto em relação ao preço tabela', hint_margin:'Margem do produto', contact:'Contato', price_hist:'Histórico de preço', no_price_hist:'Nenhum pedido aprovado deste produto para este cliente, projeto e moeda.', remove_location:'Remover localização', location_removed:'Localização removida', pdf_making:'Gerando PDF…', pdf_fail:'Não foi possível gerar o PDF', pick_on_map:'Escolher no mapa', tap_map:'Toque no mapa para marcar', map_hint3:'Use sua localização, escolha no mapa ou cole as coordenadas.', map_off:'Mapa indisponível', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidade', send_order:'Enviar pedido', gen_pdf:'Gerar PDF', send_pdf:'Enviar PDF', send_wa:'Enviar no WhatsApp', send_how:'Enviar pedido como?', c_send_unappr:'Este pedido ainda não foi aprovado. Enviar mesmo assim?', c_gen_unappr:'Este pedido ainda não foi aprovado. Gerar mesmo assim?', wa_msg:'Mensagem do WhatsApp', wa_to:'Enviar para', wa_other:'Outro contato', rp_title:'Pedido de venda', rp_no:'Nº', rp_issued:'Emissão', rp_client:'Dados do cliente', rp_delivery:'Dados de entrega', rp_items:'Produtos', rp_code:'Código', rp_desc:'Descrição do produto', rp_qty:'Quantidade', rp_unit_price:'Preço unitário', rp_total_price:'Preço total', rp_pay:'Condição de pagamento', rp_dues:'Vencimentos', rp_term:'Prazo', rp_date:'Data', rp_value:'Valor', rp_days:'{0} dias', rp_no_due:'Bonificação — sem vencimento', rp_no_due_s:'Sem vencimento', rp_bill_both:'Local de faturamento e cobrança', rp_list_value:'Valor de tabela', rp_discount:'Desconto', rp_total:'Valor total do pedido', rp_terms:'Observações / Condições gerais de venda', rp_note:'Observação do pedido', rp_freight:'Tipo de frete', rp_branch:'Filial', rp_forecast:'Previsão de entrega', rp_state:'Estado (UF)', rp_address:'Endereço', rp_district:'Bairro', rp_city:'Cidade', rp_deliv:'Entrega', rp_sign_client:'Assinatura do cliente', rp_seller:'Gestor de Venda', rp_page:'Página {0} de {1}', rp_view:'Relatório do pedido', rp_print:'Imprimir', af_marg:'Margem', af_disc:'Desconto', af_cmp:'Comparação', switch_user:'Trocar usuário', location:'Localização de entrega', coords:'Coordenadas', my_location:'Minha localização', open_map:'Abrir no mapa', map_hint:'Toque no mapa para marcar. Arraste o pino para ajustar.', map_hint_link:'Cole as coordenadas ou um link do Google Maps.', geo_off:'Localização indisponível', coords_invalid:'Coordenadas inválidas', location_saved:'Localização salva',
   margin:'Margem', discount:'Desconto', cost:'Custo', practiced:'Preço praticado', tprice:'Preço tabela', total_cost:'Custo total',
   low_margin:'Margem abaixo do mínimo', order_margin:'Margem do pedido', order_discount:'Desconto do pedido', disc_total:'Desconto total', disc_pct:'Percentual desconto',
   sem_good:'Boa', sem_mid:'Razoável', sem_bad:'Ruim', approve:'Aprovar', reject:'Reprovar', request_fix:'Correção',
@@ -948,11 +953,11 @@ pt:{
   approver_note:'Comentário do aprovador', reset_data:'Restaurar dados de exemplo', c_reset_t:'Restaurar dados?',
   c_reset_m:'Os pedidos criados serão apagados.', empty:'Nenhum pedido encontrado', empty_day:'Nenhum pedido neste dia', prev_days:'Dias anteriores', empty_appr:'Nenhum pedido em aprovação',
   pdf_title:'Pedido de venda', pdf_company:'AgroCRM · Protótipo', client_doc:'CNPJ/CPF', city:'Cidade', issued:'Emitido em',
-  theme:'Tema', lang:'Idioma', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
+  theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
   low_items:'{0} produto(ns) abaixo da margem'
 },
 es:{
-  app:'Pedidos', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
+  app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
   profile_switched:'Entró como {0}', search:'Buscar cliente o nº', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
@@ -969,7 +974,7 @@ es:{
   doc_type:'Documento de cobro', doc_transf:'Transferencia', doc_pix:'PIX', doc_boleto:'Boleto',
   delivery_place:'Local de entrega',
   summary:'Resumen', products:'Productos', order_total:'Valor total', cancel:'Cancelar', save:'Guardar', finalize:'Finalizar',
-  next:'Siguiente', back:'Volver', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Cerrar', clear:'Borrar', available:'Disponible', sign_collect:'Recoger firma', sign_title:'Firma del cliente', sign_hint:'Pida al cliente que firme en el área de abajo con el lápiz del celular.', sign_clear:'Borrar', sign_redo:'Rehacer', sign_remove:'Quitar', sign_saved:'Firma guardada', sign_empty:'Firme antes de confirmar', signed_at:'Firmado el', h_signed:'Firma recogida', delivery_data:'Datos de entrega', note_prod:'Observación del producto', note_deliv:'Observación de la entrega', billing_place:'Local de cobro', g_order:'Pedido', g_neg:'Negociación', g_places:'Locales', hint_disc:'Descuento respecto al precio de tabla', hint_margin:'Margen del producto', contact:'Contacto', price_hist:'Historial de precio', no_price_hist:'Ningún pedido aprobado de este producto para este cliente, proyecto y moneda.', remove_location:'Quitar ubicación', location_removed:'Ubicación eliminada', pdf_making:'Generando PDF…', pdf_fail:'No fue posible generar el PDF', pick_on_map:'Elegir en el mapa', tap_map:'Toque el mapa para marcar', map_hint3:'Use su ubicación, elija en el mapa o pegue las coordenadas.', map_off:'Mapa no disponible', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidad', send_order:'Enviar pedido', gen_pdf:'Generar PDF', send_pdf:'Enviar PDF', send_wa:'Enviar por WhatsApp', send_how:'¿Enviar pedido como?', c_send_unappr:'Este pedido aún no fue aprobado. ¿Enviar de todos modos?', wa_msg:'Mensaje de WhatsApp', wa_to:'Enviar a', wa_other:'Otro contacto', rp_title:'Pedido de venta', rp_no:'Nº', rp_issued:'Emisión', rp_client:'Datos del cliente', rp_delivery:'Datos de entrega', rp_items:'Productos', rp_code:'Código', rp_desc:'Descripción del producto', rp_qty:'Cantidad', rp_unit_price:'Precio unitario', rp_total_price:'Precio total', rp_pay:'Condición de pago', rp_dues:'Vencimientos', rp_term:'Plazo', rp_date:'Fecha', rp_value:'Valor', rp_days:'{0} días', rp_no_due:'Bonificación — sin vencimiento', rp_no_due_s:'Sin vencimiento', rp_bill_both:'Local de facturación y cobro', rp_list_value:'Valor de lista', rp_discount:'Descuento', rp_total:'Valor total del pedido', rp_terms:'Observaciones / Condiciones generales de venta', rp_note:'Observación del pedido', rp_freight:'Tipo de flete', rp_branch:'Sucursal', rp_forecast:'Previsión de entrega', rp_state:'Departamento', rp_address:'Dirección', rp_district:'Barrio', rp_city:'Ciudad', rp_deliv:'Entrega', rp_sign_client:'Firma del cliente', rp_seller:'Gestor de Venta', rp_page:'Página {0} de {1}', rp_view:'Informe del pedido', rp_print:'Imprimir', af_marg:'Margen', af_disc:'Descuento', af_cmp:'Comparación', switch_user:'Cambiar usuario', location:'Ubicación de entrega', coords:'Coordenadas', my_location:'Mi ubicación', open_map:'Abrir en el mapa', map_hint:'Toque el mapa para marcar. Arrastre el pin para ajustar.', map_hint_link:'Pegue las coordenadas o un enlace de Google Maps.', geo_off:'Ubicación no disponible', coords_invalid:'Coordenadas inválidas', location_saved:'Ubicación guardada',
+  next:'Siguiente', back:'Volver', edit:'Editar', pdf:'PDF', confirm:'Confirmar', close:'Cerrar', clear:'Borrar', available:'Disponible', sign_collect:'Recoger firma', sign_title:'Firma del cliente', sign_hint:'Pida al cliente que firme en el área de abajo con el lápiz del celular.', sign_clear:'Borrar', sign_redo:'Rehacer', sign_remove:'Quitar', sign_saved:'Firma guardada', sign_empty:'Firme antes de confirmar', signed_at:'Firmado el', h_signed:'Firma recogida', delivery_data:'Datos de entrega', note_prod:'Observación del producto', note_deliv:'Observación de la entrega', billing_place:'Local de cobro', g_order:'Pedido', g_neg:'Negociación', g_places:'Locales', hint_disc:'Descuento respecto al precio de tabla', hint_margin:'Margen del producto', contact:'Contacto', price_hist:'Historial de precio', no_price_hist:'Ningún pedido aprobado de este producto para este cliente, proyecto y moneda.', remove_location:'Quitar ubicación', location_removed:'Ubicación eliminada', pdf_making:'Generando PDF…', pdf_fail:'No fue posible generar el PDF', pick_on_map:'Elegir en el mapa', tap_map:'Toque el mapa para marcar', map_hint3:'Use su ubicación, elija en el mapa o pegue las coordenadas.', map_off:'Mapa no disponible', adv_filter:'Filtros', apply:'Aplicar', value_min:'Valor mínimo', value_max:'Valor máximo', check_stock:'Consultar disponibilidad', send_order:'Enviar pedido', gen_pdf:'Generar PDF', send_pdf:'Enviar PDF', send_wa:'Enviar por WhatsApp', send_how:'¿Enviar pedido como?', c_send_unappr:'Este pedido aún no fue aprobado. ¿Enviar de todos modos?', c_gen_unappr:'Este pedido aún no fue aprobado. ¿Generar de todos modos?', wa_msg:'Mensaje de WhatsApp', wa_to:'Enviar a', wa_other:'Otro contacto', rp_title:'Pedido de venta', rp_no:'Nº', rp_issued:'Emisión', rp_client:'Datos del cliente', rp_delivery:'Datos de entrega', rp_items:'Productos', rp_code:'Código', rp_desc:'Descripción del producto', rp_qty:'Cantidad', rp_unit_price:'Precio unitario', rp_total_price:'Precio total', rp_pay:'Condición de pago', rp_dues:'Vencimientos', rp_term:'Plazo', rp_date:'Fecha', rp_value:'Valor', rp_days:'{0} días', rp_no_due:'Bonificación — sin vencimiento', rp_no_due_s:'Sin vencimiento', rp_bill_both:'Local de facturación y cobro', rp_list_value:'Valor de lista', rp_discount:'Descuento', rp_total:'Valor total del pedido', rp_terms:'Observaciones / Condiciones generales de venta', rp_note:'Observación del pedido', rp_freight:'Tipo de flete', rp_branch:'Sucursal', rp_forecast:'Previsión de entrega', rp_state:'Departamento', rp_address:'Dirección', rp_district:'Barrio', rp_city:'Ciudad', rp_deliv:'Entrega', rp_sign_client:'Firma del cliente', rp_seller:'Gestor de Venta', rp_page:'Página {0} de {1}', rp_view:'Informe del pedido', rp_print:'Imprimir', af_marg:'Margen', af_disc:'Descuento', af_cmp:'Comparación', switch_user:'Cambiar usuario', location:'Ubicación de entrega', coords:'Coordenadas', my_location:'Mi ubicación', open_map:'Abrir en el mapa', map_hint:'Toque el mapa para marcar. Arrastre el pin para ajustar.', map_hint_link:'Pegue las coordenadas o un enlace de Google Maps.', geo_off:'Ubicación no disponible', coords_invalid:'Coordenadas inválidas', location_saved:'Ubicación guardada',
   margin:'Margen', discount:'Descuento', cost:'Costo', practiced:'Precio practicado', tprice:'Precio tabla', total_cost:'Costo total',
   low_margin:'Margen bajo el mínimo', order_margin:'Margen del pedido', order_discount:'Descuento del pedido', disc_total:'Descuento total', disc_pct:'Porcentaje de descuento',
   sem_good:'Buena', sem_mid:'Razonable', sem_bad:'Mala', approve:'Aprobar', reject:'Rechazar', request_fix:'Corrección',
@@ -995,7 +1000,7 @@ es:{
   approver_note:'Comentario del aprobador', reset_data:'Restaurar datos de ejemplo', c_reset_t:'¿Restaurar datos?',
   c_reset_m:'Los pedidos creados serán eliminados.', empty:'Ningún pedido encontrado', empty_day:'Ningún pedido en este día', prev_days:'Días anteriores', empty_appr:'Ningún pedido en aprobación',
   pdf_title:'Pedido de venta', pdf_company:'AgroCRM · Prototipo', client_doc:'RUC / Documento', city:'Ciudad', issued:'Emitido el',
-  theme:'Tema', lang:'Idioma', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
+  theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
   low_items:'{0} producto(s) bajo el margen'
 }};
 
@@ -1454,11 +1459,9 @@ function header(){
   const isAppr = S.profile === 'aprovador';
   const name = isAppr ? APPROVER : SELLER(ME).name;
   return `<header class="top">
-    <div class="brand">${IC.leaf}<span>${t('app')}</span></div>
+    <div class="brand"><span>${t('app')}</span></div>
     <button class="icon-btn" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
-    <button class="icon-btn" data-a="theme" aria-label="${t('theme')}">${S.theme === 'dark' ? IC.sun : IC.moon}</button>
-    <button class="pill-btn" data-a="lang" aria-label="${t('lang')}">${S.lang === 'es' ? 'ES' : 'PT'}</button>
-    <button class="profile-btn ${isAppr ? 'appr' : ''}" data-a="profile" title="${esc(name)}"><span class="avatar">${initials(name)}</span>${esc(name.split(' ')[0])}</button>
+    <button class="profile-btn ${isAppr ? 'appr' : ''}" data-a="profile" title="${esc(name)}"><span class="avatar">${initials(name)}</span><span class="pb-name">${esc(name)}</span></button>
   </header>`;
 }
 // aprovador tem uma única tela (Para aprovação), sem barra de navegação
@@ -2182,7 +2185,17 @@ const ACT = {
       <span class="avatar">${initials(name)}</span><span class="us-t"><b>${esc(name)}</b><span>${esc(sub)}</span></span>${logo ? `<img class="us-logo" src="${logo}" alt="">` : ''}</button>`;
     const body = `<div class="pp-gh">${t('approver')}</div>${row('appr', APPROVER, t('approver'))}
       ${Object.entries(COMPANIES).map(([cid, cname]) => `<div class="pp-gh">${esc(cname)}</div>${SELLERS.filter(x => x.company === cid).map(x => row(x.id, x.name, `${t('seller')} · ${UNIT(x.unit).name}`, LOGOS[cid])).join('')}`).join('')}`;
-    const r = await modal({title: t('switch_user'), body, sheet: true});
+    // tema e idioma ficam aqui dentro (saíram do topo); mudam na hora e a janela reabre já atualizada
+    const opt = (k, v, lbl, on) => `<button type="button" class="afc ${on ? 'on' : ''}" data-m="${k}:${v}">${lbl}</button>`;
+    const prefs = `<div class="pf-opts">
+      <span class="lbl">${t('theme')}</span><div class="radio-chips af-chips">${opt('theme', 'light', t('theme_light'), S.theme !== 'dark')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}</div>
+      <span class="lbl">${t('lang')}</span><div class="radio-chips af-chips">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div>
+    </div><div class="pp-gh">${t('switch_user')}</div>`;
+    const r = await modal({title: S.profile === 'aprovador' ? APPROVER : SELLER(ME).name, body: prefs + body, sheet: true});
+    if(r && /^(theme|lang):/.test(r.v)){
+      const [k, v] = r.v.split(':'); if(k === 'theme') S.theme = v; else S.lang = v;
+      savePrefs(); render(); return ACT.profile();
+    }
     if(!r || r.v === cur) return;
     if(r.v === 'appr') S.profile = 'aprovador'; else { S.profile = 'vendedor'; ME = r.v; }
     savePrefs();
@@ -2524,7 +2537,7 @@ const ACT = {
   // enviar pedido: escolhe PDF ou WhatsApp; pedido ainda não aprovado pede confirmação antes
   'send-order': () => sendMenu(ORDER(S.orderId), false),
   // gerar PDF: abre o relatório (de lá baixa, imprime ou envia)
-  'gen-pdf': () => openReport(ORDER(S.orderId)),
+  'gen-pdf': async () => { const o = ORDER(S.orderId); if(o && await okToGen(o)) openReport(o); },
   // Enviar (pedido aberto e relatório): o PDF
   // pedido fechado: Enviar PDF e WhatsApp direto (pedido não aprovado confirma antes)
   'send-pdf-o': () => pdfMenu(ORDER(S.orderId)),
@@ -3025,9 +3038,14 @@ async function pdfMenu(o){
   const body = `<div class="send-opts"><button type="button" class="btn pdf block" data-m="gen">${IC.pdf}${t('gen_pdf')}</button>
     <button type="button" class="btn wa block" data-m="pdf">${IC.wa}${t('send_pdf')}</button></div>`;
   const r = await modal({title: t('order_n', o.number), body, buttons: [BACK_BTN()]}), v = r && r.v;
-  if(v === 'gen') openReport(o); else if(v === 'pdf' && await okToSend(o)) sendPdf(o);
+  if(v === 'gen'){ if(await okToGen(o)) openReport(o); } else if(v === 'pdf' && await okToSend(o)) sendPdf(o);
 }
 // antes de enviar um pedido que ainda não foi aprovado: "Este pedido ainda não foi aprovado. Enviar mesmo assim?"
+// antes de gerar o PDF de um pedido que ainda não foi aprovado: pergunta "Gerar mesmo assim?"
+async function okToGen(o){
+  if(!o || o.status === 'aprovado') return !!o;
+  return await ask(t('c_gen_unappr'), '', [BACK_BTN(), {label: t('gen_pdf'), value: 'yes', kind: 'pdf', icon: IC.pdf}]) === 'yes';
+}
 async function okToSend(o){
   if(!o || o.status === 'aprovado') return !!o;
   return await ask(t('c_send_unappr'), '', [BACK_BTN(), {label: t('send_btn'), value: 'yes', kind: 'wa', icon: IC.wa}]) === 'yes';
