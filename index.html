@@ -166,6 +166,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dfxr .money input{min-height:38px;height:38px;font-size:15px;font-weight:700;text-align:right;padding-right:12px}
 .dfxr .money > span{font-size:14px}
 .dash .dcard h2 .dum{flex:none}
+.dash .dtop{margin:-2px 0 6px}
 .dash .dcard h2 .dum .seg-o{flex:none;width:42px;height:28px;font-size:12.5px}
 .dpiec > svg.dch{width:132px}
 .dash .dpiec > svg.dch{width:112px;flex:none}
@@ -1117,7 +1118,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1164,7 +1165,7 @@ pt:{
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -2447,7 +2448,7 @@ function openOrder(id){
 /* ---------- Dashboard de vendas: arrastar a tela de pedidos para o lado ---------- */
 // gestor vê os pedidos dele; aprovador vê todos. Tudo em uma moeda (USD convertido pelo câmbio RATE).
 const homeView = () => S.profile === 'aprovador' ? 'approvals' : 'list';
-const DASH0 = () => ({per: '90', cur: 'BRL', f: {}, sel: null, fx: RATE, um: 'L'});
+const DASH0 = () => ({per: '90', cur: 'BRL', f: {}, sel: null, fx: RATE, um: 'L', top: 'act'});   // top: 'act' = princípio ativo (padrão) | 'prod' = produto
 const D_ST = ['aprovado', 'aprovacao', 'correcao', 'aberto', 'reprovado'];
 const D_STC = {aprovado: 'var(--ok)', aprovacao: 'var(--lock)', correcao: 'var(--fix)', aberto: 'var(--warn)', reprovado: 'var(--bad)'};
 const D_PAL = ['var(--d1)', 'var(--d4)', 'var(--d3)', 'var(--d5)', 'var(--d6)', 'var(--d2)'];
@@ -2460,6 +2461,7 @@ const D_DIM = {
   st: {get: r => r.o.status, name: v => t('st_' + v), lbl: 'status'},
   line: {get: r => r.p.group, name: v => v, lbl: 'stock_group_f'},
   prod: {get: r => r.p.id, name: v => PROD(v)?.name, lbl: 'product'},
+  act: {get: r => r.p.active, name: v => ACTIVE(v)?.name, lbl: 'active'},
   client: {get: r => r.o.clientId, name: v => CLIENT(v)?.name, lbl: 'client'},
   seller: {get: r => r.o.sellerId, name: v => SELLER(v)?.name, lbl: 'seller'},
   comp: {get: r => SELLER(r.o.sellerId)?.company, name: v => COMPANIES[v], lbl: 'company'},
@@ -2671,7 +2673,12 @@ function viewDash(){
         return `<div class="dk"><div class="dk-t"><span class="dk-l">${t('qty')} (${um})</span><span class="dk-v">${dCount(q)} <small>${um}</small></span><span class="dk-s">${t('d_n_prods', np)}</span></div></div>`; }).join('')}
     </div>
     <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === '30' ? t('d_by_day') : S.dash.per === '90' ? t('d_by_week') : t('d_by_month')}</small></h2>${dEvol(rows, rg)}</section>
-    ${byProd.length ? `<section class="dcard"><h2>${t('d_top_p')}</h2>${dRank(byProd, 'prod', g => PROD(g.k)?.name, g => esc(ACTIVE(PROD(g.k).active).name), null, g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === PROD(g.k).group)) % D_PAL.length])}</section>` : ''}
+    ${sale.length ? (() => { const byAct = dGroup(sale, r => r.p.active).slice(0, 5), lc = g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === g.rs[0].p.group)) % D_PAL.length];
+      // Top 5: por princípio ativo (padrão) ou por produto
+      return `<section class="dcard"><h2>${t('d_top')}</h2>
+        <div class="seg dtop">${seg('dtop', 'act', t('active'), D.top !== 'prod')}${seg('dtop', 'prod', t('product'), D.top === 'prod')}</div>
+        ${D.top === 'prod' ? dRank(byProd, 'prod', g => PROD(g.k)?.name, g => esc(ACTIVE(PROD(g.k).active).name), null, lc)
+          : dRank(byAct, 'act', g => ACTIVE(g.k)?.name, g => `${esc(g.rs[0].p.group)} · ${t('d_n_prods', new Set(g.rs.map(r => r.p.id)).size)}`, null, lc)}</section>`; })() : ''}
     ${(() => { const um = D.um, byQ = dGroup(sale.filter(r => r.p.um === um), r => r.p.id).sort((a, b) => b.q - a.q).slice(0, 6);
       return `<section class="dcard"><h2>${t('d_qty_p')}<span class="seg dum">${['L', 'kg'].map(u => seg('dum', u, u, um === u)).join('')}</span></h2>
         ${byQ.length ? dRank(byQ, 'prod', g => PROD(g.k)?.name, g => `${esc(ACTIVE(PROD(g.k).active).name)} · ${dMoney(g.v)}`, null, g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === PROD(g.k).group)) % D_PAL.length], g => g.q, g => `${fmtNum(g.q)} ${um}`) : `<div class="empty">${t('d_empty')}</div>`}</section>`; })()}
@@ -2701,6 +2708,7 @@ const ACT = {
   dper: b => { S.dash.per = b.dataset.v; S.dash.sel = null; render(); },
   dcur: b => { S.dash.cur = b.dataset.v; render(); },
   dum: b => { S.dash.um = b.dataset.v; render(); },
+  dtop: b => { S.dash.top = b.dataset.v; render(); },
   dfil: b => { const k = b.dataset.k, v = b.dataset.v; if(S.dash.f[k] === v) delete S.dash.f[k]; else S.dash.f[k] = v; S.dash.sel = null; render(); },
   dclr: () => { S.dash.f = {}; render(); },
   dsel: b => { const i = +b.dataset.i; S.dash.sel = S.dash.sel === i ? null : i; S.dashStill = true; render(); S.dashStill = false; },
