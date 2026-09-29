@@ -107,14 +107,13 @@ main{padding:12px 16px 132px}
 .page-head .grow{margin-left:auto}
 .page-head.center{justify-content:center}
 .edhead{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 14px;padding:10px 16px 10px;border-bottom:1px solid var(--border)}
-.ed-title{display:grid;grid-template-columns:80px 1fr 80px;margin:0}
-.ed-title .back{justify-self:start}
-.ed-title > span:last-child,.ed-title > .icon-btn:last-child{justify-self:end}
+.ed-title{display:flex;align-items:center;gap:6px;margin:0}
+.ed-title > span:last-child,.ed-title > .icon-btn:last-child{margin-left:auto}
 .top-acts{flex:none;display:flex;align-items:center;gap:2px}  /* não encolhe: o título é que corta, se precisar */
 .top-acts .icon-btn{width:32px}
 .top-acts .icon-btn svg{width:30px;height:30px}  /* mesmo tamanho na digitação e na aprovação */
 .icon-btn.wa-ic{color:#25d366}
-.ed-title h1{text-align:center;white-space:nowrap;font-size:19px;min-width:0}
+.ed-title h1{text-align:left;white-space:nowrap;font-size:18px;min-width:0;overflow:hidden;text-overflow:ellipsis}  /* à esquerda, igual na aprovação */
 .edhead .totbar{margin-top:10px}
 .edhead .ed-mov{margin:10px 0 0}
 .det-top{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));z-index:8;background:var(--bg);margin:-12px -16px 12px;padding:6px 16px 12px}
@@ -196,23 +195,23 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .grid2 .stepper-in .icon-btn{width:30px}
 .grid2 .stepper-in input{padding-left:4px;padding-right:4px}
 /* cifrão com a mesma fonte, tamanho e cor do valor (como a unidade na quantidade) */
-.grid2 .money span{left:11px;font-size:14px;color:var(--text)}
+.grid2 .money span{left:11px;font-size:16px;font-weight:400;letter-spacing:0;color:var(--text)}
 .grid2 .money:not(.tot):has(input:disabled) span{color:var(--muted)}
-.grid2 .money input{padding-left:48px;padding-right:6px}
-.grid2 .money[data-c=USD] input{padding-left:47px}
-.grid2 .money.has-pct span{font-size:13.5px}
+.grid2 .money input{padding-left:52px;padding-right:6px}
+.grid2 .money[data-c=USD] input{padding-left:52px}
 .pr-row{display:flex;align-items:center;gap:2px}
 .pr-row .money{flex:1;min-width:0}
 /* estoque e histórico de preço: só o símbolo, sem formato de botão (igual ao pino) */
 .iconbare{flex:none;border:0 !important;background:none !important;box-shadow:none !important;padding:0;width:36px;min-height:44px;display:grid;place-items:center;color:var(--primary);cursor:pointer}
 .iconbare svg{width:24px;height:24px}
-.grid2 .money.tot span{font-size:14px;font-weight:700;color:var(--text)}  /* código da moeda em negrito, como o valor */
-.grid2 .money.tot input{padding-left:50px}
+.grid2 .money.tot span{font-size:16px;font-weight:700;color:var(--text)}  /* código da moeda em negrito, como o valor */
+.grid2 .money.tot input{padding-left:54px}
 .money.tot input{font-size:16px;font-weight:700;color:var(--text);-webkit-text-fill-color:var(--text);opacity:1}
 .money{position:relative}
-.money span{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;letter-spacing:.02em;color:var(--muted);pointer-events:none}
-.money input{padding-left:50px}
-.money[data-c=USD] input{padding-left:50px}
+.money span{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:16px;font-weight:400;letter-spacing:0;color:var(--text);pointer-events:none}
+.money:has(input:disabled):not(.tot) span{color:var(--muted)}
+.money input{padding-left:54px}
+.money[data-c=USD] input{padding-left:54px}
 .stockbtn2{flex:none;min-height:44px;padding:0 12px;gap:6px;font-size:14px}
 .stockbtn2 svg{width:17px;height:17px}
 /* estoque, histórico e mapa: mesma largura e mesma cor de ícone */
@@ -391,7 +390,9 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .mg-sq{flex:none;width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:13.5px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}  /* margem: quadrado 1:1 */
 /* cartão da lista: etiqueta solta no canto (o nome contorna), dados um por linha com rótulo */
 .oc-head{font-size:14px;line-height:1.45}
+.ocard .oc-head{position:relative;padding-right:104px}  /* espaço da etiqueta, que fica presa no canto */
 .oc-head .st-tag{float:right;margin:0 0 4px 8px}
+.ocard .oc-head .st-tag{position:absolute;right:0;top:0;float:none;margin:0}
 .oc-name{font-weight:800}
 .oc-kv{margin:8px 0 0;font-size:14px;line-height:1.5;clear:both}
 .oc-kv div{display:flex;gap:4px;min-width:0}
@@ -409,6 +410,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-open{position:relative;width:31px;height:31px;color:var(--gray);opacity:.7;display:grid;place-items:center;cursor:pointer}  /* abrir o pedido (aprovação) */
 .oc-open svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .oc-wa svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ocard .oc-kv{margin-top:-1.3px;clear:none}  /* nome → primeira linha com o mesmo espaço das linhas de baixo */  /* nome do cliente → primeira linha com o mesmo espaço das linhas de baixo */
 .ocard .oc-kv > div:last-child{padding-right:80px}
 .ocard .oc-kv > div:last-child dt,.ocard .oc-kv > div:last-child dd{color:var(--text);font-weight:800}  /* Valor total: tudo preto e em negrito */  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag.mg-tag{font-weight:800;font-size:13.5px;height:25px;padding:0 10px;border-radius:13px}  /* margem no cartão da aprovação: negrito, um pouco maior */
@@ -918,10 +920,10 @@ const SAFRAS = [
   {id:'SV2627', name:'Soja Verão - 26/27',     due:'2027-04-30', mult:1.00},
   {id:'MS2727', name:'Milho Safrinha - 27/27', due:'2027-08-30', mult:1.03}
 ];
-const DOC_TYPES = ['transf','pix','boleto'];
+const DOC_TYPES = ['boleto','pix','transf'];
 const CONDS = ['avista','30d','safra'];
 const NEG_TYPES = ['normal','bonif'];
-// bonificação: pedido sem data de vencimento
+// bonificação: vencimento sempre o do projeto (como Prazo safra), bloqueado
 const CURRENCIES = ['BRL','USD'];
 const CUR_SYM = {BRL: 'BRL', USD: 'USD'};   // código da moeda antes do valor (campos de preço, relatório)
 // catálogo: produtos publicados em somaxagro.com/brasil/produtos (preço/custo são fictícios)
@@ -1118,6 +1120,8 @@ const IC = {
   pdf:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="17.8" text-anchor="middle" font-size="6.8" font-weight="800" font-family="Arial,Helvetica,sans-serif" fill="currentColor" stroke="none" letter-spacing="-.2">PDF</text></svg>',
   wa:'<svg viewBox="0 0 24 24"><path d="M3.5 20.5 4.8 16.3A8.5 8.5 0 1 1 8 19.3Z"/><path fill="currentColor" stroke="none" d="M9.2 7.9c.3-.3.8-.3 1 .1l.9 1.7c.2.3.1.7-.2.9l-.6.5c.6 1.3 1.6 2.3 2.9 2.9l.5-.6c.2-.3.6-.4.9-.2l1.7.9c.4.2.4.7.1 1l-.6.7c-.6.6-1.6.7-2.5.3-2.2-1-4-2.8-5-5-.4-.9-.3-1.9.3-2.5Z"/></svg>',
   tag:'<svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  swap:'<svg viewBox="0 0 24 24"><path d="M7 4 3 8l4 4"/><path d="M3 8h14"/><path d="m17 20 4-4-4-4"/><path d="M21 16H7"/></svg>',
+  refresh:'<svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>',
   x:'<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   edit:'<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
   alert:'<svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>'
@@ -1145,7 +1149,7 @@ let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 // tv = versão da regra de tema: com tv 2 o padrão passou a ser o tema Somax (quem já tinha escolhido antes recebe o Somax uma vez)
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, me:ME, appr:APPR, tv:2})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 30) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 31) return d; }catch(e){} const s = seed(); persist(s); return s; }
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1169,6 +1173,8 @@ function dueFor(cond, safraId, base){
   if(cond === 'safra'){ const s = SAFRA(safraId); return s ? s.due : ''; }
   return '';
 }
+// vencimento do pedido: bonificação usa sempre o do projeto (igual Prazo safra)
+const dueOf = o => isBonif(o) ? dueFor('safra', o.safraId, o.date) : (o.cond ? dueFor(o.cond, o.safraId, o.date) : '');
 // fator do vencimento: 1% a.m. pró-rata dia em relação à data base da safra (antecipa = desconto, posterga = juros)
 function dueFactor(o){
   const s = SAFRA(o.safraId);
@@ -1260,7 +1266,7 @@ function openMapPicker(start, city, name){
         <div class="mv-title"><b>${t('pick_on_map')}</b><span class="muted small">${esc(name)}</span></div></div>
       <div id="mv-map"></div>
       <div class="mv-foot"><div class="mv-xy" id="mv-xy">${start ? fmtXY(start) : t('tap_map')}</div>
-        <button class="btn primary" id="mv-ok" ${start ? '' : 'disabled'}>${t('confirm')}</button></div>`;
+        <button class="btn primary" id="mv-ok" ${start ? '' : 'disabled'}>${IC.tick}${t('confirm')}</button></div>`;
     mv.hidden = false; syncScrollLock();
     let cur = start ? {...start} : null, map = null, mk = null;
     const done = v => { mapClose = null; if(map) map.remove(); mv.hidden = true; mv.innerHTML = ''; syncScrollLock(); res(v); };
@@ -1374,7 +1380,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:30, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:31, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1426,14 +1432,14 @@ function seed(){
     ['s2','c7','SV2627','BRL','safra','reprovado',  0, [['flo-20',300,.75],['g20-5',400]]]
   ];
   const at = (d, hm) => new Date(d + 'T' + hm + ':00').toISOString();
-  const BONIF = ['o10', 'o18', 'o21', 'o29'];   // ~10% dos exemplos são bonificação (sem vencimento)
+  const BONIF = ['o10', 'o18', 'o21', 'o29'];   // ~10% dos exemplos são bonificação (vencimento do projeto)
   db.seq = 10001 + defs.length;
   defs.forEach((d, i) => {
     const [sid, cid, saf, cur, cond, st, ago, items] = d;
     const date = addDays(today(), -ago), seller = SELLER(sid);
     const bonif = BONIF.includes('o' + (i + 1));
     const o = {id:'o'+(i+1), number:10001+i, date, sellerId:sid, unit:seller.unit, clientId:cid, negType:bonif ? 'bonif' : 'normal',
-      safraId:saf, currency:cur, cond, due:bonif ? '' : dueFor(cond, saf, date), billing:placesOf(cid)[0].id, note:'',
+      safraId:saf, currency:cur, cond, due:dueFor(bonif ? 'safra' : cond, saf, date), billing:placesOf(cid)[0].id, note:'',
       priceTableId:saf+'-'+cur, contact:contactsOf(cid)[0].id, items:[], docType:DOC_TYPES[i%3], billingPlace:placesOf(cid)[0].id, deliveryPlace:placesOf(cid)[i % placesOf(cid).length].id, status:st, history:[], approverNote:''};
     const seen = new Set();
     items.map(([op, q, f]) => [PMAP[op] || op, q, f]).filter(([pid]) => !seen.has(pid) && seen.add(pid)).forEach(([pid, qty, f], j) => {
@@ -1711,14 +1717,14 @@ function dataCardsHtml(o, appr, inClosing = false){
     ['g0', t('g_order'), [[t('mov_date'), movDT(o)], [t('seller'), SELLER(o.sellerId).name], [t('company'), companyOf(o)], [t('unit'), UNIT(o.unit).name]]],
     ['g1', t('client'), [[t('client'), cl?.name], ...(contactName(o) ? [[t('contact'), contactName(o)]] : [])]],
     ...(o.note ? [['gn', t('note_order'), null]] : []),
-    ['g2', t('g_neg'), [[t('neg_type'), t('neg_'+o.negType)], [t('safra'), s?.name], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], ...(isBonif(o) ? [] : [[t('due'), fmtDate(o.due)]]),
+    ['g2', t('g_neg'), [[t('neg_type'), t('neg_'+o.negType)], [t('safra'), s?.name], [t('cond'), o.cond ? t('cond_'+o.cond) : ''], [t('due'), fmtDate(o.due)],
       ...(appr ? [[t('order_margin'), `<b class="mt-${semOf(c.margin)}">${fmtPct(c.margin)}</b>`, 1], [t('order_discount'), fmtPct(c.disc), 1]] : []), ...(inClosing ? [] : [[t('doc_type'), o.docType ? t('doc_'+o.docType) : '']])]],
     ['g3', t('g_places'), [[t('billing'), billName(o), 0, 1], [t('billing_place'), billPlaceName(o), 0, 1]]]
   ];
   // "Rótulo: valor" na mesma linha, alinhado à esquerda (igual aos cartões da lista)
   // below = rótulo em cima e valor embaixo (usado em Locais: nomes longos)
   const kvHtml = rows => `<dl class="kvl">${rows.map(([k, v, html, below]) => below
-    ? `<div class="kv-below"><dt>${k}</dt><dd>${html ? v : esc(v || '—')}</dd></div>`
+    ? `<div class="kv-below"><dt>${k}:</dt><dd>${html ? v : esc(v || '—')}</dd></div>`
     : `<div><dt>${k}:</dt> <dd>${html ? v : esc(v || '—')}</dd></div>`).join('')}</dl>`;
   // cartões recolhidos por padrão; tocar no título abre/fecha (estado em S.openA['g'+n])
   return groups.map(([key, title, rows]) => { const on = !!S.openA[key];
@@ -1729,7 +1735,7 @@ function viewDone(){
   const o = ORDER(S.orderId); if(!o) return '';
   const c = orderCalc(o), cl = CLIENT(o.clientId);
   const rows = [[t('client'), esc(cl?.name || '—')], [t('safra'), esc(SAFRA(o.safraId)?.name || '—')], [t('cond'), o.cond ? t('cond_'+o.cond) : '—'],
-    ...(isBonif(o) ? [] : [[t('due'), fmtDate(o.due)]]), [t('status'), chip(o.status)]];
+    [t('due'), fmtDate(o.due)], [t('status'), chip(o.status)]];
   return `<div class="done-view">
     <div class="done-ic">${IC.tick}</div>
     <h1>${t(S.doneKind + '_title')}</h1>
@@ -1784,7 +1790,7 @@ function histHtml(o){
 function condDue(sfx){
   const o = S.draft;
   return `<div class="field"><span class="lbl">${t('cond')}</span><div class="radio-chips" id="f-cond${sfx}">${CONDS.map(c => `<label><input type="radio" name="f-cond${sfx}" data-f="cond" value="${c}" ${o.cond === c ? 'checked' : ''}><span>${t('cond_'+c)}</span></label>`).join('')}</div></div>
-    ${isBonif(o) ? '' : field(t('due'), dateField('f-due'+sfx, 'due', o.due, t('due'), {disabled: o.cond !== 'safra'}), 'f-due'+sfx)}`;
+    ${field(t('due'), dateField('f-due'+sfx, 'due', o.due, t('due'), {disabled: isBonif(o) || o.cond !== 'safra'}), 'f-due'+sfx)}`;
 }
 // limite de crédito: só um botão; ao tocar abre a tabela (limite, utilizado, este pedido, disponível) da safra escolhida
 function creditCard(o){
@@ -1831,7 +1837,8 @@ function itemCard(o, it, i){
       <span class="chev ${open ? 'on' : ''}">${IC.chev}</span>
       <span class="ih-txt"><b>${p ? esc(p.name) : t('new_item')}</b>${p && !open
         // recolhido: um dado por linha com rótulo, igual ao cartão da lista
-        ? `<dl class="oc-kv it-kv"><div><dd>${esc(ACTIVE(p.active).name)}</dd></div><div><dt>${t('qty')}:</dt> <dd>${fmtNum(ic.qty)} ${p.um}</dd></div><div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(ic.total, o.currency)}</dd></div></dl>`
+        ? `<dl class="oc-kv it-kv"><div><dd>${esc(ACTIVE(p.active).name)}</dd></div><div><dt>${t('qty')}:</dt> <dd>${fmtNum(ic.qty)} ${p.um}</dd></div><div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(ic.total, o.currency)}</dd></div></dl>
+          <button type="button" class="lnk-stk" data-a="stock-o" data-id="${it.id}">${t('check_stock').split(' ').map(w => `<u>${w}</u>`).join(' ')}</button>`
         : p || it.activeId ? `<u class="act act-sub">${esc(ACTIVE(p ? p.active : it.activeId).name)}</u>` : ''}
 </span>
       ${p && showSem() ? sem(ic.margin) : ''}
@@ -1942,8 +1949,8 @@ function actionBar(){
   if(S.view === 'editor') return `<div class="actionbar">
     ${S.step === 1 ? ''   // cabeçalho: só Próximo (sair é pela seta do topo)
       : `<button class="btn ghost" data-a="prev">${IC.back}${t('back')}</button>
-    ${S.step === 3 && !validate(S.draft).length ? `<button class="btn" data-a="save">${t('save')}</button>` : ''}`}
-    ${S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}</button>` : `<button class="btn primary" data-a="finalize">${t('finalize')}</button>`}</div>`;
+    ${S.step === 3 && !validate(S.draft).length ? `<button class="btn" data-a="save">${IC.save}${t('save')}</button>` : ''}`}
+    ${S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}${IC.fwd}</button>` : `<button class="btn primary" data-a="finalize">${IC.tick}${t('finalize')}</button>`}</div>`;
   if(S.view === 'detail'){
     const o = ORDER(S.orderId); if(!o) return '';
     // aprovador: as decisões estão no fim do pedido (depois da assinatura); embaixo, Voltar + PDF e WhatsApp (como nas outras telas)
@@ -2174,7 +2181,7 @@ const draftChanged = () => !S.draft0 || JSON.stringify(S.draft) !== S.draft0;
 async function leaveEditor(){
   if(S.view !== 'editor') return true;
   if(!draftChanged()){ S.draft = null; S.apprEdit = false; return true; }
-  const r = await ask(t('discard_q'), t('discard_m'), [BACK_BTN(), {label: t('discard'), value: 'yes', kind: 'danger'}]);
+  const r = await ask(t('discard_q'), t('discard_m'), [BACK_BTN(), {label: t('discard'), value: 'yes', kind: 'danger', icon: IC.trash}]);
   if(r !== 'yes') return false;
   S.draft = null; S.apprEdit = false; return true;
 }
@@ -2223,8 +2230,8 @@ function stepErrors(o, n){
   }
   if(n === 2){
     if(!o.cond) add(t('cond'), 'f-cond2');
-    if(!isBonif(o) && !o.due) add(t('due'), 'f-due2');
-    if(!isBonif(o) && o.due && o.due < o.date) add(t('e_due_past'), 'f-due2');
+    if(!o.due) add(t('due'), 'f-due2');
+    if(o.due && o.due < o.date) add(t('e_due_past'), 'f-due2');
     if(!o.priceTableId) add(t('price_table'), 'f-table');
     if(!o.items.length) add(t('e_items'), null);
     o.items.forEach((it, i) => {
@@ -2255,7 +2262,7 @@ async function gotoStep(n){
       S.step = k; S.errStep = k;
       errs.forEach(x => { const it = x.id && o.items.find(i => x.id.endsWith('-' + i.id)); if(it) S.open[it.id] = true; });
       go();
-      await modal({title: t('v_title'), body: `<ul class="errs">${errs.map(x => `<li>${esc(x.msg)}</li>`).join('')}</ul>`, buttons: [{label: t('close'), value: 'ok', kind: 'primary'}]});
+      await modal({title: t('v_title'), body: `<ul class="errs">${errs.map(x => `<li>${esc(x.msg)}</li>`).join('')}</ul>`, buttons: [{label: t('close'), value: 'ok', kind: 'primary', icon: IC.tick}]});
       return false;
     }
   }
@@ -2332,7 +2339,7 @@ const ACT = {
   'toggle-aitem': b => { S.openA[b.dataset.id] = !S.openA[b.dataset.id]; render(); },
   back: () => go(S.listView || 'list'),
   reset: async () => {
-    if(await ask(t('c_reset_t'), t('c_reset_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
+    if(await ask(t('c_reset_t'), t('c_reset_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'danger', icon: IC.undo}]) !== 'yes') return;
     DB = seed(); persist(); go('list');
   },
   new: () => {
@@ -2357,7 +2364,7 @@ const ACT = {
     const body = `<div class="mapopts">
       <button type="button" class="btn block" id="m-geo">${IC.target}${t('my_location')}</button>
       <button type="button" class="btn block" id="m-pick">${IC.pin}${t('pick_on_map')}</button></div>`;
-    const pr = modal({title: name, body, sheet: true, buttons: saved ? [{label: t('remove_location'), value: 'del', kind: 'ghost'}] : []});
+    const pr = modal({title: name, body, sheet: true, buttons: saved ? [{label: t('remove_location'), value: 'del', kind: 'ghost', icon: IC.trash}] : []});
     const ov = document.getElementById('overlay');
     ov.querySelector('#m-geo').addEventListener('click', () => {
       if(!navigator.geolocation) return toast(t('geo_off'), 'warn');
@@ -2478,7 +2485,7 @@ const ACT = {
     const body = `<div class="hint" style="margin:0 0 8px">${t('sign_hint')}</div>
       <div class="sig-box"><canvas id="sig-cv"></canvas></div>
       <div class="maprow"><button type="button" class="btn sm" id="sig-clear">${t('sign_clear')}</button></div>`;
-    const pr = modal({title: t('sign_title'), body, sheet: true, buttons: [{label: t('cancel'), value: 'no'}, {label: t('confirm'), value: 'ok', kind: 'primary'}]});
+    const pr = modal({title: t('sign_title'), body, sheet: true, buttons: [BACK_BTN(), {label: t('confirm'), value: 'ok', kind: 'primary', icon: IC.tick}]});
     const ov = document.getElementById('overlay'), cv = ov.querySelector('#sig-cv'), box = ov.querySelector('.sig-box');
     const dpr = window.devicePixelRatio || 1, W = box.clientWidth, H = 200;
     cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
@@ -2510,7 +2517,7 @@ const ACT = {
   },
   'sign-remove': async () => {
     const o = S.draft; if(!o || !o.signature) return;
-    if(await ask(t('sign_remove') + '?', '', [{label: t('no'), value: 'no'}, {label: t('yes'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
+    if(await ask(t('sign_remove') + '?', '', [{label: t('no'), value: 'no', kind: 'gray', icon: IC.x}, {label: t('yes'), value: 'yes', kind: 'danger', icon: IC.trash}]) !== 'yes') return;
     o.signature = ''; o.signedAt = ''; render();
   },
   datepick: async b => {
@@ -2527,8 +2534,8 @@ const ACT = {
       <div class="wheel" data-w="d">${cells(days(), st.d - 1)}</div>
       <div class="wheel" data-w="m">${cells(months, st.m)}</div>
       <div class="wheel" data-w="y">${cells(years, years.indexOf(st.y))}</div></div>`;
-    const buttons = [...(f === 'deliveryDate' && hid.value ? [{label: t('clear'), value: 'clear'}] : []),
-      {label: t('cancel'), value: 'no'}, {label: 'OK', value: 'ok', kind: 'primary'}];
+    const buttons = [...(f === 'deliveryDate' && hid.value ? [{label: t('clear'), value: 'clear', icon: IC.eraser}] : []),
+      BACK_BTN(), {label: 'OK', value: 'ok', kind: 'primary', icon: IC.tick}];
     const pr = modal({title: b.dataset.lbl, body, buttons, sheet: true});
     const ov = document.getElementById('overlay');
     const W = {d: ov.querySelector('[data-w=d]'), m: ov.querySelector('[data-w=m]'), y: ov.querySelector('[data-w=y]')};
@@ -2577,7 +2584,7 @@ const ACT = {
   },
   'del-item': async b => {
     const i = +b.dataset.i, it = S.draft.items[i], p = PROD(it.productId);
-    if(await ask(t('c_del_t'), t('c_del_m', p ? `${p.name} · ${ACTIVE(p.active).name}` : t('new_item')), [BACK_BTN(), {label: t('remove'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
+    if(await ask(t('c_del_t'), t('c_del_m', p ? `${p.name} · ${ACTIVE(p.active).name}` : t('new_item')), [BACK_BTN(), {label: t('remove'), value: 'yes', kind: 'danger', icon: IC.trash}]) !== 'yes') return;
     S.draft.items.splice(i, 1); render();
   },
   // tela de escolha do produto: lista agrupada pela linha (sem busca)
@@ -2610,14 +2617,14 @@ const ACT = {
     // salvar exige tudo preenchido, igual ao finalizar
     if(!(await gotoStep(4))) return;
     S.step = keep; go();
-    if(await ask(t('c_save_t'), t('c_save_m'), [BACK_BTN(), {label: t('save'), value: 'yes', kind: 'primary'}]) !== 'yes') return;
+    if(await ask(t('c_save_t'), t('c_save_m'), [BACK_BTN(), {label: t('save'), value: 'yes', kind: 'primary', icon: IC.save}]) !== 'yes') return;
     addHist(o, S.isNew ? 'created' : 'saved'); commit(o);
     S.orderId = o.id; S.draft = null; S.doneKind = 'saved'; go('done');
   },
   finalize: async () => {
     const o = S.draft;
     if(!(await gotoStep(4))) return;
-    if(await ask(t('c_fin_t'), t('c_fin_m'), [BACK_BTN(), {label: t('finalize'), value: 'yes', kind: 'primary'}]) !== 'yes') return;
+    if(await ask(t('c_fin_t'), t('c_fin_m'), [BACK_BTN(), {label: t('finalize'), value: 'yes', kind: 'primary', icon: IC.tick}]) !== 'yes') return;
     if(S.isNew) addHist(o, 'created');
     o.status = 'aprovacao'; o.approverNote = ''; addHist(o, 'finalized');
     commit(o); notify({to: 'aprovador', type: 'pending', orderId: o.id}); persist();
@@ -2626,7 +2633,7 @@ const ACT = {
   // Voltar da 1ª etapa = abandonar a digitação/edição (não muda a situação do pedido); só pergunta se algo foi alterado
   cancel: async () => {
     const changed = draftChanged();
-    if(changed && await ask(t('c_cancel_t'), '', [{label: t('no'), value: 'no'}, {label: t('yes'), value: 'yes', kind: 'danger'}]) !== 'yes') return;
+    if(changed && await ask(t('c_cancel_t'), '', [{label: t('no'), value: 'no', kind: 'gray', icon: IC.x}, {label: t('yes'), value: 'yes', kind: 'danger', icon: IC.back}]) !== 'yes') return;
     const wasNew = S.isNew; S.draft = null; S.draft0 = null;
     if(!wasNew && changed) toast(t('t_discarded'));
     if(S.apprEdit){ S.apprEdit = false; S.view = 'detail'; render(); window.scrollTo(0, 0); return; }
@@ -2759,11 +2766,11 @@ document.addEventListener('change', async e => {
     case 'clientId': o.clientId = v; o.contact = ''; o.deliveryPlace = ''; o.billingPlace = ''; o.billing = ''; o.items.forEach(x => x.deliveryPlace = ''); creditToast(); break;
     case 'safraId': case 'currency': {
       if(o.items.some(x => x.productId) &&
-        await ask(t('c_table_t'), t('c_table_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'primary'}]) !== 'yes'){ render(); return; }
+        await ask(t('c_table_t'), t('c_table_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'primary', icon: IC.tick}]) !== 'yes'){ render(); return; }
       o[f] = v;
       const tb = TABLES.find(x => x.safraId === o.safraId && x.currency === o.currency);
       o.priceTableId = tb ? tb.id : '';
-      if(o.cond && !isBonif(o)) o.due = dueFor(o.cond, o.safraId, o.date);
+      if(o.cond || isBonif(o)) o.due = dueOf(o);
       o.items.forEach(x => { x.manual = false; recalcItem(o, x); });
       if(f === 'safraId') creditToast();
       break;
@@ -2771,11 +2778,11 @@ document.addEventListener('change', async e => {
     case 'cond': {
       let recalc = false;
       if(o.items.some(x => x.manual)){
-        const r = await ask(t('c_cond_t'), t('c_cond_m'), [BACK_BTN(), {label: t('keep'), value: 'keep'}, {label: t('recalc'), value: 'recalc', kind: 'primary'}]);
+        const r = await ask(t('c_cond_t'), t('c_cond_m'), [BACK_BTN(), {label: t('keep'), value: 'keep', icon: IC.lock}, {label: t('recalc'), value: 'recalc', kind: 'primary', icon: IC.refresh}]);
         if(r !== 'keep' && r !== 'recalc'){ render(); return; }
         recalc = r === 'recalc';
       }
-      o.cond = v; o.due = isBonif(o) ? '' : dueFor(v, o.safraId, o.date);
+      o.cond = v; o.due = dueOf(o);
       o.items.forEach(x => { if(recalc) x.manual = false; recalcItem(o, x); });
       break;
     }
@@ -2783,17 +2790,17 @@ document.addEventListener('change', async e => {
     case 'priceTableId': {
       // com produtos já lançados, confirma antes (os preços são refeitos pela nova tabela, inclusive os digitados)
       if(o.items.some(x => x.productId) &&
-        await ask(t('c_table_t'), t('c_table_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'primary'}]) !== 'yes'){ render(); return; }
+        await ask(t('c_table_t'), t('c_table_m'), [BACK_BTN(), {label: t('confirm'), value: 'yes', kind: 'primary', icon: IC.tick}]) !== 'yes'){ render(); return; }
       o.priceTableId = v; o.items.forEach(x => { x.manual = false; recalcItem(o, x); }); break;
     }
     case 'billing': { const old = o.billing; o.billing = v; o.items.forEach(x => { if(!x.deliveryPlace || x.deliveryPlace === old) x.deliveryPlace = v; }); break; }
     case 'itemPlace': it.deliveryPlace = v; break;
-    case 'negType': o.negType = v; o.due = isBonif(o) || !o.cond ? '' : dueFor(o.cond, o.safraId, o.date); o.items.forEach(x => recalcItem(o, x)); break;
+    case 'negType': o.negType = v; o.due = dueOf(o); o.items.forEach(x => recalcItem(o, x)); break;
     case 'note': case 'docType': case 'deliveryPlace': case 'billingPlace': case 'contact': o[f] = v; break;
     case 'itemGroup': {
       // já tem produto que não é dessa linha: confirma antes de limpar
       if(v && PROD(it.productId) && PROD(it.productId).group !== v &&
-        await ask(t('c_chg_t'), t('c_chg_m'), [BACK_BTN(), {label: t('change'), value: 'yes', kind: 'danger'}]) !== 'yes'){ render(); return; }
+        await ask(t('c_chg_t'), t('c_chg_m'), [BACK_BTN(), {label: t('change'), value: 'yes', kind: 'danger', icon: IC.swap}]) !== 'yes'){ render(); return; }
       it.group = v;
       if(v && it.activeId && !PRODUCTS.some(x => x.active === it.activeId && x.group === v)) it.activeId = '';
       if(v && PROD(it.productId) && PROD(it.productId).group !== v){ it.productId = ''; it.price = 0; it.manual = false; }
@@ -2801,7 +2808,7 @@ document.addEventListener('change', async e => {
     }
     case 'activeId': {
       if(PROD(it.productId) && PROD(it.productId).active !== v &&
-        await ask(t('c_chg_t'), t('c_chg_m'), [BACK_BTN(), {label: t('change'), value: 'yes', kind: 'danger'}]) !== 'yes'){ render(); return; }
+        await ask(t('c_chg_t'), t('c_chg_m'), [BACK_BTN(), {label: t('change'), value: 'yes', kind: 'danger', icon: IC.swap}]) !== 'yes'){ render(); return; }
       it.activeId = v;
       if(v && !it.group) it.group = (PRODUCTS.find(x => x.active === v) || {}).group || '';
       if(v && PROD(it.productId) && PROD(it.productId).active !== v){ it.productId = ''; it.price = 0; it.manual = false; }
@@ -2975,7 +2982,7 @@ function reportPages(o){
   const sameBill = !o.billingPlace || o.billingPlace === o.billing;
   grid([
     [[t('client'), cl.name, 2, {bold: true, size: 9.6}], [t('client_doc'), cl.doc], [t('contact'), contactName(o)]],
-    [[sameBill ? t('rp_bill_both') : t('billing'), billName(o), 2], [t('city'), cl.city], [t('due'), isBonif(o) ? t('rp_no_due_s') : (o.due ? fmtDate(o.due) : '')]],
+    [[sameBill ? t('rp_bill_both') : t('billing'), billName(o), 2], [t('city'), cl.city], [t('due'), o.due ? fmtDate(o.due) : '']],
     ...(sameBill ? [] : [[[t('billing_place'), billPlaceName(o), 2]]])
   ]);
 
@@ -3038,7 +3045,7 @@ function reportPages(o){
   [[t('rp_term'), vx[0], 'left'], [t('rp_date'), vx[1], 'left'], [`${t('rp_value')} (${cur})`, vx[2], 'right']].forEach(([h, x, a]) =>
     text(cap(h), x, yv + 4.3, {size: 5.9, bold: true, color: brand, align: a, cs: .2}));
   yv += 6.4;
-  if(isBonif(o) || !o.due) text(fit(isBonif(o) ? t('rp_no_due') : '—', C2 - 2 * PX, 7.8).s, vx[0], yv + 4.9, {size: 7.8, color: MUTED});
+  if(!o.due) text(fit('—', C2 - 2 * PX, 7.8).s, vx[0], yv + 4.9, {size: 7.8, color: MUTED});
   else {
     const days = Math.round((parseD(o.due) - parseD(o.date)) / 864e5);
     text(days <= 0 ? t('cond_avista') : t('rp_days', days), vx[0], yv + 4.9, {size: 8.2});
@@ -3214,7 +3221,7 @@ function orderText(o){
   if(billName(o)) L.push(`${t('billing')}: ${billName(o)}`);
   L.push('', B(t('g_neg').toUpperCase()), `${t('safra')}: ${sf?.name || '—'}`, `${t('currency')}: ${t('cur_' + o.currency)}`, `${t('neg_type')}: ${t('neg_' + o.negType)}`);
   if(o.cond) L.push(`${t('cond')}: ${t('cond_' + o.cond)}`);
-  if(!isBonif(o) && o.due) L.push(`${t('due')}: ${fmtDate(o.due)}`);
+  if(o.due) L.push(`${t('due')}: ${fmtDate(o.due)}`);
   L.push('', B(`${t('items').toUpperCase()} (${items.length})`));
   items.forEach((it, i) => { const p = PROD(it.productId), ic = itemCalc(o, it);
     L.push(`${i + 1}. ${B(p.name)}`, `     ${ACTIVE(p.active).name}`, `     ${fmtNum(ic.qty)} ${p.um} × ${cur(ic.price)} = ${B(cur(ic.total))}`);
