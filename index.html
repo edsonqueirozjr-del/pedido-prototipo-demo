@@ -806,8 +806,10 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 #overlay.sheet .dlg{max-width:560px;border-radius:18px 18px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
 .errs{margin:0;padding-left:18px;color:var(--bad)} .errs li{margin-bottom:4px}
 .nitem{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;padding:12px 4px;border:0;border-bottom:1px solid var(--border);background:none;cursor:pointer}
-.nitem .dot{width:9px;height:9px;border-radius:50%;background:var(--info);margin-top:6px;flex:none}
-.nitem.read .dot{background:transparent}
+.nitem{align-items:center}
+.nitem .n-av{position:relative;flex:none}
+.nitem .n-av .avatar{width:42px;height:42px;font-size:15px}
+.nitem .n-new{position:absolute;top:-1px;right:-1px;width:13px;height:13px;border-radius:50%;background:#25d366;border:2px solid var(--surface)}
 
 /* toast */
 #toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);z-index:60;max-width:calc(100% - 32px);padding:11px 16px;border-radius:12px;background:#1d2621;color:#fff;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:.2s}
@@ -2165,12 +2167,16 @@ function notifBy(n, o){
   const h = o && [...(o.history || [])].reverse().find(x => x.action === NOTIF_H[n.type]);
   return h ? h.user : APPROVER;
 }
+// foto de quem fez o pedido (aguardando aprovação) ou de quem decidiu, pelo nome
+const personId = name => [...APPROVERS, ...SELLERS].find(x => x.name === name)?.id || '';
 function notify(n){ DB.notifs.push({id:uid(), at:new Date().toISOString(), read:false, ...n}); }
 function openNotifs(){
   const list = myNotifs();
   const body = list.length ? list.map(n => { const o = ORDER(n.orderId);
-    return `<button class="nitem ${n.read ? 'read' : ''}" data-a="notif-open" data-id="${n.orderId}"><span class="dot"></span>
-      <span><b>${t('n_'+n.type, (o ? o.number : ''), notifBy(n, o))}</b><br><span class="muted small">${fmtDT(n.at)}${o ? ' · ' + esc(CLIENT(o.clientId)?.name || '') : ''}</span></span></button>`; }).join('')
+    const who = notifBy(n, o);
+    // foto da pessoa; não lida = bolinha verde em cima da foto
+    return `<button class="nitem ${n.read ? 'read' : ''}" data-a="notif-open" data-id="${n.orderId}"><span class="n-av">${avatarHtml(personId(who), who)}${n.read ? '' : '<span class="n-new"></span>'}</span>
+      <span><b>${t('n_'+n.type, (o ? o.number : ''), who)}</b><br><span class="muted small">${fmtDT(n.at)}${o ? ' · ' + esc(CLIENT(o.clientId)?.name || '') : ''}</span></span></button>`; }).join('')
     : `<div class="empty">${t('no_notif')}</div>`;
   modal({title: t('notifications'), body, sheet: true});
   list.forEach(n => n.read = true); persist(); render();
