@@ -1553,9 +1553,9 @@ function orderCard(o, showMargin, inAppr = false){
   const main = `<div class="oc-main">
       <div class="oc-head">${inAppr ? `<span class="chip st-tag mg-tag ${semOf(c.margin) ? 'mb-' + semOf(c.margin) : ''}">${fmtPct(c.margin)}</span>` : stTag(o.status)}<b class="oc-name">${esc(cl ? cl.name : '—')}</b></div>
       <dl class="oc-kv">
+        <div><dt>${t('company')}:</dt> <dd>${esc(companyOf(o))}</dd></div>
         <div><dt>${t('number')}:</dt> <dd>${o.number}</dd></div>
         <div><dt>${t('mov_date')}:</dt> <dd>${movDT(o)}</dd></div>
-        <div><dt>${t('company')}:</dt> <dd>${esc(companyOf(o))}</dd></div>
         <div><dt>${t('seller')}:</dt> <dd>${esc(SELLER(o.sellerId).name)}</dd></div>
         <div><dt>${t('neg_type')}:</dt> <dd>${t('neg_'+o.negType)}</dd></div>
         <div><dt>${t('safra')}:</dt> <dd>${esc(SAFRA(o.safraId)?.name || '—')}</dd></div>
