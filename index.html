@@ -40,19 +40,21 @@ main{padding:12px 16px 132px}
 .muted{color:var(--muted)} .small{font-size:12.5px} .right{text-align:right}
 
 /* topo */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:var(--top);display:flex;align-items:center;gap:8px;padding:0 12px 0 16px;background:var(--surface);border-bottom:1px solid var(--border)}
-.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;margin-right:auto;color:var(--primary);white-space:nowrap}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:var(--top);display:flex;align-items:center;gap:4px;padding:0 10px 0 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.top > .icon-btn{width:34px}
+.brand{display:flex;align-items:center;gap:6px;font-weight:800;font-size:16px;margin-right:auto;color:var(--primary);white-space:nowrap}
+.brand-logo{flex:none;width:24px;height:24px;object-fit:contain}  /* símbolo da Somax, sem o nome */
 .brand span{color:var(--text)}
 .icon-btn{position:relative;display:inline-grid;place-items:center;width:38px;height:38px;border:0;border-radius:10px;background:transparent;cursor:pointer}
 .icon-btn:hover{background:var(--surface-2)}
 .badge{position:absolute;top:3px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--bad);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
 .pill-btn{height:32px;padding:0 10px;border:1px solid var(--border);border-radius:16px;background:var(--surface);font-weight:600;font-size:13px;cursor:pointer}
-.profile-btn{display:flex;align-items:center;gap:6px;min-width:0;max-width:170px;height:36px;padding:0 10px 0 4px;border:1px solid var(--border);border-radius:18px;background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600}
+.profile-btn{display:flex;align-items:center;gap:5px;min-width:0;max-width:170px;height:36px;padding:0 9px 0 4px;border:1px solid var(--border);border-radius:18px;background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600}
 .avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--primary);color:var(--primary-ink);font-size:12px;font-weight:700}
 .avatar.ph{background:var(--gray-soft);overflow:hidden}
 .avatar.ph img{width:100%;height:100%;object-fit:cover;display:block}
 .profile-btn.appr .avatar{background:var(--info);color:#fff}
-.pb-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pb-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px}
 /* janela do usuário: tema e idioma em cima, depois a troca de usuário */
 /* preferências (tema e idioma): lista neutra com seletor segmentado, no padrão de ajustes do sistema */
 .pf-list{border:1px solid var(--border);border-radius:12px;background:var(--surface);margin-bottom:4px}
@@ -1499,7 +1501,7 @@ function header(){
   const isAppr = S.profile === 'aprovador';
   const name = isAppr ? APPROVER : SELLER(ME).name;
   return `<header class="top">
-    <div class="brand"><span>${t('app')}</span></div>
+    <div class="brand"><img class="brand-logo" src="${LOGOS.somax}" alt="Somax"><span>${t('app')}</span></div>
     <button class="icon-btn" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
     <button class="profile-btn ${isAppr ? 'appr' : ''}" data-a="profile" title="${esc(name)}">${avatarHtml(isAppr ? 'appr' : ME, name)}<span class="pb-name">${esc(name)}</span></button>
   </header>`;
