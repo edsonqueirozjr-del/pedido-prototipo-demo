@@ -145,7 +145,23 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dmulti h3{margin:0 0 8px;font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .co-mini{width:15px;height:15px;object-fit:contain;vertical-align:-3px;margin-right:4px;flex:none}
 .dlr .co-mini{margin-right:0}
-.dfx{font-size:11px;color:var(--muted);text-align:center;margin-top:-2px}
+.dlr2{align-items:flex-start}
+.dlr2 > i{margin-top:4px}
+.dlr2 span{display:flex;flex-direction:column;gap:1px}
+.dlr2 span b{font-weight:600;font-size:13.5px}
+.dlr2 span small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.dpiec .dlr2 em{min-width:0}
+.dlr2 em{min-width:44px;font-weight:700;color:var(--text);font-size:13px}
+.dfxr{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);font-weight:600}
+.dfxr .money{flex:none;width:140px}
+.dfxr .money input{min-height:38px;height:38px;font-size:15px;font-weight:700;text-align:right;padding-right:12px}
+.dfxr .money > span{font-size:14px}
+.dash .dcard h2 .dum{flex:none}
+.dash .dcard h2 .dum .seg-o{flex:none;width:42px;height:28px;font-size:12.5px}
+.dpiec > svg.dch{width:132px}
+.dash .dpiec > svg.dch{width:112px;flex:none}
+.dch .dpie{cursor:pointer;stroke:var(--surface);stroke-width:1.5;transform-box:view-box;transform-origin:60px 60px;animation:dPop .6s cubic-bezier(.3,1.3,.5,1) both}
+.dash svg.dch text.dpl{fill:#fff;font-size:10px;font-weight:800;pointer-events:none}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -1092,7 +1108,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1139,7 +1155,7 @@ pt:{
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -2422,7 +2438,7 @@ function openOrder(id){
 /* ---------- Dashboard de vendas: arrastar a tela de pedidos para o lado ---------- */
 // gestor vê os pedidos dele; aprovador vê todos. Tudo em uma moeda (USD convertido pelo câmbio RATE).
 const homeView = () => S.profile === 'aprovador' ? 'approvals' : 'list';
-const DASH0 = () => ({per: '90', cur: 'BRL', f: {}, sel: null});
+const DASH0 = () => ({per: '90', cur: 'BRL', f: {}, sel: null, fx: RATE, um: 'L'});
 const D_ST = ['aprovado', 'aprovacao', 'correcao', 'aberto', 'reprovado'];
 const D_STC = {aprovado: 'var(--ok)', aprovacao: 'var(--lock)', correcao: 'var(--fix)', aberto: 'var(--warn)', reprovado: 'var(--bad)'};
 const D_PAL = ['var(--d1)', 'var(--d4)', 'var(--d3)', 'var(--d5)', 'var(--d6)', 'var(--d2)'];
@@ -2458,15 +2474,15 @@ function dFacts(from, to, withF = true){
   DB.orders.forEach(o => {
     if(S.profile !== 'aprovador' && o.sellerId !== ME) return;
     if(o.date < from || o.date > to) return;
-    const k = toCur === 'BRL' ? (o.currency === 'USD' ? RATE : 1) : (o.currency === 'USD' ? 1 : 1 / RATE);
+    const fx = S.dash.fx || RATE, k = toCur === 'BRL' ? (o.currency === 'USD' ? fx : 1) : (o.currency === 'USD' ? 1 : 1 / fx);
     o.items.forEach(it => { const p = PROD(it.productId); if(!p) return;
-      const c = itemCalc(o, it); rows.push({o, p, v: c.total * k, c: c.costT * k, tb: (c.adj || 0) * c.qty * k}); });
+      const c = itemCalc(o, it); rows.push({o, p, v: c.total * k, c: c.costT * k, tb: (c.adj || 0) * c.qty * k, q: c.qty}); });
   });
   if(!withF) return rows;
   return rows.filter(r => Object.entries(S.dash.f).every(([key, v]) => D_DIM[key].get(r) === v));
 }
-const dAgg = rows => { let v = 0, c = 0, tb = 0; const os = new Set(); rows.forEach(r => { v += r.v; c += r.c; tb += r.tb; os.add(r.o.id); });
-  return {v, c, n: os.size, m: v > 0 ? (v - c) / v : null, d: tb > 0 ? (tb - v) / tb : 0}; };
+const dAgg = rows => { let v = 0, c = 0, tb = 0, q = 0; const os = new Set(); rows.forEach(r => { v += r.v; c += r.c; tb += r.tb; q += r.q || 0; os.add(r.o.id); });
+  return {v, c, q, n: os.size, m: v > 0 ? (v - c) / v : null, d: tb > 0 ? (tb - v) / tb : 0}; };
 function dGroup(rows, key){ const m = new Map(); rows.forEach(r => { const k = key(r); if(!m.has(k)) m.set(k, []); m.get(k).push(r); });
   return [...m].map(([k, rs]) => ({k, rs, ...dAgg(rs)})).sort((a, b) => b.v - a.v); }
 function dRange(){
@@ -2519,17 +2535,28 @@ function dDonut(parts, center, sub){
   return `<svg class="dch" viewBox="0 0 120 120"><circle cx="60" cy="60" r="${r.toFixed(2)}" style="stroke:var(--gray-soft);stroke-width:${th}"/>${segs.join('')}
     <text x="60" y="61" text-anchor="middle" class="dn-big">${center}</text><text x="60" y="77" text-anchor="middle">${sub}</text></svg>`;
 }
+// pizza: fatias com o % dentro (quando cabe); tocar na fatia filtra
+function dPie(groups, key, color){
+  const gs = groups.filter(g => g.v > 0), tot = gs.reduce((a, g) => a + g.v, 0) || 1, f = S.dash.f[key], cx = 60, cy = 60, r = 57;
+  let a0 = -Math.PI / 2, s = '', lb = '';
+  gs.forEach((g, i) => { const fr = g.v / tot, a1 = a0 + fr * 2 * Math.PI, P = a => `${(cx + r * Math.cos(a)).toFixed(2)},${(cy + r * Math.sin(a)).toFixed(2)}`;
+    const d = gs.length === 1 ? `M${cx},${cy - r} A${r},${r} 0 1 1 ${cx - .01},${cy - r} Z` : `M${cx},${cy} L${P(a0)} A${r},${r} 0 ${fr > .5 ? 1 : 0} 1 ${P(a1)} Z`;
+    s += `<path class="dpie" d="${d}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}" style="fill:${color(g, i)};opacity:${f && f !== g.k ? .3 : 1};animation-delay:${i * 90}ms"/>`;
+    if(fr >= .06){ const am = (a0 + a1) / 2, rr = gs.length === 1 ? 0 : r * .63; lb += `<text x="${(cx + rr * Math.cos(am)).toFixed(1)}" y="${(cy + rr * Math.sin(am) + 3.5).toFixed(1)}" text-anchor="middle" class="dpl">${fmtNum(fr * 100, 0)}%</text>`; }
+    a0 = a1; });
+  return `<svg class="dch" viewBox="0 0 120 120">${s}${lb}</svg>`;
+}
 function dSplit(groups, key, name, color, icon){
   const tot = groups.reduce((a, g) => a + g.v, 0) || 1, f = S.dash.f[key];
   return `<div class="dsplit">${groups.filter(g => g.v > 0).map((g, i) => `<i style="flex:${g.v.toFixed(2)};background:${color(g, i)}" class="${f && f !== g.k ? 'dim' : ''}"></i>`).join('')}</div>
     <div class="dleg">${groups.map((g, i) => `<button type="button" class="dlr ${f === g.k ? 'on' : ''} ${f && f !== g.k ? 'dim' : ''}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"><i style="background:${color(g, i)}"></i>${icon ? icon(g) : ''}<span>${esc(name(g) || '—')}</span><b>${dMoney(g.v)}</b><em>${fmtNum(g.v / tot * 100, 0)}%</em></button>`).join('')}</div>`;
 }
-function dRank(groups, key, name, sub, lead, color){
-  const max = Math.max(1, ...groups.map(g => g.v)), f = S.dash.f[key];
+function dRank(groups, key, name, sub, lead, color, val = g => g.v, txt = g => dMoney(g.v)){
+  const max = Math.max(1, ...groups.map(val)), f = S.dash.f[key];
   return groups.map((g, i) => `<button type="button" class="drk ${f === g.k ? 'on' : ''}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}">
       ${lead ? lead(g, i) : `<span class="drk-n">${i + 1}</span>`}
-      <span class="drk-b"><span class="drk-t"><b>${esc(name(g) || '—')}</b><em>${dMoney(g.v)}</em></span>
-        <span class="dbar"><i style="width:${(g.v / max * 100).toFixed(1)}%;background:${color ? color(g, i) : 'var(--d1)'};animation-delay:${i * 70}ms"></i></span>
+      <span class="drk-b"><span class="drk-t"><b>${esc(name(g) || '—')}</b><em>${txt(g)}</em></span>
+        <span class="dbar"><i style="width:${(val(g) / max * 100).toFixed(1)}%;background:${color ? color(g, i) : 'var(--d1)'};animation-delay:${i * 70}ms"></i></span>
         <span class="drk-s"><span>${sub(g)}</span>${dMg() ? mBadge(g.m) : ''}</span></span></button>`).join('');
 }
 // evolução: barras (vendido + em andamento) e a linha da margem
@@ -2579,6 +2606,10 @@ function dScatter(rows){
     s += `<circle class="dbub" cx="${X(g.d).toFixed(1)}" cy="${Y(g.m).toFixed(1)}" r="${r.toFixed(1)}" data-a="open" data-id="${g.k}" style="fill:${c};fill-opacity:.62;stroke:${c};stroke-width:1.2;animation-delay:${Math.min(i * 12, 500)}ms"><title>${esc(CLIENT(g.rs[0].o.clientId)?.name || '')} · ${fmtPct(g.m)}</title></circle>`; });
   return `<svg class="dch" viewBox="0 0 ${W} ${H}">${s}</svg>`;
 }
+function dLegend(groups, key, name, color, txt = g => dMoney(g.v), val = g => g.v){
+  const tot = groups.reduce((a, g) => a + val(g), 0) || 1, f = S.dash.f[key];
+  return `<div class="dleg">${groups.map((g, i) => `<button type="button" class="dlr ${f === g.k ? 'on' : ''} ${f && f !== g.k ? 'dim' : ''}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"><i style="background:${color(g, i)}"></i><span>${esc(name(g) || '—')}</span><b>${txt(g)}</b><em>${fmtNum(val(g) / tot * 100, 0)}%</em></button>`).join('')}</div>`;
+}
 function viewDash(){
   const D = S.dash, rg = dRange(), rows = dFacts(rg.from, rg.to), cur = D.cur, isAppr = S.profile === 'aprovador';
   const sale = rows.filter(r => r.o.status !== 'reprovado');
@@ -2606,13 +2637,13 @@ function viewDash(){
   if(byLine[0] && A.v) ins.push([IC.box, t('d_ins_line', `<b>${esc(byLine[0].k)}</b>`, `<b>${fmtPct(byLine[0].v / A.v)}</b>`)]);
   if(byClient[0] && A.v) ins.push([IC.target, t('d_ins_client', `<b>${esc(CLIENT(byClient[0].k)?.name || '')}</b>`, fmtPct(byClient[0].v / A.v))]);
   if(low && dMg()) ins.push([IC.alert, t('d_ins_low', `<b>${low}</b>`, fmtPct(MARGIN_MID))]);
-  if(rate != null) ins.push([IC.tick, t('d_ins_appr', `<b>${fmtPct(rate)}</b>`)]);
   const sub = isAppr ? t('d_all_sellers') : SELLER(ME).name;
   return `<div class="dash ${S.dashStill ? 'still' : ''}">
     ${pager()}
     <div class="dhead"><div><h1>${t('dash')}</h1><span class="dsub">${esc(sub)}</span></div>
       <div class="seg dcur">${seg('dcur', 'BRL', 'BRL', cur === 'BRL')}${seg('dcur', 'USD', 'USD', cur === 'USD')}</div></div>
     <div class="seg dper">${seg('dper', '30', t('d_p30'), D.per === '30')}${seg('dper', '90', t('d_p90'), D.per === '90')}${seg('dper', 'all', t('d_all'), D.per === 'all')}</div>
+    <label class="dfxr"><span>${t('d_fx_lbl')}</span><span class="money" data-c="BRL"><span>BRL</span><input id="d-fx" type="text" inputmode="decimal" value="${fmtNum(D.fx || RATE, 2)}" aria-label="${t('d_fx_lbl')}"></span></label>
     ${fchips.length ? `<div class="dfil">${fchips.map(([k, v]) => `<button type="button" class="dfchip" data-a="dfil" data-k="${k}" data-v="${esc(v)}">${t(D_DIM[k].lbl)}: <b>${esc(D_DIM[k].name(v) || '—')}</b>${IC.x}</button>`).join('')}${fchips.length > 1 ? `<button type="button" class="dfclr" data-a="dclr">${t('d_clear')}</button>` : ''}</div>` : ''}
     <section class="dhero">
       <div class="dh-top"><span>${t('d_sold')}</span><span>${D.per === 'all' ? t('d_all') : t('d_p' + D.per)}</span></div>
@@ -2625,15 +2656,16 @@ function viewDash(){
       <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_ticket')}</span><span class="dk-v"><small>${cur}</small> ${dCount(A.n ? A.v / A.n : 0, 'short')}</span><span class="dk-s">${t('d_n_orders', A.n)}</span></div></div>
       ${dMg() ? `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_margin')}</span><span class="dk-v" style="color:${D_SEMC[semOf(A.m)] || 'var(--text)'}">${dCount(A.m ?? 0, 'pct')}</span><span class="dk-s">≥ ${fmtPct(MARGIN_GOOD)}</span></div>${dRing((A.m || 0) / .3, D_SEMC[semOf(A.m)] || 'var(--gray)')}</div>`
         : `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_biggest')}</span><span class="dk-v"><small>${cur}</small> ${dCount(big ? big.v : 0, 'short')}</span><span class="dk-s">${big ? esc(CLIENT(big.rs[0].o.clientId)?.name || '') : '—'}</span></div></div>`}
-      <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_disc')}</span><span class="dk-v">${dCount(A.d, 'pct')}</span><span class="dk-s">${t('tprice')}</span></div>${dRing(A.d / .2, 'var(--d4)')}</div>
-      <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_appr')}</span><span class="dk-v">${rate == null ? '—' : dCount(rate, 'pct')}</span><span class="dk-s">${AP.n} / ${AP.n + REJ.n}</span></div>${dRing(rate || 0, 'var(--d1)')}</div>
+      ${['L', 'kg'].map(um => { const rs = sale.filter(r => r.p.um === um), q = rs.reduce((a, r) => a + r.q, 0), np = new Set(rs.map(r => r.p.id)).size;
+        return `<div class="dk"><div class="dk-t"><span class="dk-l">${t('qty')} (${um})</span><span class="dk-v">${dCount(q)} <small>${um}</small></span><span class="dk-s">${t('d_n_prods', np)}</span></div></div>`; }).join('')}
     </div>
     ${ins.length ? `<section class="dcard"><h2>${t('d_ins')}</h2><ul class="dins">${ins.map(([ic, txt]) => `<li>${ic}<span>${txt}</span></li>`).join('')}</ul></section>` : ''}
     <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === '30' ? t('d_by_day') : S.dash.per === '90' ? t('d_by_week') : t('d_by_month')}</small></h2>${dEvol(rows, rg)}</section>
-    <section class="dcard"><h2>${t('d_status')}</h2><div class="ddon">${dDonut(bySt.map(g => ({k: g.k, v: g.v, color: D_STC[g.k], dim: D.f.st && D.f.st !== g.k})), dAgg(rows).n, t('d_orders'))}
-      <div class="dleg">${bySt.map(g => `<button type="button" class="dlr ${D.f.st === g.k ? 'on' : ''} ${D.f.st && D.f.st !== g.k ? 'dim' : ''}" data-a="dfil" data-k="st" data-v="${g.k}"><i style="background:${D_STC[g.k]}"></i><span>${t('st_' + g.k)}</span><b>${g.n}</b><em>${fmtNum(g.v / stTot * 100, 0)}%</em></button>`).join('')}</div></div></section>
-    ${byLine.length ? `<section class="dcard"><h2>${t('d_mix')}</h2>${dSplit(byLine, 'line', g => g.k, lineColor)}</section>` : ''}
+    ${byLine.length ? `<section class="dcard"><h2>${t('d_mix')}</h2><div class="ddon dpiec">${dPie(byLine, 'line', lineColor)}<div class="dleg">${byLine.map((g, i) => `<button type="button" class="dlr dlr2 ${D.f.line === g.k ? 'on' : ''} ${D.f.line && D.f.line !== g.k ? 'dim' : ''}" data-a="dfil" data-k="line" data-v="${esc(g.k)}"><i style="background:${lineColor(g, i)}"></i><span><b>${esc(g.k)}</b><small>${dMoney(g.v)}</small><small>${['L', 'kg'].map(u => { const q = g.rs.filter(r => r.p.um === u).reduce((x, r) => x + r.q, 0); return q ? `${fmtShort(q)} ${u}` : ''; }).filter(Boolean).join(' · ')}</small></span><em>${fmtPct(g.v / (A.v || 1))}</em></button>`).join('')}</div></div></section>` : ''}
     ${byProd.length ? `<section class="dcard"><h2>${t('d_top_p')}</h2>${dRank(byProd, 'prod', g => PROD(g.k)?.name, g => esc(ACTIVE(PROD(g.k).active).name), null, g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === PROD(g.k).group)) % D_PAL.length])}</section>` : ''}
+    ${(() => { const um = D.um, byQ = dGroup(sale.filter(r => r.p.um === um), r => r.p.id).sort((a, b) => b.q - a.q).slice(0, 6);
+      return `<section class="dcard"><h2>${t('d_qty_p')}<span class="seg dum">${['L', 'kg'].map(u => seg('dum', u, u, um === u)).join('')}</span></h2>
+        ${byQ.length ? dRank(byQ, 'prod', g => PROD(g.k)?.name, g => `${esc(ACTIVE(PROD(g.k).active).name)} · ${dMoney(g.v)}`, null, g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === PROD(g.k).group)) % D_PAL.length], g => g.q, g => `${fmtNum(g.q)} ${um}`) : `<div class="empty">${t('d_empty')}</div>`}</section>`; })()}
     ${byClient.length ? `<section class="dcard"><h2>${t('d_top_c')}</h2>${dRank(byClient, 'client', g => CLIENT(g.k)?.name, g => t('d_n_orders', g.n), null, () => 'var(--d4)')}</section>` : ''}
     ${isAppr && sale.length ? `<section class="dcard"><h2>${t('d_sellers')}</h2>${dRank(dGroup(sale, r => r.o.sellerId), 'seller', g => SELLER(g.k)?.name, g => { const c = SELLER(g.k)?.company; return `<img class="co-mini" src="${LOGOS[c]}" alt="">${esc(COMPANIES[c])} · ${esc(UNIT(SELLER(g.k).unit)?.name || '')}`; }, g => avatarHtml(g.k, SELLER(g.k)?.name || ''), g => `var(--${SELLER(g.k)?.company})`)}</section>
       <section class="dcard dmulti"><div><h3>${t('d_comp')}</h3>${dSplit(dGroup(sale, r => SELLER(r.o.sellerId)?.company), 'comp', g => COMPANIES[g.k], g => `var(--${g.k})`, g => `<img class="co-mini" src="${LOGOS[g.k]}" alt="">`)}</div>
@@ -2643,7 +2675,6 @@ function viewDash(){
       <div><h3>${t('d_safras')}</h3>${dSplit(dGroup(sale, r => r.o.safraId), 'safra', g => SAFRA(g.k)?.name, (g, i) => ['var(--d1)', 'var(--d3)', 'var(--d4)'][i % 3])}</div>
       <div><h3>${t('cond')}</h3>${dSplit(dGroup(sale, r => r.o.cond), 'cond', g => t('cond_' + g.k), (g, i) => ['var(--d4)', 'var(--d5)', 'var(--d6)'][i % 3])}</div>
       <div><h3>${t('neg_type')}</h3>${dSplit(dGroup(sale, r => r.o.negType), 'neg', g => t('neg_' + g.k), (g, i) => ['var(--d1)', 'var(--d3)'][i % 2])}</div></section>` : ''}
-    <div class="dfx">${t('d_fx', fmtNum(RATE, 2))}</div>
   </div>`;
 }
 // bolinhas de página: Pedidos | Dashboard
@@ -2660,6 +2691,7 @@ const ACT = {
   pg: b => dashGo(b.dataset.v === 'dash'),
   dper: b => { S.dash.per = b.dataset.v; S.dash.sel = null; render(); },
   dcur: b => { S.dash.cur = b.dataset.v; render(); },
+  dum: b => { S.dash.um = b.dataset.v; render(); },
   dfil: b => { const k = b.dataset.k, v = b.dataset.v; if(S.dash.f[k] === v) delete S.dash.f[k]; else S.dash.f[k] = v; S.dash.sel = null; render(); },
   dclr: () => { S.dash.f = {}; render(); },
   dsel: b => { const i = +b.dataset.i; S.dash.sel = S.dash.sel === i ? null : i; S.dashStill = true; render(); S.dashStill = false; },
@@ -3110,6 +3142,12 @@ document.addEventListener('click', async e => {
   });
 })();
 
+document.addEventListener('change', e => {
+  if(e.target.id !== 'd-fx') return;
+  const v = parseFloat(e.target.value.replace(/\./g, '').replace(',', '.'));
+  if(v > 0) S.dash.fx = Math.round(v * 10000) / 10000;
+  render();
+});
 /* ---------- Arrastar para o lado: Pedidos ↔ Dashboard ---------- */
 (function swipeDash(){
   let x0 = 0, y0 = 0, dx = 0, on = false, horiz = null, m = null;
