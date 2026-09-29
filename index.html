@@ -118,7 +118,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .drk-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
 .drk-t{display:flex;justify-content:space-between;gap:8px;font-size:13.5px}
 .drk-t b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.drk-t em{font-style:normal;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.drk-t em{flex:none;width:86px;text-align:left;font-style:normal;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}  /* valores em coluna, como nas legendas */
 .drk-s{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11.5px;color:var(--muted);min-height:18px}
 .drk-s > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .drk-s .mbadge{height:18px;font-size:11px;padding:0 6px}
@@ -129,6 +129,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dlr > i{width:10px;height:10px;border-radius:3px;flex:none}
 .dlr span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dlr b{font-variant-numeric:tabular-nums;font-size:12.5px;white-space:nowrap}
+.dlr > b{flex:none;width:96px;text-align:left}  /* valores em coluna: o BRL/USD alinhado na vertical */
 .dlr em{font-style:normal;color:var(--muted);font-size:12px;min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
 .dlr.on{background:var(--primary-soft)}
 .dim{opacity:.35}
