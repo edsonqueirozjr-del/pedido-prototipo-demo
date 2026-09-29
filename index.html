@@ -149,11 +149,9 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .totbar .tb-lbl{white-space:nowrap}
 /* aprovação: valor no mesmo tamanho do pedido; "Valor total" em cima e, embaixo, o valor com a margem ao lado */
 /* com a margem (aprovador): rótulo, valor e margem numa linha só; o valor diminui um pouco em telas estreitas para caber */
+/* nunca quebra linha: se não couber, fitTot() diminui a fonte do valor até caber inteiro */
 .totbar:has(.mbadge){gap:10px}
-.totbar:has(.mbadge) .tb-lbl{white-space:normal;min-width:0;line-height:1.25}  /* sem espaço, "Valor total" quebra em duas linhas */
-.totbar:has(.mbadge) .tb-right{flex:none}
-.totbar:has(.mbadge) .tb-val{font-size:clamp(18px,5.4vw,24px)}
-.totbar:has(.mbadge) .tb-val.long{font-size:clamp(16px,4.6vw,22px)}  /* valores na casa do milhão */
+.totbar .tb-lbl,.totbar .tb-right{flex:none}
 .totbar:has(.mbadge) .tb-right .mbadge{height:26px;padding:0 8px;font-size:clamp(12.5px,3.6vw,15px);flex:none}
 .tb-right .mbadge{height:28px;padding:0 10px;border-radius:8px;font-size:15px}
 .h2cnt{margin-left:auto}
@@ -1691,8 +1689,8 @@ function viewDetail(){
   // em aprovação, o histórico vem antes dos dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
-  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>` : ''}</div>
-    <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val ${fmtMoney(c.total, o.currency).length > 14 ? 'long' : ''}">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
+  return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span></div>
+    <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
     ${dataCards}
@@ -1885,11 +1883,12 @@ function actionBar(){
     ${S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}</button>` : `<button class="btn primary" data-a="finalize">${t('finalize')}</button>`}</div>`;
   if(S.view === 'detail'){
     const o = ORDER(S.orderId); if(!o) return '';
-    // aprovador: as decisões estão no fim do pedido (depois da assinatura); embaixo, só Voltar
-    if(S.profile === 'aprovador' && o.status === 'aprovacao') return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button></div>`;
+    // aprovador: as decisões estão no fim do pedido (depois da assinatura); embaixo, Voltar + PDF e WhatsApp (como nas outras telas)
+    const pdfWa = `<button class="btn icon ico-only ico-pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}" title="${t('send_pdf')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="btn icon ico-only ico-wa" data-a="send-wa-o" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button>`;
+    if(S.profile === 'aprovador' && o.status === 'aprovacao') return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${pdfWa}</div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
     // pedido fechado: Voltar e Reabrir largos; PDF (vermelho) e WhatsApp (verde) só com o ícone, para tocar
-    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn icon ico-only ico-pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}" title="${t('send_pdf')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="btn icon ico-only ico-wa" data-a="send-wa-o" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button>
+    return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}${pdfWa}
       ${canEdit(o) ? `<button class="btn primary" data-a="edit">${IC.edit}${t('edit')}</button>` : ''}</div>`;
   }
   return '';
@@ -1945,6 +1944,22 @@ function bindSlides(){
     k.addEventListener('keydown', e => { if(e.key === 'Enter') run(bar.dataset.r || bar.dataset.l); });
   });
 }
+// faixa do valor total sempre numa linha, com o valor inteiro e no maior tamanho que couber:
+// 1º diminui só o valor (até 16px); se ainda não couber (telas bem estreitas), diminui o rótulo e a margem e, por fim, o valor de novo
+function fitTot(){
+  // passou do limite interno do cartão (descontado o respiro da direita)?
+  const over = bar => { const r = bar.getBoundingClientRect(), end = bar.lastElementChild.getBoundingClientRect().right;
+    return end > r.right - parseFloat(getComputedStyle(bar).paddingRight) - parseFloat(getComputedStyle(bar).borderRightWidth) + .5 || bar.scrollWidth > bar.clientWidth; };
+  const shrink = (bar, el, min) => { if(!el) return; let fs = parseFloat(getComputedStyle(el).fontSize);
+    while(over(bar) && fs > min){ fs -= .5; el.style.fontSize = fs + 'px'; } };
+  document.querySelectorAll('.totbar').forEach(bar => {
+    const v = bar.querySelector('.tb-val'), l = bar.querySelector('.tb-lbl'), m = bar.querySelector('.mbadge'); if(!v) return;
+    [v, l, m].forEach(el => el && (el.style.fontSize = '')); bar.style.gap = '';
+    shrink(bar, v, 16);
+    if(over(bar)){ bar.style.gap = '6px'; shrink(bar, l, 9); shrink(bar, m, 11); shrink(bar, v, 11); }
+  });
+}
+addEventListener('resize', () => fitTot());
 function render(){
   const act = document.activeElement, fid = act && act.id;
   let sel = null; try{ if(fid && act.selectionStart != null) sel = [act.selectionStart, act.selectionEnd]; }catch(e){}
@@ -1960,6 +1975,7 @@ function render(){
   document.documentElement.classList.toggle('lockscroll', S.view === 'done');
   document.getElementById('app').innerHTML = (inOrder ? '' : header()) + `<main>${v}</main>` + actionBar() + nav();
   document.querySelector('.fab')?.classList.toggle('solo', !document.querySelector('.nav'));
+  fitTot();
   const strip = document.getElementById('days');
   if(strip){
     // largura de cada dia: 7 dias no espaço ao lado do rótulo do mês
