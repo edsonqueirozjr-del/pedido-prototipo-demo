@@ -2698,24 +2698,26 @@ const ACT = {
   theme: () => { S.theme = S.theme === 'dark' ? 'light' : 'dark'; savePrefs(); render(); },
   lang: () => { S.lang = S.lang === 'es' ? 'pt' : 'es'; savePrefs(); render(); },
   // trocar de usuário: o aprovador ou qualquer vendedor (agrupados pela empresa, com a logo)
-  profile: async () => {
+  profile: async (_b, atEnd = false) => {
     if(!(await leaveEditor())) return;
     const cur = S.profile === 'aprovador' ? APPR : ME;
     const row = (id, name, sub, logo) => `<button type="button" class="us-row ${id === cur ? 'on' : ''} ${id.startsWith('appr') ? 'appr' : ''}" data-m="${id}">
       ${avatarHtml(id, name)}<span class="us-t"><b>${esc(name)}</b><span>${esc(sub)}</span></span>${logo ? `<img class="us-logo" src="${logo}" alt="">` : ''}</button>`;
-    const body = `<div class="pp-gh">${t('approvers')}</div>${APPROVERS.map(a => row(a.id, a.name, t(a.role))).join('')}
+    const body = `<div class="pp-gh">${t('switch_user')}</div><div class="pp-gh">${t('approvers')}</div>${APPROVERS.map(a => row(a.id, a.name, t(a.role))).join('')}
       ${Object.entries(COMPANIES).map(([cid, cname]) => `<div class="pp-gh">${esc(cname)}</div>${SELLERS.filter(x => x.company === cid).map(x => row(x.id, x.name, `${t('seller')} · ${UNIT(x.unit).name}`, LOGOS[cid])).join('')}`).join('')}`;
-    // tema e idioma ficam aqui dentro (saíram do topo); mudam na hora e a janela reabre já atualizada
+    // tema e idioma ficam aqui dentro, por último (depois da troca de usuário); mudam na hora e a janela reabre já atualizada, rolada até eles
     // lista de preferências neutra (cinza, sem verde): rótulo à esquerda e seletor segmentado à direita
     const opt = (k, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-m="${k}:${v}" aria-pressed="${on}">${lbl}</button>`;
     const prefs = `<div class="pp-gh">${t('prefs')}</div><div class="pf-list">
       <div class="pf-row"><span>${t('theme')}</span><div class="seg seg3" role="group" aria-label="${t('theme')}">${opt('theme', 'light', t('theme_light'), S.theme !== 'dark' && S.theme !== 'somax')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}${opt('theme', 'somax', t('theme_somax'), S.theme === 'somax')}</div></div>
       <div class="pf-row"><span>${t('lang')}</span><div class="seg" role="group" aria-label="${t('lang')}">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div></div>
-    </div><div class="pp-gh">${t('switch_user')}</div>`;
-    const r = await modal({title: S.profile === 'aprovador' ? apprName() : SELLER(ME).name, body: prefs + body, sheet: true});
+    </div>`;
+    const pr = modal({title: S.profile === 'aprovador' ? apprName() : SELLER(ME).name, body: body + prefs, sheet: true});
+    if(atEnd) requestAnimationFrame(() => document.querySelector('#overlay .pf-list')?.scrollIntoView({block: 'end'}));
+    const r = await pr;
     if(r && /^(theme|lang):/.test(r.v)){
       const [k, v] = r.v.split(':'); if(k === 'theme') S.theme = v; else S.lang = v;
-      savePrefs(); render(); return ACT.profile();
+      savePrefs(); render(); return ACT.profile(null, true);
     }
     if(!r || r.v === cur) return;
     if(APPROVERS.some(a => a.id === r.v)){ S.profile = 'aprovador'; APPR = r.v; } else { S.profile = 'vendedor'; ME = r.v; }
