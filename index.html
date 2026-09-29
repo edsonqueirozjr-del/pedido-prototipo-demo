@@ -611,6 +611,12 @@ html.lockscroll main{padding-bottom:12px}
 .money .inbtn{right:4px}
 .inbtn svg{width:22px;height:22px}
 .inbtn:disabled{opacity:.4;cursor:default}
+/* estoque e histórico de preço (aba Produtos): ícone preto e sublinhado, como link; no tema Somax, verde */
+.inbtn[data-a=stock],.inbtn[data-a=pricehist]{color:var(--text)}
+.inbtn[data-a=stock] svg,.inbtn[data-a=pricehist] svg{margin-bottom:1px}
+.inbtn[data-a=stock]::after,.inbtn[data-a=pricehist]::after{content:'';position:absolute;left:50%;bottom:4px;width:18px;height:1.5px;margin-left:-9px;border-radius:1px;background:currentColor}
+.grid2 .money.has-in .inbtn[data-a=pricehist]::after{width:16px;margin-left:-8px;bottom:5px}
+[data-theme="somax"] .inbtn[data-a=stock],[data-theme="somax"] .inbtn[data-a=pricehist]{color:var(--primary)}
 .mapbtn{color:var(--muted)}
 .mapbtn.on{color:var(--primary)}
 .mapbtn svg{width:24px;height:24px}
