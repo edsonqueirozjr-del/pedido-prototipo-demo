@@ -1607,7 +1607,8 @@ function itemsHtml(o, appr){
           <span class="ih-txt"><span class="name">${esc(p.name)}</span>
             ${S.openA[it.id] ? `<u class="act act-sub">${esc(ACTIVE(p.active).name)}</u>`
               // recolhido: um dado por linha, igual ao cartão da lista
-              : `<dl class="oc-kv it-kv"><div><dd>${esc(ACTIVE(p.active).name)}</dd></div><div><dt>${t('qty')}:</dt> <dd>${fmtNum(ic.qty)} ${p.um}</dd></div><div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(ic.total, o.currency)}</dd></div></dl>`}</span>
+              : `<dl class="oc-kv it-kv"><div><dd>${esc(ACTIVE(p.active).name)}</dd></div><div><dt>${t('qty')}:</dt> <dd>${fmtNum(ic.qty)} ${p.um}</dd></div><div><dt>${t('order_total')}:</dt> <dd>${fmtMoney(ic.total, o.currency)}</dd></div></dl>
+                ${S.view === 'editor' ? `<button type="button" class="lnk-stk" data-a="stock-o" data-id="${it.id}">${t('check_stock').split(' ').map(w => `<u>${w}</u>`).join(' ')}</button>` : ''}`}</span>
           ${showSem() ? `<span class="grow">${sem(ic.margin)}</span>` : ''}</div>`;
     const noteP = it.note ? `<div class="full"><span>${t('note_prod')}</span><b>${esc(it.note)}</b></div>` : '';
     const noteD = it.noteDeliv ? `<div class="full"><span>${t('note_deliv')}</span><b>${esc(it.noteDeliv)}</b></div>` : '';
@@ -2524,7 +2525,8 @@ const ACT = {
   },
   stock: b => stockSheet(S.draft.items[+b.dataset.i]),
   // aprovação: "Consultar disponibilidade" no produto recolhido
-  'stock-o': b => { const it = ORDER(S.orderId)?.items.find(x => x.id === b.dataset.id); if(it) stockSheet(it); },
+  // consultar disponibilidade: na aprovação (pedido salvo) e no Fechamento (pedido em edição)
+  'stock-o': b => { const o = S.view === 'editor' ? S.draft : ORDER(S.orderId), it = o?.items.find(x => x.id === b.dataset.id); if(it) stockSheet(it); },
   save: async () => {
 
     const o = S.draft, keep = S.step;
