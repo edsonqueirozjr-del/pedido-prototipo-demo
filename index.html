@@ -744,8 +744,16 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .tl-note{margin-top:6px;font-size:14px;color:var(--text);padding-left:10px;border-left:2px solid var(--tls)}
 
 /* modal / sheet */
-#overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px}
-#overlay.open{display:flex}
+/* fundo de todas as janelas: escuro translúcido + desfoque, para dar foco na janela */
+#overlay{position:fixed;inset:0;z-index:50;background:rgba(10,14,12,.58);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
+#overlay.open{display:flex;animation:ovIn .18s ease-out}
+#overlay.open .dlg{animation:dlgIn .2s ease-out}
+#overlay.open.sheet .dlg{animation:sheetIn .24s cubic-bezier(.2,.8,.2,1)}
+@keyframes ovIn{from{opacity:0}to{opacity:1}}
+@keyframes dlgIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes sheetIn{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+#overlay.noanim,#overlay.noanim .dlg{animation:none !important}
+@media (prefers-reduced-motion:reduce){#overlay.open,#overlay.open .dlg{animation:none}}
 .dlg{width:100%;max-width:420px;max-height:88vh;overflow:auto;overscroll-behavior:contain;background:var(--surface);border-radius:18px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.3)}
 .dlg-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .dlg-head h3{margin:0;font-size:17px;flex:1}
@@ -754,7 +762,7 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 .dlg-foot .btn{flex:1 1 30%;min-height:50px}
 #overlay:not(.sheet) .dlg-head h3,#overlay:not(.sheet) .dlg-body p{text-align:center}
 #overlay.sheet{align-items:flex-end;padding:0}
-#overlay.top{align-items:flex-start;padding-top:calc(16px + env(safe-area-inset-top,0px))}
+#overlay.attop{align-items:flex-start;padding-top:calc(16px + env(safe-area-inset-top,0px))}
 .grab{width:40px;height:5px;border-radius:3px;background:var(--border);margin:-8px auto 10px;cursor:grab}
 #overlay.sheet .dlg-head{touch-action:none;cursor:grab}
 #overlay.sheet .dlg{max-width:560px;border-radius:18px 18px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
@@ -2036,12 +2044,13 @@ function syncScrollLock(){
 function modal({title, titleHtml = '', body = '', buttons = [], sheet = false, top = false, focus = true}){
   return new Promise(res => {
     const ov = document.getElementById('overlay');
-    ov.className = sheet ? 'sheet open' : top ? 'top open' : 'open'; syncScrollLock();
+    // janela aberta logo depois de outra (ex.: reabrir o menu ao trocar o tema): sem animação, para não piscar
+    ov.className = (sheet ? 'sheet open' : top ? 'attop open' : 'open') + (Date.now() - (modal.closedAt || 0) < 400 ? ' noanim' : ''); syncScrollLock();
     ov.innerHTML = `<div class="dlg" role="dialog" aria-modal="true"><div class="dlg-top">${sheet ? '<div class="grab" aria-hidden="true"></div>' : ''}<div class="dlg-head"><h3>${titleHtml || esc(title)}</h3>
       ${sheet ? `<button class="icon-btn" data-m="__close" aria-label="${t('close')}">${IC.x}</button>` : ''}</div></div>
       <div class="dlg-body">${body}</div>
       ${buttons.length ? `<div class="dlg-foot">${buttons.map(b => `<button class="btn ${b.kind || ''}" data-m="${b.value}" ${b.req ? 'data-req="1"' : ''}>${b.icon || ''}${esc(b.label)}</button>`).join('')}</div>` : ''}</div>`;
-    const close = v => { ov.className = ''; ov.innerHTML = ''; ov.onclick = null; closeOverlay = null; syncScrollLock(); res(v); };
+    const close = v => { modal.closedAt = Date.now(); ov.className = ''; ov.innerHTML = ''; ov.onclick = null; closeOverlay = null; syncScrollLock(); res(v); };
     closeOverlay = () => close(null);
     // folhas de baixo: arrastar a barrinha/título para baixo fecha
     if(sheet){
@@ -2194,9 +2203,9 @@ function creditToast(){
 }
 async function decide(o, kind){
   const cfg = {
-    approve: {title: t('c_approve_t', o.number), btn: {label: t('approve'), kind: 'primary'}, note: t('comment_opt'), st: 'aprovado', h: 'approved', n: 'approved', msg: 't_approved'},
-    reject:  {title: t('c_reject_t', o.number),  btn: {label: t('reject'),  kind: 'danger', req: true}, note: t('comment'), st: 'reprovado', h: 'rejected', n: 'rejected', msg: 't_rejected'},
-    fix:     {title: t('c_fix_t', o.number),     btn: {label: t('request_fix'), kind: 'fix', req: true}, note: t('comment'), st: 'correcao', h: 'correction', n: 'correction', msg: 't_fix'}
+    approve: {title: t('c_approve_t', o.number), btn: {label: t('approve'), kind: 'primary', icon: IC.tick}, note: t('comment_opt'), st: 'aprovado', h: 'approved', n: 'approved', msg: 't_approved'},
+    reject:  {title: t('c_reject_t', o.number),  btn: {label: t('reject'),  kind: 'danger', req: true, icon: IC.x}, note: t('comment'), st: 'reprovado', h: 'rejected', n: 'rejected', msg: 't_rejected'},
+    fix:     {title: t('c_fix_t', o.number),     btn: {label: t('request_fix'), kind: 'fix', req: true, icon: IC.undo}, note: t('comment'), st: 'correcao', h: 'correction', n: 'correction', msg: 't_fix'}
   }[kind];
   const r = await modal({title: cfg.title, body: `<label class="lbl" for="m-note">${cfg.note}</label><textarea id="m-note" rows="3"></textarea>`,
     buttons: [BACK_BTN(), {...cfg.btn, value: 'yes'}], top: true, focus: !!cfg.btn.req});
