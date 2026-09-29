@@ -157,6 +157,9 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dtop-r{display:flex;align-items:center;gap:6px;flex:none}
 .dfx2{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;height:38px;padding:0 9px;border:1px solid var(--border);border-radius:10px;background:var(--surface);cursor:text}
 .dfx2 span{font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;line-height:1.1}
+/* ao editar: sem o contorno do campo de dentro; o quadro todo (com "Cotação") ganha o contorno, como os outros campos */
+.dash .dfx2 input:focus{border:0;box-shadow:none;outline:none}
+.dfx2:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
 .dash .dfx2 input{width:44px;min-height:0;height:18px;padding:0;border:0;border-radius:0;background:none;font-size:15px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
 .dfxr{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);font-weight:600}
 .dfxr .money{flex:none;width:140px}
