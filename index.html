@@ -52,11 +52,16 @@ main{padding:12px 16px 132px}
 .profile-btn.appr .avatar{background:var(--info);color:#fff}
 .pb-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* janela do usuário: tema e idioma em cima, depois a troca de usuário */
-.pf-opts{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px 12px;margin:2px 0 6px}
-.pf-opts .lbl{margin:0}
-.pf-opts .af-chips{margin:0}
+/* preferências (tema e idioma): lista neutra com seletor segmentado, no padrão de ajustes do sistema */
+.pf-list{border:1px solid var(--border);border-radius:12px;background:var(--surface);margin-bottom:4px}
+.pf-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:6px 8px 6px 14px;font-size:14.5px;font-weight:600}
+.pf-row + .pf-row{border-top:1px solid var(--border)}
+.seg{display:inline-flex;flex:none;padding:3px;border-radius:10px;background:var(--gray-soft)}
+.seg-o{min-width:92px;height:34px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.seg-o.on{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.06)}
+[data-theme="dark"] .seg-o.on{background:#3a433e}
 .us-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);cursor:pointer;font:inherit}
-.us-row.on{border-color:var(--primary-soft);background:var(--primary-soft)}
+.us-row.on{border-color:var(--text);box-shadow:inset 0 0 0 .5px var(--text)}  /* usuário atual: contorno escuro, sem verde */
 .us-row .avatar{flex:none;width:34px;height:34px;font-size:13px}
 .us-row.appr .avatar{background:var(--info);color:#fff}
 .us-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;font-size:14px}
@@ -143,8 +148,13 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .tb-right{display:flex;align-items:center;gap:8px;min-width:0}
 .totbar .tb-lbl{white-space:nowrap}
 /* aprovação: valor no mesmo tamanho do pedido; "Valor total" em cima e, embaixo, o valor com a margem ao lado */
-.totbar:has(.mbadge){flex-direction:column;align-items:stretch;justify-content:center;gap:1px}
-.totbar:has(.mbadge) .tb-right{justify-content:flex-end}
+/* com a margem (aprovador): rótulo, valor e margem numa linha só; o valor diminui um pouco em telas estreitas para caber */
+.totbar:has(.mbadge){gap:10px}
+.totbar:has(.mbadge) .tb-lbl{white-space:normal;min-width:0;line-height:1.25}  /* sem espaço, "Valor total" quebra em duas linhas */
+.totbar:has(.mbadge) .tb-right{flex:none}
+.totbar:has(.mbadge) .tb-val{font-size:clamp(18px,5.4vw,24px)}
+.totbar:has(.mbadge) .tb-val.long{font-size:clamp(16px,4.6vw,22px)}  /* valores na casa do milhão */
+.totbar:has(.mbadge) .tb-right .mbadge{height:26px;padding:0 8px;font-size:clamp(12.5px,3.6vw,15px);flex:none}
 .tb-right .mbadge{height:28px;padding:0 10px;border-radius:8px;font-size:15px}
 .h2cnt{margin-left:auto}
 .pricegrid{display:grid;grid-template-columns:1fr 1fr 46px;gap:8px;align-items:end;margin-bottom:12px}
@@ -245,11 +255,11 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .icsep{flex:none;align-self:center;width:1px;height:22px;background:var(--text);opacity:.22}
 .actionbar .icsep{height:28px}
 .top-acts .icsep{height:24px;margin:0 4px}
-/* aprovador: lápis (editar) + três decisões — fonte um pouco menor para caber */
-.btn.edit-sq{background:transparent;border-color:transparent;color:var(--fix);padding:0}  /* editar do aprovador: só o lápis (cor da correção), sem fundo */
-.actionbar.appr4 .btn:not(.icon){font-size:14px;gap:4px;padding:0 5px;min-width:0}
-.actionbar.appr4 .btn svg{width:18px;height:18px}
-.actionbar.appr4 .btn.icon svg{width:27px;height:27px}
+/* aprovador: Editar, Correção, Reprovar e Aprovar no fim do pedido, depois da assinatura (2 × 2) */
+.appr-acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 12px}
+.appr-acts .btn{min-height:52px;font-size:16px;min-width:0;padding:0 8px}
+.appr-acts .btn svg{width:20px;height:20px;flex:none}
+.btn.edit-in{background:var(--fix-soft);border-color:transparent;color:var(--fix)}  /* editar: tom claro da cor da correção */
 .actionbar .savebtn{flex:0 0 52px;color:var(--primary);border:0;background:none;box-shadow:none}  /* só o disquete, sem contorno */
 .actionbar .savebtn svg{width:32px;height:32px;stroke-width:1.8}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:560px;z-index:14;display:flex;background:var(--surface);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom)}
@@ -957,7 +967,7 @@ pt:{
   approver_note:'Comentário do aprovador', reset_data:'Restaurar dados de exemplo', c_reset_t:'Restaurar dados?',
   c_reset_m:'Os pedidos criados serão apagados.', empty:'Nenhum pedido encontrado', empty_day:'Nenhum pedido neste dia', prev_days:'Dias anteriores', empty_appr:'Nenhum pedido em aprovação',
   pdf_title:'Pedido de venda', pdf_company:'AgroCRM · Protótipo', client_doc:'CNPJ/CPF', city:'Cidade', issued:'Emitido em',
-  theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
+  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
   low_items:'{0} produto(ns) abaixo da margem'
 },
 es:{
@@ -1004,7 +1014,7 @@ es:{
   approver_note:'Comentario del aprobador', reset_data:'Restaurar datos de ejemplo', c_reset_t:'¿Restaurar datos?',
   c_reset_m:'Los pedidos creados serán eliminados.', empty:'Ningún pedido encontrado', empty_day:'Ningún pedido en este día', prev_days:'Días anteriores', empty_appr:'Ningún pedido en aprobación',
   pdf_title:'Pedido de venta', pdf_company:'AgroCRM · Prototipo', client_doc:'RUC / Documento', city:'Ciudad', issued:'Emitido el',
-  theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
+  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
   low_items:'{0} producto(s) bajo el margen'
 }};
 
@@ -1079,7 +1089,7 @@ function hash(str){ let h = 2166136261; for(const ch of str){ h ^= ch.charCodeAt
 let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, me:ME})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 28) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 29) return d; }catch(e){} const s = seed(); persist(s); return s; }
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1308,7 +1318,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:28, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:29, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1348,7 +1358,16 @@ function seed(){
     ['s5','c4','MS2727','BRL','avista','reprovado', 7, [['imi-10',120,.8],['lam-1',60]]],
     ['s6','c3','SV2627','USD','safra','correcao',   2, [['teb-20',900,.9],['sme-20',1800]]],
     ['s4','c9','MS2727','BRL','30d',  'aprovado',  15, [['acf-1',50],['man-1',300]]],
-    ['s6','c10','SV2627','BRL','safra','aprovacao', 3, [['azp-20',800],['imi-1',100,.93],['ful-20',1200]]]
+    ['s6','c10','SV2627','BRL','safra','aprovacao', 3, [['azp-20',800],['imi-1',100,.93],['ful-20',1200]]],
+    // pedidos de teste do dia (hoje): um de cada situação, vendedores e empresas variados
+    ['s1','c4','SV2627','BRL','safra','aprovacao',  0, [['cap-20',300],['sme-20',1200,.94],['flo-5',100]]],
+    ['s2','c2','MS2727','BRL','30d',  'aprovacao',  0, [['g200-20',1600],['ful-20',600,.9]]],
+    ['s3','c6','SV2627','USD','safra','aprovacao',  0, [['g20-20',2400,.96],['azp-5',150],['imi-1',60]]],
+    ['s4','c11','SV2627','BRL','safra','aprovacao', 0, [['teb-20',500],['lam-5',200,.88],['man-25',800]]],
+    ['s1','c8','MS2727','BRL','avista','aberto',    0, [['sme-5',250],['cap-5',120]]],
+    ['s5','c9','SV2627','BRL','30d',  'correcao',   0, [['azp-20',600,.82],['acf-10',300]]],
+    ['s6','c5','MS2727','USD','safra','aprovado',   0, [['man-25',1000],['teb-20',400]]],
+    ['s2','c7','SV2627','BRL','safra','reprovado',  0, [['flo-20',300,.75],['g20-5',400]]]
   ];
   const at = (d, hm) => new Date(d + 'T' + hm + ':00').toISOString();
   const BONIF = ['o10', 'o18', 'o21', 'o29'];   // ~10% dos exemplos são bonificação (sem vencimento)
@@ -1378,7 +1397,7 @@ function seed(){
     H('created', seller.name, at(date, `0${7 + i % 2}:${String((i * 13 + 5) % 60).padStart(2, '0')}`));   // hora de criação variada (07h–08h)
     if(st === 'correcao'){
       H('finalized', seller.name, at(date, '09:40'));
-      o.approverNote = ({o3:'Revisar preço do Flowzin.', o14:'Confirmar quantidade do Fulltime e a previsão de entrega.', o16:'Desconto acima do permitido na condição 30 dias; ajustar o preço praticado.', o26:'Trocar o Cappo de 20 L por 5 L e rever a previsão de entrega.', o33:'Rever o preço do Tebuzol; está abaixo da política.', o17:'Previsão de entrega antes do início da safra; conferir com o cliente e o desconto do herbicida.'})[o.id] || '';
+      o.approverNote = ({o3:'Revisar preço do Flowzin.', o14:'Confirmar quantidade do Fulltime e a previsão de entrega.', o16:'Desconto acima do permitido na condição 30 dias; ajustar o preço praticado.', o26:'Trocar o Cappo de 20 L por 5 L e rever a previsão de entrega.', o33:'Rever o preço do Tebuzol; está abaixo da política.', o17:'Previsão de entrega antes do início da safra; conferir com o cliente e o desconto do herbicida.', o41:'Desconto do Azoxi Pro acima da política; rever o preço.'})[o.id] || '';
       H('correction', APPROVER, at(date, '15:20'), o.approverNote);
       db.notifs.push({id:uid(), to:'vendedor', sellerId:sid, type:'correction', orderId:o.id, at:at(date,'15:20'), read:false});
     } else if(st === 'aberto'){ H('saved', seller.name, at(date, '09:30')); }
@@ -1386,12 +1405,12 @@ function seed(){
       H('finalized', seller.name, at(date, '10:30'));
       if(st === 'aprovacao') db.notifs.push({id:uid(), to:'aprovador', type:'pending', orderId:o.id, at:at(date,'10:30'), read:false});
       if(st === 'aprovado' || st === 'reprovado'){
-        const note = st === 'reprovado' ? (({o24:'Preço do Flowzin muito abaixo da tabela.', o25:'Cliente sem limite disponível nesta safra.'})[o.id] || 'Desconto acima do permitido.') : '';
+        const note = st === 'reprovado' ? (({o24:'Preço do Flowzin muito abaixo da tabela.', o25:'Cliente sem limite disponível nesta safra.', o43:'Preço do Flowzin 20 L muito abaixo da tabela.'})[o.id] || 'Desconto acima do permitido.') : '';
         H(st === 'aprovado' ? 'approved' : 'rejected', APPROVER, at(addDays(date, 1), '14:00'), note);
         db.notifs.push({id:uid(), to:'vendedor', sellerId:sid, type: st === 'aprovado' ? 'approved' : 'rejected', orderId:o.id, at:at(addDays(date,1),'14:00'), read: ago > 10});
       }
     }
-    if(['o4','o13','o16','o20','o22','o23'].includes(o.id)){ o.signature = fakeSignature(i); o.signedAt = at(date, '10:20'); H('signed', seller.name, at(date, '10:20')); }
+    if(['o4','o13','o16','o20','o22','o23','o36','o37','o38','o39','o42'].includes(o.id)){ o.signature = fakeSignature(i); o.signedAt = at(date, '10:20'); H('signed', seller.name, at(date, '10:20')); }
     o.note = ({o18:'Primeiro pedido do cliente com a Somax.', o21:'Entrega em duas etapas: metade no plantio e metade 30 dias depois.', o27:'Cliente pediu prioridade na entrega do S-Metolacloro.', o4:'Cliente pediu faturamento em duas notas.', o13:'Pedido fechado na visita de campo; conferir prazo de entrega.', o16:'Cliente quer receber tudo antes do plantio.'})[o.id] || (i % 3 === 1 ? NOTE_ORDER[i % NOTE_ORDER.length] : '');
     db.orders.push(o);
   });
@@ -1673,13 +1692,22 @@ function viewDetail(){
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
   return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span>${appr ? `<span class="top-acts"><button class="icon-btn pdf-ic" data-a="rpt-open" aria-label="${t('rp_view')}" title="${t('rp_view')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="icon-btn wa-ic" data-a="top-wa" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button></span>` : ''}</div>
-    <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
+    <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val ${fmtMoney(c.total, o.currency).length > 14 ? 'long' : ''}">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
     ${dataCards}
     ${itemsBlockFold(o, items)}
     ${sigCard(o, false, S.profile === 'vendedor')}
+    ${appr ? apprActs() : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? '' : histCard}`;
+}
+// aprovador: as quatro decisões ficam no fim do pedido, depois da assinatura (a barra de baixo fica só com Voltar)
+function apprActs(){
+  return `<div class="appr-acts">
+      <button class="btn edit-in" data-a="appr-edit">${IC.edit}${t('edit')}</button>
+      <button class="btn fix" data-a="fix">${IC.undo}${t('request_fix')}</button>
+      <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
+      <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
 }
 const HIST_TONE = {created:'gray', saved:'gray', signed:'ok', reopened:'warn', finalized:'lock', approved:'ok', rejected:'bad', correction:'warn', edited_appr:'info'};
 function histHtml(o){
@@ -1857,11 +1885,8 @@ function actionBar(){
     ${S.step < 3 ? `<button class="btn primary" data-a="next">${t('next')}</button>` : `<button class="btn primary" data-a="finalize">${t('finalize')}</button>`}</div>`;
   if(S.view === 'detail'){
     const o = ORDER(S.orderId); if(!o) return '';
-    if(S.profile === 'aprovador' && o.status === 'aprovacao') return `<div class="actionbar appr4">
-      <button class="btn edit-sq icon" data-a="appr-edit" aria-label="${t('edit')}" title="${t('edit')}">${IC.edit}</button>
-      <button class="btn fix" data-a="fix">${IC.undo}${t('request_fix')}</button>
-      <button class="btn danger" data-a="reject">${IC.x}${t('reject')}</button>
-      <button class="btn primary" data-a="approve">${IC.tick}${t('approve')}</button></div>`;
+    // aprovador: as decisões estão no fim do pedido (depois da assinatura); embaixo, só Voltar
+    if(S.profile === 'aprovador' && o.status === 'aprovacao') return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button></div>`;
     const canReopen = S.profile === 'vendedor' && o.status === 'aprovacao';
     // pedido fechado: Voltar e Reabrir largos; PDF (vermelho) e WhatsApp (verde) só com o ícone, para tocar
     return `<div class="actionbar"><button class="btn ghost" data-a="back">${IC.back}${t('back')}</button>${canReopen ? `<button class="btn warn" data-a="reopen">${IC.unlock}${t('reopen')}</button>` : ''}<button class="btn icon ico-only ico-pdf" data-a="send-pdf-o" aria-label="${t('send_pdf')}" title="${t('send_pdf')}">${IC.pdf}</button><span class="icsep" aria-hidden="true"></span><button class="btn icon ico-only ico-wa" data-a="send-wa-o" aria-label="${t('send_wa')}" title="${t('send_wa')}">${IC.wa}</button>
@@ -2191,10 +2216,11 @@ const ACT = {
     const body = `<div class="pp-gh">${t('approver')}</div>${row('appr', APPROVER, t('approver'))}
       ${Object.entries(COMPANIES).map(([cid, cname]) => `<div class="pp-gh">${esc(cname)}</div>${SELLERS.filter(x => x.company === cid).map(x => row(x.id, x.name, `${t('seller')} · ${UNIT(x.unit).name}`, LOGOS[cid])).join('')}`).join('')}`;
     // tema e idioma ficam aqui dentro (saíram do topo); mudam na hora e a janela reabre já atualizada
-    const opt = (k, v, lbl, on) => `<button type="button" class="afc ${on ? 'on' : ''}" data-m="${k}:${v}">${lbl}</button>`;
-    const prefs = `<div class="pf-opts">
-      <span class="lbl">${t('theme')}</span><div class="radio-chips af-chips">${opt('theme', 'light', t('theme_light'), S.theme !== 'dark')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}</div>
-      <span class="lbl">${t('lang')}</span><div class="radio-chips af-chips">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div>
+    // lista de preferências neutra (cinza, sem verde): rótulo à esquerda e seletor segmentado à direita
+    const opt = (k, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-m="${k}:${v}" aria-pressed="${on}">${lbl}</button>`;
+    const prefs = `<div class="pp-gh">${t('prefs')}</div><div class="pf-list">
+      <div class="pf-row"><span>${t('theme')}</span><div class="seg" role="group" aria-label="${t('theme')}">${opt('theme', 'light', t('theme_light'), S.theme !== 'dark')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}</div></div>
+      <div class="pf-row"><span>${t('lang')}</span><div class="seg" role="group" aria-label="${t('lang')}">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div></div>
     </div><div class="pp-gh">${t('switch_user')}</div>`;
     const r = await modal({title: S.profile === 'aprovador' ? APPROVER : SELLER(ME).name, body: prefs + body, sheet: true});
     if(r && /^(theme|lang):/.test(r.v)){
