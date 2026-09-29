@@ -83,6 +83,15 @@ main{padding:12px 16px 132px}
 .pf-row .seg-o{flex:1;min-width:0;padding:0 4px}
 .seg-o.on{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.06)}
 [data-theme="dark"] .seg-o.on{background:#3a433e}
+/* filtro de situação: uma linha por situação, com a etiqueta, a quantidade e a marcação */
+.st-opts{display:flex;flex-direction:column;gap:8px}
+.st-opt{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:0 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;text-align:left}
+.st-opt .chip{font-size:13.5px;height:26px;padding:0 12px}
+.st-opt .st-cnt{margin-left:auto;color:var(--muted);font-size:13.5px;font-variant-numeric:tabular-nums}
+.st-opt .st-check{flex:none;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--border);display:grid;place-items:center;color:transparent}
+.st-opt .st-check svg{width:16px;height:16px;stroke-width:2.6}
+.st-opt.on{border-color:var(--primary);background:var(--primary-soft)}
+.st-opt.on .st-check{background:var(--primary);border-color:var(--primary);color:#fff}
 .us-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);cursor:pointer;font:inherit}
 .us-row.on{border-color:var(--text);box-shadow:inset 0 0 0 .5px var(--text)}  /* usuário atual: contorno escuro, sem verde */
 .us-row .avatar{flex:none;width:34px;height:34px;font-size:13px}
@@ -275,7 +284,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 /* risquinho discreto entre o PDF e o WhatsApp */
 .icsep{flex:none;align-self:center;width:1px;height:22px;background:var(--text);opacity:.22}
 .actionbar .icsep{height:28px}
-.top-acts .icsep{height:24px;margin:0 4px}
+.top-acts .icsep{height:24px;margin:0 -.5px 0 8.5px}  /* no meio entre o desenho do PDF e o do WhatsApp */
 /* aprovador: Editar, Correção, Reprovar e Aprovar no fim do pedido, depois da assinatura (2 × 2) */
 .appr-acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 12px}
 .appr-acts .btn{min-height:52px;font-size:16px;min-width:0;padding:0 8px}
@@ -400,7 +409,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-open{position:relative;width:31px;height:31px;color:var(--gray);opacity:.7;display:grid;place-items:center;cursor:pointer}  /* abrir o pedido (aprovação) */
 .oc-open svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .oc-wa svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ocard .oc-kv > div:last-child{padding-right:80px}  /* o valor não passa por baixo do PDF e do enviar */
+.ocard .oc-kv > div:last-child{padding-right:80px}
+.ocard .oc-kv > div:last-child dt,.ocard .oc-kv > div:last-child dd{color:var(--text);font-weight:800}  /* Valor total: tudo preto e em negrito */  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag.mg-tag{font-weight:800;font-size:13.5px;height:25px;padding:0 10px;border-radius:13px}  /* margem no cartão da aprovação: negrito, um pouco maior */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -855,8 +865,8 @@ const UNITS = [
 // empresa de cada vendedor (o pedido é da empresa de quem o faz)
 const COMPANIES = {somax: 'Somax', corteva: 'Corteva'};
 const SELLERS = [
-  {id:'s1', name:'Marcelo Grotti', unit:'PR', company:'somax'}, {id:'s2', name:'Jovanio Conink', unit:'SP', company:'somax'},
-  {id:'s3', name:'Erni Pellenz', unit:'MT', company:'somax'},
+  {id:'s1', name:'Marcelo Grotti', unit:'PR', company:'somax'}, {id:'s2', name:'Jovanio Conink', unit:'MT', company:'somax'},
+  {id:'s3', name:'Erni Pellenz', unit:'RS', company:'somax'},
   // Corteva (nomes fictícios)
   {id:'s4', name:'Rafael Moretti', unit:'RS', company:'corteva'}, {id:'s5', name:'Camila Bettoni', unit:'SP', company:'corteva'},
   {id:'s6', name:'Thiago Vilela', unit:'MT', company:'corteva'}
@@ -1107,6 +1117,7 @@ const IC = {
   download:'<svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>',
   pdf:'<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><text x="12" y="17.8" text-anchor="middle" font-size="6.8" font-weight="800" font-family="Arial,Helvetica,sans-serif" fill="currentColor" stroke="none" letter-spacing="-.2">PDF</text></svg>',
   wa:'<svg viewBox="0 0 24 24"><path d="M3.5 20.5 4.8 16.3A8.5 8.5 0 1 1 8 19.3Z"/><path fill="currentColor" stroke="none" d="M9.2 7.9c.3-.3.8-.3 1 .1l.9 1.7c.2.3.1.7-.2.9l-.6.5c.6 1.3 1.6 2.3 2.9 2.9l.5-.6c.2-.3.6-.4.9-.2l1.7.9c.4.2.4.7.1 1l-.6.7c-.6.6-1.6.7-2.5.3-2.2-1-4-2.8-5-5-.4-.9-.3-1.9.3-2.5Z"/></svg>',
+  tag:'<svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
   x:'<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   edit:'<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
   alert:'<svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>'
@@ -1134,7 +1145,7 @@ let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 // tv = versão da regra de tema: com tv 2 o padrão passou a ser o tema Somax (quem já tinha escolhido antes recebe o Somax uma vez)
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, me:ME, appr:APPR, tv:2})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 29) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 30) return d; }catch(e){} const s = seed(); persist(s); return s; }
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1363,7 +1374,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:29, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:30, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1579,12 +1590,15 @@ function viewList(){
   // filtro por dia (hoje por padrão); com busca digitada procura em todos os dias
   if(!S.day) S.day = today();
   let list = DB.orders.filter(o => o.sellerId === ME);   // vendedor vê só os pedidos dele
+  const stF = S.stF || [];
   if(q) list = list.filter(o => String(o.number).includes(q) || (CLIENT(o.clientId)?.name || '').toLowerCase().includes(q));
-  else list = list.filter(o => o.date === S.day);
+  // filtro de situação (uma ou mais): como a busca, olha todos os dias
+  if(stF.length) list = list.filter(o => stF.includes(o.status));
+  if(!q && !stF.length) list = list.filter(o => o.date === S.day);
   list = list.filter(advMatch).sort(byRecent);
-  return `    ${searchRow()}
+  return `    ${searchRow(true)}
     ${dayStrip()}
-    ${list.length ? list.map(o => orderCard(o, S.profile === 'aprovador')).join('') : `<div class="empty">${t(q ? 'empty' : 'empty_day')}</div>`}
+    ${list.length ? list.map(o => orderCard(o, S.profile === 'aprovador')).join('') : `<div class="empty">${t(q || stF.length ? 'empty' : 'empty_day')}</div>`}
     <button class="linkbtn" data-a="reset">${t('reset_data')}</button>
     ${S.profile === 'vendedor' ? `<button class="fab" data-a="new" aria-label="${t('new_order')}" title="${t('new_order')}">${IC.plus}</button>` : ''}`;
 }
@@ -1605,10 +1619,11 @@ function dayStrip(){
     `<div class="mgrp"><span class="days-mon">${monthLabel(g.days[0])}</span>${g.days.map(dayBtn).join('')}</div>`).join('')}</div></div>`;
 }
 // busca (cliente ou nº) + botão de filtro avançado — usado em Pedidos e Para aprovação
-function searchRow(){
-  const nAdv = advCount();
+function searchRow(withStatus = false){
+  const nAdv = advCount(), nSt = (S.stF || []).length;
   return `<div class="searchrow">
       <div class="searchbox">${IC.search}<input id="search" type="search" placeholder="${t('search')}" value="${esc(S.q || '')}" data-search></div>
+      ${withStatus ? `<button class="btn filterbtn ${nSt ? 'on' : ''}" data-a="stfilter" aria-label="${t('status')}" title="${t('status')}">${IC.tag}${nSt ? `<span class="badge">${nSt}</span>` : ''}</button>` : ''}
       <button class="btn filterbtn ${nAdv ? 'on' : ''}" data-a="advfilter" aria-label="${t('adv_filter')}">${IC.filter}${nAdv ? `<span class="badge">${nAdv}</span>` : ''}</button>
     </div>`;
 }
@@ -2355,6 +2370,20 @@ const ACT = {
     });
     const r = await pr;
     if(r && r.v === 'del') save(null);
+  },
+  // filtro de situação da lista do gestor: marcar uma ou mais situações (Limpar tira todas)
+  stfilter: async () => {
+    const sts = ['aberto', 'correcao', 'aprovacao', 'aprovado', 'reprovado'], sel = new Set(S.stF || []);
+    const mine = DB.orders.filter(o => o.sellerId === ME);
+    const body = `<div class="st-opts">${sts.map(st => `<button type="button" class="st-opt ${sel.has(st) ? 'on' : ''}" data-s="${st}" aria-pressed="${sel.has(st)}">
+      <span class="chip st-${st}">${t('st_' + st)}</span><span class="st-cnt">${mine.filter(o => o.status === st).length}</span><span class="st-check">${IC.tick}</span></button>`).join('')}</div>`;
+    const pr = modal({title: t('status'), body, sheet: true, buttons: [{label: t('clear'), value: 'clear', kind: 'gray', icon: IC.eraser}, {label: t('apply'), value: 'ok', kind: 'primary', icon: IC.filter}]});
+    const ov = document.getElementById('overlay');
+    ov.querySelector('.st-opts').addEventListener('click', e => { const b = e.target.closest('.st-opt'); if(!b) return; const st = b.dataset.s;
+      if(sel.has(st)) sel.delete(st); else sel.add(st);
+      b.classList.toggle('on', sel.has(st)); b.setAttribute('aria-pressed', sel.has(st)); });
+    const r = await pr; if(!r) return;
+    S.stF = r.v === 'clear' ? [] : sts.filter(x => sel.has(x)); render();
   },
   advfilter: async () => {
     const a = S.adv, sel = (id, list, val, lbl = x => x.name) => `<select id="${id}">${opts(list, val, lbl)}</select>`;
@@ -3225,7 +3254,7 @@ function waEdit(o){
   if(prefs.appr && APPROVERS.some(a => a.id === prefs.appr)) APPR = prefs.appr;
   S = {profile: 'vendedor', lang: prefs.lang || 'pt',
     theme: (prefs.tv === 2 && prefs.theme) || 'somax',   // padrão: tema Somax
-    view: 'list', listView: 'list', open: {}, openA: {}, openD: {}, adv: ADV0(), errStep: 0, anim: '', filter: 'all', mine: false, q: '', step: 1, draft: null, isNew: false, orderId: null};
+    view: 'list', listView: 'list', open: {}, openA: {}, openD: {}, adv: ADV0(), stF: [], errStep: 0, anim: '', filter: 'all', mine: false, q: '', step: 1, draft: null, isNew: false, orderId: null};
   DB = loadDB();
   pushNav();
   render();
