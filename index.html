@@ -86,7 +86,8 @@ main{padding:12px 16px 132px}
 /* filtro de situação: uma linha por situação, com a etiqueta, a quantidade e a marcação */
 .st-opts{display:flex;flex-direction:column;gap:8px}
 .st-opt{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:0 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;text-align:left}
-.st-opt .chip{font-size:13.5px;height:26px;padding:0 12px}
+.st-opt .chip{font-size:13.5px;height:26px;padding:0 12px 0 9px;display:inline-flex;align-items:center;gap:5px}
+.st-opt .chip svg{width:14px;height:14px;stroke-width:2.4;flex:none}
 .st-opt .st-cnt{margin-left:auto;color:var(--muted);font-size:13.5px;font-variant-numeric:tabular-nums}
 .st-opt .st-check{flex:none;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--border);display:grid;place-items:center;color:transparent}
 .st-opt .st-check svg{width:16px;height:16px;stroke-width:2.6}
@@ -410,7 +411,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-open{position:relative;width:31px;height:31px;color:var(--gray);opacity:.7;display:grid;place-items:center;cursor:pointer}  /* abrir o pedido (aprovação) */
 .oc-open svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .oc-wa svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ocard .oc-kv{margin-top:-1.3px;clear:none}  /* nome → primeira linha com o mesmo espaço das linhas de baixo */  /* nome do cliente → primeira linha com o mesmo espaço das linhas de baixo */
+.ocard .oc-kv{margin-top:3px;clear:none}  /* nome → Empresa: um respiro discreto a mais */
+.ocard .oc-kv > div:last-child{margin-top:4px}  /* Projeto → Valor total: o mesmo respiro */  /* nome do cliente → primeira linha com o mesmo espaço das linhas de baixo */
 .ocard .oc-kv > div:last-child{padding-right:80px}
 .ocard .oc-kv > div:last-child dt,.ocard .oc-kv > div:last-child dd{color:var(--text);font-weight:800}  /* Valor total: tudo preto e em negrito */  /* o valor não passa por baixo do PDF e do enviar */
 .st-tag.mg-tag{font-weight:800;font-size:13.5px;height:25px;padding:0 10px;border-radius:13px}  /* margem no cartão da aprovação: negrito, um pouco maior */
@@ -2386,10 +2388,12 @@ const ACT = {
   },
   // filtro de situação da lista do gestor: marcar uma ou mais situações (Limpar tira todas)
   stfilter: async () => {
+    // um ícone por situação, dentro da etiqueta
+    const ST_IC = {aberto: IC.pen, correcao: IC.undo, aprovacao: IC.lock, aprovado: IC.tick, reprovado: IC.x};
     const sts = ['aberto', 'correcao', 'aprovacao', 'aprovado', 'reprovado'], sel = new Set(S.stF || []);
     const mine = DB.orders.filter(o => o.sellerId === ME);
     const body = `<div class="st-opts">${sts.map(st => `<button type="button" class="st-opt ${sel.has(st) ? 'on' : ''}" data-s="${st}" aria-pressed="${sel.has(st)}">
-      <span class="chip st-${st}">${t('st_' + st)}</span><span class="st-cnt">${mine.filter(o => o.status === st).length}</span><span class="st-check">${IC.tick}</span></button>`).join('')}</div>`;
+      <span class="chip st-${st}">${ST_IC[st]}${t('st_' + st)}</span><span class="st-cnt">${mine.filter(o => o.status === st).length}</span><span class="st-check">${IC.tick}</span></button>`).join('')}</div>`;
     const pr = modal({title: t('status'), body, sheet: true, buttons: [{label: t('clear'), value: 'clear', kind: 'gray', icon: IC.eraser}, {label: t('apply'), value: 'ok', kind: 'primary', icon: IC.filter}]});
     const ov = document.getElementById('overlay');
     ov.querySelector('.st-opts').addEventListener('click', e => { const b = e.target.closest('.st-opt'); if(!b) return; const st = b.dataset.s;
