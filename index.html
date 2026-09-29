@@ -991,7 +991,7 @@ pt:{
   h_created:'Pedido criado', h_saved:'Pedido salvo', h_finalized:'Bloqueado', h_approved:'Aprovado',
   h_rejected:'Reprovado', h_correction:'Correção solicitada',
   notifications:'Notificações', no_notif:'Sem notificações',
-  n_pending:'Pedido Nº {0} aguardando aprovação', n_approved:'Seu pedido Nº {0} foi aprovado por {1}', n_rejected:'Seu pedido Nº {0} foi reprovado por {1}',
+  n_pending:'O pedido Nº {0} do Gestor {1} está aguardando aprovação', n_approved:'Seu pedido Nº {0} foi aprovado por {1}', n_rejected:'Seu pedido Nº {0} foi reprovado por {1}',
   n_correction:'Correção solicitada no pedido Nº {0} por {1}',
   c_save_t:'Salvar pedido?', c_save_m:'O pedido ficará em aberto e não seguirá para aprovação.',
   c_fin_t:'Finalizar pedido?', c_fin_m:'O pedido será enviado para aprovação e não poderá mais ser editado.',
@@ -1038,7 +1038,7 @@ es:{
   h_created:'Pedido creado', h_saved:'Pedido guardado', h_finalized:'Bloqueado', h_approved:'Aprobado',
   h_rejected:'Rechazado', h_correction:'Corrección solicitada',
   notifications:'Notificaciones', no_notif:'Sin notificaciones',
-  n_pending:'Pedido Nº {0} esperando aprobación', n_approved:'Su pedido Nº {0} fue aprobado por {1}', n_rejected:'Su pedido Nº {0} fue rechazado por {1}',
+  n_pending:'El pedido Nº {0} del Gestor {1} está esperando aprobación', n_approved:'Su pedido Nº {0} fue aprobado por {1}', n_rejected:'Su pedido Nº {0} fue rechazado por {1}',
   n_correction:'Corrección solicitada en el pedido Nº {0} por {1}',
   c_save_t:'¿Guardar pedido?', c_save_m:'El pedido quedará abierto y no seguirá a aprobación.',
   c_fin_t:'¿Finalizar pedido?', c_fin_m:'El pedido será enviado a aprobación y ya no podrá editarse.',
@@ -2138,6 +2138,7 @@ function myNotifs(){
 // quem aprovou / reprovou / pediu correção / editou: guardado na notificação ou, nos exemplos, o último registro do histórico
 const NOTIF_H = {approved: 'approved', rejected: 'rejected', correction: 'correction', edited: 'edited_appr'};
 function notifBy(n, o){
+  if(n.type === 'pending') return o ? SELLER(o.sellerId)?.name || '' : '';   // aprovador: o gestor que enviou o pedido
   if(n.by) return n.by;
   const h = o && [...(o.history || [])].reverse().find(x => x.action === NOTIF_H[n.type]);
   return h ? h.user : APPROVER;
