@@ -79,7 +79,8 @@ main{padding:12px 16px 132px}
 .pf-row + .pf-row{border-top:1px solid var(--border)}
 .seg{display:inline-flex;flex:none;padding:3px;border-radius:10px;background:var(--gray-soft)}
 .seg-o{min-width:92px;height:34px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
-.seg3 .seg-o{min-width:0;padding:0 10px}  /* tema: três opções (Claro, Escuro, Somax) */
+.pf-row .seg{display:flex;width:204px}  /* tema e idioma com a mesma largura */
+.pf-row .seg-o{flex:1;min-width:0;padding:0 4px}
 .seg-o.on{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.06)}
 [data-theme="dark"] .seg-o.on{background:#3a433e}
 .us-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);cursor:pointer;font:inherit}
@@ -971,7 +972,7 @@ pt:{
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
   neg_normal:'Normal', neg_bonif:'Bonificação', safra:'Projeto', currency:'Moeda',
-  cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', reopen:'Reabrir', c_reopen_t:'Reabrir o pedido?', c_reopen_m:'O pedido sai da aprovação e volta para Em aberto para você editar. Depois é preciso finalizar de novo.', t_reopened:'Pedido reaberto para edição', h_reopened:'Pedido reaberto', h_edited_appr:'Editado pelo aprovador', t_edited_appr:'Alterações salvas', n_edited:'Seu pedido {0} foi editado pelo aprovador', qty_min:'Quantidade mínima', qty_max:'Quantidade máxima', company:'Empresa', af_who:'Quem vendeu', af_client:'Cliente e negociação', af_value:'Valor', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente no projeto do pedido.', credit_leg2:'Valores em BRL; pedidos em USD convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', approved_title:'Pedido aprovado!', approved_msg:'O pedido nº {0} foi aprovado.', back_appr:'Voltar para aprovação', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
+  cond:'Condição de pagamento', cond_short:'Condição', due:'Vencimento', billing:'Local de faturamento', note:'Observação', reopen:'Reabrir', c_reopen_t:'Reabrir o pedido?', c_reopen_m:'O pedido sai da aprovação e volta para Em aberto para você editar. Depois é preciso finalizar de novo.', t_reopened:'Pedido reaberto para edição', h_reopened:'Pedido reaberto', h_edited_appr:'Editado pelo aprovador', t_edited_appr:'Alterações salvas', n_edited:'Seu pedido Nº {0} foi editado por {1}', qty_min:'Quantidade mínima', qty_max:'Quantidade máxima', company:'Empresa', af_who:'Quem vendeu', af_client:'Cliente e negociação', af_value:'Valor', mov_date:'Data movimento', send_btn:'Enviar', report:'Gerar relatório', credit_detail:'Ver limite em tabela', credit_total_s:'Limite', credit_orders:'Pedidos no limite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado em outros pedidos', credit_leg1:'Outros pedidos = não finalizados, em correção, em análise e aprovados deste cliente no projeto do pedido.', credit_leg2:'Valores em BRL; pedidos em USD convertidos.', order:'Pedido', qty_short:'Qtd.', price_short:'Preço', disc_short:'Desc.', avg_price:'Preço médio', stock_group:'Grupo', stock_group_f:'Linha', c_chg_t:'Trocar e limpar o produto?', c_chg_m:'O produto escolhido não é dessa opção. Ao trocar, o produto e o preço deste item serão apagados.', change:'Trocar', send_client:'Enviar para o cliente', send_text:'Segue o pedido nº {0}.', hello:'Olá', email:'E-mail', order_contact:'Contato do pedido', approved_title:'Pedido aprovado!', approved_msg:'O pedido nº {0} foi aprovado.', back_appr:'Voltar para aprovação', saved_title:'Pedido salvo!', saved_msg:'O pedido nº {0} foi salvo e continua em aberto para edição.', done_title:'Pedido enviado!', done_msg:'O pedido nº {0} foi para análise do aprovador.', share_order:'Compartilhar pedido', back_orders:'Voltar para pedidos', sign_pen:'Use a caneta do celular para assinar', pick_product:'Escolher produto', search_prod:'Buscar produto ou princípio ativo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sem estoque', pack:'Emb.', qty_in:'quantidades em', stock_legend:'Físico = no armazém · Carteira = já vendido, a entregar · Disponível = físico − carteira', swipe_new:'Arraste para novo pedido', note_order:'Observação do pedido', select:'Selecione',
   cond_avista:'À vista', cond_30d:'30 dias', cond_safra:'Prazo projeto', cur_BRL:'BRL', cur_USD:'USD',
   credit:'Limite de crédito', credit_total:'Limite total', credit_used:'Utilizado', credit_avail:'Limite disponível', this_order:'Este pedido', no_orders:'Sem pedidos',
   price_table:'Tabela de preço', active:'Princípio ativo', product:'Produto', stock:'Estoque', qty:'Quantidade', price:'Preço praticado',
@@ -990,8 +991,8 @@ pt:{
   h_created:'Pedido criado', h_saved:'Pedido salvo', h_finalized:'Bloqueado', h_approved:'Aprovado',
   h_rejected:'Reprovado', h_correction:'Correção solicitada',
   notifications:'Notificações', no_notif:'Sem notificações',
-  n_pending:'Pedido {0} aguardando aprovação', n_approved:'Seu pedido {0} foi aprovado', n_rejected:'Seu pedido {0} foi reprovado',
-  n_correction:'Correção solicitada no pedido {0}',
+  n_pending:'Pedido Nº {0} aguardando aprovação', n_approved:'Seu pedido Nº {0} foi aprovado por {1}', n_rejected:'Seu pedido Nº {0} foi reprovado por {1}',
+  n_correction:'Correção solicitada no pedido Nº {0} por {1}',
   c_save_t:'Salvar pedido?', c_save_m:'O pedido ficará em aberto e não seguirá para aprovação.',
   c_fin_t:'Finalizar pedido?', c_fin_m:'O pedido será enviado para aprovação e não poderá mais ser editado.',
   c_cancel_t:'Tem certeza que quer voltar?', c_cancel_new:'O pedido não será gravado.', discard_m2:'As alterações não serão gravadas.', yes:'Sim', no:'Não', c_cancel_edit:'Descartar as alterações ou cancelar o pedido?',
@@ -1018,7 +1019,7 @@ es:{
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
   neg_normal:'Normal', neg_bonif:'Bonificación', safra:'Proyecto', currency:'Moneda',
-  cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', reopen:'Reabrir', c_reopen_t:'¿Reabrir el pedido?', c_reopen_m:'El pedido sale de la aprobación y vuelve a Abierto para que lo edite. Después hay que finalizarlo de nuevo.', t_reopened:'Pedido reabierto para edición', h_reopened:'Pedido reabierto', h_edited_appr:'Editado por el aprobador', t_edited_appr:'Cambios guardados', n_edited:'Su pedido {0} fue editado por el aprobador', qty_min:'Cantidad mínima', qty_max:'Cantidad máxima', company:'Empresa', af_who:'Quién vendió', af_client:'Cliente y negociación', af_value:'Valor', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en el proyecto del pedido.', credit_leg2:'Valores en BRL; pedidos en USD convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', approved_title:'¡Pedido aprobado!', approved_msg:'El pedido nº {0} fue aprobado.', back_appr:'Volver a aprobación', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
+  cond:'Condición de pago', cond_short:'Condición', due:'Vencimiento', billing:'Local de facturación', note:'Observación', reopen:'Reabrir', c_reopen_t:'¿Reabrir el pedido?', c_reopen_m:'El pedido sale de la aprobación y vuelve a Abierto para que lo edite. Después hay que finalizarlo de nuevo.', t_reopened:'Pedido reabierto para edición', h_reopened:'Pedido reabierto', h_edited_appr:'Editado por el aprobador', t_edited_appr:'Cambios guardados', n_edited:'Su pedido Nº {0} fue editado por {1}', qty_min:'Cantidad mínima', qty_max:'Cantidad máxima', company:'Empresa', af_who:'Quién vendió', af_client:'Cliente y negociación', af_value:'Valor', mov_date:'Fecha de movimiento', send_btn:'Enviar', report:'Generar informe', credit_detail:'Ver límite en tabla', credit_total_s:'Límite', credit_orders:'Pedidos en el límite', value_brl:'Valor (BRL)', this_order:'Este pedido', credit_used_other:'Utilizado en otros pedidos', credit_leg1:'Otros pedidos = no finalizados, en corrección, en análisis y aprobados de este cliente en el proyecto del pedido.', credit_leg2:'Valores en BRL; pedidos en USD convertidos.', order:'Pedido', qty_short:'Cant.', price_short:'Precio', disc_short:'Desc.', avg_price:'Precio medio', stock_group:'Grupo', stock_group_f:'Línea', c_chg_t:'¿Cambiar y borrar el producto?', c_chg_m:'El producto elegido no corresponde a esta opción. Al cambiar, se borrarán el producto y el precio de este ítem.', change:'Cambiar', send_client:'Enviar al cliente', send_text:'Le enviamos el pedido nº {0}.', hello:'Hola', email:'E-mail', order_contact:'Contacto del pedido', approved_title:'¡Pedido aprobado!', approved_msg:'El pedido nº {0} fue aprobado.', back_appr:'Volver a aprobación', saved_title:'¡Pedido guardado!', saved_msg:'El pedido nº {0} fue guardado y sigue abierto para edición.', done_title:'¡Pedido enviado!', done_msg:'El pedido nº {0} fue a análisis del aprobador.', share_order:'Compartir pedido', back_orders:'Volver a pedidos', sign_pen:'Use el lápiz del celular para firmar', pick_product:'Elegir producto', search_prod:'Buscar producto o principio activo', reg:'Reg.', no_results:'Nada encontrado', no_stock:'Sin stock', pack:'Emb.', qty_in:'cantidades en', stock_legend:'Físico = en el almacén · Cartera = ya vendido, a entregar · Disponible = físico − cartera', swipe_new:'Deslice para nuevo pedido', note_order:'Observación del pedido', select:'Seleccione',
   cond_avista:'Al contado', cond_30d:'30 días', cond_safra:'Plazo proyecto', cur_BRL:'BRL', cur_USD:'USD',
   credit:'Límite de crédito', credit_total:'Límite total', credit_used:'Utilizado', credit_avail:'Límite disponible', this_order:'Este pedido', no_orders:'Sin pedidos',
   price_table:'Tabla de precios', active:'Principio activo', product:'Producto', stock:'Stock', qty:'Cantidad', price:'Precio practicado',
@@ -1037,8 +1038,8 @@ es:{
   h_created:'Pedido creado', h_saved:'Pedido guardado', h_finalized:'Bloqueado', h_approved:'Aprobado',
   h_rejected:'Rechazado', h_correction:'Corrección solicitada',
   notifications:'Notificaciones', no_notif:'Sin notificaciones',
-  n_pending:'Pedido {0} esperando aprobación', n_approved:'Su pedido {0} fue aprobado', n_rejected:'Su pedido {0} fue rechazado',
-  n_correction:'Corrección solicitada en el pedido {0}',
+  n_pending:'Pedido Nº {0} esperando aprobación', n_approved:'Su pedido Nº {0} fue aprobado por {1}', n_rejected:'Su pedido Nº {0} fue rechazado por {1}',
+  n_correction:'Corrección solicitada en el pedido Nº {0} por {1}',
   c_save_t:'¿Guardar pedido?', c_save_m:'El pedido quedará abierto y no seguirá a aprobación.',
   c_fin_t:'¿Finalizar pedido?', c_fin_m:'El pedido será enviado a aprobación y ya no podrá editarse.',
   c_cancel_t:'¿Seguro que quiere volver?', c_cancel_new:'El pedido no se guardará.', discard_m2:'Los cambios no se guardarán.', yes:'Sí', no:'No', c_cancel_edit:'¿Descartar los cambios o cancelar el pedido?',
@@ -2134,12 +2135,19 @@ function myNotifs(){
   return DB.notifs.filter(n => S.profile === 'aprovador' ? n.to === 'aprovador' : (n.to === 'vendedor' && n.sellerId === ME))
     .sort((a, b) => b.at.localeCompare(a.at));
 }
+// quem aprovou / reprovou / pediu correção / editou: guardado na notificação ou, nos exemplos, o último registro do histórico
+const NOTIF_H = {approved: 'approved', rejected: 'rejected', correction: 'correction', edited: 'edited_appr'};
+function notifBy(n, o){
+  if(n.by) return n.by;
+  const h = o && [...(o.history || [])].reverse().find(x => x.action === NOTIF_H[n.type]);
+  return h ? h.user : APPROVER;
+}
 function notify(n){ DB.notifs.push({id:uid(), at:new Date().toISOString(), read:false, ...n}); }
 function openNotifs(){
   const list = myNotifs();
   const body = list.length ? list.map(n => { const o = ORDER(n.orderId);
     return `<button class="nitem ${n.read ? 'read' : ''}" data-a="notif-open" data-id="${n.orderId}"><span class="dot"></span>
-      <span><b>${t('n_'+n.type, (o ? o.number : ''))}</b><br><span class="muted small">${fmtDT(n.at)}${o ? ' · ' + esc(CLIENT(o.clientId)?.name || '') : ''}</span></span></button>`; }).join('')
+      <span><b>${t('n_'+n.type, (o ? o.number : ''), notifBy(n, o))}</b><br><span class="muted small">${fmtDT(n.at)}${o ? ' · ' + esc(CLIENT(o.clientId)?.name || '') : ''}</span></span></button>`; }).join('')
     : `<div class="empty">${t('no_notif')}</div>`;
   modal({title: t('notifications'), body, sheet: true});
   list.forEach(n => n.read = true); persist(); render();
@@ -2253,7 +2261,7 @@ async function decide(o, kind){
   o.status = cfg.st;
   o.approverNote = kind === 'fix' ? r.note : '';
   addHist(o, cfg.h, apprName(), r.note);
-  notify({to: 'vendedor', sellerId: o.sellerId, type: cfg.n, orderId: o.id});
+  notify({to: 'vendedor', sellerId: o.sellerId, type: cfg.n, orderId: o.id, by: apprName()});
   persist();
   // aprovado: mesma tela de confirmação do pedido enviado/salvo (enviar, compartilhar, voltar)
   if(kind === 'approve'){ S.doneKind = 'approved'; go('done'); return; }
@@ -2601,7 +2609,7 @@ const ACT = {
     const o = S.draft; if(!o) return;
     if(draftChanged()){
       addHist(o, 'edited_appr', apprName()); commit(o);
-      notify({to: 'vendedor', sellerId: o.sellerId, type: 'edited', orderId: o.id}); persist(); toast(t('t_edited_appr'), 'ok');
+      notify({to: 'vendedor', sellerId: o.sellerId, type: 'edited', orderId: o.id, by: apprName()}); persist(); toast(t('t_edited_appr'), 'ok');
     }
     S.orderId = o.id; S.draft = null; S.draft0 = null; S.apprEdit = false; S.openA = {}; S.view = 'detail'; render(); window.scrollTo(0, 0);
   },
