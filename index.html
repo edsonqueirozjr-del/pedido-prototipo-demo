@@ -2483,6 +2483,7 @@ function dFacts(from, to, withF = true){
   DB.orders.forEach(o => {
     if(S.profile !== 'aprovador' && o.sellerId !== ME) return;
     if(o.date < from || o.date > to) return;
+    if(o.status !== 'aprovado') return;   // o dashboard só considera pedidos aprovados
     const fx = S.dash.fx || RATE, k = toCur === 'BRL' ? (o.currency === 'USD' ? fx : 1) : (o.currency === 'USD' ? 1 : 1 / fx);
     o.items.forEach(it => { const p = PROD(it.productId); if(!p) return;
       const c = itemCalc(o, it); rows.push({o, p, v: c.total * k, c: c.costT * k, tb: (c.adj || 0) * c.qty * k, q: c.qty}); });
@@ -2572,7 +2573,7 @@ function dRank(groups, key, name, sub, lead, color, val = g => g.v, txt = g => d
 function dEvol(rows, rg){
   const B = dBuckets(rg), W = 340, H = 176, L = 36, R = dMg() ? 26 : 8, T = 12, BT = 20, ih = H - T - BT;
   B.forEach(b => { const rs = rows.filter(r => r.o.date >= b.from && r.o.date <= b.to && r.o.status !== 'reprovado'), a = dAgg(rs);
-    b.ap = dAgg(rs.filter(r => r.o.status === 'aprovado')).v; b.op = a.v - b.ap; b.m = a.m; b.n = a.n; });
+    b.ap = dAgg(rs.filter(r => r.o.status === 'aprovado')).v; b.op = 0; b.m = a.m; b.n = a.n; });
   const max = niceMax(Math.max(1, ...B.map(b => b.ap + b.op))), cw = (W - L - R) / B.length, bw = Math.max(3, Math.min(20, cw * .64));
   const y = v => T + ih * (1 - v / max), sel = S.dash.sel;
   const ms = B.filter(b => b.m != null).map(b => b.m), mMax = Math.max(.3, ...ms), mMin = Math.min(0, ...ms);
@@ -2592,9 +2593,9 @@ function dEvol(rows, rg){
   pts.forEach(p => { s += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4" style="fill:var(--surface);stroke:var(--d3);stroke-width:1.6"/>`; });
   B.forEach((b, i) => { s += `<rect x="${(L + i * cw).toFixed(1)}" y="${T}" width="${cw.toFixed(1)}" height="${ih}" data-a="dsel" data-i="${i}" style="fill:transparent;cursor:pointer"/>`; });
   const b = sel != null && B[sel];
-  const tip = b ? `<div class="dtip"><b>${b.from === b.to ? fmtDate(b.from) : `${b.lbl} → ${fmtDate(b.to).slice(0, 5)}`}</b><span><i style="background:var(--d1)"></i>${t('d_sold')} <b>${dMoney(b.ap)}</b></span><span><i style="background:var(--d2)"></i>${t('d_pipe')} <b>${dMoney(b.op)}</b></span>${dMg() ? `<span><i style="background:var(--d3)"></i>${t('d_margin')} <b>${fmtPct(b.m)}</b></span>` : ''}</div>` : '';
+  const tip = b ? `<div class="dtip"><b>${b.from === b.to ? fmtDate(b.from) : `${b.lbl} → ${fmtDate(b.to).slice(0, 5)}`}</b><span><i style="background:var(--d1)"></i>${t('d_sold')} <b>${dMoney(b.ap)}</b></span>${dMg() ? `<span><i style="background:var(--d3)"></i>${t('d_margin')} <b>${fmtPct(b.m)}</b></span>` : ''}</div>` : '';
   return `${tip}<svg class="dch" viewBox="0 0 ${W} ${H}">${s}</svg>
-    <div class="dlegs"><span><i style="background:var(--d1)"></i>${t('d_sold')}</span><span><i style="background:var(--d2);opacity:.55"></i>${t('d_pipe')}</span>${dMg() ? `<span><i class="ln" style="background:var(--d3)"></i>${t('d_margin')}</span>` : ''}</div>`;
+    <div class="dlegs"><span><i style="background:var(--d1)"></i>${t('d_sold')}</span>${dMg() ? `<span><i class="ln" style="background:var(--d3)"></i>${t('d_margin')}</span>` : ''}</div>`;
 }
 // margem × desconto de cada pedido; bolha = valor; faixas da política de margem
 function dScatter(rows){
@@ -2661,6 +2662,7 @@ function viewDash(){
       ${spark}
       <div class="dh-mini"><div><span>${t('d_orders')}</span><b>${dCount(A.n)}</b></div><div><span>${t('d_clients')}</span><b>${dCount(clients)}</b></div><div><span>${t('d_prods')}</span><b>${dCount(new Set(sale.map(r => r.p.id)).size)}</b></div></div>
     </section>
+    ${byLine.length ? `<section class="dcard"><h2>${t('d_mix')}</h2><div class="ddon dpiec">${dPie(byLine, 'line', lineColor)}<div class="dleg">${byLine.map((g, i) => `<button type="button" class="dlr dlr2 ${D.f.line === g.k ? 'on' : ''} ${D.f.line && D.f.line !== g.k ? 'dim' : ''}" data-a="dfil" data-k="line" data-v="${esc(g.k)}"><i style="background:${lineColor(g, i)}"></i><span><b>${esc(g.k)}</b><small>${dMoney(g.v)}</small><small>${['L', 'kg'].map(u => { const q = g.rs.filter(r => r.p.um === u).reduce((x, r) => x + r.q, 0); return q ? `${fmtShort(q)} ${u}` : ''; }).filter(Boolean).join(' · ')}</small></span><em>${fmtPct(g.v / (A.v || 1))}</em></button>`).join('')}</div></div></section>` : ''}
     <div class="dkpis">
       <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_ticket')}</span><span class="dk-v"><small>${cur}</small> ${dCount(A.n ? A.v / A.n : 0, 'short')}</span><span class="dk-s">${t('d_n_orders', A.n)}</span></div></div>
       ${dMg() ? `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_margin')}</span><span class="dk-v" style="color:${D_SEMC[semOf(A.m)] || 'var(--text)'}">${dCount(A.m ?? 0, 'pct')}</span><span class="dk-s">≥ ${fmtPct(MARGIN_GOOD)}</span></div>${dRing((A.m || 0) / .3, D_SEMC[semOf(A.m)] || 'var(--gray)')}</div>`
@@ -2669,7 +2671,6 @@ function viewDash(){
         return `<div class="dk"><div class="dk-t"><span class="dk-l">${t('qty')} (${um})</span><span class="dk-v">${dCount(q)} <small>${um}</small></span><span class="dk-s">${t('d_n_prods', np)}</span></div></div>`; }).join('')}
     </div>
     <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === '30' ? t('d_by_day') : S.dash.per === '90' ? t('d_by_week') : t('d_by_month')}</small></h2>${dEvol(rows, rg)}</section>
-    ${byLine.length ? `<section class="dcard"><h2>${t('d_mix')}</h2><div class="ddon dpiec">${dPie(byLine, 'line', lineColor)}<div class="dleg">${byLine.map((g, i) => `<button type="button" class="dlr dlr2 ${D.f.line === g.k ? 'on' : ''} ${D.f.line && D.f.line !== g.k ? 'dim' : ''}" data-a="dfil" data-k="line" data-v="${esc(g.k)}"><i style="background:${lineColor(g, i)}"></i><span><b>${esc(g.k)}</b><small>${dMoney(g.v)}</small><small>${['L', 'kg'].map(u => { const q = g.rs.filter(r => r.p.um === u).reduce((x, r) => x + r.q, 0); return q ? `${fmtShort(q)} ${u}` : ''; }).filter(Boolean).join(' · ')}</small></span><em>${fmtPct(g.v / (A.v || 1))}</em></button>`).join('')}</div></div></section>` : ''}
     ${byProd.length ? `<section class="dcard"><h2>${t('d_top_p')}</h2>${dRank(byProd, 'prod', g => PROD(g.k)?.name, g => esc(ACTIVE(PROD(g.k).active).name), null, g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === PROD(g.k).group)) % D_PAL.length])}</section>` : ''}
     ${(() => { const um = D.um, byQ = dGroup(sale.filter(r => r.p.um === um), r => r.p.id).sort((a, b) => b.q - a.q).slice(0, 6);
       return `<section class="dcard"><h2>${t('d_qty_p')}<span class="seg dum">${['L', 'kg'].map(u => seg('dum', u, u, um === u)).join('')}</span></h2>
