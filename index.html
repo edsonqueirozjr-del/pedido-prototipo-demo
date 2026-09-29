@@ -27,6 +27,22 @@
   --somax:#5cb884; --somax-soft:#16301f; --corteva:#6d9ff7; --corteva-soft:#172a4d; --lock:#b692f0; --lock-soft:#2b2140;
   --shadow:0 1px 2px rgba(0,0,0,.4);
 }
+/* tema Somax: cores do site e das redes da Somax — verde-escuro #043D1C / #1B5B35 (topo e rodapé), verde #038C33
+   (títulos e faixas), limão #70C536 e amarelo #FBC51F (destaques), laranja #F89401. Só as cores; a estrutura é a mesma. */
+[data-theme="somax"]{
+  --map-water:#d6e8e0; --map-land:#f4f8f3; --map-line:#a9bcae; --map-lbl:#5a6d61;
+  --bg:#eef4f0; --surface:#fff; --surface-2:#f5f9f6; --border:#d6e4da; --text:#132a1c; --muted:#5a6d61;
+  --primary:#038c33; --primary-ink:#fff; --primary-soft:#dff2e5;
+  --ok:#038c33; --warn:#c99400; --bad:#d23c3c; --info:#1b5b35; --gray:#7d8c82;
+  --fix:#f89401; --fix-soft:#feedd2; --ok-soft:#dff2e5; --warn-soft:#fff3c9; --bad-soft:#fce4e4; --info-soft:#e2eee6; --gray-soft:#e8efea;
+  --somax:#1b5b35; --somax-soft:#dff2e5; --corteva:#175de3; --corteva-soft:#e2ebfc; --lock:#7b4bc4; --lock-soft:#efe6fa;
+  --shadow:0 1px 2px rgba(4,61,28,.06),0 4px 14px rgba(4,61,28,.07);
+}
+/* topo como o do site: verde-escuro em degradê, textos e símbolo em branco, filete amarelo embaixo */
+[data-theme="somax"] .top{background:linear-gradient(90deg,#043d1c,#1b5b35);border-bottom:0;box-shadow:inset 0 -3px 0 #fbc51f;color:#fff}
+[data-theme="somax"] .top .brand,[data-theme="somax"] .top .brand span,[data-theme="somax"] .top > .icon-btn{color:#fff}
+[data-theme="somax"] .top .brand-logo{filter:brightness(0) invert(1)}
+[data-theme="somax"] .top .profile-btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -62,6 +78,7 @@ main{padding:12px 16px 132px}
 .pf-row + .pf-row{border-top:1px solid var(--border)}
 .seg{display:inline-flex;flex:none;padding:3px;border-radius:10px;background:var(--gray-soft)}
 .seg-o{min-width:92px;height:34px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.seg3 .seg-o{min-width:0;padding:0 10px}  /* tema: três opções (Claro, Escuro, Somax) */
 .seg-o.on{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.06)}
 [data-theme="dark"] .seg-o.on{background:#3a433e}
 .us-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);cursor:pointer;font:inherit}
@@ -984,7 +1001,7 @@ pt:{
   approver_note:'Comentário do aprovador', reset_data:'Restaurar dados de exemplo', c_reset_t:'Restaurar dados?',
   c_reset_m:'Os pedidos criados serão apagados.', empty:'Nenhum pedido encontrado', empty_day:'Nenhum pedido neste dia', prev_days:'Dias anteriores', empty_appr:'Nenhum pedido em aprovação',
   pdf_title:'Pedido de venda', pdf_company:'AgroCRM · Protótipo', client_doc:'CNPJ/CPF', city:'Cidade', issued:'Emitido em',
-  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', appr_role:'Diretor Comercial', open:'Abrir', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
+  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', theme_somax:'Somax', appr_role:'Diretor Comercial', open:'Abrir', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
   low_items:'{0} produto(ns) abaixo da margem'
 },
 es:{
@@ -1031,7 +1048,7 @@ es:{
   approver_note:'Comentario del aprobador', reset_data:'Restaurar datos de ejemplo', c_reset_t:'¿Restaurar datos?',
   c_reset_m:'Los pedidos creados serán eliminados.', empty:'Ningún pedido encontrado', empty_day:'Ningún pedido en este día', prev_days:'Días anteriores', empty_appr:'Ningún pedido en aprobación',
   pdf_title:'Pedido de venta', pdf_company:'AgroCRM · Prototipo', client_doc:'RUC / Documento', city:'Ciudad', issued:'Emitido el',
-  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', appr_role:'Director Comercial', open:'Abrir', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
+  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', theme_somax:'Somax', appr_role:'Director Comercial', open:'Abrir', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
   low_items:'{0} producto(s) bajo el margen'
 }};
 
@@ -1988,6 +2005,7 @@ function render(){
   const y = window.scrollY;
   document.documentElement.lang = S.lang === 'es' ? 'es' : 'pt-BR';
   document.documentElement.dataset.theme = S.theme;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', S.theme === 'somax' ? '#043d1c' : S.theme === 'dark' ? '#0e1310' : '#1f7a4a');
   if(S.profile === 'aprovador' && S.view === 'list') S.view = 'approvals';
   const v = S.view === 'report' ? viewReport() : S.view === 'approvals' ? viewApprovals() : S.view === 'detail' ? viewDetail() : S.view === 'editor' ? viewEditor() : S.view === 'done' ? viewDone() : viewList();
   // dentro do pedido (digitação ou detalhe) some a barra de cima (notificações, tema, idioma)
@@ -2258,7 +2276,7 @@ const ACT = {
     // lista de preferências neutra (cinza, sem verde): rótulo à esquerda e seletor segmentado à direita
     const opt = (k, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-m="${k}:${v}" aria-pressed="${on}">${lbl}</button>`;
     const prefs = `<div class="pp-gh">${t('prefs')}</div><div class="pf-list">
-      <div class="pf-row"><span>${t('theme')}</span><div class="seg" role="group" aria-label="${t('theme')}">${opt('theme', 'light', t('theme_light'), S.theme !== 'dark')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}</div></div>
+      <div class="pf-row"><span>${t('theme')}</span><div class="seg seg3" role="group" aria-label="${t('theme')}">${opt('theme', 'light', t('theme_light'), S.theme !== 'dark' && S.theme !== 'somax')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}${opt('theme', 'somax', t('theme_somax'), S.theme === 'somax')}</div></div>
       <div class="pf-row"><span>${t('lang')}</span><div class="seg" role="group" aria-label="${t('lang')}">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div></div>
     </div><div class="pp-gh">${t('switch_user')}</div>`;
     const r = await modal({title: S.profile === 'aprovador' ? APPROVER : SELLER(ME).name, body: prefs + body, sheet: true});
