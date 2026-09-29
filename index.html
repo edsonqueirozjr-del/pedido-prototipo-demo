@@ -378,6 +378,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .oc-wa::before{content:"";position:absolute;inset:-6px -8px -6px -4px}  /* área de toque maior */
 .oc-wa svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ocard .oc-kv > div:last-child{padding-right:88px}  /* o valor não passa por baixo do PDF e do enviar */
+.st-tag.mg-tag{font-weight:800}  /* margem no cartão da aprovação: negrito */
 .st-tag{height:22px;padding:0 9px;gap:4px;font-size:12px;font-weight:600;border-radius:11px;flex:none}
 .st-tag svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .st-ico.sm{width:32px;height:32px;border-radius:9px;margin:-2px 0 0 8px}  /* na linha do nome, à direita */
@@ -1507,7 +1508,7 @@ function orderCard(o, showMargin, inAppr = false){
   // showMargin = visão do aprovador (mostra o vendedor); inAppr = tela Para aprovação (margem, sem etiqueta de situação)
   const c = orderCalc(o), cl = CLIENT(o.clientId);
   const main = `<div class="oc-main">
-      <div class="oc-head">${inAppr ? `<span class="chip st-tag ${semOf(c.margin) ? 'mb-' + semOf(c.margin) : ''}">${fmtPct(c.margin)}</span>` : stTag(o.status)}<b class="oc-name">${esc(cl ? cl.name : '—')}</b></div>
+      <div class="oc-head">${inAppr ? `<span class="chip st-tag mg-tag ${semOf(c.margin) ? 'mb-' + semOf(c.margin) : ''}">${fmtPct(c.margin)}</span>` : stTag(o.status)}<b class="oc-name">${esc(cl ? cl.name : '—')}</b></div>
       <dl class="oc-kv">
         <div><dt>${t('number')}:</dt> <dd>${o.number}</dd></div>
         <div><dt>${t('mov_date')}:</dt> <dd>${movDT(o)}</dd></div>
