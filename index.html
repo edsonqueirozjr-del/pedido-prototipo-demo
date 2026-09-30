@@ -90,8 +90,8 @@
 [data-theme="dark"]{--h2a:#0a1d13;--h2b:#15402a;--h2g1:rgba(61,187,120,.38);--h2g2:rgba(111,163,246,.18);--h2ink:#e9f5ee;--h2sub:rgba(233,245,238,.72)}
 [data-theme="somax"]{--h2a:#043d1c;--h2b:#0b7a35;--h2g1:rgba(112,197,54,.50);--h2g2:rgba(251,197,31,.30);--h2ink:#fff;--h2sub:rgba(255,255,255,.8)}
 [data-theme="emerald"]{--h2a:#043428;--h2b:#0a6b51;--h2g1:rgba(248,231,201,.30);--h2g2:rgba(79,154,124,.55);--h2ink:#f8e7c9;--h2sub:rgba(248,231,201,.78)}
-.app:has(.top.hdr2){--h2h:101px}
-.app:has(.top.hdr2):has(.dash){--h2h:129px}
+.app:has(.top.hdr2){--h2h:137px}   /* o painel desce até abraçar a busca e os botões ao lado */
+.app:has(.top.hdr2):has(.dash){--h2h:137px}
 /* cabeçalho modelo 2 mais junto da busca: menos espaço entre o nome/filial, as bolinhas e a busca */
 .app:has(.top.hdr2) main{padding-top:4px}
 .app:has(.top.hdr2) main > .pager{margin:0 0 8px}
@@ -322,6 +322,15 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-hbb b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-hb.on{background:var(--primary-soft);border-radius:8px}
 .pv .dtop{margin-bottom:8px}
+/* mapa do faturamento */
+.dash svg.pv-map{border-radius:12px;margin-bottom:8px;overflow:hidden}
+.dash svg.pv-map text.pv-mu{fill:#fff;font-size:12px;font-weight:800;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px}
+.dash svg.pv-map text.pv-mv{fill:#fff;font-size:10px;font-weight:700;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px}
+.dash svg.pv-map .pv-bub{fill:var(--d3);fill-opacity:.8;stroke:#fff;stroke-width:1.2}
+.pv-uf{flex:none;width:30px;height:22px;border-radius:6px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-size:11.5px}
+.pv-avs{display:flex;margin-left:auto;padding-right:4px}
+.pv-avs .avatar{width:22px;height:22px;margin-left:-6px;border:2px solid var(--surface)}
+.pv-mapt .pv-tr > span:not(.pv-n){flex:none;text-align:right}
 .pv .dlegs{gap:28px;justify-content:center}  /* legenda da evolução: centralizada, com espaço entre os anos */
 .pv > .dper{margin-top:10px}  /* mais espaço entre o painel verde e o filtro do ano */
 /* título numa linha só (cabe ao lado da moeda) */
@@ -1292,7 +1301,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes ativos', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_qfc:'Qtd fat. + cart.', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes ativos', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_qfc:'Qtd fat. + cart.', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', pv_map:'Faturamento por estado', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1334,12 +1343,12 @@ pt:{
   approver_note:'Comentário do aprovador', reset_data:'Restaurar dados de exemplo', c_reset_t:'Restaurar dados?',
   c_reset_m:'Os pedidos criados serão apagados.', empty:'Nenhum pedido encontrado', empty_day:'Nenhum pedido neste dia', prev_days:'Dias anteriores', empty_appr:'Nenhum pedido em aprovação',
   pdf_title:'Pedido de venda', pdf_company:'AgroCRM · Protótipo', client_doc:'CNPJ/CPF', city:'Cidade', issued:'Emitido em',
-  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', theme_somax:'Somax', theme_emerald:'Esmeralda', hdr:'Cabeçalho', hdr_m:'Modelo {0}', unit_pick:'Trocar filial', dir_com:'Diretor Comercial', dir_sup:'Diretor de Supply', approvers:'Aprovadores', open:'Abrir', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
+  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', theme_somax:'Somax', theme_emerald:'Somax', hdr:'Cabeçalho', hdr_m:'Modelo {0}', unit_pick:'Trocar filial', dir_com:'Diretor Comercial', dir_sup:'Diretor de Supply', approvers:'Aprovadores', open:'Abrir', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
   low_items:'{0} produto(ns) abaixo da margem'
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes activos', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_qfc:'Cant. fact. + cart.', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes activos', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_qfc:'Cant. fact. + cart.', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', pv_map:'Facturación por estado', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -1381,7 +1390,7 @@ es:{
   approver_note:'Comentario del aprobador', reset_data:'Restaurar datos de ejemplo', c_reset_t:'¿Restaurar datos?',
   c_reset_m:'Los pedidos creados serán eliminados.', empty:'Ningún pedido encontrado', empty_day:'Ningún pedido en este día', prev_days:'Días anteriores', empty_appr:'Ningún pedido en aprobación',
   pdf_title:'Pedido de venta', pdf_company:'AgroCRM · Prototipo', client_doc:'RUC / Documento', city:'Ciudad', issued:'Emitido el',
-  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', theme_somax:'Somax', theme_emerald:'Esmeralda', hdr:'Encabezado', hdr_m:'Modelo {0}', unit_pick:'Cambiar sucursal', dir_com:'Director Comercial', dir_sup:'Director de Supply', approvers:'Aprobadores', open:'Abrir', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
+  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', theme_somax:'Somax', theme_emerald:'Somax', hdr:'Encabezado', hdr_m:'Modelo {0}', unit_pick:'Cambiar sucursal', dir_com:'Director Comercial', dir_sup:'Director de Supply', approvers:'Aprobadores', open:'Abrir', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
   low_items:'{0} producto(s) bajo el margen'
 }};
 
@@ -2851,6 +2860,7 @@ function dLegend(groups, key, name, color, txt = g => dMoney(g.v), val = g => g.
 const PV_SEAS = [.35, .3, .25, .3, .35, .55, 1.2, 1.35, 1.7, 1.15, .7, .9];
 const p2 = n => String(n).padStart(2, '0');
 let PV_CACHE = null;
+const pvUF = c => (c?.city || '').split('/')[1] || '';   // estado do cliente (UF da cidade)
 // produtos que cada cliente compra (grupo fixo de 1 a 10 produtos por cliente)
 const PV_POOL = cid => { const n = [2, 3, 1, 5, 4, 7, 3, 9, 2, 6, 10, 4][hash('pool' + cid) % 12];
   return [...PRODUCTS].sort((a, b) => hash(cid + a.id) - hash(cid + b.id)).slice(0, n); };
@@ -2868,8 +2878,8 @@ function pvBase(){
   const end = today(), Y = +end.slice(0, 4), fat = [], cart = [], plan = [];
   const price = (pid, saf, cur) => TABLE(saf + '-' + cur)?.prices[pid] || 0;
   SELLERS.forEach((sl, si) => {
-    let cl = [...new Set(DB.orders.filter(o => o.sellerId === sl.id).map(o => o.clientId))];
-    CLIENTS.forEach((c, ci) => { if(!cl.includes(c.id) && hash(sl.id + c.id) % 4 === 0) cl.push(c.id); });
+    // clientes do estado da filial do gestor (o gestor do PR não fatura para cliente do RS)
+    let cl = CLIENTS.filter(c => pvUF(c) === sl.unit).map(c => c.id);
     if(!cl.length) cl = [CLIENTS[si % CLIENTS.length].id];
     const big = sl.company === 'somax' ? 1.25 : .8;
     for(let y = Y - 1; y <= Y; y++) for(let m = 1; m <= 12; m++){
@@ -2886,7 +2896,7 @@ function pvBase(){
     }
   });
   // pedidos aprovados do app: parte faturada entra no faturamento; o resto é Carteira
-  DB.orders.filter(o => o.status === 'aprovado').forEach(o => o.items.forEach(it => {
+  DB.orders.filter(o => o.status === 'aprovado' && pvUF(CLIENT(o.clientId)) === o.unit).forEach(o => o.items.forEach(it => {
     const p = PROD(it.productId); if(!p || !(+it.qty)) return;
     const qf = qtyInvoiced(o, it), pr = +it.price || 0;
     if(qf) fat.push({o, p, q: qf, pr, date: o.past ? o.date : (addDays(o.date, 5) > end ? end : addDays(o.date, 5))});
@@ -2982,6 +2992,26 @@ function pvCliProd(R){
   s += `<text x="${W / 2}" y="${H - 2}" text-anchor="middle" class="dax">${t('pv_nprod')}</text>`;
   return `<svg class="dch" viewBox="0 0 ${W} ${H}">${s}</svg>`;
 }
+// mapa: estados com faturamento (cor pela participação), bolha em cada cidade de cliente (tamanho = faturado); tocar filtra a filial
+function pvMap(R){
+  const byUF = new Map(); R.fat.forEach(r => { const u = r.o.unit; byUF.set(u, (byUF.get(u) || 0) + r.v); });
+  const byCity = new Map(); R.fat.forEach(r => { const c = CLIENT(r.o.clientId), xy = c && CITY_XY[c.city]; if(!xy) return;
+    const g = byCity.get(c.city) || {xy, v: 0, n: new Set()}; g.v += r.v; g.n.add(c.id); byCity.set(c.city, g); });
+  const tot = [...byUF.values()].reduce((a, v) => a + v, 0) || 1, mx = Math.max(1, ...byUF.values()), mc = Math.max(1, ...[...byCity.values()].map(g => g.v));
+  const lo0 = -64, lo1 = -40, la0 = -34.2, la1 = -6.5, k = Math.cos(20 * Math.PI / 180), W = 340, H = Math.round(W * (la1 - la0) / ((lo1 - lo0) * k));
+  const X = lo => (lo - lo0) / (lo1 - lo0) * W, Y = la => (la1 - la) / (la1 - la0) * H;
+  const f = S.dash.f.unit;
+  let s = `<rect width="${W}" height="${H}" rx="12" style="fill:var(--map-water)"/>`, lb = '';
+  BR_STATES.forEach(st => { const v = byUF.get(st.n) || 0;
+    const d = st.r.map(ring => 'M' + ring.map(([lo, la]) => `${X(lo).toFixed(1)},${Y(la).toFixed(1)}`).join('L') + 'Z').join('');
+    s += `<path d="${d}" ${v ? `data-a="dfil" data-k="unit" data-v="${st.n}"` : ''} style="fill:${v ? 'var(--d1)' : 'var(--map-land)'};fill-opacity:${v ? (.25 + .6 * v / mx) * (f && f !== st.n ? .35 : 1) : 1};stroke:var(--map-line);stroke-width:.8;${v ? 'cursor:pointer' : ''}"/>`;
+    if(v){ const pts = st.r.flat(), cx = pts.reduce((a, p) => a + p[0], 0) / pts.length, cy = pts.reduce((a, p) => a + p[1], 0) / pts.length;
+      lb += `<text x="${X(cx).toFixed(1)}" y="${(Y(cy) - 2).toFixed(1)}" text-anchor="middle" class="pv-mu">${st.n}</text><text x="${X(cx).toFixed(1)}" y="${(Y(cy) + 11).toFixed(1)}" text-anchor="middle" class="pv-mv">${fmtShort(v)}</text>`; } });
+  [...byCity.values()].sort((a, b) => b.v - a.v).forEach(g => { s += `<circle cx="${X(g.xy[1]).toFixed(1)}" cy="${Y(g.xy[0]).toFixed(1)}" r="${(3 + 9 * Math.sqrt(g.v / mc)).toFixed(1)}" class="pv-bub"><title>${fmtShort(g.v)}</title></circle>`; });
+  const rows = [...byUF].sort((a, b) => b[1] - a[1]).map(([u, v]) => { const sl = SELLERS.filter(x => x.unit === u && R.fat.some(r => r.o.sellerId === x.id));
+    return `<button type="button" class="pv-tr ${f === u ? 'on' : ''}" data-a="dfil" data-k="unit" data-v="${u}"><span class="pv-n"><b class="pv-uf">${u}</b><span>${esc(UNIT(u)?.name || u)}</span><span class="pv-avs">${sl.map(x => avatarHtml(x.id, x.name)).join('')}</span></span><span style="width:64px"><b>${fmtShort(v)}</b></span><span style="width:40px">${fmtNum(v / tot * 100, 0)}%</span></button>`; }).join('');
+  return `<svg class="dch pv-map" viewBox="0 0 ${W} ${H}">${s}${lb}</svg><div class="pv-tbl pv-mapt">${rows}</div>`;
+}
 function viewPlan(head){
   const D = S.dash, Y = pvBase().Y, year = D.year || Y, R = pvRows(year), isAppr = S.profile === 'aprovador';
   const F = pvSum(R.fat), C = pvSum(R.cart), P = pvSum(R.plan), clients = new Set(R.fat.map(r => r.o.clientId)).size;
@@ -3035,10 +3065,11 @@ function viewPlan(head){
     <section class="dcard"><h2>${t('pv_cliprod')}<small>${t('pv_cliprod_s')}</small></h2>${pvCliProd(R)}</section>
     <section class="dcard"><h2>${t('pv_detail')}</h2>${pvTable([
         {l: t('pv_fat'), w: 64, v: g => fmtShort(g.fv)}, {l: t('pv_cart'), w: 58, v: g => fmtShort(g.cv)}, {l: t('pv_fc_s'), w: 64, v: g => `<b>${fmtShort(g.fv + g.cv)}</b>`}],
-      tot, byCli.slice(0, D.pmore === 'cli' ? 99 : 10), 'client', g => `<span>${esc(CLIENT(g.k)?.name || '')}</span>`, 'ml')}
-      ${byCli.length > 10 && D.pmore !== 'cli' ? `<button type="button" class="pv-more" data-a="pmore" data-v="cli">${t('pv_more', byCli.length - 10)}</button>` : ''}</section>
+      tot, byCli.slice(0, D.pmore === 'cli' ? 99 : 5), 'client', g => `<span>${esc(CLIENT(g.k)?.name || '')}</span>`, 'ml')}
+      ${byCli.length > 5 && D.pmore !== 'cli' ? `<button type="button" class="pv-more" data-a="pmore" data-v="cli">${t('pv_more', byCli.length - 5)}</button>` : ''}</section>
     <section class="dcard"><h2>${t('pv_by_saf')}</h2>${bySaf.length ? bySaf.map((g, i) => `<button type="button" class="pv-hb ${D.f.safra === g.k ? 'on' : ''}" data-a="dfil" data-k="safra" data-v="${g.k}"><span>${esc(SAFRA(g.k)?.name || '')}</span>
       <span class="pv-hbb"><i style="width:${(g.fv / safMax * 100).toFixed(1)}%;animation-delay:${i * 80}ms"></i><b>${fmtShort(g.fv)}</b></span></button>`).join('') : `<div class="empty">${t('d_empty')}</div>`}</section>
+    <section class="dcard"><h2>${t('pv_map')}</h2>${pvMap(R)}</section>
     <div class="dfx pv-note">${t('pv_note')}</div>
   </div>`;
 }
@@ -3085,14 +3116,14 @@ const ACT = {
     const cur = S.profile === 'aprovador' ? APPR : ME;
     const row = (id, name, sub, logo) => `<button type="button" class="us-row ${id === cur ? 'on' : ''} ${id.startsWith('appr') ? 'appr' : ''}" data-m="${id}">
       ${avatarHtml(id, name)}<span class="us-t"><b>${esc(name)}</b><span>${esc(sub)}</span></span>${logo ? `<img class="us-logo" src="${logo}" alt="">` : ''}</button>`;
-    const body = `<div class="pp-gh">${t('switch_user')}</div><div class="pp-gh">${t('approvers')}</div>${APPROVERS.map(a => row(a.id, a.name, t(a.role))).join('')}
+    const body = `<div class="pp-gh">${t('approvers')}</div>${APPROVERS.map(a => row(a.id, a.name, t(a.role))).join('')}
       ${Object.entries(COMPANIES).map(([cid, cname]) => `<div class="pp-gh">${esc(cname)}</div>${SELLERS.filter(x => x.company === cid).map(x => row(x.id, x.name, `${t('seller')} · ${UNIT(x.unit).name}`, LOGOS[cid])).join('')}`).join('')}`;
     // tema e idioma ficam aqui dentro, por último (depois da troca de usuário); mudam na hora e a janela reabre já atualizada, rolada até eles
     // lista de preferências neutra (cinza, sem verde): rótulo à esquerda e seletor segmentado à direita
     const opt = (k, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-m="${k}:${v}" aria-pressed="${on}">${lbl}</button>`;
     const prefs = `<div class="pp-gh">${t('prefs')}</div><div class="pf-list">
-      <div class="pf-row pf-stack"><span>${t('theme')}</span><div class="seg seg4" role="group" aria-label="${t('theme')}">${opt('theme', 'light', t('theme_light'), !['dark', 'somax', 'emerald'].includes(S.theme))}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}${opt('theme', 'somax', t('theme_somax'), S.theme === 'somax')}${opt('theme', 'emerald', t('theme_emerald'), S.theme === 'emerald')}</div></div>
-      <div class="pf-row pf-stack"><span>${t('hdr')}</span><div class="seg" role="group" aria-label="${t('hdr')}">${opt('hdr', '1', t('hdr_m', 1), S.hdr === '1')}${opt('hdr', '2', t('hdr_m', 2), S.hdr !== '1')}</div></div>
+      <div class="pf-row pf-stack"><span>${t('theme')}</span><div class="seg seg4" role="group" aria-label="${t('theme')}">${opt('theme', 'emerald', t('theme_emerald'), S.theme === 'emerald')}${opt('theme', 'light', t('theme_light'), S.theme === 'light')}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}</div></div>
+      <div class="pf-row pf-stack"><span>${t('hdr')}</span><div class="seg" role="group" aria-label="${t('hdr')}">${opt('hdr', '2', t('hdr_m', 1), S.hdr !== '1')}${opt('hdr', '1', t('hdr_m', 2), S.hdr === '1')}</div></div>
       <div class="pf-row pf-stack"><span>${t('lang')}</span><div class="seg" role="group" aria-label="${t('lang')}">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div></div>
     </div>`;
     const pr = modal({title: S.profile === 'aprovador' ? apprName() : SELLER(ME).name, body: body + prefs, sheet: true});
@@ -4084,8 +4115,8 @@ function waEdit(o){
   if(prefs.me && SELLERS.some(x => x.id === prefs.me)) ME = prefs.me;
   if(prefs.appr && APPROVERS.some(a => a.id === prefs.appr)) APPR = prefs.appr;
   S = {profile: 'vendedor', lang: prefs.lang || 'pt',
-    theme: (prefs.tv === 2 && prefs.theme) || 'somax',   // padrão: tema Somax
-    hdr: prefs.hdr === '1' ? '1' : '2',   // cabeçalho: modelo 2 (foto, nome e filial) é o padrão
+    theme: ({somax: 'emerald'})[prefs.theme] || (prefs.tv === 2 && ['emerald', 'light', 'dark'].includes(prefs.theme) && prefs.theme) || 'emerald',   // padrão: tema Somax (paleta Emerald Ink + Champagne)
+    hdr: prefs.hdr === '1' ? '1' : '2',   // cabeçalho: interno '2' = foto, nome e filial (na tela "Modelo 1", padrão); '1' = logo ("Modelo 2")
     view: 'list', listView: 'list', open: {}, openA: {}, openD: {}, adv: ADV0(), stF: [], dash: DASH0(), errStep: 0, anim: '', filter: 'all', mine: false, q: '', step: 1, draft: null, isNew: false, orderId: null};
   DB = loadDB();
   // cabeçalho modelo 2: fundo sólido no topo só depois que a tela rola

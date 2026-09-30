@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modelos · Clientes × Produtos</title>
+<style>
+:root{--bg:#f2f4f1;--surface:#fff;--surface-2:#f7f8f6;--border:#dfe4dd;--text:#18211b;--muted:#637068;
+  --d1:#1f7a4a;--d2:#43b77a;--d3:#e39b00;--d4:#2f6fd6;--d5:#8e5bd8;--d6:#e0664a;--ok:#1c9a52;--warn:#c98a00;--bad:#d23c3c;--soft:#e6ece7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:420px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:20px;margin:4px 0 4px}
+.lead{color:var(--muted);font-size:13px;margin:0 0 14px}
+.help{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:13px;margin-bottom:16px}
+.help b{color:var(--d1)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px;margin-bottom:14px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.04)}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:#fff;background:var(--d1);border-radius:6px;padding:2px 7px;margin-bottom:6px}
+.card h2{margin:0 0 2px;font-size:15.5px}
+.q{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.q b{color:var(--text)}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:inherit;fill:var(--muted);font-size:10px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.kpis div{background:var(--surface-2);border-radius:10px;padding:8px}
+.kpis span{display:block;font-size:11px;color:var(--muted)}
+.kpis b{font-size:17px}
+.row{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--border);font-size:13px}
+.row:first-of-type{border-top:0}
+.row .n{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .v{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.bar{height:8px;border-radius:4px;background:var(--soft);overflow:hidden;flex:0 0 90px}
+.bar i{display:block;height:100%;border-radius:4px}
+.pill{font-size:11px;font-weight:700;border-radius:10px;padding:1px 7px;white-space:nowrap}
+.hm{display:grid;grid-template-columns:1fr repeat(3,46px);gap:3px;font-size:12px;align-items:center}
+.hm .h{font-size:10.5px;color:var(--muted);text-align:center;font-weight:700}
+.hm .c{height:24px;border-radius:5px;display:grid;place-items:center;font-size:10.5px;font-weight:700;color:#fff}
+.hm .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quad div{border-radius:12px;padding:10px;min-height:92px}
+.quad b{display:block;font-size:22px}
+.quad span{font-size:12px;font-weight:700}
+.quad small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.opp{border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:8px}
+.opp b{font-size:13.5px}
+.opp .t{font-size:12px;color:var(--muted);margin-top:2px}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.chips span{font-size:11px;border-radius:8px;padding:2px 7px;font-weight:700}
+.leg{display:flex;gap:14px;justify-content:center;font-size:11.5px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+.leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Clientes × Produtos — 10 modelos</h1>
+  <p class="lead">Dados de exemplo (40 clientes fictícios). Em cada modelo, a pergunta que ele responde.</p>
+  <div class="help"><b>Para que serve essa análise?</b> Mostrar a <b>amplitude de compra</b> de cada cliente — quantos produtos diferentes ele compra.
+    Cliente que compra <b>1 ou 2 produtos</b> é mais fácil de perder e tem espaço para vender mais (venda cruzada); quem compra <b>muitos</b> é fiel.
+    O modelo atual (quantos clientes compraram 1, 2, 3… produtos) é o <b>Modelo 1</b>, só que agrupado.</div>
+  <div id="m"></div>
+</div>
+<script>
+// ---------- dados de exemplo (fixos) ----------
+const H = s => { let h = 2166136261; for(const c of s){ h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+const NAMES = ['Agropecuária Santa Rita','Fazenda Boa Esperança','Grupo Três Irmãos','Sementes Vale Verde','Agro Campos Gerais','Cooperativa Vale do Pardo','Fazenda São Jorge','Cerealista Planalto','Agrícola Horizonte','Fazenda Rio Claro',
+  'Agro Serra Azul','Fazenda Primavera','Grãos do Oeste','Sítio Bela Vista','Agropecuária Guarani','Fazenda Santa Luzia','Agro Norte Sul','Cooperativa Alfa','Fazenda Paraíso','Agro Pioneira',
+  'Fazenda Esperança Nova','Agrícola Sol Nascente','Fazenda Dois Rios','Agro Terra Roxa','Fazenda Palmeiras','Cerealista União','Fazenda Ouro Verde','Agro Cerrado','Fazenda Boa Vista','Agropecuária Iguaçu',
+  'Fazenda Santa Fé','Agro Chapadão','Fazenda Recanto','Grupo Mato Grosso','Fazenda Aurora','Agro Vale do Ivaí','Fazenda Lagoa Seca','Agrícola Progresso','Fazenda Canaã','Agro Fronteira'];
+const LINES = ['Herbicida','Fungicida','Inseticida'], LC = ['var(--d1)','var(--d4)','var(--d3)'];
+const PRODS = [['Flowzin','Herbicida'],['Cappo','Herbicida'],['Glufosinato 20%','Herbicida'],['Fulltime','Herbicida'],['Lautus','Herbicida'],['Atrazina','Herbicida'],['Glifosato','Herbicida'],
+  ['Azoxi Pro','Fungicida'],['Tebuzol','Fungicida'],['Mancozebe','Fungicida'],['Difeno','Fungicida'],['Imidacloprido','Inseticida'],['Lambda','Inseticida'],['Acefato','Inseticida'],['Bifentrina','Inseticida']];
+const DIST = [1,1,1,2,2,2,2,3,3,3,4,4,4,5,5,6,6,7,7,7,8,8,9,10,11,12,1,2,3,3,4,5,2,1,6,4,3,2,9,5];
+const CLI = NAMES.map((n, i) => { const h = H(n), k = DIST[i];
+  const ps = [...PRODS].sort((a, b) => H(n + a[0]) - H(n + b[0])).slice(0, k);
+  const v = Math.round((80 + (h % 400) + k * 90 * (1 + (h >>> 8) % 3)) * 1000), v25 = Math.round(v * (.6 + ((h >>> 4) % 70) / 100));
+  const k25 = Math.max(1, k - ((h >>> 3) % 3) + 1 * ((h >>> 5) % 2));
+  return {n, k, ps, v, v25, k25, lines: LINES.map(l => ps.filter(p => p[1] === l).length)}; });
+const fmtK = v => v >= 1e6 ? (v / 1e6).toFixed(2).replace('.', ',') + ' mi' : Math.round(v / 1e3) + ' mil';
+const pct = (a, b) => Math.round(a / b * 100) + '%';
+const TOT = CLI.reduce((a, c) => a + c.v, 0), AVG = CLI.reduce((a, c) => a + c.k, 0) / CLI.length;
+const BANDS = [['1 produto', c => c.k === 1, 'var(--bad)'], ['2–3', c => c.k >= 2 && c.k <= 3, 'var(--d3)'], ['4–6', c => c.k >= 4 && c.k <= 6, 'var(--d2)'], ['7+', c => c.k >= 7, 'var(--d1)']];
+const card = (n, title, q, body) => `<section class="card"><span class="tag">MODELO ${n}</span><h2>${title}</h2><p class="q">${q}</p>${body}</section>`;
+let out = '';
+
+// 1) faixas: clientes e faturamento por faixa
+{ const W = 340, H0 = 170, T = 18, ih = 110, cw = W / 4, bw = 34; let s = '';
+  const rows = BANDS.map(b => { const cs = CLI.filter(b[1]); return {l: b[0], c: cs.length, v: cs.reduce((a, x) => a + x.v, 0), col: b[2]}; });
+  const mc = Math.max(...rows.map(r => r.c)), mv = Math.max(...rows.map(r => r.v));
+  rows.forEach((r, i) => { const cx = i * cw + cw / 2, h1 = ih * r.c / mc, h2 = ih * r.v / mv;
+    s += `<rect x="${cx - bw - 2}" y="${T + ih - h1}" width="${bw}" height="${h1}" rx="4" style="fill:${r.col}"/><text x="${cx - bw / 2 - 2}" y="${T + ih - h1 - 4}" text-anchor="middle" style="fill:var(--text);font-weight:700">${r.c}</text>
+      <rect x="${cx + 2}" y="${T + ih - h2}" width="${bw}" height="${h2}" rx="4" style="fill:${r.col};opacity:.35"/><text x="${cx + bw / 2 + 2}" y="${T + ih - h2 - 4}" text-anchor="middle" style="fill:var(--text);font-weight:700">${pct(r.v, TOT)}</text>
+      <text x="${cx}" y="${T + ih + 16}" text-anchor="middle" style="fill:var(--text);font-size:11.5px;font-weight:700">${r.l}</text>`; });
+  out += card(1, 'Faixas de amplitude', 'Responde: <b>quantos clientes estão em cada faixa</b> de produtos e <b>quanto do faturamento</b> vem de cada faixa.',
+    `<svg viewBox="0 0 ${W} ${H0}">${s}</svg><div class="leg"><span><i style="background:var(--d1)"></i>nº de clientes</span><span><i style="background:var(--d1);opacity:.35"></i>% do faturamento</span></div>`); }
+
+// 2) indicadores + risco mono-produto
+{ const mono = CLI.filter(c => c.k === 1), two = CLI.filter(c => c.k <= 2);
+  out += card(2, 'Indicadores de amplitude', 'Responde: <b>em média quantos produtos</b> cada cliente compra e <b>quanto está em risco</b> (clientes de 1 produto).',
+    `<div class="kpis"><div><span>Média de produtos</span><b>${AVG.toFixed(1).replace('.', ',')}</b></div><div><span>Clientes com 1 produto</span><b style="color:var(--bad)">${mono.length}</b></div><div><span>Fat. desses clientes</span><b>${pct(mono.reduce((a, c) => a + c.v, 0), TOT)}</b></div></div>
+     ${mono.slice(0, 5).map(c => `<div class="row"><span class="n">${c.n}</span><span class="pill" style="background:#fce4e4;color:var(--bad)">só ${c.ps[0][0]}</span><span class="v">${fmtK(c.v)}</span></div>`).join('')}`); }
+
+// 3) ranking por cliente: nº de produtos + faturamento
+{ const top = [...CLI].sort((a, b) => b.v - a.v).slice(0, 8), mk = 12;
+  out += card(3, 'Ranking de clientes com o mix', 'Responde: <b>meus maiores clientes compram muitos ou poucos produtos?</b>',
+    top.map(c => `<div class="row"><span class="n">${c.n}</span><span class="bar"><i style="width:${c.k / mk * 100}%;background:${c.k <= 2 ? 'var(--bad)' : c.k <= 5 ? 'var(--d3)' : 'var(--d1)'}"></i></span><span class="v" style="width:28px;text-align:right">${c.k}</span><span class="v" style="width:62px;text-align:right">${fmtK(c.v)}</span></div>`).join('')); }
+
+// 4) dispersão: nº produtos × faturamento
+{ const W = 340, H0 = 210, L = 34, B = 26, T = 8, iw = W - L - 8, ih = H0 - B - T, mv = Math.max(...CLI.map(c => c.v));
+  let s = `<line x1="${L}" x2="${W - 8}" y1="${T + ih}" y2="${T + ih}" stroke="#ccd3cd"/><line x1="${L}" x2="${L}" y1="${T}" y2="${T + ih}" stroke="#ccd3cd"/>`;
+  for(let k = 1; k <= 12; k += 1) s += `<text x="${L + iw * (k - .5) / 12}" y="${T + ih + 13}" text-anchor="middle">${k}</text>`;
+  s += `<text x="${W - 8}" y="${H0 - 1}" text-anchor="end" style="font-weight:700">produtos →</text><text x="${L + 3}" y="${T + 9}" style="font-weight:700">↑ faturamento</text>`;
+  CLI.forEach(c => { const x = L + iw * (c.k - .5) / 12 + ((H(c.n) % 9) - 4), y = T + ih * (1 - c.v / mv); const opp = c.v > mv * .45 && c.k <= 3;
+    s += `<circle cx="${x}" cy="${y}" r="${opp ? 7 : 5}" style="fill:${opp ? 'var(--d6)' : 'var(--d1)'};fill-opacity:.7;stroke:#fff"/>`; });
+  out += card(4, 'Faturamento × nº de produtos', 'Responde: <b>quem compra muito mas com pouco mix</b> (em laranja = maior oportunidade de venda cruzada).', `<svg viewBox="0 0 ${W} ${H0}">${s}</svg>`); }
+
+// 5) matriz 2×2
+{ const mv = [...CLI].map(c => c.v).sort((a, b) => a - b)[Math.floor(CLI.length / 2)], q = (hv, hk) => CLI.filter(c => (c.v >= mv) === hv && (c.k >= 4) === hk);
+  const Q = [[true, true, 'Estratégicos', 'Alto faturamento e mix amplo — manter', 'var(--d1)', '#e1f4e8'], [true, false, 'Oportunidade de mix', 'Compram muito, poucos produtos — vender mais linhas', 'var(--d6)', '#fbe8d9'],
+    [false, true, 'Desenvolver volume', 'Mix amplo, pouco volume — aumentar quantidade', 'var(--d4)', '#e3ecfb'], [false, false, 'Atenção', 'Pouco volume e pouco mix — risco de perder', 'var(--bad)', '#fce4e4']];
+  out += card(5, 'Matriz faturamento × mix', 'Responde: <b>onde está cada cliente</b> e <b>o que fazer</b> com cada grupo.',
+    `<div class="quad">${Q.map(x => { const cs = q(x[0], x[1]); return `<div style="background:${x[5]}"><span style="color:${x[4]}">${x[2]}</span><b>${cs.length}</b><small>${x[3]}</small><small><b style="font-size:12px;display:inline">${pct(cs.reduce((a, c) => a + c.v, 0), TOT)}</b> do faturamento</small></div>`; }).join('')}</div>`); }
+
+// 6) mapa de calor cliente × linha
+{ const top = [...CLI].sort((a, b) => b.v - a.v).slice(0, 10);
+  const cell = n => `<span class="c" style="background:${n ? `rgba(31,122,74,${.3 + Math.min(n, 5) * .14})` : '#e8ece9'};color:${n ? '#fff' : '#9aa59d'}">${n || '–'}</span>`;
+  out += card(6, 'Mapa cliente × linha', 'Responde: <b>que linha cada cliente ainda não compra</b> (cinza = lacuna para oferecer).',
+    `<div class="hm"><span></span>${LINES.map(l => `<span class="h">${l.slice(0, 5)}.</span>`).join('')}${top.map(c => `<span class="nm">${c.n}</span>${c.lines.map(cell).join('')}`).join('')}</div>`); }
+
+// 7) penetração por linha
+{ out += card(7, 'Penetração de cada linha', 'Responde: <b>que % dos clientes compra cada linha</b> — a linha com menor % é a maior chance de crescer.',
+    LINES.map((l, i) => { const n = CLI.filter(c => c.lines[i]).length; return `<div class="row"><span class="n" style="flex:0 0 86px">${l}</span><span class="bar" style="flex:1"><i style="width:${n / CLI.length * 100}%;background:${LC[i]}"></i></span><span class="v" style="width:40px;text-align:right">${pct(n, CLI.length)}</span><span class="v" style="width:70px;text-align:right;color:var(--muted);font-weight:500">${n} de ${CLI.length}</span></div>`; }).join('')); }
+
+// 8) lista de oportunidades (venda cruzada)
+{ const opp = [...CLI].filter(c => c.lines.some(x => !x) && c.k >= 2).sort((a, b) => b.v - a.v).slice(0, 4);
+  out += card(8, 'Oportunidades de venda cruzada', 'Responde: <b>para quem ligar amanhã</b> e <b>o que oferecer</b> (linhas que o cliente ainda não compra).',
+    opp.map(c => `<div class="opp"><b>${c.n}</b><div class="t">Compra ${c.k} produtos · ${fmtK(c.v)}</div><div class="chips">${LINES.map((l, i) => c.lines[i] ? `<span style="background:#e1f4e8;color:var(--d1)">✓ ${l}</span>` : `<span style="background:#fbe8d9;color:var(--d6)">+ oferecer ${l}</span>`).join('')}</div></div>`).join('')); }
+
+// 9) rosca por faixa + média no centro
+{ const cx = 70, cy = 70, r = 54, C = 2 * Math.PI * r; let acc = 0, s = '';
+  const rows = BANDS.map(b => ({l: b[0], c: CLI.filter(b[1]).length, col: b[2]}));
+  rows.forEach(x => { const len = x.c / CLI.length * C; s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${x.col}" stroke-width="18" stroke-dasharray="${len - 2} ${C - len + 2}" stroke-dashoffset="${-acc}" transform="rotate(-90 ${cx} ${cy})"/>`; acc += len; });
+  s += `<text x="${cx}" y="${cy + 2}" text-anchor="middle" style="fill:var(--text);font-size:24px;font-weight:800">${AVG.toFixed(1).replace('.', ',')}</text><text x="${cx}" y="${cy + 18}" text-anchor="middle">média</text>`;
+  out += card(9, 'Distribuição dos clientes', 'Responde: <b>como os clientes se dividem</b> por faixa de produtos, com a média no centro.',
+    `<div style="display:flex;align-items:center;gap:16px;justify-content:center"><svg viewBox="0 0 140 140" style="width:140px">${s}</svg><div>${rows.map(x => `<div class="row" style="border:0;padding:4px 0"><i style="width:10px;height:10px;border-radius:3px;background:${x.col}"></i><span class="n" style="flex:0 0 76px">${x.l}</span><span class="v">${x.c} <span style="color:var(--muted);font-weight:500">(${pct(x.c, CLI.length)})</span></span></div>`).join('')}</div></div>`); }
+
+// 10) evolução: ano anterior × ano atual
+{ const a25 = CLI.reduce((a, c) => a + c.k25, 0) / CLI.length, m25 = CLI.filter(c => c.k25 === 1).length, m26 = CLI.filter(c => c.k === 1).length;
+  const moved = CLI.filter(c => c.k > c.k25).length, lost = CLI.filter(c => c.k < c.k25).length;
+  out += card(10, 'Evolução do mix: ano anterior × atual', 'Responde: <b>o mix dos clientes está crescendo ou caindo?</b>',
+    `<div class="kpis"><div><span>Média 2025 → 2026</span><b>${a25.toFixed(1).replace('.', ',')} → ${AVG.toFixed(1).replace('.', ',')}</b></div><div><span>Aumentaram o mix</span><b style="color:var(--ok)">▲ ${moved}</b></div><div><span>Diminuíram</span><b style="color:var(--bad)">▼ ${lost}</b></div></div>
+     <div class="row"><span class="n">Clientes com 1 produto</span><span class="v">${m25} → ${m26}</span></div>
+     ${[...CLI].sort((a, b) => (b.k - b.k25) - (a.k - a.k25)).slice(0, 4).map(c => `<div class="row"><span class="n">${c.n}</span><span class="v">${c.k25} → ${c.k}</span><span class="pill" style="background:${c.k >= c.k25 ? '#e1f4e8' : '#fce4e4'};color:${c.k >= c.k25 ? 'var(--ok)' : 'var(--bad)'}">${c.k >= c.k25 ? '+' : ''}${c.k - c.k25}</span></div>`).join('')}`); }
+
+document.getElementById('m').innerHTML = out;
+</script>
+</body>
+</html>
