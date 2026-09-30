@@ -100,8 +100,7 @@
   box-shadow:0 10px 30px -12px var(--h2a)}
 .app:has(.top.hdr2) main{position:relative;z-index:1}
 [data-hdr="2"] .top.hdr2{background:transparent !important;border-bottom:0 !important;box-shadow:none !important;color:var(--h2ink);transition:background .2s,box-shadow .2s}
-/* rolando a tela: o topo ganha fundo sólido com leve desfoque */
-[data-hdr="2"].h2s .top.hdr2{background:color-mix(in srgb,var(--h2a) 92%,transparent) !important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 18px -8px rgba(0,0,0,.35) !important}
+/* rolando a tela: o topo continua igual (sem virar verde sólido) */
 .top.hdr2 .h2-name,.top.hdr2 > .icon-btn{color:var(--h2ink)}
 .top.hdr2 .h2-unit{color:var(--h2sub);opacity:1}
 .top.hdr2 .h2-av{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4)}
@@ -321,7 +320,6 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-avs .avatar{width:22px;height:22px;margin-left:-6px;border:2px solid var(--surface)}
 .pv-mapt .pv-tr > span:not(.pv-n){flex:none;text-align:right}
 .pv .dlegs{gap:28px;justify-content:center}  /* legenda da evolução: centralizada, com espaço entre os anos */
-.pv > .dper{margin-top:10px}  /* mais espaço entre o painel verde e o filtro do ano */
 /* título numa linha só (cabe ao lado da moeda) */
 .pv .dhead > div:first-child{min-width:0}
 .pv .dhead h1{font-size:18.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
