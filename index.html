@@ -244,6 +244,59 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dash .dfx2 input:focus{border:0;box-shadow:none;outline:none}
 .dfx2:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
 .dash .dfx2 input{width:44px;min-height:0;height:18px;padding:0;border:0;border-radius:0;background:none;font-size:15px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+/* Planejado × Realizado */
+:root{--pv-prev:#b9c7bd} [data-theme="dark"]{--pv-prev:#6f8277} [data-theme="somax"]{--pv-prev:#fbc51f} [data-theme="emerald"]{--pv-prev:#d9c49a}
+.pv-hero{border-radius:18px;padding:14px 14px 12px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+.pv-h1{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pv-h1 span{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.pv-h1 b{font-size:24px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pv-h1 b small{font-size:12px;color:var(--muted)}
+.pv-bar{display:flex;height:12px;border-radius:6px;background:var(--gray-soft);overflow:hidden;margin:10px 0 12px}
+.pv-bar i{display:block;height:100%;transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
+.pv-bar i.f,.pv-kg i.f{background:var(--d1)} .pv-bar i.c,.pv-kg i.c{background:var(--pv-prev)}
+.pv-kg{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+.pv-kg > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;min-width:0}
+.pv-kg span{flex-basis:100%;font-size:11.5px;color:var(--muted);font-weight:600}
+.pv-kg span i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.pv-kg b{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pv-p{font-size:13px;font-weight:800;font-variant-numeric:tabular-nums} .pv-p.ok{color:var(--ok)} .pv-p.mid{color:var(--warn)} .pv-p.bad{color:var(--bad)}
+.pv-na{color:var(--muted)}
+.pv-tbl{display:flex;flex-direction:column;margin:0 -4px}
+.pv-tr{display:flex;align-items:center;gap:6px;width:100%;min-height:40px;padding:6px 4px;border:0;border-top:1px solid var(--border);border-radius:0;background:none;color:var(--text);font:inherit;font-size:13px;text-align:left;cursor:pointer}
+.pv-tr > span:not(.pv-n):not(:first-child){flex:none;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pv-tr > span:first-child{flex:1;min-width:0}
+.pv-n{display:flex;align-items:center;gap:8px;min-width:0}
+.pv-n > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.pv-n .avatar{width:26px;height:26px;flex:none}
+.pv-dot{width:10px;height:10px;border-radius:3px;flex:none}
+.pv-th{min-height:28px;border-top:0;cursor:default;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;align-items:flex-end}
+.pv-tot{background:var(--surface-2);border-radius:8px;font-weight:800;cursor:default}
+.pv-tot > span:first-child{font-weight:800;padding-left:4px}
+.pv-tr.on{background:var(--primary-soft);border-radius:8px}
+.pv-wrap .pv-tr:not(.pv-th):not(.pv-tot){flex-wrap:wrap;row-gap:2px;padding:8px 4px}
+.pv-wrap .pv-tr:not(.pv-th):not(.pv-tot) > .pv-n{flex:0 0 100%}
+.pv-wrap .pv-tr:not(.pv-th):not(.pv-tot) > .pv-n + span{margin-left:auto}
+.pv-wrap .pv-n > span{white-space:normal;line-height:1.25}
+.pv-more{display:block;width:100%;margin-top:6px;padding:8px;border:0;border-top:1px solid var(--border);background:none;color:var(--primary);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.pv-pies{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pv-pies h3{margin:0 0 6px;font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.pv-pie .dch{width:100%;max-width:130px;margin:0 auto 6px}
+.pv-pl{display:flex;flex-direction:column;gap:2px}
+.pv-li{display:flex;align-items:center;gap:6px;padding:4px;border:0;border-radius:6px;background:none;color:inherit;font:inherit;font-size:12.5px;text-align:left;cursor:pointer}
+.pv-li i{width:9px;height:9px;border-radius:2px;flex:none}
+.pv-li b{margin-left:auto;font-variant-numeric:tabular-nums}
+.pv-li.on{background:var(--primary-soft)}
+.pv-hb{display:flex;flex-direction:column;gap:4px;width:100%;padding:8px 0;border:0;border-top:1px solid var(--border);background:none;color:inherit;font:inherit;font-size:13px;font-weight:600;text-align:left;cursor:pointer}
+.pv-hb:first-of-type{border-top:0}
+.pv-hbb{display:flex;align-items:center;gap:8px}
+.pv-hbb i{display:block;height:22px;border-radius:4px;background:var(--d5);transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
+.pv-hbb b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pv-hb.on{background:var(--primary-soft);border-radius:8px}
+.pv .dtop{margin-bottom:8px}
+/* título numa linha só (cabe ao lado da moeda) */
+.pv .dhead > div:first-child{min-width:0}
+.pv .dhead h1{font-size:18.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv-note{margin-top:2px}
 .dfxr{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);font-weight:600}
 .dfxr .money{flex:none;width:140px}
 .dfxr .money input{min-height:38px;height:38px;font-size:15px;font-weight:700;text-align:right;padding-right:12px}
@@ -1208,7 +1261,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes ativos', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1255,7 +1308,7 @@ pt:{
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes activos', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -2599,7 +2652,8 @@ const D_DIM = {
   safra: {get: r => r.o.safraId, name: v => SAFRA(v)?.name, lbl: 'safra'},
   unit: {get: r => r.o.unit, name: v => UNIT(v)?.name, lbl: 'unit'},
   cond: {get: r => r.o.cond, name: v => t('cond_' + v), lbl: 'cond'},
-  neg: {get: r => r.o.negType, name: v => t('neg_' + v), lbl: 'neg_type'}
+  neg: {get: r => r.o.negType, name: v => t('neg_' + v), lbl: 'neg_type'},
+  cur: {get: r => r.o.currency, name: v => v, lbl: 'currency'}
 };
 // valores compactos: 1,25 mi · 845 mil
 function fmtShort(v){
@@ -2758,75 +2812,198 @@ function dLegend(groups, key, name, color, txt = g => dMoney(g.v), val = g => g.
   const tot = groups.reduce((a, g) => a + val(g), 0) || 1, f = S.dash.f[key];
   return `<div class="dleg">${groups.map((g, i) => `<button type="button" class="dlr ${f === g.k ? 'on' : ''} ${f && f !== g.k ? 'dim' : ''}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"><i style="background:${color(g, i)}"></i><span>${esc(name(g) || '—')}</span><b>${txt(g)}</b><em>${fmtNum(val(g) / tot * 100, 0)}%</em></button>`).join('')}</div>`;
 }
-function viewDash(){
-  const D = S.dash, rg = dRange(), rows = dFacts(rg.from, rg.to), cur = D.cur, isAppr = S.profile === 'aprovador';
-  const sale = rows.filter(r => r.o.status !== 'reprovado');
-  const A = dAgg(sale), AP = dAgg(rows.filter(r => r.o.status === 'aprovado')), PIPE = dAgg(rows.filter(r => D_OPEN.includes(r.o.status))), REJ = dAgg(rows.filter(r => r.o.status === 'reprovado'));
-  const prev = rg.prev ? dAgg(dFacts(rg.prev.from, rg.prev.to).filter(r => r.o.status === 'aprovado')).v : 0;
-  const delta = prev > 0 ? AP.v / prev - 1 : null;
-  const clients = new Set(sale.map(r => r.o.clientId)).size, rate = AP.n + REJ.n ? AP.n / (AP.n + REJ.n) : null;
+/* ---------- Dashboard → Planejado × Realizado ----------
+   Faturamento e metas são FICTÍCIOS (só para o protótipo), gerados de forma fixa (mesmo resultado sempre):
+   - faturas de jan do ano anterior até hoje, por gestor, com sazonalidade (pico jul–out), clientes da carteira de cada gestor,
+     78% em BRL e 22% em USD; mais a parte faturada dos pedidos aprovados do app (a outra parte é a Carteira);
+   - metas (quantidade planejada por gestor e produto): ano anterior ≈ o realizado; ano atual = crescimento sobre o ano anterior. */
+const PV_SEAS = [.35, .3, .25, .3, .35, .55, 1.2, 1.35, 1.7, 1.15, .7, .9];
+const p2 = n => String(n).padStart(2, '0');
+let PV_CACHE = null;
+// produtos que cada cliente compra (grupo fixo de 1 a 10 produtos por cliente)
+const PV_POOL = cid => { const n = [2, 3, 1, 5, 4, 7, 3, 9, 2, 6, 10, 4][hash('pool' + cid) % 12];
+  return [...PRODUCTS].sort((a, b) => hash(cid + a.id) - hash(cid + b.id)).slice(0, n); };
+// qtd já faturada de cada produto de um pedido aprovado: o de hoje ainda não faturou; ≈ 45 dias para faturar tudo
+function qtyInvoiced(o, it){
+  const p = PROD(it.productId), q = +it.qty || 0; if(!p || o.status !== 'aprovado' || !q) return 0;
+  if(o.past) return q;
+  const age = Math.round((parseD(today()) - parseD(o.date)) / 864e5); if(age < 2) return 0;
+  const h = hash(o.id + ':' + it.productId), fr = Math.max(0, Math.min(1, (age - 2) / 45 + ((h % 41) - 20) / 100));
+  const pk = p.pack || 1; return fr >= .97 ? q : Math.floor(q * fr / pk) * pk;
+}
+function pvBase(){
+  const key = today() + '|' + DB.orders.length + '|' + DB.orders.filter(o => o.status === 'aprovado').length;
+  if(PV_CACHE && PV_CACHE.key === key) return PV_CACHE;
+  const end = today(), Y = +end.slice(0, 4), fat = [], cart = [], plan = [];
+  const price = (pid, saf, cur) => TABLE(saf + '-' + cur)?.prices[pid] || 0;
+  SELLERS.forEach((sl, si) => {
+    let cl = [...new Set(DB.orders.filter(o => o.sellerId === sl.id).map(o => o.clientId))];
+    CLIENTS.forEach((c, ci) => { if(!cl.includes(c.id) && hash(sl.id + c.id) % 4 === 0) cl.push(c.id); });
+    if(!cl.length) cl = [CLIENTS[si % CLIENTS.length].id];
+    const big = sl.company === 'somax' ? 1.25 : .8;
+    for(let y = Y - 1; y <= Y; y++) for(let m = 1; m <= 12; m++){
+      if(`${y}-${p2(m)}-01` > end) break;
+      const n = Math.max(1, Math.round((3 + hash(sl.id + y + m) % 4) * PV_SEAS[m - 1] * big));
+      for(let k = 0; k < n; k++){
+        const h = hash(`${sl.id}|${y}|${m}|${k}`), cid = cl[(h >>> 5) % cl.length], pool = PV_POOL(cid), p = pool[h % pool.length], date = `${y}-${p2(m)}-${p2(1 + (h >>> 9) % 28)}`;
+        if(date > end) continue;
+        const cur = (h >>> 13) % 100 < 22 ? 'USD' : 'BRL', saf = m <= 6 ? 'MS2727' : 'SV2627';
+        const q = Math.max(1, Math.round((250 + (h >>> 3) % 3200) * (p.um === 'kg' ? .5 : 1) / p.pack)) * p.pack;
+        const pr = r2(price(p.id, saf, cur) * (y < Y ? .94 : 1) * (.9 + ((h >>> 17) % 16) / 100));
+        fat.push({o: {id: 'f' + si + y + m + k, sellerId: sl.id, clientId: cid, safraId: saf, currency: cur, unit: sl.unit, negType: 'normal', cond: 'safra', date}, p, q, pr});
+      }
+    }
+  });
+  // pedidos aprovados do app: parte faturada entra no faturamento; o resto é Carteira
+  DB.orders.filter(o => o.status === 'aprovado').forEach(o => o.items.forEach(it => {
+    const p = PROD(it.productId); if(!p || !(+it.qty)) return;
+    const qf = qtyInvoiced(o, it), pr = +it.price || 0;
+    if(qf) fat.push({o, p, q: qf, pr, date: o.past ? o.date : (addDays(o.date, 5) > end ? end : addDays(o.date, 5))});
+    if(it.qty - qf > 0 && !o.past) cart.push({o, p, q: it.qty - qf, pr});
+  }));
+  fat.forEach(r => { r.date = r.date || r.o.date; });
+  // metas: quantidade planejada por ano, gestor e produto (em cima do realizado do ano anterior)
+  const qBy = new Map();
+  fat.forEach(r => { const k = r.date.slice(0, 4) + '|' + r.o.sellerId + '|' + r.p.id; qBy.set(k, (qBy.get(k) || 0) + r.q); });
+  SELLERS.forEach(sl => PRODUCTS.forEach(p => {
+    const prev = qBy.get((Y - 1) + '|' + sl.id + '|' + p.id) || 0; if(!prev) return;
+    const h = hash('meta' + sl.id + p.id), pk = p.pack || 1;
+    const pl1 = Math.round(prev * (.88 + (h % 30) / 100) / pk) * pk, pl2 = Math.round(prev * (1.15 + ((h >>> 6) % 40) / 100) / pk) * pk;
+    const pb = price(p.id, 'SV2627', 'BRL');
+    plan.push({y: Y - 1, o: {sellerId: sl.id, unit: sl.unit}, p, q: pl1, pr: pb}, {y: Y, o: {sellerId: sl.id, unit: sl.unit}, p, q: pl2, pr: pb});
+  }));
+  return PV_CACHE = {key, fat, cart, plan, Y};
+}
+// linhas do ano escolhido, já com o valor na moeda do dashboard e os filtros tocados
+function pvRows(year){
+  const B = pvBase(), fx = S.dash.fx || RATE, to = S.dash.cur;
+  const k = cur => to === 'BRL' ? (cur === 'USD' ? fx : 1) : (cur === 'USD' ? 1 : 1 / fx);
+  const mine = r => S.profile === 'aprovador' || r.o.sellerId === ME;
+  const flt = (r, keys) => Object.entries(S.dash.f).every(([key, v]) => !keys.includes(key) || D_DIM[key].get(r) === v);
+  const ALL = Object.keys(D_DIM), PLANK = ['line', 'prod', 'act', 'seller', 'comp', 'unit'];
+  const fat = B.fat.filter(r => r.date.slice(0, 4) == year && mine(r) && flt(r, ALL)).map(r => ({...r, v: r.q * r.pr * k(r.o.currency)}));
+  const cart = B.cart.filter(r => r.o.date.slice(0, 4) == year && mine(r) && flt(r, ALL)).map(r => ({...r, v: r.q * r.pr * k(r.o.currency)}));
+  const plan = B.plan.filter(r => r.y == year && mine(r) && flt(r, PLANK)).map(r => ({...r, v: r.q * r.pr * k('BRL')}));
+  return {fat, cart, plan};
+}
+const pvSum = (rs, f = r => r.v) => rs.reduce((a, r) => a + f(r), 0);
+function pvGroup(R, key){
+  const m = new Map(), get = k => { if(!m.has(k)) m.set(k, {k, fv: 0, fq: 0, cv: 0, cq: 0, pv: 0, pq: 0, cl: new Set()}); return m.get(k); };
+  R.fat.forEach(r => { const g = get(key(r)); g.fv += r.v; g.fq += r.q; g.cl.add(r.o.clientId); });
+  R.cart.forEach(r => { const g = get(key(r)); g.cv += r.v; g.cq += r.q; });
+  R.plan.forEach(r => { const g = get(key(r)); g.pv += r.v; g.pq += r.q; });
+  return [...m.values()];
+}
+const pvPct = (a, b) => b > 0 ? a / b : null;
+const pvPctHtml = p => p == null ? '<span class="pv-na">–</span>' : `<b class="pv-p ${p >= 1 ? 'ok' : p >= .5 ? 'mid' : 'bad'}">${fmtNum(p * 100, 0)}%</b>`;
+const pvQ = q => q ? fmtNum(q) : '–';
+// tabela do celular: nome à esquerda e colunas de números de largura fixa (valores alinhados); primeira linha = total
+function pvTable(cols, total, rows, key, name, wrap = true){
+  const f = S.dash.f[key];
+  const head = `<div class="pv-tr pv-th"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.l}</span>`).join('')}</div>`;
+  const tot = total ? `<div class="pv-tr pv-tot"><span>${t('pv_total')}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(total)}</span>`).join('')}</div>` : '';
+  const body = rows.map(g => `<button type="button" class="pv-tr ${f === g.k ? 'on' : ''}" ${key ? `data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"` : ''}><span class="pv-n">${name(g)}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(g)}</span>`).join('')}</button>`).join('');
+  return `<div class="pv-tbl ${wrap ? 'pv-wrap' : ''}">${head}${tot}${body}</div>`;
+}
+// evolução do faturamento por mês: ano anterior × ano escolhido (barras lado a lado)
+function pvEvol(year){
+  const a = pvRows(year - 1).fat, b = pvRows(year).fat, M = [...Array(12)].map((_, i) => i + 1);
+  const va = M.map(m => pvSum(a.filter(r => +r.date.slice(5, 7) === m))), vb = M.map(m => pvSum(b.filter(r => +r.date.slice(5, 7) === m)));
+  const top = Math.max(1, ...va, ...vb), max = niceMax(top * 1.08), sc = top >= 1e6 ? 1e6 : 1e3, unit = sc === 1e6 ? (S.lang === 'es' ? 'M' : 'mi') : 'mil';
+  const W = 340, L = 26, R = 4, T = 16, ih = 140, H = T + ih + 18, cw = (W - L - R) / 12, bw = Math.min(11, cw * .36), y = v => T + ih * (1 - v / max), sel = S.dash.psel;
+  let s = '';
+  [0, .5, 1].forEach(k => { const yy = y(max * k); s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" style="stroke:var(--border);stroke-width:1;${k ? 'stroke-dasharray:3 4' : ''}"/><text x="${L - 4}" y="${yy + 3}" text-anchor="end">${fmtNum(max * k / sc, 0)}</text>`; });
+  s += `<text x="0" y="8" class="dax">${S.dash.cur} ${unit}</text>`;
+  const mn = S.lang === 'es' ? ['E','F','M','A','M','J','J','A','S','O','N','D'] : ['J','F','M','A','M','J','J','A','S','O','N','D'];
+  M.forEach((m, i) => { const cx = L + i * cw + cw / 2, off = sel != null && sel !== i ? 'opacity:.35;' : '';
+    [[va[i], cx - bw - .5, 'var(--pv-prev)'], [vb[i], cx + .5, 'var(--d1)']].forEach(([v, x, c], j) => { if(v > 0) s += `<rect class="bar" x="${x.toFixed(1)}" y="${y(v).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(v)).toFixed(1)}" rx="2" style="fill:${c};${off}animation-delay:${i * 25 + j * 10}ms"/>`; });
+    s += `<text x="${cx.toFixed(1)}" y="${H - 4}" text-anchor="middle" style="${sel === i ? 'fill:var(--text);font-weight:700' : ''}">${mn[i]}</text>`;
+    s += `<rect x="${(L + i * cw).toFixed(1)}" y="0" width="${cw.toFixed(1)}" height="${H}" data-a="psel" data-i="${i}" style="fill:transparent;cursor:pointer"/>`; });
+  const mm = new Intl.DateTimeFormat(loc(), {month: 'long'});
+  const tip = sel != null ? `<div class="dtip"><b>${mm.format(new Date(2026, sel, 1))}</b><span><i style="background:var(--pv-prev)"></i>${year - 1} <b>${dMoney(va[sel])}</b></span><span><i style="background:var(--d1)"></i>${year} <b>${dMoney(vb[sel])}</b></span>${va[sel] ? `<span>${vb[sel] >= va[sel] ? '▲' : '▼'} ${fmtPct(Math.abs(vb[sel] / va[sel] - 1))}</span>` : ''}</div>` : '';
+  return `${tip}<svg class="dch" viewBox="0 0 ${W} ${H}">${s}</svg>
+    <div class="dlegs"><span><i style="background:var(--pv-prev)"></i>${year - 1} · ${dMoney(pvSum(a))}</span><span><i style="background:var(--d1)"></i>${year} · ${dMoney(pvSum(b))}</span></div>`;
+}
+// clientes × quantos produtos diferentes faturaram
+function pvCliProd(R){
+  const m = new Map(); R.fat.forEach(r => { if(!m.has(r.o.clientId)) m.set(r.o.clientId, new Set()); m.get(r.o.clientId).add(r.p.id); });
+  const cnt = [...Array(10)].map((_, i) => [...m.values()].filter(s => i === 9 ? s.size >= 10 : s.size === i + 1).length);
+  const top = Math.max(1, ...cnt), W = 340, T = 16, ih = 110, H = T + ih + 30, cw = W / 10, bw = cw * .62;
+  let s = `<line x1="0" x2="${W}" y1="${T + ih}" y2="${T + ih}" style="stroke:var(--border);stroke-width:1.5"/>`;
+  cnt.forEach((c, i) => { const cx = i * cw + cw / 2, h = ih * c / top;
+    if(c) s += `<rect class="bar" x="${(cx - bw / 2).toFixed(1)}" y="${(T + ih - h).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" style="fill:var(--d5);animation-delay:${i * 30}ms"/>`;
+    s += `<text x="${cx.toFixed(1)}" y="${(T + ih - h - 4).toFixed(1)}" text-anchor="middle" style="fill:var(--text);font-weight:700;font-size:10px">${c}</text>
+      <text x="${cx.toFixed(1)}" y="${T + ih + 13}" text-anchor="middle">${i === 9 ? '10+' : i + 1}</text>`; });
+  s += `<text x="${W / 2}" y="${H - 2}" text-anchor="middle" class="dax">${t('pv_nprod')}</text>`;
+  return `<svg class="dch" viewBox="0 0 ${W} ${H}">${s}</svg>`;
+}
+function viewPlan(head){
+  const D = S.dash, Y = pvBase().Y, year = D.year || Y, R = pvRows(year), isAppr = S.profile === 'aprovador';
+  const F = pvSum(R.fat), C = pvSum(R.cart), P = pvSum(R.plan), clients = new Set(R.fat.map(r => r.o.clientId)).size;
+  const pf = pvPct(F, P), pfc = pvPct(F + C, P);
   const seg = (a, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-a="${a}" data-v="${v}" aria-pressed="${on}">${lbl}</button>`;
-  const fchips = Object.entries(D.f);
-  // acumulado do vendido no período (faixa de baixo do destaque)
-  const B = dBuckets(rg); let acc = 0;
-  const cum = B.map(b => acc += dAgg(rows.filter(r => r.o.status === 'aprovado' && r.o.date >= b.from && r.o.date <= b.to)).v);
-  const cmax = Math.max(1, acc), sp = cum.map((v, i) => [B.length > 1 ? i / (B.length - 1) * 340 : 170, 60 - v / cmax * 50]);
-  const spark = sp.length > 1 ? `<svg class="dch dh-spark" viewBox="0 0 340 64" preserveAspectRatio="none"><defs><linearGradient id="dhg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
-      <path d="${dSmooth(sp)} L340,64 L0,64 Z" style="fill:url(#dhg)"/><path class="dline" d="${dSmooth(sp)}" style="stroke:var(--dacc);stroke-width:2.2;fill:none;stroke-linecap:round" vector-effect="non-scaling-stroke"/></svg>` : '';
-  // grupos
-  const byLine = dGroup(sale, r => r.p.group), lineColor = (g, i) => D_PAL[i % D_PAL.length];
-  const byProd = dGroup(sale, r => r.p.id).slice(0, 5), byClient = dGroup(sale, r => r.o.clientId).slice(0, 5);
-  const bySt = D_ST.map(st => ({k: st, ...dAgg(rows.filter(r => r.o.status === st))}));
-  const stTot = bySt.reduce((a, g) => a + g.v, 0) || 1;
-  const low = dGroup(sale, r => r.o.id).filter(g => g.m != null && g.m < MARGIN_MID).length;
-  // destaques calculados
-  const ins = [];
-  if(byLine[0] && A.v) ins.push([IC.box, t('d_ins_line', `<b>${esc(byLine[0].k)}</b>`, `<b>${fmtPct(byLine[0].v / A.v)}</b>`)]);
-  if(byClient[0] && A.v) ins.push([IC.target, t('d_ins_client', `<b>${esc(CLIENT(byClient[0].k)?.name || '')}</b>`, fmtPct(byClient[0].v / A.v))]);
-  if(low && dMg()) ins.push([IC.alert, t('d_ins_low', `<b>${low}</b>`, fmtPct(MARGIN_MID))]);
-  const sub = isAppr ? t('d_all_sellers') : SELLER(ME).name;
-  return `<div class="dash ${S.dashStill ? 'still' : ''}">
-    ${pager()}
-    <div class="dhead"><div><h1>${t('dash')}</h1><span class="dsub">${esc(sub)}</span></div>
+  const w = (a, b) => `${Math.max(0, Math.min(100, (b > 0 ? a / b : 0) * 100)).toFixed(1)}%`;
+  const lineC = g => D_PAL[Math.max(0, [...new Set(PRODUCTS.map(p => p.group))].indexOf(g.k)) % D_PAL.length];
+  const byLine = pvGroup(R, r => r.p.group).sort((a, b) => b.fv - a.fv);
+  const byCur = pvGroup(R, r => r.o.currency).sort((a, b) => b.fv - a.fv);
+  const tot = {fv: F, cv: C, pv: P, fq: pvSum(R.fat, r => r.q), cq: pvSum(R.cart, r => r.q), pq: pvSum(R.plan, r => r.q), cl: {size: clients}};
+  const pie = (gs, key, color, name) => gs.some(g => g.fv > 0) ? `<div class="pv-pie">${dPie(gs.map(g => ({k: g.k, v: g.fv})), key, color)}
+      <div class="pv-pl">${gs.filter(g => g.fv > 0).map((g, i) => `<button type="button" class="pv-li ${D.f[key] === g.k ? 'on' : ''}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"><i style="background:${color(g, i)}"></i>${esc(name(g))}<b>${fmtNum(g.fv / (F || 1) * 100, 1)}%</b></button>`).join('')}</div></div>` : `<div class="empty">${t('d_empty')}</div>`;
+  const tab = D.ptab || 'act';
+  const byAct = pvGroup(R, r => r.p.active).filter(g => g.fq || g.cq).sort((a, b) => b.fq - a.fq);
+  const byProd = pvGroup(R, r => r.p.id).filter(g => g.fq || g.pq || g.cq).sort((a, b) => b.fq - a.fq || b.pq - a.pq);
+  const byCli = pvGroup(R, r => r.o.clientId).filter(g => g.fv || g.cv).sort((a, b) => (b.fv + b.cv) - (a.fv + a.cv));
+  const bySaf = pvGroup(R, r => r.o.safraId).filter(g => g.fv).sort((a, b) => b.fv - a.fv), safMax = Math.max(1, ...bySaf.map(g => g.fv));
+  const mpr = (v, q) => q ? fmtNum(v / q, 2) : '–';
+  return `<div class="dash pv ${S.dashStill ? 'still' : ''}">${head}
+    <div class="seg dper">${[Y - 1, Y].map(y => seg('pyear', y, String(y), year === y)).join('')}</div>
+    <section class="pv-hero">
+      <div class="pv-h1"><span>${t('pv_obj')}</span><b><small>${D.cur}</small> ${dCount(P)}</b></div>
+      <div class="pv-bar"><i class="f" style="width:${w(F, P)}"></i><i class="c" style="width:${w(C, P)}"></i></div>
+      <div class="pv-kg">
+        <div><span><i class="f"></i>${t('pv_fat')}</span><b>${fmtShort(F)}</b>${pvPctHtml(pf)}</div>
+        <div><span><i class="c"></i>${t('pv_cart')}</span><b>${fmtShort(C)}</b></div>
+        <div><span>${t('pv_fc')}</span><b>${fmtShort(F + C)}</b>${pvPctHtml(pfc)}</div>
+        <div><span>${t('pv_cli')}</span><b>${dCount(clients)}</b></div>
+      </div>
+    </section>
+    ${isAppr ? `<section class="dcard"><h2>${t('pv_by_seller')}</h2>${pvTable([
+        {l: t('pv_fat'), w: 66, v: g => fmtShort(g.fv)}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cart'), w: 58, v: g => fmtShort(g.cv)}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
+      tot, pvGroup(R, r => r.o.sellerId).sort((a, b) => b.fv - a.fv), 'seller', g => `${avatarHtml(g.k, SELLER(g.k)?.name || '')}<span>${esc(SELLER(g.k)?.name || '')}</span>`)}</section>` : ''}
+    <section class="dcard"><h2>${t('pv_part')}</h2><div class="pv-pies">
+      <div><h3>${t('stock_group_f')}</h3>${pie(byLine, 'line', lineC, g => g.k)}</div>
+      <div><h3>${t('currency')}</h3>${pie(byCur, 'cur', g => g.k === 'BRL' ? 'var(--d1)' : 'var(--d3)', g => g.k)}</div></div></section>
+    <section class="dcard"><h2>${t('pv_by_line')}</h2>${pvTable([
+        {l: t('pv_obj'), w: 60, v: g => fmtShort(g.pv)}, {l: t('pv_fat'), w: 60, v: g => `<b>${fmtShort(g.fv)}</b>`}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
+      tot, byLine, 'line', g => `<i class="pv-dot" style="background:${lineC(g)}"></i><span>${esc(g.k)}</span>`, false)}</section>
+    <section class="dcard"><h2>${t('pv_evol')}<small>${Y - 1} × ${Y}</small></h2>${pvEvol(Y)}</section>
+    <section class="dcard"><div class="seg dtop">${seg('ptab', 'act', t('active'), tab === 'act')}${seg('ptab', 'qty', t('qty'), tab === 'qty')}</div>
+      ${tab === 'act' ? pvTable([
+          {l: t('pv_qf'), w: 62, v: g => pvQ(g.fq)}, {l: t('pv_pm'), w: 46, v: g => mpr(g.fv, g.fq)}, {l: t('pv_qc'), w: 58, v: g => pvQ(g.cq)}, {l: t('pv_pm'), w: 46, v: g => mpr(g.cv, g.cq)}],
+        tot, byAct.slice(0, D.pmore === 'act' ? 99 : 12), 'act', g => `<span>${esc(ACTIVE(g.k)?.name || '')}</span>`)
+      : pvTable([
+          {l: t('pv_qp'), w: 64, v: g => pvQ(g.pq)}, {l: t('pv_qf'), w: 60, v: g => pvQ(g.fq)}, {l: '%', w: 36, v: g => pvPctHtml(pvPct(g.fq, g.pq))}, {l: t('pv_qt'), w: 58, v: g => pvQ(g.fq + g.cq)}],
+        tot, byProd.slice(0, D.pmore === 'qty' ? 99 : 12), 'prod', g => `<span>${esc(PROD(g.k)?.name || '')}</span>`)}
+      ${(tab === 'act' ? byAct : byProd).length > 12 && D.pmore !== tab ? `<button type="button" class="pv-more" data-a="pmore" data-v="${tab}">${t('pv_more', (tab === 'act' ? byAct : byProd).length - 12)}</button>` : ''}</section>
+    <section class="dcard"><h2>${t('pv_cliprod')}<small>${t('pv_cliprod_s')}</small></h2>${pvCliProd(R)}</section>
+    <section class="dcard"><h2>${t('pv_detail')}</h2>${pvTable([
+        {l: t('pv_fat'), w: 64, v: g => fmtShort(g.fv)}, {l: t('pv_cart'), w: 58, v: g => fmtShort(g.cv)}, {l: t('pv_fc_s'), w: 64, v: g => `<b>${fmtShort(g.fv + g.cv)}</b>`}],
+      tot, byCli.slice(0, D.pmore === 'cli' ? 99 : 10), 'client', g => `<span>${esc(CLIENT(g.k)?.name || '')}</span>`)}
+      ${byCli.length > 10 && D.pmore !== 'cli' ? `<button type="button" class="pv-more" data-a="pmore" data-v="cli">${t('pv_more', byCli.length - 10)}</button>` : ''}</section>
+    <section class="dcard"><h2>${t('pv_by_saf')}</h2>${bySaf.length ? bySaf.map((g, i) => `<button type="button" class="pv-hb ${D.f.safra === g.k ? 'on' : ''}" data-a="dfil" data-k="safra" data-v="${g.k}"><span>${esc(SAFRA(g.k)?.name || '')}</span>
+      <span class="pv-hbb"><i style="width:${(g.fv / safMax * 100).toFixed(1)}%;animation-delay:${i * 80}ms"></i><b>${fmtShort(g.fv)}</b></span></button>`).join('') : `<div class="empty">${t('d_empty')}</div>`}</section>
+    <div class="dfx pv-note">${t('pv_note')}</div>
+  </div>`;
+}
+function viewDash(){
+  const D = S.dash, cur = D.cur, isAppr = S.profile === 'aprovador', fchips = Object.entries(D.f);
+  const seg = (a, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-a="${a}" data-v="${v}" aria-pressed="${on}">${lbl}</button>`;
+  const head = `${pager()}
+    <div class="dhead"><div><h1>${t('pv_title')}</h1><span class="dsub">${esc(isAppr ? t('d_all_sellers') : SELLER(ME).name)}</span></div>
       <div class="dtop-r">${cur === 'USD' ? `<label class="dfx2" title="${t('d_fx_lbl')}"><span>${t('d_fx_s')}</span><input id="d-fx" type="text" inputmode="decimal" value="${fmtNum(D.fx || RATE, 2)}" aria-label="${t('d_fx_lbl')}"></label>` : ''}
       <div class="seg dcur">${seg('dcur', 'BRL', 'BRL', cur === 'BRL')}${seg('dcur', 'USD', 'USD', cur === 'USD')}</div></div></div>
-    <div class="seg dper">${seg('dper', '30', t('d_p30'), D.per === '30')}${seg('dper', '90', t('d_p90'), D.per === '90')}${seg('dper', 'all', t('d_all'), D.per === 'all')}</div>
-    ${fchips.length ? `<div class="dfil">${fchips.map(([k, v]) => `<button type="button" class="dfchip" data-a="dfil" data-k="${k}" data-v="${esc(v)}">${t(D_DIM[k].lbl)}: <b>${esc(D_DIM[k].name(v) || '—')}</b>${IC.x}</button>`).join('')}${fchips.length > 1 ? `<button type="button" class="dfclr" data-a="dclr">${t('d_clear')}</button>` : ''}</div>` : ''}
-    <section class="dhero">
-      <div class="dh-top"><span>${t('d_sold')}</span><span>${D.per === 'all' ? t('d_all') : t('d_p' + D.per)}</span></div>
-      <div class="dh-val"><small>${cur}</small> ${dCount(AP.v)}</div>
-      ${delta != null ? `<div class="dh-delta ${delta < 0 ? 'down' : ''}"><b>${delta < 0 ? '▼' : '▲'} ${fmtPct(Math.abs(delta))}</b><span>${t('d_vs')}</span></div>` : ''}
-      ${spark}
-      <div class="dh-mini"><div><span>${t('d_orders')}</span><b>${dCount(A.n)}</b></div><div><span>${t('d_clients')}</span><b>${dCount(clients)}</b></div><div><span>${t('d_prods')}</span><b>${dCount(new Set(sale.map(r => r.p.id)).size)}</b></div></div>
-    </section>
-    ${byLine.length ? `<section class="dcard"><h2>${t('d_mix')}</h2><div class="ddon dpiec">${dPie(byLine, 'line', lineColor)}<div class="dleg">${byLine.map((g, i) => `<button type="button" class="dlr dlr2 ${D.f.line === g.k ? 'on' : ''} ${D.f.line && D.f.line !== g.k ? 'dim' : ''}" data-a="dfil" data-k="line" data-v="${esc(g.k)}"><i style="background:${lineColor(g, i)}"></i><span><b>${esc(g.k)}</b><small>${dMoney(g.v)}</small><small>${['L', 'kg'].map(u => { const q = g.rs.filter(r => r.p.um === u).reduce((x, r) => x + r.q, 0); return q ? `${fmtShort(q)} ${u}` : ''; }).filter(Boolean).join(' · ')}</small></span><em>${fmtPct(g.v / (A.v || 1))}</em></button>`).join('')}</div></div></section>` : ''}
-    <div class="dkpis">
-      <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_ticket')}</span><span class="dk-v"><small>${cur}</small> ${dCount(A.n ? A.v / A.n : 0, 'short')}</span></div></div>
-      ${dMg() ? `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_margin')}</span><span class="dk-v" style="color:${D_SEMC[semOf(A.m)] || 'var(--text)'}">${dCount(A.m ?? 0, 'pct')}</span><span class="dk-s">≥ ${fmtPct(MARGIN_GOOD)}</span></div>${dRing((A.m || 0) / .3, D_SEMC[semOf(A.m)] || 'var(--gray)')}</div>`
-        : `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_qty_orders')}</span><span class="dk-v">${dCount(A.n)}</span></div></div>`}
-      ${['L', 'kg'].map(um => { const rs = sale.filter(r => r.p.um === um), q = rs.reduce((a, r) => a + r.q, 0), np = new Set(rs.map(r => r.p.id)).size;
-        return `<div class="dk"><div class="dk-t"><span class="dk-l">${t('qty')} (${um})</span><span class="dk-v">${dCount(q)} <small>${um}</small></span><span class="dk-s">${t('d_n_prods', np)}</span></div></div>`; }).join('')}
-    </div>
-    <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === 'all' ? t('d_by_month') : t('d_by_week')}</small></h2>${dEvol(rows, rg)}</section>
-    ${sale.length ? (() => { const byAct = dGroup(sale, r => r.p.active).slice(0, 5), lc = g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === g.rs[0].p.group)) % D_PAL.length];
-      // Top 5: por princípio ativo (padrão) ou por produto
-      return `<section class="dcard"><h2>${t('d_top')}</h2>
-        <div class="seg dtop">${seg('dtop', 'act', t('active'), D.top !== 'prod')}${seg('dtop', 'prod', t('product'), D.top === 'prod')}</div>
-        ${D.top === 'prod' ? dRank(byProd, 'prod', g => PROD(g.k)?.name, g => esc(ACTIVE(PROD(g.k).active).name), null, lc)
-          : dRank(byAct, 'act', g => ACTIVE(g.k)?.name, g => `${esc(g.rs[0].p.group)} · ${t('d_n_prods', new Set(g.rs.map(r => r.p.id)).size)}`, null, lc)}</section>`; })() : ''}
-    ${(() => { const um = D.um, byQ = dGroup(sale.filter(r => r.p.um === um), r => r.p.id).sort((a, b) => b.q - a.q).slice(0, 6);
-      return `<section class="dcard"><h2>${t('d_qty_p')}<span class="seg dum">${['L', 'kg'].map(u => seg('dum', u, u, um === u)).join('')}</span></h2>
-        ${byQ.length ? dRank(byQ, 'prod', g => PROD(g.k)?.name, g => `${esc(ACTIVE(PROD(g.k).active).name)} · ${dMoney(g.v)}`, null, g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === PROD(g.k).group)) % D_PAL.length], g => g.q, g => `${fmtNum(g.q)} ${um}`) : `<div class="empty">${t('d_empty')}</div>`}</section>`; })()}
-    ${byClient.length ? `<section class="dcard"><h2>${t('d_top_c')}</h2>${dRank(byClient, 'client', g => CLIENT(g.k)?.name, g => t('d_n_orders', g.n), null, () => 'var(--d4)')}</section>` : ''}
-    ${isAppr && sale.length ? `<section class="dcard"><h2>${t('d_sellers')}</h2>${dRank(dGroup(sale, r => r.o.sellerId), 'seller', g => SELLER(g.k)?.name, g => { const c = SELLER(g.k)?.company; return `<img class="co-mini" src="${LOGOS[c]}" alt="">${esc(COMPANIES[c])} · ${esc(UNIT(SELLER(g.k).unit)?.name || '')}`; }, g => avatarHtml(g.k, SELLER(g.k)?.name || ''), g => `var(--${SELLER(g.k)?.company})`)}</section>
-      <section class="dcard dmulti"><div><h3>${t('d_comp')}</h3>${dSplit(dGroup(sale, r => SELLER(r.o.sellerId)?.company), 'comp', g => COMPANIES[g.k], g => `var(--${g.k})`, g => `<img class="co-mini" src="${LOGOS[g.k]}" alt="">`)}</div>
-        <div><h3>${t('d_units')}</h3>${dSplit(dGroup(sale, r => r.o.unit), 'unit', g => UNIT(g.k)?.name, (g, i) => D_PAL[i % D_PAL.length])}</div></section>` : ''}
-    ${dMg() ? `<section class="dcard"><h2>${t('d_scatter')}<small>${t('d_bubble')}</small></h2>${dScatter(rows)}</section>` : ''}
-    ${sale.length ? `<section class="dcard dmulti">
-      <div><h3>${t('d_safras')}</h3>${dSplit(dGroup(sale, r => r.o.safraId), 'safra', g => SAFRA(g.k)?.name, (g, i) => ['var(--d1)', 'var(--d3)', 'var(--d4)'][i % 3])}</div>
-      <div><h3>${t('cond')}</h3>${dSplit(dGroup(sale, r => r.o.cond), 'cond', g => t('cond_' + g.k), (g, i) => ['var(--d4)', 'var(--d5)', 'var(--d6)'][i % 3])}</div>
-      <div><h3>${t('neg_type')}</h3>${dSplit(dGroup(sale, r => r.o.negType), 'neg', g => t('neg_' + g.k), (g, i) => ['var(--d1)', 'var(--d3)'][i % 2])}</div></section>` : ''}
-  </div>`;
+    ${fchips.length ? `<div class="dfil">${fchips.map(([k, v]) => `<button type="button" class="dfchip" data-a="dfil" data-k="${k}" data-v="${esc(v)}">${t(D_DIM[k].lbl)}: <b>${esc(D_DIM[k].name(v) || '—')}</b>${IC.x}</button>`).join('')}${fchips.length > 1 ? `<button type="button" class="dfclr" data-a="dclr">${t('d_clear')}</button>` : ''}</div>` : ''}`;
+  return viewPlan(head);
 }
 // bolinhas de página: Pedidos | Dashboard
 const pager = () => `<div class="pager"><button type="button" class="${S.view !== 'dash' ? 'on' : ''}" data-a="pg" data-v="home" aria-label="${t('d_orders')}"></button><button type="button" class="${S.view === 'dash' ? 'on' : ''}" data-a="pg" data-v="dash" aria-label="${t('dash')}"></button></div>`;
@@ -2842,6 +3019,11 @@ const ACT = {
   pg: b => dashGo(b.dataset.v === 'dash'),
   dper: b => { S.dash.per = b.dataset.v; S.dash.sel = null; render(); },
   dcur: b => { S.dash.cur = b.dataset.v; render(); },
+  // Planejado × Realizado: ano, aba princípio ativo | quantidade, "ver todos", mês escolhido na evolução
+  pyear: b => { S.dash.year = +b.dataset.v; S.dash.psel = null; render(); },
+  ptab: b => { S.dash.ptab = b.dataset.v; render(); },
+  pmore: b => { S.dash.pmore = b.dataset.v; render(); },
+  psel: b => { const i = +b.dataset.i; S.dash.psel = S.dash.psel === i ? null : i; S.dashStill = true; render(); S.dashStill = false; },
   dum: b => { S.dash.um = b.dataset.v; render(); },
   dtop: b => { S.dash.top = b.dataset.v; render(); },
   dfil: b => { const k = b.dataset.k, v = b.dataset.v; if(S.dash.f[k] === v) delete S.dash.f[k]; else S.dash.f[k] = v; S.dash.sel = null; render(); },
