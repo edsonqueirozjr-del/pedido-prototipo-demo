@@ -280,7 +280,10 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-more{display:block;width:100%;margin-top:6px;padding:8px;border:0;border-top:1px solid var(--border);background:none;color:var(--primary);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .pv-pies{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pv-pies h3{margin:0 0 6px;font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-.pv-pie .dch{width:100%;max-width:130px;margin:0 auto 6px}
+.pv-pie{display:flex;align-items:center;gap:14px}
+.dash .pv-pie > svg.dch{width:130px;flex:none;margin:0}
+.pv-pie .pv-pl{flex:1;min-width:0}
+.pv-pie .pv-li{font-size:13.5px;padding:7px 6px}
 .pv-pl{display:flex;flex-direction:column;gap:2px}
 .pv-li{display:flex;align-items:center;gap:6px;padding:4px;border:0;border-radius:6px;background:none;color:inherit;font:inherit;font-size:12.5px;text-align:left;cursor:pointer}
 .pv-li i{width:9px;height:9px;border-radius:2px;flex:none}
@@ -293,6 +296,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-hbb b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-hb.on{background:var(--primary-soft);border-radius:8px}
 .pv .dtop{margin-bottom:8px}
+.pv > .dper{margin-top:10px}  /* mais espaço entre o painel verde e o filtro do ano */
 /* título numa linha só (cabe ao lado da moeda) */
 .pv .dhead > div:first-child{min-width:0}
 .pv .dhead h1{font-size:18.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -2970,9 +2974,9 @@ function viewPlan(head){
     ${isAppr ? `<section class="dcard"><h2>${t('pv_by_seller')}</h2>${pvTable([
         {l: t('pv_fat'), w: 66, v: g => fmtShort(g.fv)}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cart'), w: 58, v: g => fmtShort(g.cv)}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
       tot, pvGroup(R, r => r.o.sellerId).sort((a, b) => b.fv - a.fv), 'seller', g => `${avatarHtml(g.k, SELLER(g.k)?.name || '')}<span>${esc(SELLER(g.k)?.name || '')}</span>`)}</section>` : ''}
-    <section class="dcard"><h2>${t('pv_part')}</h2><div class="pv-pies">
-      <div><h3>${t('stock_group_f')}</h3>${pie(byLine, 'line', lineC, g => g.k)}</div>
-      <div><h3>${t('currency')}</h3>${pie(byCur, 'cur', g => g.k === 'BRL' ? 'var(--d1)' : 'var(--d3)', g => g.k)}</div></div></section>
+    <section class="dcard"><h2>${t('pv_part')}</h2>
+      <div class="seg dtop">${seg('ppart', 'line', t('stock_group_f'), D.ppart !== 'cur')}${seg('ppart', 'cur', t('currency'), D.ppart === 'cur')}</div>
+      ${D.ppart === 'cur' ? pie(byCur, 'cur', g => g.k === 'BRL' ? 'var(--d1)' : 'var(--d3)', g => g.k) : pie(byLine, 'line', lineC, g => g.k)}</section>
     <section class="dcard"><h2>${t('pv_by_line')}</h2>${pvTable([
         {l: t('pv_obj'), w: 60, v: g => fmtShort(g.pv)}, {l: t('pv_fat'), w: 60, v: g => `<b>${fmtShort(g.fv)}</b>`}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
       tot, byLine, 'line', g => `<i class="pv-dot" style="background:${lineC(g)}"></i><span>${esc(g.k)}</span>`, false)}</section>
@@ -3022,6 +3026,7 @@ const ACT = {
   // Planejado × Realizado: ano, aba princípio ativo | quantidade, "ver todos", mês escolhido na evolução
   pyear: b => { S.dash.year = +b.dataset.v; S.dash.psel = null; render(); },
   ptab: b => { S.dash.ptab = b.dataset.v; render(); },
+  ppart: b => { S.dash.ppart = b.dataset.v; render(); },
   pmore: b => { S.dash.pmore = b.dataset.v; render(); },
   psel: b => { const i = +b.dataset.i; S.dash.psel = S.dash.psel === i ? null : i; S.dashStill = true; render(); S.dashStill = false; },
   dum: b => { S.dash.um = b.dataset.v; render(); },
