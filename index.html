@@ -244,37 +244,6 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dash .dfx2 input:focus{border:0;box-shadow:none;outline:none}
 .dfx2:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
 .dash .dfx2 input{width:44px;min-height:0;height:18px;padding:0;border:0;border-radius:0;background:none;font-size:15px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
-/* Carteira (falta faturar) */
-.dcart .c-top{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-bottom:8px}
-.dcart .c-big{display:block;font-size:24px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:2px}
-.dcart .c-big small{font-size:12px;font-weight:700;color:var(--muted)}
-.dcart .c-pct{text-align:right;flex:none}
-.dcart .c-pct b{display:block;font-size:18px;font-weight:800;color:var(--d1);font-variant-numeric:tabular-nums}
-.dcart .c-pct span,.cq-l,.cq-s{font-size:11.5px;color:var(--muted);font-weight:600}
-.cbar{display:block;height:8px;border-radius:4px;background:var(--gray-soft);overflow:hidden}
-.cbar i{display:block;height:100%;border-radius:4px;transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
-.c-leg{display:flex;justify-content:space-between;gap:8px;margin:6px 0 12px;font-size:11.5px;color:var(--muted)}
-.c-leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px;background:var(--gray-soft);border:1px solid var(--border)}
-.ccur{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.ccur > div{display:flex;flex-direction:column;gap:2px;padding:0 2px;min-width:0}
-.ccur b{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
-.cqs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.cq{display:flex;flex-direction:column;gap:4px;padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--surface-2);min-width:0}
-.cq b{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
-.cq b small{font-size:11px;color:var(--muted)}
-.cq .cbar{height:6px}
-.cq-s{font-weight:500;line-height:1.3}
-.dash .dcseg{margin-bottom:6px}
-.cord{display:flex;flex-direction:column;gap:5px;width:100%;padding:10px 4px;border:0;border-top:1px solid var(--border);background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
-.cord:first-of-type{border-top:0}
-.cord-t,.cord-s{display:flex;justify-content:space-between;gap:10px}
-.cord-t b{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cord-t em{flex:none;width:86px;font-style:normal;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-.cord-s{font-size:11.5px;color:var(--muted)}
-.cord-s span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cord-s span:last-child{flex:none;width:86px}
-.cord .cbar{height:5px}
-.cmore{font-size:12px;color:var(--muted);text-align:center;padding-top:8px;border-top:1px solid var(--border)}
 .dfxr{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);font-weight:600}
 .dfxr .money{flex:none;width:140px}
 .dfxr .money input{min-height:38px;height:38px;font-size:15px;font-weight:700;text-align:right;padding-right:12px}
@@ -1239,7 +1208,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_cart:'Carteira', d_cart_s:'falta faturar', d_c_val:'Valor a faturar', d_c_cur:'Pedidos em {0}', d_c_inv:'Faturado', d_c_inv_s:'faturado', d_c_pend:'A faturar', d_c_qty:'A faturar', d_c_of:'faturado {0} de {1} {2}', d_c_orders:'Pedidos ({0})', d_c_left:'Falta', d_c_none:'Nada a faturar no período', d_c_more:'+ {0} pedidos em carteira', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1286,7 +1255,7 @@ pt:{
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_cart:'Cartera', d_cart_s:'falta facturar', d_c_val:'Valor a facturar', d_c_cur:'Pedidos en {0}', d_c_inv:'Facturado', d_c_inv_s:'facturado', d_c_pend:'A facturar', d_c_qty:'A facturar', d_c_of:'facturado {0} de {1} {2}', d_c_orders:'Pedidos ({0})', d_c_left:'Falta', d_c_none:'Nada a facturar en el período', d_c_more:'+ {0} pedidos en cartera', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -2641,16 +2610,6 @@ function fmtShort(v){
 }
 const dMoney = v => `${S.dash.cur} ${fmtShort(v)}`;
 function niceMax(v){ const e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return ([1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(x => f <= x + 1e-9)) * e; }
-// faturado (fictício, fixo por produto): só pedido aprovado fatura; o de hoje ainda não faturou, e quanto mais antigo
-// mais faturado (≈ 45 dias para faturar tudo, com variação por produto); pedidos antigos do histórico (past) já estão 100% faturados.
-// A quantidade faturada respeita a embalagem (múltiplos).
-function qtyInvoiced(o, it){
-  const p = PROD(it.productId), q = +it.qty || 0; if(!p || o.status !== 'aprovado' || !q) return 0;
-  if(o.past) return q;
-  const age = Math.round((parseD(today()) - parseD(o.date)) / 864e5); if(age < 2) return 0;
-  const h = hash(o.id + ':' + it.productId), fr = Math.max(0, Math.min(1, (age - 2) / 45 + ((h % 41) - 20) / 100));
-  const pk = p.pack || 1; return fr >= .97 ? q : Math.floor(q * fr / pk) * pk;
-}
 // linhas de fato: um registro por produto do pedido (valor, custo e valor de tabela já na moeda escolhida)
 function dFacts(from, to, withF = true){
   const rows = [], toCur = S.dash.cur;
@@ -2660,13 +2619,13 @@ function dFacts(from, to, withF = true){
     if(o.status !== 'aprovado') return;   // o dashboard só considera pedidos aprovados
     const fx = S.dash.fx || RATE, k = toCur === 'BRL' ? (o.currency === 'USD' ? fx : 1) : (o.currency === 'USD' ? 1 : 1 / fx);
     o.items.forEach(it => { const p = PROD(it.productId); if(!p) return;
-      const c = itemCalc(o, it), qf = qtyInvoiced(o, it); rows.push({o, p, v: c.total * k, c: c.costT * k, tb: (c.adj || 0) * c.qty * k, q: c.qty, qf, vf: qf * c.price * k, vo: c.total, vfo: qf * c.price}); });   // vo/vfo: na moeda do pedido
+      const c = itemCalc(o, it); rows.push({o, p, v: c.total * k, c: c.costT * k, tb: (c.adj || 0) * c.qty * k, q: c.qty}); });
   });
   if(!withF) return rows;
   return rows.filter(r => Object.entries(S.dash.f).every(([key, v]) => D_DIM[key].get(r) === v));
 }
-const dAgg = rows => { let v = 0, c = 0, tb = 0, q = 0, vf = 0, qf = 0; const os = new Set(); rows.forEach(r => { v += r.v; c += r.c; tb += r.tb; q += r.q || 0; vf += r.vf || 0; qf += r.qf || 0; os.add(r.o.id); });
-  return {v, c, q, vf, qf, vp: v - vf, qp: q - qf, n: os.size, m: v > 0 ? (v - c) / v : null, d: tb > 0 ? (tb - v) / tb : 0}; };
+const dAgg = rows => { let v = 0, c = 0, tb = 0, q = 0; const os = new Set(); rows.forEach(r => { v += r.v; c += r.c; tb += r.tb; q += r.q || 0; os.add(r.o.id); });
+  return {v, c, q, n: os.size, m: v > 0 ? (v - c) / v : null, d: tb > 0 ? (tb - v) / tb : 0}; };
 function dGroup(rows, key){ const m = new Map(); rows.forEach(r => { const k = key(r); if(!m.has(k)) m.set(k, []); m.get(k).push(r); });
   return [...m].map(([k, rs]) => ({k, rs, ...dAgg(rs)})).sort((a, b) => b.v - a.v); }
 function dRange(){
@@ -2799,35 +2758,6 @@ function dLegend(groups, key, name, color, txt = g => dMoney(g.v), val = g => g.
   const tot = groups.reduce((a, g) => a + val(g), 0) || 1, f = S.dash.f[key];
   return `<div class="dleg">${groups.map((g, i) => `<button type="button" class="dlr ${f === g.k ? 'on' : ''} ${f && f !== g.k ? 'dim' : ''}" data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"><i style="background:${color(g, i)}"></i><span>${esc(name(g) || '—')}</span><b>${txt(g)}</b><em>${fmtNum(val(g) / tot * 100, 0)}%</em></button>`).join('')}</div>`;
 }
-// Carteira: o que foi aprovado e ainda falta faturar (valor e quantidade), por linha/produto e os pedidos pendentes
-function dCarteira(sale, byLine){
-  const D = S.dash, A = dAgg(sale), pf = A.v > 0 ? A.vf / A.v : 0, mode = D.cart || 'orders';
-  const pend = dGroup(sale, r => r.o.id).filter(g => g.vp > .005).sort((a, b) => b.vp - a.vp);
-  const bar = (f, c = 'var(--d1)') => `<span class="cbar"><i style="width:${(Math.max(0, Math.min(1, f)) * 100).toFixed(1)}%;background:${c}"></i></span>`;
-  const qBox = um => { const rs = sale.filter(r => r.p.um === um), q = rs.reduce((a, r) => a + r.q, 0), qf = rs.reduce((a, r) => a + r.qf, 0);
-    return q ? `<div class="cq"><span class="cq-l">${t('d_c_qty')} (${um})</span><b>${fmtNum(q - qf)} <small>${um}</small></b>${bar(q ? qf / q : 0, 'var(--d2)')}<span class="cq-s">${t('d_c_of', fmtNum(qf), fmtNum(q), um)}</span></div>` : ''; };
-  const byProd = dGroup(sale, r => r.p.id).filter(g => g.qp > 0).sort((a, b) => b.vp - a.vp).slice(0, 6);
-  const lc = g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === g.rs[0].p.group)) % D_PAL.length];
-  const seg = (v, lbl) => `<button type="button" class="seg-o ${mode === v ? 'on' : ''}" data-a="dcart" data-v="${v}" aria-pressed="${mode === v}">${lbl}</button>`;
-  return `<section class="dcard dcart"><h2>${t('d_cart')}<small>${t('d_cart_s')}</small></h2>
-    <div class="c-top"><div><span class="cq-l">${t('d_c_val')}</span><b class="c-big"><small>${D.cur}</small> ${dCount(A.vp)}</b></div>
-      <div class="c-pct"><b>${fmtPct(pf)}</b><span>${t('d_c_inv')}</span></div></div>
-    ${bar(pf)}
-    <div class="c-leg"><span><i style="background:var(--d1)"></i>${t('d_c_inv')} ${dMoney(A.vf)}</span><span><i></i>${t('d_c_pend')} ${dMoney(A.vp)}</span></div>
-    <div class="ccur">${['BRL', 'USD'].map(cu => { const rs = sale.filter(r => r.o.currency === cu), vo = rs.reduce((a, r) => a + r.vo, 0), vfo = rs.reduce((a, r) => a + r.vfo, 0);
-      // pedidos em real e em dólar (todos entram no total acima, convertidos pela cotação): o que falta faturar na moeda de cada um
-      return `<div><span class="cq-l">${t('d_c_cur', cu)}</span><b>${cu} ${fmtShort(vo - vfo)}</b><span class="cq-s">${t('d_c_of', fmtShort(vfo), fmtShort(vo), '')}</span></div>`; }).join('')}</div>
-    <div class="cqs">${qBox('L')}${qBox('kg')}</div>
-    <div class="seg dcseg">${seg('orders', t('d_c_orders', pend.length))}${seg('prod', t('product'))}</div>
-    ${mode === 'prod'
-      ? (byProd.length ? dRank(byProd, 'prod', g => PROD(g.k)?.name, g => `${t('d_c_left')} ${fmtNum(g.qp)} ${PROD(g.k).um} · ${dMoney(g.vp)}`, null, lc, g => g.vp, g => fmtPct(g.q ? g.qf / g.q : 0) + ' ' + t('d_c_inv_s')) : `<div class="empty">${t('d_c_none')}</div>`)
-      : (pend.length ? pend.slice(0, 6).map(g => { const o = g.rs[0].o, f = g.v ? g.vf / g.v : 0;
-          return `<button type="button" class="cord" data-a="open" data-id="${o.id}"><span class="cord-t"><b>${esc(CLIENT(o.clientId)?.name || '—')}</b><em>${dMoney(g.vp)}</em></span>
-            ${bar(f)}<span class="cord-s"><span>Nº ${o.number} · ${fmtDate(o.date)}${dMg() ? ' · ' + esc(SELLER(o.sellerId)?.name || '') : ''}</span><span>${fmtPct(f)} ${t('d_c_inv_s')}</span></span></button>`; }).join('')
-        + (pend.length > 6 ? `<div class="cmore">${t('d_c_more', pend.length - 6)}</div>` : '')
-        : `<div class="empty">${t('d_c_none')}</div>`)}
-  </section>`;
-}
 function viewDash(){
   const D = S.dash, rg = dRange(), rows = dFacts(rg.from, rg.to), cur = D.cur, isAppr = S.profile === 'aprovador';
   const sale = rows.filter(r => r.o.status !== 'reprovado');
@@ -2877,7 +2807,6 @@ function viewDash(){
       ${['L', 'kg'].map(um => { const rs = sale.filter(r => r.p.um === um), q = rs.reduce((a, r) => a + r.q, 0), np = new Set(rs.map(r => r.p.id)).size;
         return `<div class="dk"><div class="dk-t"><span class="dk-l">${t('qty')} (${um})</span><span class="dk-v">${dCount(q)} <small>${um}</small></span><span class="dk-s">${t('d_n_prods', np)}</span></div></div>`; }).join('')}
     </div>
-    ${sale.length ? dCarteira(sale, byLine) : ''}
     <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === 'all' ? t('d_by_month') : t('d_by_week')}</small></h2>${dEvol(rows, rg)}</section>
     ${sale.length ? (() => { const byAct = dGroup(sale, r => r.p.active).slice(0, 5), lc = g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === g.rs[0].p.group)) % D_PAL.length];
       // Top 5: por princípio ativo (padrão) ou por produto
@@ -2914,7 +2843,6 @@ const ACT = {
   dper: b => { S.dash.per = b.dataset.v; S.dash.sel = null; render(); },
   dcur: b => { S.dash.cur = b.dataset.v; render(); },
   dum: b => { S.dash.um = b.dataset.v; render(); },
-  dcart: b => { S.dash.cart = b.dataset.v; render(); },
   dtop: b => { S.dash.top = b.dataset.v; render(); },
   dfil: b => { const k = b.dataset.k, v = b.dataset.v; if(S.dash.f[k] === v) delete S.dash.f[k]; else S.dash.f[k] = v; S.dash.sel = null; render(); },
   dclr: () => { S.dash.f = {}; render(); },
