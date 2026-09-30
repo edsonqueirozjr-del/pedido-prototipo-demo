@@ -277,6 +277,11 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-wrap .pv-tr:not(.pv-th):not(.pv-tot) > .pv-n{flex:0 0 100%}
 .pv-wrap .pv-tr:not(.pv-th):not(.pv-tot) > .pv-n + span{margin-left:auto}
 .pv-wrap .pv-n > span{white-space:normal;line-height:1.25}
+/* princípio ativo e quantidade: nome quebra em várias linhas na própria coluna; nome e números centralizados na vertical */
+.pv-ml .pv-tr{align-items:center;padding:8px 4px}
+.pv-ml .pv-tr{gap:5px;font-size:12.5px}
+.pv-ml .pv-n > span{white-space:normal;overflow:visible;line-height:1.25;font-size:12.5px;overflow-wrap:break-word}
+.pv-ml .pv-th{font-size:10px;letter-spacing:0}
 .pv-more{display:block;width:100%;margin-top:6px;padding:8px;border:0;border-top:1px solid var(--border);background:none;color:var(--primary);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .pv-pies{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pv-pies h3{margin:0 0 6px;font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
@@ -326,7 +331,7 @@ main{padding:12px 16px 132px}
 .muted{color:var(--muted)} .small{font-size:12.5px} .right{text-align:right}
 
 /* topo */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:var(--top);display:flex;align-items:center;gap:4px;padding:0 10px 0 14px;background:var(--surface);border-bottom:1px solid var(--border)}
+.top{position:relative;z-index:20;height:var(--top);display:flex;align-items:center;gap:4px;padding:0 10px 0 14px;background:var(--surface);border-bottom:1px solid var(--border)}
 .top > .icon-btn{width:34px}
 .brand{display:flex;align-items:center;gap:7px;font-weight:800;font-size:18.5px;margin-right:auto;color:var(--primary);white-space:nowrap}
 .brand-logo{flex:none;width:27px;height:27px;object-fit:contain}  /* símbolo da Somax, sem o nome */
@@ -2908,7 +2913,7 @@ function pvTable(cols, total, rows, key, name, wrap = true){
   const head = `<div class="pv-tr pv-th"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.l}</span>`).join('')}</div>`;
   const tot = total ? `<div class="pv-tr pv-tot"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.v(total)}</span>`).join('')}</div>` : '';
   const body = rows.map(g => `<button type="button" class="pv-tr ${f === g.k ? 'on' : ''}" ${key ? `data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"` : ''}><span class="pv-n">${name(g)}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(g)}</span>`).join('')}</button>`).join('');
-  return `<div class="pv-tbl ${wrap ? 'pv-wrap' : ''}">${head}${tot}${body}</div>`;
+  return `<div class="pv-tbl ${wrap === 'ml' ? 'pv-ml' : wrap ? 'pv-wrap' : ''}">${head}${tot}${body}</div>`;
 }
 // evolução do faturamento por mês: ano anterior × ano escolhido (barras lado a lado)
 function pvEvol(year){
@@ -2984,11 +2989,11 @@ function viewPlan(head){
     <section class="dcard"><h2>${t('pv_evol')}</h2>${pvEvol(Y)}</section>
     <section class="dcard"><div class="seg dtop">${seg('ptab', 'act', t('active'), tab === 'act')}${seg('ptab', 'qty', t('qty'), tab === 'qty')}</div>
       ${tab === 'act' ? pvTable([
-          {l: t('pv_qf'), w: 62, v: g => pvQ(g.fq)}, {l: t('pv_pm'), w: 46, v: g => mpr(g.fv, g.fq)}, {l: t('pv_qc'), w: 58, v: g => pvQ(g.cq)}, {l: t('pv_pm'), w: 46, v: g => mpr(g.cv, g.cq)}],
-        tot, byAct.slice(0, D.pmore === 'act' ? 99 : 12), 'act', g => `<span>${esc(ACTIVE(g.k)?.name || '')}</span>`)
+          {l: t('pv_qf'), w: 54, v: g => pvQ(g.fq)}, {l: t('pv_pm'), w: 42, v: g => mpr(g.fv, g.fq)}, {l: t('pv_qc'), w: 48, v: g => pvQ(g.cq)}, {l: t('pv_pm'), w: 42, v: g => mpr(g.cv, g.cq)}],
+        tot, byAct.slice(0, D.pmore === 'act' ? 99 : 12), 'act', g => `<span>${esc(ACTIVE(g.k)?.name || '')}</span>`, 'ml')
       : pvTable([
-          {l: t('pv_qp'), w: 64, v: g => pvQ(g.pq)}, {l: t('pv_qf'), w: 60, v: g => pvQ(g.fq)}, {l: '%', w: 36, v: g => pvPctHtml(pvPct(g.fq, g.pq))}, {l: t('pv_qt'), w: 58, v: g => pvQ(g.fq + g.cq)}],
-        tot, byProd.slice(0, D.pmore === 'qty' ? 99 : 12), 'prod', g => `<span>${esc(PROD(g.k)?.name || '')}</span>`)}
+          {l: t('pv_qp'), w: 54, v: g => pvQ(g.pq)}, {l: t('pv_qf'), w: 52, v: g => pvQ(g.fq)}, {l: '%', w: 34, v: g => pvPctHtml(pvPct(g.fq, g.pq))}, {l: t('pv_qt'), w: 52, v: g => pvQ(g.fq + g.cq)}],
+        tot, byProd.slice(0, D.pmore === 'qty' ? 99 : 12), 'prod', g => `<span>${esc(PROD(g.k)?.name || '')}</span>`, 'ml')}
       ${(tab === 'act' ? byAct : byProd).length > 12 && D.pmore !== tab ? `<button type="button" class="pv-more" data-a="pmore" data-v="${tab}">${t('pv_more', (tab === 'act' ? byAct : byProd).length - 12)}</button>` : ''}</section>
     <section class="dcard"><h2>${t('pv_cliprod')}<small>${t('pv_cliprod_s')}</small></h2>${pvCliProd(R)}</section>
     <section class="dcard"><h2>${t('pv_detail')}</h2>${pvTable([
