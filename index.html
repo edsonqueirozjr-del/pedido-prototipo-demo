@@ -296,6 +296,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-hbb b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-hb.on{background:var(--primary-soft);border-radius:8px}
 .pv .dtop{margin-bottom:8px}
+.pv .dlegs{gap:28px}  /* legenda da evolução: mais espaço entre os anos */
 .pv > .dper{margin-top:10px}  /* mais espaço entre o painel verde e o filtro do ano */
 /* título numa linha só (cabe ao lado da moeda) */
 .pv .dhead > div:first-child{min-width:0}
@@ -2905,7 +2906,7 @@ const pvQ = q => q ? fmtNum(q) : '–';
 function pvTable(cols, total, rows, key, name, wrap = true){
   const f = S.dash.f[key];
   const head = `<div class="pv-tr pv-th"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.l}</span>`).join('')}</div>`;
-  const tot = total ? `<div class="pv-tr pv-tot"><span>${t('pv_total')}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(total)}</span>`).join('')}</div>` : '';
+  const tot = total ? `<div class="pv-tr pv-tot"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.v(total)}</span>`).join('')}</div>` : '';
   const body = rows.map(g => `<button type="button" class="pv-tr ${f === g.k ? 'on' : ''}" ${key ? `data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"` : ''}><span class="pv-n">${name(g)}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(g)}</span>`).join('')}</button>`).join('');
   return `<div class="pv-tbl ${wrap ? 'pv-wrap' : ''}">${head}${tot}${body}</div>`;
 }
@@ -2980,7 +2981,7 @@ function viewPlan(head){
     <section class="dcard"><h2>${t('pv_by_line')}</h2>${pvTable([
         {l: t('pv_obj'), w: 60, v: g => fmtShort(g.pv)}, {l: t('pv_fat'), w: 60, v: g => `<b>${fmtShort(g.fv)}</b>`}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
       tot, byLine, 'line', g => `<i class="pv-dot" style="background:${lineC(g)}"></i><span>${esc(g.k)}</span>`, false)}</section>
-    <section class="dcard"><h2>${t('pv_evol')}<small>${Y - 1} × ${Y}</small></h2>${pvEvol(Y)}</section>
+    <section class="dcard"><h2>${t('pv_evol')}</h2>${pvEvol(Y)}</section>
     <section class="dcard"><div class="seg dtop">${seg('ptab', 'act', t('active'), tab === 'act')}${seg('ptab', 'qty', t('qty'), tab === 'qty')}</div>
       ${tab === 'act' ? pvTable([
           {l: t('pv_qf'), w: 62, v: g => pvQ(g.fq)}, {l: t('pv_pm'), w: 46, v: g => mpr(g.fv, g.fq)}, {l: t('pv_qc'), w: 58, v: g => pvQ(g.cq)}, {l: t('pv_pm'), w: 46, v: g => mpr(g.cv, g.cq)}],
