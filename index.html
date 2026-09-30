@@ -104,6 +104,7 @@
 .top.hdr2 .h2-name,.top.hdr2 > .icon-btn{color:var(--h2ink)}
 .top.hdr2 .h2-unit{color:var(--h2sub);opacity:1}
 .top.hdr2 .h2-av{background:none;border:0}
+.top.hdr2 .h2-av .avatar{box-shadow:0 0 0 2px rgba(255,255,255,.5)}  /* contorno de volta, por fora (a foto continua com 48 px) */
 .top.hdr2 .h2-bell:hover{background:rgba(255,255,255,.1)}
 /* bolinhas de página, título do Dashboard e seletor de moeda em cima do painel */
 /* busca e botões ao lado: cartão branco flutuando sobre a borda do painel */
@@ -311,6 +312,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-hbb b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-hb.on{background:var(--primary-soft);border-radius:8px}
 .pv .dtop{margin-bottom:8px}
+.pv > .pv-co{margin:0}  /* filtro de empresa (diretor) com o mesmo espaço dos outros blocos */
 /* mapa do faturamento */
 .dash svg.pv-map{border-radius:12px;margin-bottom:8px;overflow:hidden}
 .dash svg.pv-map text.pv-mu{fill:#fff;font-size:12px;font-weight:800;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px}
@@ -3025,6 +3027,7 @@ function viewPlan(head){
   const mpr = (v, q) => q ? fmtNum(v / q, 2) : '–';
   return `<div class="dash pv ${S.dashStill ? 'still' : ''}">${head}
     <div class="seg dper">${[Y - 1, Y].map(y => seg('pyear', y, String(y), year === y)).join('')}</div>
+    ${isAppr ? `<div class="co-chips pv-co">${Object.entries(COMPANIES).map(([id, nm]) => `<button type="button" class="co-chip co-${id} ${D.f.comp === id ? 'on' : ''}" data-a="dfil" data-k="comp" data-v="${id}" aria-pressed="${D.f.comp === id}"><img class="co-ic" src="${LOGOS[id]}" alt="">${esc(nm)}</button>`).join('')}</div>` : ''}
     <section class="pv-hero">
       <div class="pv-h1"><span>${t('pv_obj')}</span><b><small>${D.cur}</small> ${dCount(P)}</b></div>
       <div class="pv-bar"><i class="f" style="width:${w(F, P)}"></i><i class="c" style="width:${w(C, P)}"></i></div>
