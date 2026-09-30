@@ -65,8 +65,8 @@
 /* cabeçalho modelo 2 (Preferências → Cabeçalho): foto, nome e filial à esquerda; sino num botão redondo à direita */
 [data-hdr="2"]{--top:60px}
 .top.hdr2{gap:10px;padding:0 12px 0 14px}
-.h2-av{flex:none;display:grid;place-items:center;width:46px;height:46px;padding:2px;border:1.5px solid var(--border);border-radius:50%;background:var(--surface-2);cursor:pointer}
-.h2-av .avatar{width:40px;height:40px;font-size:14px}
+.h2-av{flex:none;display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}  /* foto maior, sem contorno */
+.h2-av .avatar{width:48px;height:48px;font-size:16px}
 .h2-av.appr .avatar{background:var(--info);color:#fff}
 .h2-t{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px}
 .h2-name{max-width:100%;padding:0;border:0;background:none;color:inherit;font:inherit;font-size:16.5px;font-weight:800;letter-spacing:-.01em;line-height:1.2;text-align:left;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -103,7 +103,7 @@
 /* rolando a tela: o topo continua igual (sem virar verde sólido) */
 .top.hdr2 .h2-name,.top.hdr2 > .icon-btn{color:var(--h2ink)}
 .top.hdr2 .h2-unit{color:var(--h2sub);opacity:1}
-.top.hdr2 .h2-av{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4)}
+.top.hdr2 .h2-av{background:none;border:0}
 .top.hdr2 .h2-bell:hover{background:rgba(255,255,255,.1)}
 /* bolinhas de página, título do Dashboard e seletor de moeda em cima do painel */
 /* busca e botões ao lado: cartão branco flutuando sobre a borda do painel */
@@ -317,8 +317,10 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .dash svg.pv-map text.pv-mv{fill:var(--text);font-size:10.5px;font-weight:800;paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
 .dash svg.pv-map .pv-bub{fill:var(--d1);fill-opacity:.78;stroke:#fff;stroke-width:1.5;cursor:pointer}
 .pv-uf{flex:none;width:30px;height:22px;border-radius:6px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-size:11.5px}
-.pv-avs{display:flex;margin-left:auto;padding-right:4px}
-.pv-avs .avatar{width:22px;height:22px;margin-left:-6px;border:2px solid var(--surface)}
+.pv-avs{display:flex;gap:3px;margin-left:auto;padding:2px 4px 2px 8px}
+.pv-n > .pv-avs{overflow:visible;flex:none}  /* fotos dos gestores inteiras (não cortar) */
+.pv-avs .avatar{width:24px;height:24px;flex:none;overflow:hidden}  /* lado a lado, sem uma cobrir a outra */
+.pv-mapt .pv-n > span:not(.pv-avs){white-space:normal;line-height:1.25}  /* nome da cidade inteiro (até 2 linhas) */
 .pv-mapt .pv-tr > span:not(.pv-n){flex:none;text-align:right}
 .pv .dlegs{gap:28px;justify-content:center}  /* legenda da evolução: centralizada, com espaço entre os anos */
 /* título numa linha só (cabe ao lado da moeda) */
