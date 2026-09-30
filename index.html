@@ -43,60 +43,89 @@
 [data-theme="somax"] .top .brand,[data-theme="somax"] .top .brand span,[data-theme="somax"] .top > .icon-btn{color:#fff}
 [data-theme="somax"] .top .brand-logo{filter:brightness(0) invert(1)}
 [data-theme="somax"] .top .profile-btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff}
-/* tema Esmeralda: base clara com verde-esmeralda (#059669 / #047857) e água-marinha; topo esmeralda em degradê */
-[data-theme="esmeralda"]{
-  --map-water:#d3ece6; --map-land:#f3f9f7; --map-line:#a6c4bb; --map-lbl:#557068;
-  --bg:#edf7f3; --surface:#fff; --surface-2:#f3faf7; --border:#d2e6de; --text:#0e2a23; --muted:#56706a;
-  --primary:#059669; --primary-ink:#fff; --primary-soft:#d5f2e7;
-  --ok:#059669; --warn:#c48a00; --bad:#d43d4b; --info:#0f766e; --gray:#7a8b86;
-  --fix:#e0772a; --fix-soft:#fce8d7; --ok-soft:#d5f2e7; --warn-soft:#fcf0cf; --bad-soft:#fce4e6; --info-soft:#d8efec; --gray-soft:#e6efec;
-  --somax:#1b5b35; --somax-soft:#dff2e5; --corteva:#175de3; --corteva-soft:#e2ebfc; --lock:#7b4bc4; --lock-soft:#efe6fa;
+/* tema Esmeralda: Emerald Ink #064E3B (tinta: topo, botões, títulos) + Champagne #F8E7C9 (fundo quente, destaques e texto sobre o verde).
+   Só as cores; a estrutura é a mesma. */
+[data-theme="emerald"]{
+  --map-water:#dbe7df; --map-land:#fbf5ea; --map-line:#c9bb9d; --map-lbl:#6b6655;
+  --bg:#f7efe0; --surface:#fffdf8; --surface-2:#fbf5ea; --border:#eadcc0; --text:#0d2a21; --muted:#66705f;
+  --primary:#064e3b; --primary-ink:#f8e7c9; --primary-soft:#f3e2c2;
+  --ok:#0b7a55; --warn:#b07414; --bad:#c43a31; --info:#23589c; --gray:#8a8373;
+  --fix:#c8641c; --fix-soft:#f8e1cb; --ok-soft:#ddeee3; --warn-soft:#f8e9c4; --bad-soft:#f9e0da; --info-soft:#e1e9f4; --gray-soft:#efe5d2;
+  --somax:#1b5b35; --somax-soft:#dff0e3; --corteva:#175de3; --corteva-soft:#e2ebfc; --lock:#7b4bc4; --lock-soft:#efe6fa;
   --shadow:0 1px 2px rgba(6,78,59,.06),0 4px 14px rgba(6,78,59,.07);
-  --d1:#059669; --d2:#34d399; --d3:#f59e0b; --d4:#0e7490; --d5:#7c5cd6; --d6:#f472b6; --dh1:#059669; --dh2:#064e3b; --dacc:#a7f3d0;
+  --d1:#064e3b;--d2:#4f9a7c;--d3:#c9962f;--d4:#23589c;--d5:#8a5a9e;--d6:#d0743c;--dh1:#0a6b51;--dh2:#043428;--dacc:#f8e7c9;
 }
-[data-theme="esmeralda"] .top{background:linear-gradient(90deg,#064e3b,#047857);border-bottom:0;color:#fff}
-[data-theme="esmeralda"] .top .brand,[data-theme="esmeralda"] .top .brand span,[data-theme="esmeralda"] .top > .icon-btn{color:#fff}
-[data-theme="esmeralda"] .top .brand-logo{filter:brightness(0) invert(1)}
-[data-theme="esmeralda"] .top .profile-btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28)}
+/* topo em Emerald Ink com textos em Champagne e filete champagne embaixo */
+[data-theme="emerald"] .top{background:#064e3b;border-bottom:0;box-shadow:inset 0 -3px 0 #f8e7c9;color:#f8e7c9}
+[data-theme="emerald"] .top .brand,[data-theme="emerald"] .top .brand span,[data-theme="emerald"] .top > .icon-btn{color:#f8e7c9}
+[data-theme="emerald"] .top .brand-logo{filter:brightness(0) invert(94%) sepia(14%) saturate(560%) hue-rotate(335deg)}
+[data-theme="emerald"] .top .profile-btn{background:rgba(248,231,201,.14);border-color:rgba(248,231,201,.35);color:#f8e7c9}
+[data-theme="emerald"] .top .icon-btn:hover{background:rgba(248,231,201,.12)}
 
-/* ================= MODELO 2 =================
-   Só vale com o Modelo 2 escolhido (html[data-model="2"]); o Modelo 1 é o app de sempre.
-   O Modelo 2 muda a composição (topo leve, fundo com manchas de cor desfocadas, componentes mais leves);
-   as cores vêm SEMPRE das variáveis do tema ativo (Claro, Escuro, Somax, Esmeralda) — nenhuma paleta própria. */
-[data-model="2"] body{background:transparent}  /* o fundo fica no html; as manchas (body::before) aparecem entre os dois */
-[data-model="2"] body::before{content:'';position:fixed;inset:-25%;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(42% 30% at 10% 14%, color-mix(in srgb, var(--primary) 38%, transparent), transparent 70%),
-    radial-gradient(36% 28% at 94% 30%, color-mix(in srgb, var(--d4, var(--info)) 26%, transparent), transparent 70%),
-    radial-gradient(44% 32% at 80% 76%, color-mix(in srgb, var(--primary) 28%, transparent), transparent 72%),
-    radial-gradient(38% 30% at 14% 86%, color-mix(in srgb, var(--d2, var(--primary)) 26%, transparent), transparent 70%),
-    radial-gradient(30% 24% at 50% 45%, color-mix(in srgb, var(--surface) 55%, transparent), transparent 75%);
-  filter:blur(46px)}
-[data-model="2"][data-theme="dark"] body::before{opacity:.75}
-/* topo: sem faixa de cor; vidro claro sobre o fundo, integrado à tela */
-[data-model="2"] .top,[data-model="2"][data-theme] .top{background:color-mix(in srgb, var(--bg) 62%, transparent);-webkit-backdrop-filter:saturate(1.4) blur(16px);backdrop-filter:saturate(1.4) blur(16px);
-  border-bottom:1px solid color-mix(in srgb, var(--border) 55%, transparent);box-shadow:none;color:var(--text);padding:0 12px 0 16px}
-[data-model="2"][data-theme] .top .brand{color:var(--text);font-size:19px;letter-spacing:-.01em}
-[data-model="2"][data-theme] .top .brand span{color:var(--text)}
-[data-model="2"][data-theme] .top > .icon-btn{color:var(--text);background:color-mix(in srgb, var(--surface) 70%, transparent);border:1px solid color-mix(in srgb, var(--border) 70%, transparent);border-radius:12px;width:40px;height:40px;margin-right:6px}
-[data-model="2"][data-theme] .top .brand-logo{filter:none}
-[data-model="2"][data-theme="dark"] .top .brand-logo{filter:brightness(1.25)}
-[data-model="2"][data-theme] .top .profile-btn{background:var(--surface);border:2px solid color-mix(in srgb, var(--primary) 55%, transparent);box-shadow:0 0 0 4px color-mix(in srgb, var(--primary) 12%, transparent)}
-/* componentes: superfícies translúcidas, cantos mais redondos, sombras suaves com um brilho da cor principal */
-[data-model="2"] .card,[data-model="2"] .dcard,[data-model="2"] .dk{background:color-mix(in srgb, var(--surface) 84%, transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  border-color:color-mix(in srgb, var(--border) 65%, transparent);border-radius:18px;box-shadow:0 1px 2px rgba(0,0,0,.03),0 10px 28px -12px color-mix(in srgb, var(--primary) 28%, transparent)}
-[data-model="2"] .searchbox input,[data-model="2"] .filterbtn{background:color-mix(in srgb, var(--surface) 82%, transparent);border-color:color-mix(in srgb, var(--border) 70%, transparent);border-radius:14px}
-[data-model="2"] .searchbox > svg{z-index:1;color:var(--primary)}
-[data-model="2"] .filterbtn.on{background:var(--primary-soft);border-color:var(--primary)}
-[data-model="2"] .day .dn{background:color-mix(in srgb, var(--surface) 75%, transparent);border-color:color-mix(in srgb, var(--border) 70%, transparent)}
-[data-model="2"] .day.on .dn{background:var(--primary);border-color:var(--primary);box-shadow:0 6px 16px -4px color-mix(in srgb, var(--primary) 60%, transparent)}
-[data-model="2"] .fab{border-radius:20px;background:linear-gradient(145deg, color-mix(in srgb, var(--primary) 82%, #fff), var(--primary));box-shadow:0 12px 26px -8px color-mix(in srgb, var(--primary) 70%, transparent),0 0 0 6px color-mix(in srgb, var(--primary) 12%, transparent)}
-[data-model="2"] .st-tag{box-shadow:inset 0 0 0 1px color-mix(in srgb, currentColor 18%, transparent)}
-[data-model="2"] .pager button.on{box-shadow:0 0 10px color-mix(in srgb, var(--primary) 50%, transparent)}
-/* faixas presas no alto (mês, topo do pedido, valor total): vidro em vez do fundo liso, para as manchas continuarem por trás */
-[data-model="2"] .days-mon{background:transparent}
-[data-model="2"] .page-head.sticky,[data-model="2"] .edhead,[data-model="2"] .det-top,[data-model="2"] .totstick{background:color-mix(in srgb, var(--bg) 72%, transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
-[data-model="2"] .actionbar{background:color-mix(in srgb, var(--bg) 70%, transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+/* cabeçalho modelo 2 (Preferências → Cabeçalho): foto, nome e filial à esquerda; sino num botão redondo à direita */
+[data-hdr="2"]{--top:60px}
+.top.hdr2{gap:10px;padding:0 12px 0 14px}
+.h2-av{flex:none;display:grid;place-items:center;width:46px;height:46px;padding:2px;border:1.5px solid var(--border);border-radius:50%;background:var(--surface-2);cursor:pointer}
+.h2-av .avatar{width:40px;height:40px;font-size:14px}
+.h2-av.appr .avatar{background:var(--info);color:#fff}
+.h2-t{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+.h2-name{max-width:100%;padding:0;border:0;background:none;color:inherit;font:inherit;font-size:16.5px;font-weight:800;letter-spacing:-.01em;line-height:1.2;text-align:left;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.h2-unit{display:inline-flex;align-items:center;gap:4px;max-width:100%;min-height:24px;padding:0;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.h2-unit span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top .h2-unit svg{width:15px;height:15px;flex:none}
+.top .h2-unit svg:last-child{width:14px;height:14px;transform:rotate(90deg);opacity:.8}
+.top .h2-bell{flex:none;width:44px;height:44px;border-radius:50%;background:none;border:0}  /* só o sino, sem fundo nem contorno */
+.top .h2-bell > svg{width:26px;height:26px}
+.h2-bell .badge{top:3px;right:3px}
+.h2-role{cursor:default}
+/* topo escuro (Somax e Esmeralda): textos claros e botões translúcidos */
+[data-theme="somax"] .top .h2-name,[data-theme="emerald"] .top .h2-name{color:inherit}
+[data-theme="somax"] .top .h2-unit,[data-theme="emerald"] .top .h2-unit{color:inherit;opacity:.85}
+[data-theme="somax"] .top .h2-av{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+[data-theme="emerald"] .top .h2-av{background:rgba(248,231,201,.14);border-color:rgba(248,231,201,.35);color:#f8e7c9}
+
+/* modelo 2: painel colorido em degradê com brilhos suaves ("néon") atrás do topo, cantos de baixo arredondados;
+   a busca (ou o título do Dashboard) fica por cima da borda do painel. Cores por tema. */
+:root{--h2a:#0d4a2c;--h2b:#1f7a4a;--h2g1:rgba(140,240,185,.40);--h2g2:rgba(67,183,122,.45);--h2ink:#fff;--h2sub:rgba(255,255,255,.78)}
+[data-theme="dark"]{--h2a:#0a1d13;--h2b:#15402a;--h2g1:rgba(61,187,120,.38);--h2g2:rgba(111,163,246,.18);--h2ink:#e9f5ee;--h2sub:rgba(233,245,238,.72)}
+[data-theme="somax"]{--h2a:#043d1c;--h2b:#0b7a35;--h2g1:rgba(112,197,54,.50);--h2g2:rgba(251,197,31,.30);--h2ink:#fff;--h2sub:rgba(255,255,255,.8)}
+[data-theme="emerald"]{--h2a:#043428;--h2b:#0a6b51;--h2g1:rgba(248,231,201,.30);--h2g2:rgba(79,154,124,.55);--h2ink:#f8e7c9;--h2sub:rgba(248,231,201,.78)}
+.app:has(.top.hdr2){--h2h:101px}
+.app:has(.top.hdr2):has(.dash){--h2h:129px}
+/* cabeçalho modelo 2 mais junto da busca: menos espaço entre o nome/filial, as bolinhas e a busca */
+.app:has(.top.hdr2) main{padding-top:4px}
+.app:has(.top.hdr2) main > .pager{margin:0 0 8px}
+.app:has(.top.hdr2) .dash > .pager{margin:0 0 -4px}
+.app:has(.top.hdr2)::before{content:'';position:absolute;left:0;right:0;top:0;height:calc(var(--h2h) + env(safe-area-inset-top,0px));z-index:0;pointer-events:none;border-radius:0 0 28px 28px;
+  background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);
+  box-shadow:0 10px 30px -12px var(--h2a)}
+.app:has(.top.hdr2) main{position:relative;z-index:1}
+[data-hdr="2"] .top.hdr2{background:transparent !important;border-bottom:0 !important;box-shadow:none !important;color:var(--h2ink);transition:background .2s,box-shadow .2s}
+/* rolando a tela: o topo ganha fundo sólido com leve desfoque */
+[data-hdr="2"].h2s .top.hdr2{background:color-mix(in srgb,var(--h2a) 92%,transparent) !important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 18px -8px rgba(0,0,0,.35) !important}
+.top.hdr2 .h2-name,.top.hdr2 > .icon-btn{color:var(--h2ink)}
+.top.hdr2 .h2-unit{color:var(--h2sub);opacity:1}
+.top.hdr2 .h2-av{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4)}
+.top.hdr2 .h2-bell:hover{background:rgba(255,255,255,.1)}
+/* bolinhas de página, título do Dashboard e seletor de moeda em cima do painel */
+.app:has(.top.hdr2) main > .pager button,.app:has(.top.hdr2) .dash > .pager button{background:rgba(255,255,255,.35)}
+.app:has(.top.hdr2) main > .pager button.on,.app:has(.top.hdr2) .dash > .pager button.on{background:var(--h2ink)}
+.app:has(.top.hdr2) .dhead h1{color:var(--h2ink)}
+.app:has(.top.hdr2) .dhead .dsub{color:var(--h2sub)}
+.app:has(.top.hdr2) .dhead .dcur{background:rgba(255,255,255,.16)}
+.app:has(.top.hdr2) .dhead .dcur .seg-o{color:var(--h2sub)}
+.app:has(.top.hdr2) .dhead .dcur .seg-o.on{background:var(--h2ink);color:var(--h2a)}
+.app:has(.top.hdr2) .dhead .dfx2{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:var(--h2ink)}
+.app:has(.top.hdr2) .dhead .dfx2 span{color:var(--h2sub)}
+/* busca e botões ao lado: cartão branco flutuando sobre a borda do painel */
+.app:has(.top.hdr2) .searchrow > *{box-shadow:0 6px 18px -6px rgba(0,0,0,.22)}
+/* lista de filiais (trocar a filial pelo cabeçalho) */
+.un-row{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:0 14px;margin-bottom:6px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font:inherit;font-size:15px;text-align:left;cursor:pointer}
+.un-row svg{width:19px;height:19px;color:var(--muted);flex:none}
+.un-row span{flex:1;min-width:0}
+.un-row span + svg{color:var(--primary)}
+.un-row.on{border-color:var(--primary);background:var(--primary-soft);font-weight:800}
+.un-row.on svg{color:var(--primary)}
 /* ---------- Dashboard de vendas ---------- */
 /* paleta dos gráficos por tema: d1 principal, d2 apoio, d3 destaque (linha), d4–d6 categorias; dh = degradê do destaque */
 :root{--d1:#1f7a4a;--d2:#43b77a;--d3:#e39b00;--d4:#2f6fd6;--d5:#8e5bd8;--d6:#e0664a;--dh1:#1f7a4a;--dh2:#0d3f25;--dacc:#b9f3d2}
@@ -264,9 +293,9 @@ main{padding:12px 16px 132px}
 .seg-o{min-width:92px;height:34px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
 .pf-row .seg{display:flex;width:204px}  /* tema e idioma com a mesma largura */
 .pf-row .seg-o{flex:1;min-width:0;padding:0 4px}
-/* tema: quatro opções numa linha inteira, embaixo do rótulo */
-.pf-row.pf-col{flex-direction:column;align-items:stretch;gap:8px;padding:10px 8px 10px 14px}
-.pf-row.pf-col .seg{width:100%}
+.pf-row.pf-stack{flex-direction:column;align-items:stretch;gap:8px;padding:12px 8px 10px 14px}  /* tema e idioma: rótulo em cima e o seletor na linha de baixo inteira (4 temas não cabem ao lado do rótulo) */
+.pf-row.pf-stack .seg{width:100%}
+.pf-row.pf-stack .seg-o{flex:1 1 auto;padding:0 6px;font-size:13px}  /* largura pelo texto: "Esmeralda" cabe inteiro até em 320 px */
 .seg-o.on{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12),0 0 0 .5px rgba(0,0,0,.06)}
 [data-theme="dark"] .seg-o.on{background:#3a433e}
 /* filtro de situação: uma linha por situação, com a etiqueta, a quantidade e a marcação */
@@ -542,6 +571,10 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .radio-chips:has(input:checked) input:not(:checked):not(:disabled)+span,
 .af-chips:has(.afc.on) .afc:not(.on):not(:disabled),
 .co-chips:has(.co-chip.on) .co-chip:not(.on){opacity:.5}
+/* botões de escolha (moeda, tipo de negociação, empresa, filtros, seletores segmentados): em todos os temas,
+   a opção marcada fica em negrito forte e as outras em peso normal, para a marcada saltar à vista */
+.co-chip,.af-chips .afc,.seg-o,.fchip,.radio-chips span{font-weight:500}
+.co-chip.on,.af-chips .afc.on,.seg-o.on,.fchip.on,.radio-chips input:checked+span{font-weight:800}
 .radio-chips label{min-width:0}
 .radio-chips span{padding:0 6px;font-size:14.5px;text-align:center}
 
@@ -802,7 +835,7 @@ html.lockscroll main{padding-bottom:12px}
 .inbtn[data-a=stock] svg,.inbtn[data-a=pricehist] svg{margin-bottom:1px}
 .inbtn[data-a=stock]::after,.inbtn[data-a=pricehist]::after{content:'';position:absolute;left:50%;bottom:4px;width:18px;height:1.5px;margin-left:-9px;border-radius:1px;background:currentColor}
 .grid2 .money.has-in .inbtn[data-a=pricehist]::after{width:16px;margin-left:-8px;bottom:5px}
-[data-theme="somax"] .inbtn[data-a=stock],[data-theme="somax"] .inbtn[data-a=pricehist]{color:var(--primary)}
+[data-theme="somax"] .inbtn[data-a=stock],[data-theme="somax"] .inbtn[data-a=pricehist],[data-theme="emerald"] .inbtn[data-a=stock],[data-theme="emerald"] .inbtn[data-a=pricehist]{color:var(--primary)}
 .mapbtn{color:var(--muted)}
 .mapbtn.on{color:var(--primary)}
 .mapbtn svg{width:24px;height:24px}
@@ -1175,7 +1208,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1217,12 +1250,12 @@ pt:{
   approver_note:'Comentário do aprovador', reset_data:'Restaurar dados de exemplo', c_reset_t:'Restaurar dados?',
   c_reset_m:'Os pedidos criados serão apagados.', empty:'Nenhum pedido encontrado', empty_day:'Nenhum pedido neste dia', prev_days:'Dias anteriores', empty_appr:'Nenhum pedido em aprovação',
   pdf_title:'Pedido de venda', pdf_company:'AgroCRM · Protótipo', client_doc:'CNPJ/CPF', city:'Cidade', issued:'Emitido em',
-  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', theme_somax:'Somax', theme_esmeralda:'Esmeralda', model:'Modelo', model_n:'Modelo {0}', dir_com:'Diretor Comercial', dir_sup:'Diretor de Supply', approvers:'Aprovadores', open:'Abrir', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
+  prefs:'Preferências', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Escuro', theme_somax:'Somax', theme_emerald:'Esmeralda', hdr:'Cabeçalho', hdr_m:'Modelo {0}', unit_pick:'Trocar filial', dir_com:'Diretor Comercial', dir_sup:'Diretor de Supply', approvers:'Aprovadores', open:'Abrir', discard_q:'Descartar alterações?', discard_m:'O pedido em edição não foi salvo.',
   low_items:'{0} produto(ns) abaixo da margem'
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -1264,7 +1297,7 @@ es:{
   approver_note:'Comentario del aprobador', reset_data:'Restaurar datos de ejemplo', c_reset_t:'¿Restaurar datos?',
   c_reset_m:'Los pedidos creados serán eliminados.', empty:'Ningún pedido encontrado', empty_day:'Ningún pedido en este día', prev_days:'Días anteriores', empty_appr:'Ningún pedido en aprobación',
   pdf_title:'Pedido de venta', pdf_company:'AgroCRM · Prototipo', client_doc:'RUC / Documento', city:'Ciudad', issued:'Emitido el',
-  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', theme_somax:'Somax', theme_esmeralda:'Esmeralda', model:'Modelo', model_n:'Modelo {0}', dir_com:'Director Comercial', dir_sup:'Director de Supply', approvers:'Aprobadores', open:'Abrir', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
+  prefs:'Preferencias', theme:'Tema', lang:'Idioma', theme_light:'Claro', theme_dark:'Oscuro', theme_somax:'Somax', theme_emerald:'Esmeralda', hdr:'Encabezado', hdr_m:'Modelo {0}', unit_pick:'Cambiar sucursal', dir_com:'Director Comercial', dir_sup:'Director de Supply', approvers:'Aprobadores', open:'Abrir', discard_q:'¿Descartar cambios?', discard_m:'El pedido en edición no fue guardado.',
   low_items:'{0} producto(s) bajo el margen'
 }};
 
@@ -1286,6 +1319,7 @@ const IC = {
   chev:'<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>',
   tick:'<svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>',
   cal:'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  office:'<svg viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></svg>',   // filial (prédio)
   pin:'<svg viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
   target:'<svg viewBox="0 0 24 24" style="width:16px;height:16px"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>',
   search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
@@ -1344,8 +1378,18 @@ function hash(str){ let h = 2166136261; for(const ch of str){ h ^= ch.charCodeAt
 let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 // tv = versão da regra de tema: com tv 2 o padrão passou a ser o tema Somax (quem já tinha escolhido antes recebe o Somax uma vez)
-function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, model:S.model, me:ME, appr:APPR, tv:2})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 31) return d; }catch(e){} const s = seed(); persist(s); return s; }
+function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, hdr:S.hdr, me:ME, appr:APPR, tv:2})); }catch(e){} }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 32) return d; var old = d; }catch(e){} const s = seed(); keepUserOrders(old, s); persist(s); return s; }
+// ao trocar a versão da base, os exemplos são recriados; os pedidos que o usuário criou no aparelho (id que não é de exemplo)
+// passam para a base nova com as notificações deles, e a numeração continua depois do último
+function keepUserOrders(old, s){
+  if(!old || !Array.isArray(old.orders)) return;
+  const mine = old.orders.filter(o => o && o.id && !/^(o\d+|h\d+-\d+)$/.test(o.id)); if(!mine.length) return;
+  const ids = new Set(mine.map(o => o.id));
+  mine.forEach(o => { o.number = s.seq++; });
+  s.orders.unshift(...mine);
+  s.notifs.push(...(old.notifs || []).filter(n => ids.has(n.orderId)));
+}
 function persist(d = DB){ try{ localStorage.setItem(DB_KEY, JSON.stringify(d)); }catch(e){} }
 
 const loc = () => S.lang === 'es' ? 'es-AR' : 'pt-BR';
@@ -1576,7 +1620,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:31, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:32, seq:10019, orders:[], notifs:[], pins:{}};
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1625,9 +1669,22 @@ function seed(){
     ['s1','c8','MS2727','BRL','avista','aberto',    0, [['sme-5',250],['cap-5',120]]],
     ['s5','c9','SV2627','BRL','30d',  'correcao',   0, [['azp-20',600,.82],['acf-10',300]]],
     ['s6','c5','MS2727','USD','safra','aprovado',   0, [['man-25',1000],['teb-20',400]]],
-    ['s2','c7','SV2627','BRL','safra','reprovado',  0, [['flo-20',300,.75],['g20-5',400]]]
+    ['s2','c7','SV2627','BRL','safra','reprovado',  0, [['flo-20',300,.75],['g20-5',400]]],
+    // mais pedidos de hoje: dois por gestor de venda (todos os 6), situações variadas
+    ['s1','c9','SV2627','BRL','safra','aprovacao',  0, [['g20-20',1800],['cap-20',200,.95],['azp-5',100]]],
+    ['s1','c11','MS2727','BRL','30d', 'aberto',     0, [['sme-20',900],['flo-5',80]]],
+    ['s2','c6','SV2627','USD','safra','aprovacao',  0, [['g200-20',2000,.96],['ful-20',500],['imi-1',40]]],
+    ['s2','c4','MS2727','BRL','safra','correcao',   0, [['cap-20',300,.84],['sme-5',150]]],
+    ['s3','c1','SV2627','BRL','avista','aberto',    0, [['ful-5',200],['g20-5',300]]],
+    ['s3','c10','MS2727','BRL','safra','aprovacao', 0, [['flo-20',140],['g200-20',1400,.93],['sme-20',1000]]],
+    ['s4','c2','SV2627','BRL','safra','aprovacao',  0, [['teb-20',700],['azp-20',300,.92],['imi-10',60]]],
+    ['s4','c7','MS2727','USD','30d',  'aprovado',   0, [['man-25',1200],['acf-10',200]]],
+    ['s5','c3','SV2627','BRL','safra','aprovacao',  0, [['lam-5',250],['teb-20',600,.95],['g20-20',1000]]],
+    ['s5','c8','MS2727','BRL','30d',  'aberto',     0, [['azp-5',120],['imi-1',50]]],
+    ['s6','c1','SV2627','USD','safra','correcao',   0, [['acf-10',350,.83],['man-25',900]]],
+    ['s6','c11','MS2727','BRL','safra','aprovacao', 0, [['azp-20',500],['lam-5',180,.9],['ful-20',700]]]
   ];
-  const at = (d, hm) => new Date(d + 'T' + hm + ':00').toISOString();
+  const at = (d, hm) => new Date(d + 'T' + hm + ':00').toISOString(), NOW_SEED = new Date();
   const BONIF = ['o10', 'o18', 'o21', 'o29'];   // ~10% dos exemplos são bonificação (vencimento do projeto)
   db.seq = 10001 + defs.length;
   defs.forEach((d, i) => {
@@ -1651,24 +1708,30 @@ function seed(){
       it.noteDeliv = ({'o16-1':'Descarregar no galpão 2.', 'o4-1':'Entregar pela manhã, avisar o gerente.', 'o13-0':'Caminhão truck; estrada de terra.'})[o.id + '-' + j] || it.noteDeliv || '';
       o.items.push(it);
     });
-    const H = (action, user, when, note='') => o.history.push({action, user, at:when, note});
+    // pedido de hoje: nenhum horário depois de agora (quem abre de manhã não vê "aprovado às 11:40"); os que passariam ficam
+    // uns minutos antes de agora, na ordem em que aconteceram
+    const H = (action, user, when, note='') => { if(new Date(when) > NOW_SEED){ const prev = o.history.length ? +new Date(o.history[o.history.length - 1].at) + 60000 : 0;
+        when = new Date(Math.min(+NOW_SEED, Math.max(prev, NOW_SEED - (8 - o.history.length) * 60000))).toISOString(); }
+      o.history.push({action, user, at:when, note}); };
+    const last = () => o.history[o.history.length - 1].at;
     H('created', seller.name, at(date, `0${7 + i % 2}:${String((i * 13 + 5) % 60).padStart(2, '0')}`));   // hora de criação variada (07h–08h)
     if(st === 'correcao'){
       H('finalized', seller.name, at(date, '09:40'));
-      o.approverNote = ({o3:'Revisar preço do Flowzin.', o14:'Confirmar quantidade do Fulltime e a previsão de entrega.', o16:'Desconto acima do permitido na condição 30 dias; ajustar o preço praticado.', o26:'Trocar o Cappo de 20 L por 5 L e rever a previsão de entrega.', o33:'Rever o preço do Tebuzol; está abaixo da política.', o17:'Previsão de entrega antes do início da safra; conferir com o cliente e o desconto do herbicida.', o41:'Desconto do Azoxi Pro acima da política; rever o preço.'})[o.id] || '';
+      o.approverNote = ({o3:'Revisar preço do Flowzin.', o14:'Confirmar quantidade do Fulltime e a previsão de entrega.', o16:'Desconto acima do permitido na condição 30 dias; ajustar o preço praticado.', o26:'Trocar o Cappo de 20 L por 5 L e rever a previsão de entrega.', o33:'Rever o preço do Tebuzol; está abaixo da política.', o17:'Previsão de entrega antes do início da safra; conferir com o cliente e o desconto do herbicida.', o41:'Desconto do Azoxi Pro acima da política; rever o preço.', o47:'Desconto do Cappo acima da política no prazo safra; rever o preço.', o54:'Preço do Acefato abaixo da tabela; confirmar com o cliente ou ajustar.'})[o.id] || '';
       H('correction', apprOf(i), at(date, '15:20'), o.approverNote);
-      db.notifs.push({id:uid(), to:'vendedor', sellerId:sid, type:'correction', orderId:o.id, at:at(date,'15:20'), read:false});
+      db.notifs.push({id:uid(), to:'vendedor', sellerId:sid, type:'correction', orderId:o.id, at:last(), read:false});
     } else if(st === 'aberto'){ H('saved', seller.name, at(date, '09:30')); }
     else {
       H('finalized', seller.name, at(date, '10:30'));
-      if(st === 'aprovacao') db.notifs.push({id:uid(), to:'aprovador', type:'pending', orderId:o.id, at:at(date,'10:30'), read:false});
+      if(st === 'aprovacao') db.notifs.push({id:uid(), to:'aprovador', type:'pending', orderId:o.id, at:last(), read:false});
       if(st === 'aprovado' || st === 'reprovado'){
         const note = st === 'reprovado' ? (({o24:'Preço do Flowzin muito abaixo da tabela.', o25:'Cliente sem limite disponível nesta safra.', o43:'Preço do Flowzin 20 L muito abaixo da tabela.'})[o.id] || 'Desconto acima do permitido.') : '';
-        H(st === 'aprovado' ? 'approved' : 'rejected', apprOf(i), at(addDays(date, 1), '14:00'), note);
-        db.notifs.push({id:uid(), to:'vendedor', sellerId:sid, type: st === 'aprovado' ? 'approved' : 'rejected', orderId:o.id, at:at(addDays(date,1),'14:00'), read: ago > 10});
+        const dec = ago ? at(addDays(date, 1), '14:00') : at(date, '11:40');   // pedido de hoje: decidido no mesmo dia
+        H(st === 'aprovado' ? 'approved' : 'rejected', apprOf(i), dec, note);
+        db.notifs.push({id:uid(), to:'vendedor', sellerId:sid, type: st === 'aprovado' ? 'approved' : 'rejected', orderId:o.id, at:last(), read: ago > 10});
       }
     }
-    if(['o4','o13','o16','o20','o22','o23','o36','o37','o38','o39','o42'].includes(o.id)){ o.signature = fakeSignature(i); o.signedAt = at(date, '10:20'); H('signed', seller.name, at(date, '10:20')); }
+    if(['o4','o13','o16','o20','o22','o23','o36','o37','o38','o39','o42','o44','o46','o49','o50','o52','o55'].includes(o.id)){ o.signature = fakeSignature(i); H('signed', seller.name, at(date, '10:20')); o.signedAt = last(); }
     o.note = ({o18:'Primeiro pedido do cliente com a Somax.', o21:'Entrega em duas etapas: metade no plantio e metade 30 dias depois.', o27:'Cliente pediu prioridade na entrega do S-Metolacloro.', o4:'Cliente pediu faturamento em duas notas.', o13:'Pedido fechado na visita de campo; conferir prazo de entrega.', o16:'Cliente quer receber tudo antes do plantio.'})[o.id] || (i % 3 === 1 ? NOTE_ORDER[i % NOTE_ORDER.length] : '');
     db.orders.push(o);
   });
@@ -1739,6 +1802,17 @@ function header(){
   const unread = myNotifs().filter(n => !n.read).length;
   const isAppr = S.profile === 'aprovador';
   const name = isAppr ? apprName() : SELLER(ME).name;
+  if(S.hdr !== '1'){
+    // modelo 2: foto e nome à esquerda; embaixo, a filial em que o gestor lança os pedidos (toque para trocar) ou o cargo do aprovador; sino à direita
+    const un = UNIT(S.unit)?.name || '';
+    return `<header class="top hdr2">
+    <button class="h2-av ${isAppr ? 'appr' : ''}" data-a="profile" aria-label="${esc(name)}">${avatarHtml(isAppr ? APPR : ME, name)}</button>
+    <div class="h2-t"><button class="h2-name" data-a="profile">${esc(name)}</button>
+      ${isAppr ? `<span class="h2-unit h2-role">${esc(t(APPROVERS.find(a => a.id === APPR)?.role || ''))}</span>`
+        : `<button class="h2-unit" data-a="unitpick" aria-label="${t('unit')}">${IC.office}<span>${esc(un)}</span>${IC.chev}</button>`}</div>
+    <button class="icon-btn h2-bell" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
+  </header>`;
+  }
   return `<header class="top">
     <div class="brand"><img class="brand-logo" src="${LOGOS.somax}" alt="Somax"><span>${t('app')}</span></div>
     <button class="icon-btn" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
@@ -2233,11 +2307,8 @@ function render(){
   let sel = null; try{ if(fid && act.selectionStart != null) sel = [act.selectionStart, act.selectionEnd]; }catch(e){}
   const y = window.scrollY;
   document.documentElement.lang = S.lang === 'es' ? 'es' : 'pt-BR';
-  document.documentElement.dataset.theme = S.theme;
-  document.documentElement.dataset.model = S.model || '1';
-  // barra do celular: no Modelo 2 acompanha o fundo do tema; no Modelo 1, a cor do topo
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', S.model === '2' ? (getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#f2f4f1')
-    : S.theme === 'somax' ? '#043d1c' : S.theme === 'esmeralda' ? '#064e3b' : S.theme === 'dark' ? '#0e1310' : '#1f7a4a');
+  document.documentElement.dataset.theme = S.theme; document.documentElement.dataset.hdr = S.hdr === '1' ? '1' : '2';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', S.theme === 'somax' ? '#043d1c' : S.theme === 'emerald' ? '#064e3b' : S.theme === 'dark' ? '#0e1310' : '#1f7a4a');
   if(S.profile === 'aprovador' && S.view === 'list') S.view = 'approvals';
   const v = S.view === 'dash' ? viewDash() : S.view === 'report' ? viewReport() : S.view === 'approvals' ? viewApprovals() : S.view === 'detail' ? viewDetail() : S.view === 'editor' ? viewEditor() : S.view === 'done' ? viewDone() : viewList();
   // dentro do pedido (digitação ou detalhe) some a barra de cima (notificações, tema, idioma)
@@ -2562,11 +2633,13 @@ function dRange(){
   if(per === 'all'){ const first = DB.orders.reduce((a, o) => o.date < a ? o.date : a, end); return {from: first, to: end}; }
   const n = +per; return {from: addDays(end, -(n - 1)), to: end, prev: {from: addDays(end, -(2 * n - 1)), to: addDays(end, -n)}};
 }
-// grupos do gráfico de evolução: 30 dias = por dia; 90 dias = por semana; tudo = por mês
+// grupos do gráfico de evolução: 30 e 90 dias = por semana; tudo = por mês
+// dia/mês com dois dígitos (dd/mm), igual em português e espanhol
+const dDM = d => `${d.slice(8, 10)}/${d.slice(5, 7)}`;
 function dBuckets(rg){
   const B = [];
-  if(S.dash.per === '30') for(let i = 0; i < 30; i++){ const d = addDays(rg.from, i); B.push({from: d, to: d, lbl: fmtDate(d).slice(0, 5)}); }
-  else if(S.dash.per === '90') for(let s = rg.from; s <= rg.to; s = addDays(s, 7)){ const e = addDays(s, 6); B.push({from: s, to: e > rg.to ? rg.to : e, lbl: fmtDate(s).slice(0, 5)}); }
+  if(S.dash.per !== 'all'){   // 30 e 90 dias: por semana, contando de hoje para trás (a última barra é a semana que termina hoje)
+    for(let e = rg.to; e >= rg.from; e = addDays(e, -7)){ const s0 = addDays(e, -6), s = s0 < rg.from ? rg.from : s0; B.unshift({from: s, to: e, lbl: dDM(s)}); } }
   else { let y = +rg.from.slice(0, 4), m = +rg.from.slice(5, 7); const ey = +rg.to.slice(0, 4), em = +rg.to.slice(5, 7);
     while(y < ey || (y === ey && m <= em)){
       const s = `${y}-${String(m).padStart(2, '0')}-01`; m++; if(m === 13){ m = 1; y++; }
@@ -2631,33 +2704,36 @@ function dRank(groups, key, name, sub, lead, color, val = g => g.v, txt = g => d
         <span class="dbar"><i style="width:${(val(g) / max * 100).toFixed(1)}%;background:${color ? color(g, i) : 'var(--d1)'};animation-delay:${i * 70}ms"></i></span>
         <span class="drk-s"><span>${sub(g)}</span>${dMg() ? mBadge(g.m) : ''}</span></span></button>`).join('');
 }
-// evolução: barras (vendido + em andamento) e a linha da margem
+// evolução: uma barra por período com o valor escrito em cima; eixo e valores na mesma unidade (mil / mi, indicada no título);
+// para o aprovador, a margem de cada período numa linha de números embaixo, com a cor do semáforo (no lugar da curva)
 function dEvol(rows, rg){
-  const B = dBuckets(rg), W = 340, H = 176, L = 36, R = dMg() ? 26 : 8, T = 12, BT = 20, ih = H - T - BT;
-  B.forEach(b => { const rs = rows.filter(r => r.o.date >= b.from && r.o.date <= b.to && r.o.status !== 'reprovado'), a = dAgg(rs);
-    b.ap = dAgg(rs.filter(r => r.o.status === 'aprovado')).v; b.op = 0; b.m = a.m; b.n = a.n; });
-  const max = niceMax(Math.max(1, ...B.map(b => b.ap + b.op))), cw = (W - L - R) / B.length, bw = Math.max(3, Math.min(20, cw * .64));
-  const y = v => T + ih * (1 - v / max), sel = S.dash.sel;
-  const ms = B.filter(b => b.m != null).map(b => b.m), mMax = Math.max(.3, ...ms), mMin = Math.min(0, ...ms);
-  const ym = m => T + ih * (1 - (m - mMin) / (mMax - mMin));
+  const B = dBuckets(rg), mg = dMg(), W = 340, L = 30, R = 6, T = 20, BT = 18, MR = mg ? 18 : 0, ih = 150, H = T + ih + BT + MR;
+  B.forEach(b => { const a = dAgg(rows.filter(r => r.o.date >= b.from && r.o.date <= b.to)); b.ap = a.v; b.m = a.m; b.n = a.n; });
+  const top = Math.max(0, ...B.map(b => b.ap)), max = (v => { const e = Math.pow(10, Math.floor(Math.log10(v))); return [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(x => v / e <= x + 1e-9) * e; })(Math.max(1, top * 1.12));   // teto do eixo logo acima da maior barra, com folga para o número
+  const sc = top >= 1e6 ? 1e6 : top >= 1e3 ? 1e3 : 1, unit = sc === 1e6 ? (S.lang === 'es' ? 'M' : 'mi') : sc === 1e3 ? 'mil' : '';
+  const fv = v => fmtNum(v / sc, sc === 1e6 && v / sc < 10 ? 2 : sc === 1e6 ? 1 : 0);
+  const cw = (W - L - R) / B.length, bw = Math.max(6, Math.min(34, cw * .66)), y = v => T + ih * (1 - v / max), sel = S.dash.sel;
+  const fs = cw < 24 ? 8 : 9.5;   // números menores quando há muitas barras (90 dias)
   let s = '';
-  [0, .5, 1].forEach(k => { const yy = y(max * k); s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" style="stroke:var(--border);stroke-width:1;${k ? 'stroke-dasharray:3 4' : ''}"/><text x="${L - 6}" y="${yy + 3}" text-anchor="end">${fmtShort(max * k)}</text>`; });
-  if(dMg()) [mMin, mMax].forEach(m => { s += `<text x="${W - R + 5}" y="${ym(m) + 3}" style="fill:var(--d3)">${fmtNum(m * 100, 0)}%</text>`; });
-  const every = Math.ceil(B.length / 6);
+  [0, .5, 1].forEach(k => { const yy = y(max * k); s += `<line x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}" style="stroke:var(--border);stroke-width:1;${k ? 'stroke-dasharray:3 4' : ''}"/><text x="${L - 5}" y="${yy + 3}" text-anchor="end">${fv(max * k)}</text>`; });
+  s += `<text x="0" y="8" class="dax">${S.dash.cur}${unit ? ' ' + unit : ''}</text>`;   // unidade dos valores, em cima do eixo
+  const every = Math.ceil(B.length / 7);
   B.forEach((b, i) => {
-    const x = L + i * cw + (cw - bw) / 2, dim = sel != null && sel !== i ? 'opacity:.35;' : '', d = `animation-delay:${i * 16}ms;`;
-    if(b.ap > 0) s += `<rect class="bar" x="${x.toFixed(1)}" y="${y(b.ap).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(b.ap)).toFixed(1)}" rx="2" style="fill:var(--d1);${dim}${d}"/>`;
-    if(b.op > 0) s += `<rect class="bar" x="${x.toFixed(1)}" y="${y(b.ap + b.op).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(b.ap) - y(b.ap + b.op)).toFixed(1)}" rx="2" style="fill:var(--d2);opacity:${sel != null && sel !== i ? .25 : .55};${d}"/>`;
-    if(i % every === 0 || i === B.length - 1 && B.length < 8) s += `<text x="${(L + i * cw + cw / 2).toFixed(1)}" y="${H - 5}" text-anchor="middle">${b.lbl}</text>`;
+    const cx = L + i * cw + cw / 2, x = cx - bw / 2, off = sel != null && sel !== i, d = `animation-delay:${i * 16}ms;`;
+    if(b.ap > 0){
+      s += `<rect class="bar" x="${x.toFixed(1)}" y="${y(b.ap).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(0) - y(b.ap)).toFixed(1)}" rx="3" style="fill:var(--d1);${off ? 'opacity:.35;' : ''}${d}"/>`;
+      s += `<text x="${cx.toFixed(1)}" y="${(y(b.ap) - 4).toFixed(1)}" text-anchor="middle" style="fill:var(--text);font-size:${fs}px;font-weight:700;${off ? 'opacity:.35' : ''}">${fv(b.ap)}</text>`;
+    }
+    if(i % every === 0 || i === B.length - 1) s += `<text x="${cx.toFixed(1)}" y="${T + ih + 13}" text-anchor="middle" style="${sel === i ? 'fill:var(--text);font-weight:700' : ''}">${b.lbl}</text>`;
+    if(mg && b.m != null) s += `<text x="${cx.toFixed(1)}" y="${T + ih + BT + 12}" text-anchor="middle" style="fill:${D_SEMC[semOf(b.m)] || 'var(--muted)'};font-size:${fs}px;font-weight:700;${off ? 'opacity:.35' : ''}">${fmtNum(b.m * 100, 0)}%</text>`;
   });
-  const pts = !dMg() ? [] : B.map((b, i) => b.m == null ? null : [L + i * cw + cw / 2, ym(b.m)]).filter(Boolean);
-  if(pts.length > 1) s += `<path class="dline" d="${dSmooth(pts)}" style="stroke:var(--d3);stroke-width:2.2;fill:none;stroke-linecap:round"/>`;
-  pts.forEach(p => { s += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.4" style="fill:var(--surface);stroke:var(--d3);stroke-width:1.6"/>`; });
-  B.forEach((b, i) => { s += `<rect x="${(L + i * cw).toFixed(1)}" y="${T}" width="${cw.toFixed(1)}" height="${ih}" data-a="dsel" data-i="${i}" style="fill:transparent;cursor:pointer"/>`; });
+  if(mg) s += `<text x="${L - 5}" y="${T + ih + BT + 12}" text-anchor="end" class="dax">${t('d_mg_s')}</text>`;
+  B.forEach((b, i) => { s += `<rect x="${(L + i * cw).toFixed(1)}" y="0" width="${cw.toFixed(1)}" height="${H}" data-a="dsel" data-i="${i}" style="fill:transparent;cursor:pointer"/>`; });
   const b = sel != null && B[sel];
-  const tip = b ? `<div class="dtip"><b>${b.from === b.to ? fmtDate(b.from) : `${b.lbl} → ${fmtDate(b.to).slice(0, 5)}`}</b><span><i style="background:var(--d1)"></i>${t('d_sold')} <b>${dMoney(b.ap)}</b></span>${dMg() ? `<span><i style="background:var(--d3)"></i>${t('d_margin')} <b>${fmtPct(b.m)}</b></span>` : ''}</div>` : '';
+  const per = b ? (b.from === b.to ? fmtDate(b.from) : `${dDM(b.from)} → ${dDM(b.to)}`) : '';
+  const tip = b ? `<div class="dtip"><b>${per}</b><span>${t('d_sold')} <b>${dMoney(b.ap)}</b></span><span>${t('d_n_orders', b.n)}</span>${mg && b.m != null ? `<span>${t('d_margin')} <b class="mt-${semOf(b.m)}">${fmtPct(b.m)}</b></span>` : ''}</div>` : '';
   return `${tip}<svg class="dch" viewBox="0 0 ${W} ${H}">${s}</svg>
-    <div class="dlegs"><span><i style="background:var(--d1)"></i>${t('d_sold')}</span>${dMg() ? `<span><i class="ln" style="background:var(--d3)"></i>${t('d_margin')}</span>` : ''}</div>`;
+    <div class="dlegs">${t('d_evol_tap')}</div>`;
 }
 // margem × desconto de cada pedido; bolha = valor; faixas da política de margem
 function dScatter(rows){
@@ -2702,7 +2778,6 @@ function viewDash(){
   const byProd = dGroup(sale, r => r.p.id).slice(0, 5), byClient = dGroup(sale, r => r.o.clientId).slice(0, 5);
   const bySt = D_ST.map(st => ({k: st, ...dAgg(rows.filter(r => r.o.status === st))}));
   const stTot = bySt.reduce((a, g) => a + g.v, 0) || 1;
-  const big = dGroup(sale, r => r.o.id)[0];
   const low = dGroup(sale, r => r.o.id).filter(g => g.m != null && g.m < MARGIN_MID).length;
   // destaques calculados
   const ins = [];
@@ -2726,13 +2801,13 @@ function viewDash(){
     </section>
     ${byLine.length ? `<section class="dcard"><h2>${t('d_mix')}</h2><div class="ddon dpiec">${dPie(byLine, 'line', lineColor)}<div class="dleg">${byLine.map((g, i) => `<button type="button" class="dlr dlr2 ${D.f.line === g.k ? 'on' : ''} ${D.f.line && D.f.line !== g.k ? 'dim' : ''}" data-a="dfil" data-k="line" data-v="${esc(g.k)}"><i style="background:${lineColor(g, i)}"></i><span><b>${esc(g.k)}</b><small>${dMoney(g.v)}</small><small>${['L', 'kg'].map(u => { const q = g.rs.filter(r => r.p.um === u).reduce((x, r) => x + r.q, 0); return q ? `${fmtShort(q)} ${u}` : ''; }).filter(Boolean).join(' · ')}</small></span><em>${fmtPct(g.v / (A.v || 1))}</em></button>`).join('')}</div></div></section>` : ''}
     <div class="dkpis">
-      <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_ticket')}</span><span class="dk-v"><small>${cur}</small> ${dCount(A.n ? A.v / A.n : 0, 'short')}</span><span class="dk-s">${t('d_n_orders', A.n)}</span></div></div>
+      <div class="dk"><div class="dk-t"><span class="dk-l">${t('d_ticket')}</span><span class="dk-v"><small>${cur}</small> ${dCount(A.n ? A.v / A.n : 0, 'short')}</span></div></div>
       ${dMg() ? `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_margin')}</span><span class="dk-v" style="color:${D_SEMC[semOf(A.m)] || 'var(--text)'}">${dCount(A.m ?? 0, 'pct')}</span><span class="dk-s">≥ ${fmtPct(MARGIN_GOOD)}</span></div>${dRing((A.m || 0) / .3, D_SEMC[semOf(A.m)] || 'var(--gray)')}</div>`
-        : `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_biggest')}</span><span class="dk-v"><small>${cur}</small> ${dCount(big ? big.v : 0, 'short')}</span><span class="dk-s">${big ? esc(CLIENT(big.rs[0].o.clientId)?.name || '') : '—'}</span></div></div>`}
+        : `<div class="dk"><div class="dk-t"><span class="dk-l">${t('d_qty_orders')}</span><span class="dk-v">${dCount(A.n)}</span></div></div>`}
       ${['L', 'kg'].map(um => { const rs = sale.filter(r => r.p.um === um), q = rs.reduce((a, r) => a + r.q, 0), np = new Set(rs.map(r => r.p.id)).size;
         return `<div class="dk"><div class="dk-t"><span class="dk-l">${t('qty')} (${um})</span><span class="dk-v">${dCount(q)} <small>${um}</small></span><span class="dk-s">${t('d_n_prods', np)}</span></div></div>`; }).join('')}
     </div>
-    <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === '30' ? t('d_by_day') : S.dash.per === '90' ? t('d_by_week') : t('d_by_month')}</small></h2>${dEvol(rows, rg)}</section>
+    <section class="dcard"><h2>${t('d_evol')}<small>${S.dash.per === 'all' ? t('d_by_month') : t('d_by_week')}</small></h2>${dEvol(rows, rg)}</section>
     ${sale.length ? (() => { const byAct = dGroup(sale, r => r.p.active).slice(0, 5), lc = g => D_PAL[Math.max(0, byLine.findIndex(l => l.k === g.rs[0].p.group)) % D_PAL.length];
       // Top 5: por princípio ativo (padrão) ou por produto
       return `<section class="dcard"><h2>${t('d_top')}</h2>
@@ -2786,23 +2861,32 @@ const ACT = {
     // lista de preferências neutra (cinza, sem verde): rótulo à esquerda e seletor segmentado à direita
     const opt = (k, v, lbl, on) => `<button type="button" class="seg-o ${on ? 'on' : ''}" data-m="${k}:${v}" aria-pressed="${on}">${lbl}</button>`;
     const prefs = `<div class="pp-gh">${t('prefs')}</div><div class="pf-list">
-      <div class="pf-row"><span>${t('model')}</span><div class="seg" role="group" aria-label="${t('model')}">${opt('model', '1', t('model_n', 1), S.model !== '2')}${opt('model', '2', t('model_n', 2), S.model === '2')}</div></div>
-      <div class="pf-row pf-col"><span>${t('theme')}</span><div class="seg seg4" role="group" aria-label="${t('theme')}">${['light', 'dark', 'somax', 'esmeralda'].map(th => opt('theme', th, t('theme_' + th), (S.theme || 'light') === th)).join('')}</div></div>
-      <div class="pf-row"><span>${t('lang')}</span><div class="seg" role="group" aria-label="${t('lang')}">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div></div>
+      <div class="pf-row pf-stack"><span>${t('theme')}</span><div class="seg seg4" role="group" aria-label="${t('theme')}">${opt('theme', 'light', t('theme_light'), !['dark', 'somax', 'emerald'].includes(S.theme))}${opt('theme', 'dark', t('theme_dark'), S.theme === 'dark')}${opt('theme', 'somax', t('theme_somax'), S.theme === 'somax')}${opt('theme', 'emerald', t('theme_emerald'), S.theme === 'emerald')}</div></div>
+      <div class="pf-row pf-stack"><span>${t('hdr')}</span><div class="seg" role="group" aria-label="${t('hdr')}">${opt('hdr', '1', t('hdr_m', 1), S.hdr === '1')}${opt('hdr', '2', t('hdr_m', 2), S.hdr !== '1')}</div></div>
+      <div class="pf-row pf-stack"><span>${t('lang')}</span><div class="seg" role="group" aria-label="${t('lang')}">${opt('lang', 'pt', 'Português', S.lang !== 'es')}${opt('lang', 'es', 'Español', S.lang === 'es')}</div></div>
     </div>`;
     const pr = modal({title: S.profile === 'aprovador' ? apprName() : SELLER(ME).name, body: body + prefs, sheet: true});
     if(atEnd) requestAnimationFrame(() => document.querySelector('#overlay .pf-list')?.scrollIntoView({block: 'end'}));
     const r = await pr;
-    if(r && /^(theme|lang|model):/.test(r.v)){
-      const [k, v] = r.v.split(':'); if(k === 'theme') S.theme = v; else if(k === 'model') S.model = v; else S.lang = v;
+    if(r && /^(theme|lang|hdr):/.test(r.v)){
+      const [k, v] = r.v.split(':'); if(k === 'theme') S.theme = v; else if(k === 'hdr') S.hdr = v; else S.lang = v;
       savePrefs(); render(); return ACT.profile(null, true);
     }
     if(!r || r.v === cur) return;
     if(APPROVERS.some(a => a.id === r.v)){ S.profile = 'aprovador'; APPR = r.v; } else { S.profile = 'vendedor'; ME = r.v; }
     savePrefs();
+    S.unit = SELLER(ME).unit;   // ao trocar de gestor, volta para a filial dele
     S.filter = 'all'; S.mine = false; S.listView = S.profile === 'aprovador' ? 'approvals' : 'list';
     toast(t('profile_switched', S.profile === 'aprovador' ? apprName() : SELLER(ME).name));
     go(S.listView);   // aprovador entra direto na tela de aprovação
+  },
+  // filial pelo cabeçalho (modelo 2): a filial em que o gestor lança os pedidos novos (não filtra listas nem o Dashboard)
+  unitpick: async () => {
+    const row = u => { const on = S.unit === u.id;
+      return `<button type="button" class="un-row ${on ? 'on' : ''}" data-m="unit:${u.id}" aria-pressed="${on}">${IC.office}<span>${esc(u.name)}</span>${on ? IC.check : ''}</button>`; };
+    const r = await modal({title: t('unit_pick'), body: UNITS.map(row).join(''), sheet: true});
+    if(!r || !/^unit:/.test(r.v)) return;
+    S.unit = r.v.slice(5); render();
   },
   tab: b => { S.listView = b.dataset.v; go(b.dataset.v); },
   filter: b => { S.filter = b.dataset.s; render(); },
@@ -2818,7 +2902,8 @@ const ACT = {
   },
   new: () => {
     const me = SELLER(ME);
-    S.draft = {id: uid(), number: DB.seq++, date: today(), sellerId: ME, unit: me.unit, clientId: '', negType: 'normal', safraId: '',
+    S.draft = {id: uid(), number: DB.seq++, date: today(), sellerId: ME, unit: S.unit || me.unit,   // filial escolhida no cabeçalho
+      clientId: '', negType: 'normal', safraId: '',
       currency: 'BRL', cond: '', due: '', billing: '', contact: '', note: '', signature: '', signedAt: '', priceTableId: '', items: [], docType: '', billingPlace: '', deliveryPlace: '',
       status: 'aberto', history: [], approverNote: ''};
     S.draft0 = JSON.stringify(S.draft);
@@ -3770,9 +3855,13 @@ function waEdit(o){
   if(prefs.appr && APPROVERS.some(a => a.id === prefs.appr)) APPR = prefs.appr;
   S = {profile: 'vendedor', lang: prefs.lang || 'pt',
     theme: (prefs.tv === 2 && prefs.theme) || 'somax',   // padrão: tema Somax
-    model: prefs.model === '2' ? '2' : '1',              // Modelo 1 = visual atual (padrão); Modelo 2 = visual moderno
+    hdr: prefs.hdr === '1' ? '1' : '2',   // cabeçalho: modelo 2 (foto, nome e filial) é o padrão
     view: 'list', listView: 'list', open: {}, openA: {}, openD: {}, adv: ADV0(), stF: [], dash: DASH0(), errStep: 0, anim: '', filter: 'all', mine: false, q: '', step: 1, draft: null, isNew: false, orderId: null};
   DB = loadDB();
+  // cabeçalho modelo 2: fundo sólido no topo só depois que a tela rola
+  const h2s = () => document.documentElement.classList.toggle('h2s', (window.scrollY || document.documentElement.scrollTop) > 6);
+  window.addEventListener('scroll', h2s, {passive: true}); h2s();
+  S.unit = SELLER(ME).unit;   // filial de lançamento: começa na filial do gestor
   pushNav();
   render();
 })();
