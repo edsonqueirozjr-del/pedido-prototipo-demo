@@ -281,6 +281,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-ml .pv-tr.on > span:first-child{background:var(--primary-soft)}
 .pv-ml .pv-tr > span:not(:first-child){width:84px !important;flex:1 0 84px !important}
 .pv-ml .pv-th{font-size:10.5px}
+.pv-ml .pv-n > .avatar{overflow:hidden;flex:none}  /* foto redonda também nas tabelas que arrastam */
 .pv-ml .pv-th > span{white-space:normal !important;line-height:1.2}  /* títulos longos (Qtd fat. + cart.) em duas linhas */
 /* por linha: coluna do nome estreita; as colunas de números dividem o resto da largura */
 .pv-fit .pv-tr{gap:4px}
@@ -2945,7 +2946,7 @@ function pvTable(cols, total, rows, key, name, wrap = true){
   const head = `<div class="pv-tr pv-th"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.l}</span>`).join('')}</div>`;
   const tot = total ? `<div class="pv-tr pv-tot"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.v(total)}</span>`).join('')}</div>` : '';
   const body = rows.map(g => `<button type="button" class="pv-tr ${f === g.k ? 'on' : ''}" ${key ? `data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"` : ''}><span class="pv-n">${name(g)}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(g)}</span>`).join('')}</button>`).join('');
-  const nw = wrap === 'ml' ? pvNameW(rows.map(g => name(g).replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').trim())) : 0;
+  const nw = wrap === 'ml' ? pvNameW(rows.map(g => name(g).replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').trim())) + (rows.some(g => name(g).includes('avatar')) ? 34 : 0) : 0;
   return `<div class="pv-tbl ${wrap === 'ml' ? 'pv-ml' : wrap === 'fit' ? 'pv-fit' : wrap ? 'pv-wrap' : ''}" ${nw ? `style="--nw:${nw}px"` : ''}>${head}${tot}${body}</div>`;
 }
 // evolução do faturamento por mês: ano anterior × ano escolhido (barras lado a lado)
@@ -3034,9 +3035,12 @@ function viewPlan(head){
         <div><span>${t('d_orders')}</span><b>${dCount(new Set([...R.fat, ...R.cart].map(r => r.o.id)).size)}</b></div>
       </div>
     </section>
-    ${isAppr ? `<section class="dcard"><h2>${t('pv_by_seller')}</h2>${pvTable([
-        {l: t('pv_fat'), w: 66, v: g => fmtShort(g.fv)}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cart'), w: 58, v: g => fmtShort(g.cv)}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
-      tot, pvGroup(R, r => r.o.sellerId).sort((a, b) => b.fv - a.fv), 'seller', g => `${avatarHtml(g.k, SELLER(g.k)?.name || '')}<span>${esc(SELLER(g.k)?.name || '')}</span>`)}</section>` : ''}
+    ${isAppr ? (() => { const bySel = pvGroup(R, r => r.o.sellerId).sort((a, b) => b.fv - a.fv);
+      // por gestor: igual às outras tabelas — nome ao lado dos números (até 2 linhas), arrasta para o lado, 5 linhas e "Ver mais"
+      return `<section class="dcard"><h2>${t('pv_by_seller')}</h2>${pvTable([
+        {l: t('pv_fat'), w: 64, v: g => fmtShort(g.fv)}, {l: '%', w: 40, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cart'), w: 60, v: g => fmtShort(g.cv)}, {l: t('d_clients'), w: 52, v: g => g.cl.size}],
+      tot, bySel.slice(0, D.pmore === 'sel' ? 99 : 5), 'seller', g => `${avatarHtml(g.k, SELLER(g.k)?.name || '')}<span>${esc(SELLER(g.k)?.name || '')}</span>`, 'ml')}
+      ${bySel.length > 5 && D.pmore !== 'sel' ? `<button type="button" class="pv-more" data-a="pmore" data-v="sel">${t('pv_more', bySel.length - 5)}</button>` : ''}</section>`; })() : ''}
     <section class="dcard"><h2>${t('pv_part')}</h2>
       <div class="seg dtop">${seg('ppart', 'line', t('stock_group_f'), D.ppart !== 'cur')}${seg('ppart', 'cur', t('currency'), D.ppart === 'cur')}</div>
       ${D.ppart === 'cur' ? pie(byCur, 'cur', g => g.k === 'BRL' ? 'var(--d1)' : 'var(--d3)', g => g.k) : pie(byLine, 'line', lineC, g => g.k)}</section>
