@@ -282,6 +282,15 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-ml .pv-tr{gap:5px;font-size:12.5px}
 .pv-ml .pv-n > span{white-space:normal;overflow:visible;line-height:1.25;font-size:12.5px;overflow-wrap:break-word}
 .pv-ml .pv-th{font-size:10px;letter-spacing:0}
+/* princípio ativo e quantidade: tabela que arrasta para o lado; nome numa coluna estreita e presa à esquerda,
+   números com colunas largas (mais espaço entre eles) */
+.pv-tbl.pv-ml{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin}
+.pv-ml .pv-tr{width:max-content;min-width:100%}  /* largura pelo conteúdo: só arrasta quando não cabe */
+.pv-ml .pv-tr > span:first-child{flex:0 0 128px;position:sticky;left:0;z-index:1;background:var(--surface);align-self:stretch;display:flex;align-items:center;padding-right:6px}
+.pv-ml .pv-tot > span:first-child{background:var(--surface-2)}
+.pv-ml .pv-tr.on > span:first-child{background:var(--primary-soft)}
+.pv-ml .pv-tr > span:not(:first-child){width:84px !important;flex:1 0 84px !important}
+.pv-ml .pv-th{font-size:10.5px}
 .pv-more{display:block;width:100%;margin-top:6px;padding:8px;border:0;border-top:1px solid var(--border);background:none;color:var(--primary);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .pv-pies{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pv-pies h3{margin:0 0 6px;font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
@@ -2998,7 +3007,7 @@ function viewPlan(head){
     <section class="dcard"><h2>${t('pv_cliprod')}<small>${t('pv_cliprod_s')}</small></h2>${pvCliProd(R)}</section>
     <section class="dcard"><h2>${t('pv_detail')}</h2>${pvTable([
         {l: t('pv_fat'), w: 64, v: g => fmtShort(g.fv)}, {l: t('pv_cart'), w: 58, v: g => fmtShort(g.cv)}, {l: t('pv_fc_s'), w: 64, v: g => `<b>${fmtShort(g.fv + g.cv)}</b>`}],
-      tot, byCli.slice(0, D.pmore === 'cli' ? 99 : 10), 'client', g => `<span>${esc(CLIENT(g.k)?.name || '')}</span>`)}
+      tot, byCli.slice(0, D.pmore === 'cli' ? 99 : 10), 'client', g => `<span>${esc(CLIENT(g.k)?.name || '')}</span>`, 'ml')}
       ${byCli.length > 10 && D.pmore !== 'cli' ? `<button type="button" class="pv-more" data-a="pmore" data-v="cli">${t('pv_more', byCli.length - 10)}</button>` : ''}</section>
     <section class="dcard"><h2>${t('pv_by_saf')}</h2>${bySaf.length ? bySaf.map((g, i) => `<button type="button" class="pv-hb ${D.f.safra === g.k ? 'on' : ''}" data-a="dfil" data-k="safra" data-v="${g.k}"><span>${esc(SAFRA(g.k)?.name || '')}</span>
       <span class="pv-hbb"><i style="width:${(g.fv / safMax * 100).toFixed(1)}%;animation-delay:${i * 80}ms"></i><b>${fmtShort(g.fv)}</b></span></button>`).join('') : `<div class="empty">${t('d_empty')}</div>`}</section>
@@ -3513,7 +3522,7 @@ document.addEventListener('change', e => {
   document.addEventListener('touchstart', e => {
     on = false;
     if(!(home() || S.view === 'dash') || e.touches.length > 1 || document.getElementById('overlay').classList.contains('open')) return;
-    if(e.target.closest('#days, input, select, textarea, .top')) return;   // a faixa de dias rola sozinha
+    if(e.target.closest('#days, input, select, textarea, .top, .pv-ml')) return;   // a faixa de dias e as tabelas que arrastam rolam sozinhas
     m = document.querySelector('main'); x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; horiz = null; on = true;
   }, {passive: true});
   document.addEventListener('touchmove', e => {
