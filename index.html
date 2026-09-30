@@ -3028,7 +3028,7 @@ function viewPlan(head){
           {l: t('pv_qf'), w: 54, v: g => pvQ(g.fq)}, {l: t('pv_pm'), w: 42, v: g => mpr(g.fv, g.fq)}, {l: t('pv_qc'), w: 48, v: g => pvQ(g.cq)}, {l: t('pv_pm'), w: 42, v: g => mpr(g.cv, g.cq)}],
         tot, byAct.slice(0, D.pmore === 'act' ? 99 : 5), 'act', g => `<span>${esc(ACTIVE(g.k)?.name || '')}</span>`, 'ml')
       : pvTable([
-          {l: t('pv_qp'), w: 54, v: g => pvQ(g.pq)}, {l: t('pv_qf'), w: 52, v: g => pvQ(g.fq)}, {l: t('pv_qt'), w: 52, v: g => pvQ(g.fq + g.cq)}],
+          {l: t('pv_qp'), w: 54, v: g => pvQ(g.pq)}, {l: t('pv_qf'), w: 52, v: g => pvQ(g.fq)}, {l: t('pv_fc_s'), w: 52, v: g => pvQ(g.fq + g.cq)}],
         tot, byProd.slice(0, D.pmore === 'qty' ? 99 : 5), 'prod', g => `<span>${esc(PROD(g.k)?.name || '')}</span>`, 'ml')}
       ${(tab === 'act' ? byAct : byProd).length > 5 && D.pmore !== tab ? `<button type="button" class="pv-more" data-a="pmore" data-v="${tab}">${t('pv_more', (tab === 'act' ? byAct : byProd).length - 5)}</button>` : ''}</section>
     <section class="dcard"><h2>${t('pv_cliprod')}<small>${t('pv_cliprod_s')}</small></h2>${pvCliProd(R)}</section>
