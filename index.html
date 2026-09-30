@@ -63,7 +63,7 @@
 [data-theme="emerald"] .top .icon-btn:hover{background:rgba(248,231,201,.12)}
 
 /* cabeçalho modelo 2 (Preferências → Cabeçalho): foto, nome e filial à esquerda; sino num botão redondo à direita */
-[data-hdr="2"]{--top:60px}
+[data-hdr="2"]{--top:68px}  /* topo com a altura do painel verde: foto, nome e filial centralizados na vertical */
 .top.hdr2{gap:10px;padding:0 12px 0 14px}
 .h2-av{flex:none;display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}  /* foto maior, sem contorno */
 .h2-av .avatar{width:48px;height:48px;font-size:16px}
@@ -90,9 +90,9 @@
 [data-theme="dark"]{--h2a:#0a1d13;--h2b:#15402a;--h2g1:rgba(61,187,120,.38);--h2g2:rgba(111,163,246,.18);--h2ink:#e9f5ee;--h2sub:rgba(233,245,238,.72)}
 [data-theme="somax"]{--h2a:#043d1c;--h2b:#0b7a35;--h2g1:rgba(112,197,54,.50);--h2g2:rgba(251,197,31,.30);--h2ink:#fff;--h2sub:rgba(255,255,255,.8)}
 [data-theme="emerald"]{--h2a:#043428;--h2b:#0a6b51;--h2g1:rgba(248,231,201,.30);--h2g2:rgba(79,154,124,.55);--h2ink:#f8e7c9;--h2sub:rgba(248,231,201,.78)}
-.app:has(.top.hdr2){--h2h:66px}   /* o painel verde ocupa só o topo (foto, nome, filial e sino) */
+.app:has(.top.hdr2){--h2h:68px}   /* o painel verde ocupa só o topo (foto, nome, filial e sino) */
 /* cabeçalho modelo 2 mais junto da busca: menos espaço entre o nome/filial, as bolinhas e a busca */
-.app:has(.top.hdr2) main{padding-top:16px}
+.app:has(.top.hdr2) main{padding-top:10px}
 .app:has(.top.hdr2) main > .pager{margin:0 0 8px}
 .app:has(.top.hdr2) .dash > .pager{margin:0 0 -4px}
 .app:has(.top.hdr2)::before{content:'';position:absolute;left:0;right:0;top:0;height:calc(var(--h2h) + env(safe-area-inset-top,0px));z-index:0;pointer-events:none;border-radius:0 0 28px 28px;
