@@ -254,12 +254,14 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-bar{display:flex;height:12px;border-radius:6px;background:var(--gray-soft);overflow:hidden;margin:10px 0 12px}
 .pv-bar i{display:block;height:100%;transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
 .pv-bar i.f,.pv-kg i.f{background:var(--d1)} .pv-bar i.c,.pv-kg i.c{background:var(--pv-prev)}
-.pv-kg{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
-.pv-kg > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;min-width:0}
+.pv-kg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}  /* 3 por linha: Faturado, Carteira, Fat. + Cart. / Clientes ativos, Produtos, Pedidos */
+.pv-kg > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 5px;min-width:0}
+.pv-kg > div > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv-kg .pv-p{font-size:11.5px}  /* % ao lado do valor, na mesma linha */
 .pv-kg > div > span{flex-basis:100%;font-size:11.5px;color:var(--muted);font-weight:600}
 .pv-kg span i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-.pv-kg b{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
-.pv-p{font-size:13px;font-weight:800;font-variant-numeric:tabular-nums} .pv-p.ok{color:var(--ok)} .pv-p.mid{color:var(--warn)} .pv-p.bad{color:var(--bad)}
+.pv-kg b{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pv-p{font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums} .pv-p.ok{color:var(--ok)} .pv-p.mid{color:var(--warn)} .pv-p.bad{color:var(--bad)}
 .pv-na{color:var(--muted)}
 .pv-tbl{display:flex;flex-direction:column;margin:0 -4px}
 .pv-tr{display:flex;align-items:center;gap:6px;width:100%;min-height:40px;padding:6px 4px;border:0;border-top:1px solid var(--border);border-radius:0;background:none;color:var(--text);font:inherit;font-size:13px;text-align:left;cursor:pointer}
@@ -286,17 +288,26 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
    números com colunas largas (mais espaço entre eles) */
 .pv-tbl.pv-ml{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin}
 .pv-ml .pv-tr{width:max-content;min-width:100%}  /* largura pelo conteúdo: só arrasta quando não cabe */
-.pv-ml .pv-tr > span:first-child{flex:0 0 128px;position:sticky;left:0;z-index:1;background:var(--surface);align-self:stretch;display:flex;align-items:center;padding-right:6px}
+.pv-ml .pv-tr > span:first-child{flex:0 0 var(--nw,128px);position:sticky;left:0;z-index:1;background:var(--surface);align-self:stretch;display:flex;align-items:center;padding-right:6px}
 .pv-ml .pv-tot > span:first-child{background:var(--surface-2)}
 .pv-ml .pv-tr.on > span:first-child{background:var(--primary-soft)}
 .pv-ml .pv-tr > span:not(:first-child){width:84px !important;flex:1 0 84px !important}
 .pv-ml .pv-th{font-size:10.5px}
+/* por linha: coluna do nome estreita; as colunas de números dividem o resto da largura */
+.pv-fit .pv-tr{gap:4px}
+.pv-fit .pv-tr > span:first-child{flex:1 0 86px;max-width:120px}
+.pv-fit .pv-tr > span:not(:first-child){flex:1 0 auto !important;width:auto !important}
+.pv-fit .pv-tr > span:nth-child(2),.pv-fit .pv-tr > span:nth-child(3){min-width:54px}
+.pv-fit .pv-tr > span:nth-child(4){min-width:34px}
+.pv-fit .pv-tr > span:nth-child(5){min-width:46px}
+.pv-fit .pv-th{font-size:10px;letter-spacing:0}
 .pv-more{display:block;width:100%;margin-top:6px;padding:8px;border:0;border-top:1px solid var(--border);background:none;color:var(--primary);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .pv-pies{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pv-pies h3{margin:0 0 6px;font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .pv-pie{display:flex;align-items:center;gap:14px}
 .dash .pv-pie > svg.dch{width:130px;flex:none;margin:0}
-.pv-pie .pv-pl{flex:1;min-width:0}
+.pv-pie .pv-pl{flex:0 1 auto;min-width:0}  /* legenda na largura do texto: % junto do nome (em qualquer largura de tela) */
+.pv-pie .pv-li b{padding-left:16px}
 .pv-pie .pv-li{font-size:13.5px;padding:7px 6px}
 .pv-pl{display:flex;flex-direction:column;gap:2px}
 .pv-li{display:flex;align-items:center;gap:6px;padding:4px;border:0;border-radius:6px;background:none;color:inherit;font:inherit;font-size:12.5px;text-align:left;cursor:pointer}
@@ -2917,12 +2928,26 @@ const pvPct = (a, b) => b > 0 ? a / b : null;
 const pvPctHtml = p => p == null ? '<span class="pv-na">–</span>' : `<b class="pv-p ${p >= 1 ? 'ok' : p >= .5 ? 'mid' : 'bad'}">${fmtNum(p * 100, 0)}%</b>`;
 const pvQ = q => q ? fmtNum(q) : '–';
 // tabela do celular: nome à esquerda e colunas de números de largura fixa (valores alinhados); primeira linha = total
+let PV_CTX = null;
+function pvNameW(texts){
+  PV_CTX = PV_CTX || document.createElement('canvas').getContext('2d');
+  PV_CTX.font = '600 12.5px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif';
+  const W = s => PV_CTX.measureText(s).width, sp = W(' ');
+  const lines = (ws, w) => { let n = 1, cur = 0; ws.forEach(x => { const xw = W(x); if(cur && cur + sp + xw > w){ n++; cur = xw; } else cur += (cur ? sp : 0) + xw; }); return n; };
+  let need = 80;
+  texts.forEach(tx => { const ws = tx.split(/\s+/).filter(Boolean); if(!ws.length) return;
+    let lo = Math.max(...ws.map(W)), hi = W(tx);
+    if(lines(ws, lo) > 2){ while(hi - lo > 1){ const mid = (lo + hi) / 2; if(lines(ws, mid) <= 2) hi = mid; else lo = mid; } lo = hi; }
+    need = Math.max(need, Math.ceil(lo)); });
+  return Math.min(230, need + 12);
+}
 function pvTable(cols, total, rows, key, name, wrap = true){
   const f = S.dash.f[key];
   const head = `<div class="pv-tr pv-th"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.l}</span>`).join('')}</div>`;
   const tot = total ? `<div class="pv-tr pv-tot"><span></span>${cols.map(c => `<span style="width:${c.w}px">${c.v(total)}</span>`).join('')}</div>` : '';
   const body = rows.map(g => `<button type="button" class="pv-tr ${f === g.k ? 'on' : ''}" ${key ? `data-a="dfil" data-k="${key}" data-v="${esc(g.k)}"` : ''}><span class="pv-n">${name(g)}</span>${cols.map(c => `<span style="width:${c.w}px">${c.v(g)}</span>`).join('')}</button>`).join('');
-  return `<div class="pv-tbl ${wrap === 'ml' ? 'pv-ml' : wrap ? 'pv-wrap' : ''}">${head}${tot}${body}</div>`;
+  const nw = wrap === 'ml' ? pvNameW(rows.map(g => name(g).replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').trim())) : 0;
+  return `<div class="pv-tbl ${wrap === 'ml' ? 'pv-ml' : wrap === 'fit' ? 'pv-fit' : wrap ? 'pv-wrap' : ''}" ${nw ? `style="--nw:${nw}px"` : ''}>${head}${tot}${body}</div>`;
 }
 // evolução do faturamento por mês: ano anterior × ano escolhido (barras lado a lado)
 function pvEvol(year){
@@ -2982,8 +3007,10 @@ function viewPlan(head){
       <div class="pv-kg">
         <div><span><i class="f"></i>${t('pv_fat')}</span><b>${fmtShort(F)}</b>${pvPctHtml(pf)}</div>
         <div><span><i class="c"></i>${t('pv_cart')}</span><b>${fmtShort(C)}</b></div>
-        <div><span>${t('pv_fc')}</span><b>${fmtShort(F + C)}</b>${pvPctHtml(pfc)}</div>
+        <div><span>${t('pv_fc_s')}</span><b>${fmtShort(F + C)}</b>${pvPctHtml(pfc)}</div>
         <div><span>${t('pv_cli')}</span><b>${dCount(clients)}</b></div>
+        <div><span>${t('d_prods')}</span><b>${dCount(new Set(R.fat.map(r => r.p.id)).size)}</b></div>
+        <div><span>${t('d_orders')}</span><b>${dCount(new Set([...R.fat, ...R.cart].map(r => r.o.id)).size)}</b></div>
       </div>
     </section>
     ${isAppr ? `<section class="dcard"><h2>${t('pv_by_seller')}</h2>${pvTable([
@@ -2993,8 +3020,8 @@ function viewPlan(head){
       <div class="seg dtop">${seg('ppart', 'line', t('stock_group_f'), D.ppart !== 'cur')}${seg('ppart', 'cur', t('currency'), D.ppart === 'cur')}</div>
       ${D.ppart === 'cur' ? pie(byCur, 'cur', g => g.k === 'BRL' ? 'var(--d1)' : 'var(--d3)', g => g.k) : pie(byLine, 'line', lineC, g => g.k)}</section>
     <section class="dcard"><h2>${t('pv_by_line')}</h2>${pvTable([
-        {l: t('pv_obj'), w: 60, v: g => fmtShort(g.pv)}, {l: t('pv_fat'), w: 60, v: g => `<b>${fmtShort(g.fv)}</b>`}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('pv_cli_s'), w: 30, v: g => g.cl.size}],
-      tot, byLine, 'line', g => `<i class="pv-dot" style="background:${lineC(g)}"></i><span>${esc(g.k)}</span>`, false)}</section>
+        {l: t('pv_obj'), w: 60, v: g => fmtShort(g.pv)}, {l: t('pv_fat'), w: 60, v: g => `<b>${fmtShort(g.fv)}</b>`}, {l: '%', w: 38, v: g => pvPctHtml(pvPct(g.fv, g.pv))}, {l: t('d_clients'), w: 52, v: g => g.cl.size}],
+      tot, byLine, 'line', g => `<i class="pv-dot" style="background:${lineC(g)}"></i><span>${esc(g.k)}</span>`, 'fit')}</section>
     <section class="dcard"><h2>${t('pv_evol')}</h2>${pvEvol(Y)}</section>
     <section class="dcard"><div class="seg dtop">${seg('ptab', 'act', t('active'), tab === 'act')}${seg('ptab', 'qty', t('qty'), tab === 'qty')}</div>
       ${tab === 'act' ? pvTable([
