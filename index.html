@@ -634,6 +634,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .day .dn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:15px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border)}
 .day.today .dn{border-color:var(--primary);color:var(--primary)}
 .day.on .dn{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+/* dia escolhido com o mesmo verde em degradê do cartão do topo */
+.day.on .dn{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);border-color:var(--h2a);color:var(--h2ink)}
 .day.on .dw{color:var(--primary)}
 .day.m1-old::before{content:"";position:absolute;left:0;top:4px;bottom:2px;width:1.5px;border-radius:1px;background:var(--border)}  /* risquinho entre meses */
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none}
