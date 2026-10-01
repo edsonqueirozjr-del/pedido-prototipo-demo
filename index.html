@@ -836,6 +836,8 @@ html.lockscroll,html.lockscroll body{overflow:hidden;overscroll-behavior:none;he
 html.lockscroll main{padding-bottom:12px}
 .done-ic{width:84px;height:84px;border-radius:24px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;margin-bottom:16px}
 .done-ic svg{width:44px;height:44px;stroke-width:2.4}
+/* certinho das mensagens (pedido salvo, enviado, aprovado…) e outros verdes cheios: o mesmo degradê do cartão do topo */
+.done-ic,#toast.ok,.st-opt.on .st-check,.fchip.on,.cr-fill,.cr-knob{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);border-color:var(--h2a);color:var(--h2ink)}
 .done-view h1{font-size:22px;margin:0 0 6px}
 .done-view > p{margin:0 0 18px;font-size:14.5px}
 .done-card{width:100%;text-align:left}
@@ -2067,7 +2069,7 @@ function dayStrip(){
     return `<button type="button" class="day ${d === S.day ? 'on' : ''} ${d === t0 ? 'today' : ''}" data-a="day" data-d="${d}" aria-pressed="${d === S.day}">
         <span class="dw">${WD[S.lang === 'es' ? 'es' : 'pt'][dt.getDay()]}</span><span class="dn">${dt.getDate()}</span></button>`; };
   return `<div class="days-wrap"><div class="days" id="days">${groups.map(g =>
-    `<div class="mgrp"><span class="days-mon">${monthLabel(g.days[0])}</span>${g.days.map(dayBtn).join('')}</div>`).join('')}</div></div>`;
+    `<div class="mgrp"><span class="days-mon">${monthLabel(g.days[0])}:</span>${g.days.map(dayBtn).join('')}</div>`).join('')}</div></div>`;
 }
 // busca (cliente ou nº) + botão de filtro avançado — usado em Pedidos e Para aprovação
 function searchRow(withStatus = false){
