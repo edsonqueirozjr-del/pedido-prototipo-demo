@@ -245,7 +245,12 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-bar{display:flex;height:12px;border-radius:6px;background:var(--gray-soft);overflow:hidden;margin:10px 0 12px}
 .pv-bar i{display:block;height:100%;transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
 .pv-bar i.f,.pv-kg i.f{background:var(--d1)} .pv-bar i.c,.pv-kg i.c{background:var(--pv-prev)}
-.pv-kg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}  /* 3 por linha: Faturado, Carteira, Fat. + Cart. / Clientes ativos, Produtos, Pedidos */
+.pv-kg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}  /* cada indicador no seu cartão, 3 por linha */
+.pv-kg > div{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+.pv-leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--muted);font-weight:600;margin-top:-4px}
+.pv-leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.pv-leg i.f{background:var(--d1)} .pv-leg i.c{background:var(--pv-prev)}
+.pv-leg .pv-p{font-size:11.5px}  /* 3 por linha: Faturado, Carteira, Fat. + Cart. / Clientes ativos, Produtos, Pedidos */
 .pv-kg > div{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 5px;min-width:0}
 .pv-kg > div > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pv-kg .pv-p{font-size:11.5px}  /* % ao lado do valor, na mesma linha */
@@ -3036,15 +3041,16 @@ function viewPlan(head){
     <section class="pv-hero">
       <div class="pv-h1"><span>${t('pv_obj')}</span><b><small>${D.cur}</small> ${dCount(P)}</b></div>
       <div class="pv-bar"><i class="f" style="width:${w(F, P)}"></i><i class="c" style="width:${w(C, P)}"></i></div>
-      <div class="pv-kg">
+      <div class="pv-leg"><span><i class="f"></i>${t('pv_fat')} ${pvPctHtml(pf)}</span><span><i class="c"></i>${t('pv_cart')}</span><span>${t('pv_fc_s')} ${pvPctHtml(pfc)}</span></div>
+    </section>
+    <div class="pv-kg">
         <div><span><i class="f"></i>${t('pv_fat')}</span><b>${fmtShort(F)}</b>${pvPctHtml(pf)}</div>
         <div><span><i class="c"></i>${t('pv_cart')}</span><b>${fmtShort(C)}</b></div>
         <div><span>${t('pv_fc_s')}</span><b>${fmtShort(F + C)}</b>${pvPctHtml(pfc)}</div>
         <div><span>${t('pv_cli')}</span><b>${dCount(clients)}</b></div>
         <div><span>${t('d_prods')}</span><b>${dCount(new Set(R.fat.map(r => r.p.id)).size)}</b></div>
         <div><span>${t('d_orders')}</span><b>${dCount(new Set([...R.fat, ...R.cart].map(r => r.o.id)).size)}</b></div>
-      </div>
-    </section>
+    </div>
     ${isAppr ? (() => { const bySel = pvGroup(R, r => r.o.sellerId).sort((a, b) => b.fv - a.fv);
       // por gestor: igual às outras tabelas — nome ao lado dos números (até 2 linhas), arrasta para o lado, 5 linhas e "Ver mais"
       return `<section class="dcard"><h2>${t('pv_by_seller')}</h2>${pvTable([
