@@ -577,6 +577,19 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;padding:8px;display:block;margin:16px auto 0}
 .fab{position:fixed;bottom:84px;right:max(16px,calc(50% - 264px));z-index:15;height:54px;padding:0 22px;border-radius:14px;border:0;background:var(--primary);color:var(--primary-ink);font-size:16.5px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 6px 18px rgba(0,0,0,.2);cursor:pointer}
 .fab{width:58px;height:58px;padding:0;justify-content:center;border-radius:16px}  /* só o +, quadrado 1:1 */
+/* cartão "ao vivo" embaixo: translúcido (vidro sobre o verde do topo), informações passando da direita para a esquerda */
+.live{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:calc(100% - 20px);max-width:540px;height:42px;z-index:14;
+  display:flex;align-items:center;overflow:hidden;border-radius:14px;color:var(--h2ink);font-size:12.5px;
+  background:color-mix(in srgb,var(--h2a) 70%,transparent);-webkit-backdrop-filter:blur(12px) saturate(1.3);backdrop-filter:blur(12px) saturate(1.3);border:1px solid color-mix(in srgb,var(--h2ink) 18%,transparent)}
+.lv-track{display:flex;width:max-content;animation:lvMove 40s linear infinite}
+.live:hover .lv-track,.live:active .lv-track{animation-play-state:paused}
+.lv-row{display:flex;align-items:center;white-space:nowrap;flex:none}
+.lv-i{padding:0 4px} .lv-i b{font-weight:800}
+.lv-i em{font-style:normal;font-weight:800;margin-left:2px} .lv-i em.up{color:#9ff0c4} .lv-i em.dn{color:#ffb4ab}
+.lv-sep{opacity:.5;padding:0 10px}
+@keyframes lvMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.lv-track{animation:none}.live{overflow-x:auto}}
+.fab{bottom:calc(64px + env(safe-area-inset-bottom,0px))}  /* + acima do cartão ao vivo */
 /* botão + com o mesmo verde em degradê (com brilho) do cartão do topo */
 .fab{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);color:var(--h2ink)}
 .fab svg{width:28px !important;height:28px !important;stroke-width:2.4}
@@ -1315,7 +1328,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_qfc:'Qtd fat. + cart.', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', pv_map:'Faturamento por cidade', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_qfc:'Qtd fat. + cart.', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', pv_map:'Faturamento por cidade', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', lv_title:'Tempo e câmbio', lv_loading:'Carregando tempo e câmbio…', lv_off:'Tempo e câmbio indisponíveis agora (sem internet ou bloqueado)', w_clear:'Céu limpo', w_partly:'Parcialmente nublado', w_cloudy:'Nublado', w_fog:'Neblina', w_drizzle:'Garoa', w_rain:'Chuva', w_snow:'Neve', w_showers:'Pancadas de chuva', w_storm:'Tempestade', w_minmax:'mín {0}° · máx {1}°', w_rain_p:'chuva {0}%', fx_usd:'Dólar comercial', fx_usdt:'Dólar turismo', fx_eur:'Euro', fx_buy:'compra', fx_sell:'venda', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1362,7 +1375,7 @@ pt:{
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_qfc:'Cant. fact. + cart.', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', pv_map:'Facturación por ciudad', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_qfc:'Cant. fact. + cart.', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', pv_map:'Facturación por ciudad', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', lv_title:'Clima y cambio', lv_loading:'Cargando clima y cambio…', lv_off:'Clima y cambio no disponibles ahora (sin internet o bloqueado)', w_clear:'Despejado', w_partly:'Parcialmente nublado', w_cloudy:'Nublado', w_fog:'Niebla', w_drizzle:'Llovizna', w_rain:'Lluvia', w_snow:'Nieve', w_showers:'Chubascos', w_storm:'Tormenta', w_minmax:'mín {0}° · máx {1}°', w_rain_p:'lluvia {0}%', fx_usd:'Dólar comercial', fx_usdt:'Dólar turismo', fx_eur:'Euro', fx_buy:'compra', fx_sell:'venta', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -1929,8 +1942,55 @@ function header(){
     <button class="profile-btn ${isAppr ? 'appr' : ''}" data-a="profile" title="${esc(name)}" aria-label="${esc(name)}">${avatarHtml(isAppr ? APPR : ME, name)}</button>
   </header>`;
 }
-// aprovador tem uma única tela (Para aprovação), sem barra de navegação
-function nav(){ return ''; }
+// embaixo, nas telas de lista e no Dashboard: o cartão "ao vivo" (tempo e câmbio)
+function nav(){ return ['list', 'approvals', 'dash'].includes(S.view) ? liveCard() : ''; }
+/* ---------- Cartão "ao vivo" (embaixo): tempo da localização atual + dólar comercial, dólar turismo e euro ----------
+   Serviços gratuitos, sem chave: Open-Meteo (tempo), BigDataCloud (nome da cidade) e AwesomeAPI (câmbio).
+   Sem permissão de localização, usa a cidade da filial do gestor. Atualiza a cada 10 min; guarda o último resultado. */
+const LIVE_KEY = 'pedido_proto_live';
+const UNIT_XY = {PR: [-25.43, -49.27, 'Curitiba'], SP: [-23.55, -46.63, 'São Paulo'], MT: [-15.6, -56.1, 'Cuiabá'], RS: [-30.03, -51.23, 'Porto Alegre']};
+let LIVE = (() => { try{ return JSON.parse(localStorage.getItem(LIVE_KEY)) || {}; }catch(e){ return {}; } })();
+const WMO = c => c === 0 ? ['☀️', 'w_clear'] : c <= 2 ? ['⛅', 'w_partly'] : c === 3 ? ['☁️', 'w_cloudy'] : c <= 48 ? ['🌫️', 'w_fog'] : c <= 57 ? ['🌦️', 'w_drizzle'] : c <= 67 ? ['🌧️', 'w_rain'] : c <= 77 ? ['🌨️', 'w_snow'] : c <= 82 ? ['🌧️', 'w_showers'] : ['⛈️', 'w_storm'];
+const brl = v => 'R$ ' + fmtNum(+v, 2);
+function liveHtml(){
+  const w = LIVE.wx, f = LIVE.fx, it = [];
+  if(w){ const [ic, k] = WMO(w.code); it.push(`<span class="lv-i"><b>${ic} ${fmtNum(w.t, 0)}°</b> ${esc(w.city)} · ${t(k)} · ${t('w_minmax', fmtNum(w.min, 0), fmtNum(w.max, 0))}${w.rain != null ? ' · ' + t('w_rain_p', w.rain) : ''}</span>`); }
+  if(f){ [['USDBRL', 'fx_usd'], ['USDBRLT', 'fx_usdt'], ['EURBRL', 'fx_eur']].forEach(([c, k]) => { const x = f[c]; if(!x) return; const up = +x.pctChange >= 0;
+    it.push(`<span class="lv-i"><b>${t(k)}</b> ${t('fx_buy')} ${brl(x.bid)} · ${t('fx_sell')} ${brl(x.ask)} <em class="${up ? 'up' : 'dn'}">${up ? '▲' : '▼'} ${fmtNum(Math.abs(+x.pctChange), 2)}%</em></span>`); }); }
+  if(!it.length) it.push(`<span class="lv-i">${LIVE.err ? t('lv_off') : t('lv_loading')}</span>`);
+  const row = it.join('<span class="lv-sep">•</span>') + '<span class="lv-sep">•</span>';
+  return `<div class="lv-track"><div class="lv-row">${row}</div><div class="lv-row" aria-hidden="true">${row}</div></div>`;
+}
+const liveCard = () => `<aside class="live" id="live" aria-label="${t('lv_title')}">${liveHtml()}</aside>`;
+function liveShow(){ const el = document.getElementById('live'); if(el) el.innerHTML = liveHtml(); }
+function liveCoords(){
+  const u = UNIT_XY[S.unit || SELLER(ME)?.unit] || UNIT_XY.PR, fb = {lat: u[0], lon: u[1], city: u[2]};
+  return new Promise(res => {
+    if(!navigator.geolocation) return res(fb);
+    let done = false; const end = v => { if(!done){ done = true; res(v); } };
+    setTimeout(() => end(fb), 8000);
+    try{ navigator.geolocation.getCurrentPosition(p => end({lat: p.coords.latitude, lon: p.coords.longitude}), () => end(fb), {timeout: 7000, maximumAge: 600000}); }catch(e){ end(fb); }
+  });
+}
+async function liveLoad(force){
+  if(!force && LIVE.at && Date.now() - LIVE.at < 600000){ liveShow(); return; }
+  const j = async u => { const r = await fetch(u); if(!r.ok) throw new Error(r.status); return r.json(); };
+  let ok = false;
+  try{ const fx = await j('https://economia.awesomeapi.com.br/json/last/USD-BRL,USD-BRLT,EUR-BRL'); LIVE.fx = fx; ok = true; }catch(e){}
+  try{
+    const c = await liveCoords();
+    const m = await j(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1`);
+    let city = c.city;
+    if(!city){ try{ const g = await j(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${c.lat}&longitude=${c.lon}&localityLanguage=pt`); city = g.city || g.locality || g.principalSubdivision || ''; }catch(e){} }
+    LIVE.wx = {t: m.current.temperature_2m, code: m.current.weather_code, min: m.daily.temperature_2m_min[0], max: m.daily.temperature_2m_max[0], rain: m.daily.precipitation_probability_max?.[0], city: city || '—'};
+    ok = true;
+  }catch(e){}
+  LIVE.err = !ok && !LIVE.fx && !LIVE.wx; if(ok) LIVE.at = Date.now();
+  try{ localStorage.setItem(LIVE_KEY, JSON.stringify(LIVE)); }catch(e){}
+  liveShow();
+}
+setInterval(() => liveLoad(true), 600000);
+
 
 /* ---------- Lista de pedidos ---------- */
 function orderCard(o, showMargin, inAppr = false){
@@ -2427,7 +2487,7 @@ function render(){
   document.documentElement.classList.toggle('nohead', inOrder);
   document.documentElement.classList.toggle('lockscroll', S.view === 'done');
   document.getElementById('app').innerHTML = (inOrder ? '' : header()) + `<main class="${S.mainAnim || ''}">${v}</main>` + actionBar() + nav();
-  document.querySelector('.fab')?.classList.toggle('solo', !document.querySelector('.nav'));
+  document.querySelector('.fab')?.classList.toggle('solo', !document.querySelector('.nav, .live'));   // com o cartão ao vivo, o + fica acima dele
   fitTot();
   const strip = document.getElementById('days');
   if(strip){
@@ -4125,6 +4185,7 @@ function waEdit(o){
   S.unit = SELLER(ME).unit;   // filial de lançamento: começa na filial do gestor
   pushNav();
   render();
+  liveLoad();
 })();
 </script>
 </body>
