@@ -623,9 +623,9 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .co-chip.on.co-somax,#af-company .afc.on[data-v="somax"]{background:var(--somax-soft);border-color:var(--somax-soft);color:var(--somax)}
 .co-chip.on.co-corteva,#af-company .afc.on[data-v="corteva"]{background:var(--corteva-soft);border-color:var(--corteva-soft);color:var(--corteva)}
 /* faixa de dias agrupada por mês: o rótulo do mês anda com os dias e gruda na esquerda enquanto o mês aparece */
-.days-wrap{margin:16px 0 12px}
+.days-wrap{margin:-4px 0 12px}  /* faixa de dias a 12 px da busca, como entre um cartão e outro */
 .mgrp{display:flex;flex:none;align-items:stretch}
-.days-mon{position:sticky;left:0;z-index:2;flex:none;width:46px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:17px;font-size:13px;font-weight:800;color:var(--text);white-space:nowrap;background:linear-gradient(90deg,var(--bg) 70%,transparent)}
+.days-mon{position:sticky;left:0;z-index:2;flex:none;width:46px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:11px;font-size:13px;font-weight:800;color:var(--text);white-space:nowrap;background:linear-gradient(90deg,var(--bg) 70%,transparent)}
 .days{scroll-padding-left:46px}
 .days{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0 6px}
 .days::-webkit-scrollbar{display:none}
