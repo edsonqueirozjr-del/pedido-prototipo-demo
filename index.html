@@ -76,6 +76,8 @@
 .top .h2-unit svg:last-child{width:14px;height:14px;transform:rotate(90deg);opacity:.8}
 .top .h2-bell{flex:none;width:44px;height:44px;border-radius:50%;background:none;border:0}  /* só o sino, sem fundo nem contorno */
 .top .h2-bell > svg{width:26px;height:26px}
+.top .h2-dash.on{background:rgba(255,255,255,.18)}  /* Dashboard aberto: símbolo marcado */
+.top.hdr2 .h2-dash{margin-right:-4px}
 .h2-bell .badge{top:3px;right:3px}
 .h2-role{cursor:default}
 /* topo escuro (Somax e Esmeralda): textos claros e botões translúcidos */
@@ -1437,6 +1439,7 @@ const IC = {
   tag:'<svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
   swap:'<svg viewBox="0 0 24 24"><path d="M7 4 3 8l4 4"/><path d="M3 8h14"/><path d="m17 20 4-4-4-4"/><path d="M21 16H7"/></svg>',
   refresh:'<svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>',
+  chart:'<svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>',   // dashboard
   x:'<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   edit:'<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
   alert:'<svg viewBox="0 0 24 24" style="width:15px;height:15px"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>'
@@ -1895,11 +1898,13 @@ function header(){
     <div class="h2-t"><button class="h2-name" data-a="profile">${esc(name)}</button>
       ${isAppr ? `<span class="h2-unit h2-role">${esc(t(APPROVERS.find(a => a.id === APPR)?.role || ''))}</span>`
         : `<button class="h2-unit" data-a="unitpick" aria-label="${t('unit')}">${IC.office}<span>${esc(un)}</span>${IC.chev}</button>`}</div>
+    <button class="icon-btn h2-bell h2-dash ${S.view === 'dash' ? 'on' : ''}" data-a="dashbtn" aria-label="${t('dash')}" aria-pressed="${S.view === 'dash'}" title="${t('dash')}">${IC.chart}</button>
     <button class="icon-btn h2-bell" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
   </header>`;
   }
   return `<header class="top">
     <div class="brand"><img class="brand-logo" src="${LOGOS.somax}" alt="Somax"><span>${t('app')}</span></div>
+    <button class="icon-btn h2-dash ${S.view === 'dash' ? 'on' : ''}" data-a="dashbtn" aria-label="${t('dash')}" aria-pressed="${S.view === 'dash'}" title="${t('dash')}">${IC.chart}</button>
     <button class="icon-btn" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
     <button class="profile-btn ${isAppr ? 'appr' : ''}" data-a="profile" title="${esc(name)}" aria-label="${esc(name)}">${avatarHtml(isAppr ? APPR : ME, name)}</button>
   </header>`;
@@ -3083,7 +3088,7 @@ function viewDash(){
   return viewPlan(head);
 }
 // bolinhas de página: Pedidos | Dashboard
-const pager = () => `<div class="pager"><button type="button" class="${S.view !== 'dash' ? 'on' : ''}" data-a="pg" data-v="home" aria-label="${t('d_orders')}"></button><button type="button" class="${S.view === 'dash' ? 'on' : ''}" data-a="pg" data-v="dash" aria-label="${t('dash')}"></button></div>`;
+const pager = () => '';   // sem bolinhas: o Dashboard abre pelo símbolo no topo
 function dashGo(on){
   if(on === (S.view === 'dash')) return;
   S.mainAnim = on ? 'in-next' : 'in-prev';
@@ -3092,6 +3097,7 @@ function dashGo(on){
 }
 const ACT = {
   notifs: () => openNotifs(),
+  dashbtn: () => dashGo(S.view !== 'dash'),   // símbolo do Dashboard no topo: abre; tocando de novo volta para os pedidos
   // dashboard: bolinhas de página, período, moeda, filtros tocando nos gráficos, barra escolhida na evolução
   pg: b => dashGo(b.dataset.v === 'dash'),
   dper: b => { S.dash.per = b.dataset.v; S.dash.sel = null; render(); },
@@ -3573,32 +3579,7 @@ document.addEventListener('change', e => {
   if(v > 0) S.dash.fx = Math.round(v * 10000) / 10000;
   render();
 });
-/* ---------- Arrastar para o lado: Pedidos ↔ Dashboard ---------- */
-(function swipeDash(){
-  let x0 = 0, y0 = 0, dx = 0, on = false, horiz = null, m = null;
-  const home = () => S.view === 'list' || S.view === 'approvals';
-  document.addEventListener('touchstart', e => {
-    on = false;
-    if(!(home() || S.view === 'dash') || e.touches.length > 1 || document.getElementById('overlay').classList.contains('open')) return;
-    if(e.target.closest('#days, input, select, textarea, .top, .pv-ml')) return;   // a faixa de dias e as tabelas que arrastam rolam sozinhas
-    m = document.querySelector('main'); x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; dx = 0; horiz = null; on = true;
-  }, {passive: true});
-  document.addEventListener('touchmove', e => {
-    if(!on || !m) return;
-    const mx = e.touches[0].clientX - x0, my = e.touches[0].clientY - y0;
-    if(horiz === null && (Math.abs(mx) > 10 || Math.abs(my) > 10)) horiz = Math.abs(mx) > Math.abs(my) * 1.4;
-    if(!horiz) return;
-    dx = mx; const ok = S.view === 'dash' ? dx > 0 : dx < 0;   // pedidos → arrasta para a esquerda; dashboard → para a direita
-    m.style.transition = 'none'; m.style.transform = `translateX(${ok ? dx * .5 : dx * .12}px)`; m.style.opacity = String(1 - Math.min(Math.abs(dx) / 900, .3));
-  }, {passive: true});
-  document.addEventListener('touchend', () => {
-    if(!on || !m) return; on = false;
-    const el = m; m = null; el.style.transition = 'transform .2s ease, opacity .2s ease'; el.style.transform = ''; el.style.opacity = '';
-    if(!horiz || Math.abs(dx) < 70) return;
-    if(S.view === 'dash' && dx > 0) dashGo(false);
-    else if(home() && dx < 0) dashGo(true);
-  });
-})();
+/* Dashboard: abre só pelo símbolo do topo (o arrastar para o lado foi retirado) */
 
 document.addEventListener('input', e => {
   if(e.target.matches('[data-search]')){ S.q = e.target.value; render(); }
