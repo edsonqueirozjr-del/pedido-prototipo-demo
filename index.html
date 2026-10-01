@@ -772,7 +772,11 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .st.on{color:var(--primary);font-weight:700}
 .st.done{color:var(--text)}
 .st.on .dot{background:var(--primary);border-color:var(--primary);color:var(--primary-ink);box-shadow:0 0 0 4px var(--primary-soft)}
+/* etapas (Cabeçalho, Produtos, Fechamento): o verde com o mesmo degradê do cartão do topo */
+.st.on .dot,.st.done .dot{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);border-color:var(--h2a);color:var(--h2ink)}
+.st.done::before,.st.on::before{background:linear-gradient(90deg,var(--h2a),var(--h2b))}
 .st.done .dot{background:var(--primary-soft);border-color:var(--primary);color:var(--primary)}
+.st.done .dot{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);border-color:var(--h2a);color:var(--h2ink)}  /* etapa feita: mesmo degradê do cartão */
 .st:focus-visible{outline:none} .st:focus-visible .dot{box-shadow:0 0 0 4px var(--primary-soft),0 0 0 6px var(--primary)}
 .step-body{touch-action:pan-y;will-change:transform}
 .step-body.in-next{animation:inNext .2s ease-out}  /* troca de etapa suave (sem tranco) */
@@ -856,7 +860,7 @@ html.lockscroll main{padding-bottom:12px}
    os claros (cinza, salvar, reabrir, editar) só um brilho suave */
 .btn.primary{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);border-color:var(--h2a);color:var(--h2ink)}
 .btn.danger,.btn.ok,.btn.info,.btn.pdf,.btn.fix,.btn.wa{background-image:radial-gradient(120% 90% at 92% -10%,rgba(255,255,255,.32),transparent 55%),linear-gradient(165deg,rgba(0,0,0,.22) 0%,rgba(0,0,0,0) 75%)}
-.btn.gray,.btn.soft,.btn.warn,.btn.edit-in{background-image:radial-gradient(120% 90% at 92% -10%,rgba(255,255,255,.7),transparent 55%),linear-gradient(165deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,0) 75%)}
+.btn.gray,.btn.soft,.btn.warn,.btn.edit-in,.actionbar .btn.ghost{background-image:radial-gradient(120% 90% at 92% -10%,rgba(255,255,255,.7),transparent 55%),linear-gradient(165deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,0) 75%)}
 .send-opts{display:flex;flex-direction:column;gap:8px}
 .send-opts .btn{min-height:48px}
 .wa-msg{min-height:300px;font:14.5px/1.45 inherit;white-space:pre-wrap}
