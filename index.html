@@ -1467,7 +1467,7 @@ let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 // tv = versão da regra de tema: com tv 2 o padrão passou a ser o tema Somax (quem já tinha escolhido antes recebe o Somax uma vez)
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, hdr:S.hdr, me:ME, appr:APPR, tv:2})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 32) return d; var old = d; }catch(e){} const s = seed(); keepUserOrders(old, s); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 32 && d.day === today()) return d; var old = d; }catch(e){} const s = seed(); keepUserOrders(old, s); persist(s); return s; }
 // ao trocar a versão da base, os exemplos são recriados; os pedidos que o usuário criou no aparelho (id que não é de exemplo)
 // passam para a base nova com as notificações deles, e a numeração continua depois do último
 function keepUserOrders(old, s){
@@ -1686,7 +1686,7 @@ function fakeSignature(seedN){
   return c.toDataURL('image/png');
 }
 // lista de produtos: título solto + cada produto é um cartão próprio
-// aprovação: "Produtos · N" como cartão recolhível (fechado ao abrir o pedido); aberto mostra os produtos soltos abaixo
+// aprovação: "Produtos · N" como cartão recolhível (já aberto ao abrir o pedido); aberto mostra os produtos soltos abaixo
 // fechado: cartão "Produtos" (sem a quantidade); aberto: volta ao formato normal (título Produtos · N + produtos soltos), com setinha para fechar
 const itemsBlockFold = (o, items) => S.openA.gp
   ? `<div class="items-title it-toggle" data-a="toggle-aitem" data-id="gp" role="button" tabindex="0" aria-expanded="true">${t('items')}${itemCount(o)}<span class="chev on">${IC.chev}</span></div>
@@ -1708,7 +1708,7 @@ const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negocia
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
 function seed(){
-  const db = {v:32, seq:10019, orders:[], notifs:[], pins:{}};
+  const db = {v:32, day:today(), seq:10019, orders:[], notifs:[], pins:{}};   // day: refeita a cada dia, para sempre ter pedidos de hoje
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -2117,15 +2117,15 @@ function viewDetail(){
   const appr = S.profile === 'aprovador' && o.status === 'aprovacao', c = orderCalc(o), cl = CLIENT(o.clientId), s = SAFRA(o.safraId);
   const dataCards = dataCardsHtml(o, appr);
   const items = itemsHtml(o, appr);
-  // em aprovação, o histórico vem antes dos dados do pedido
+  // em aprovação: histórico, depois os produtos (já abertos) e só então os dados do pedido
   const histCard = `<section class="card"><h2>${t('history')}</h2>${histHtml(o)}</section>`;
   // topo fixo ao rolar: voltar, nº do pedido, situação e a faixa do valor total
   return `<div class="det-top"><div class="page-head"><button class="icon-btn back" data-a="back" aria-label="${t('back')}">${IC.back}</button><h1>${t('order_n', o.number)}</h1><span class="grow">${chip(o.status)}</span></div>
     <div class="totbar"><span class="tb-lbl">${t('order_total')}</span><span class="tb-right"><b class="tb-val">${fmtMoney(c.total, o.currency)}</b>${appr ? mBadge(c.margin) : ''}</span></div></div>
     ${o.approverNote && o.status === 'correcao' ? `<div class="notice warn"><b>${t('approver_note')}:</b> ${esc(o.approverNote)}</div>` : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? histCard : ''}
-    ${dataCards}
     ${itemsBlockFold(o, items)}
+    ${dataCards}
     ${sigCard(o, false, S.profile === 'vendedor')}
     ${appr ? apprActs() : ''}
     ${['aprovacao','aprovado','reprovado'].includes(o.status) ? '' : histCard}`;
@@ -2662,7 +2662,7 @@ async function decide(o, kind){
 // pedido em aberto do próprio vendedor abre direto na edição; os demais abrem o detalhe
 function openOrder(id){
   const o = ORDER(id); if(!o) return;
-  S.orderId = id; S.openA = {};
+  S.orderId = id; S.openA = {gp: true};   // aprovação: cartão Produtos já vem aberto
   if(canEdit(o)){ S.draft = clone(o); S.draft0 = JSON.stringify(S.draft); S.isNew = false; S.open = {}; S.step = 1; S.errStep = 0; go('editor'); }
   else go('detail');
 }
@@ -3475,7 +3475,7 @@ const ACT = {
       addHist(o, 'edited_appr', apprName()); commit(o);
       notify({to: 'vendedor', sellerId: o.sellerId, type: 'edited', orderId: o.id, by: apprName()}); persist(); toast(t('t_edited_appr'), 'ok');
     }
-    S.orderId = o.id; S.draft = null; S.draft0 = null; S.apprEdit = false; S.openA = {}; S.view = 'detail'; render(); window.scrollTo(0, 0);
+    S.orderId = o.id; S.draft = null; S.draft0 = null; S.apprEdit = false; S.openA = {gp: true}; S.view = 'detail'; render(); window.scrollTo(0, 0);
   },
   approve: () => decide(ORDER(S.orderId), 'approve'),
   reject: () => decide(ORDER(S.orderId), 'reject'),
