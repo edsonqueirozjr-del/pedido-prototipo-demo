@@ -973,12 +973,6 @@ html.lockscroll main{padding-bottom:12px}
 .notice.bad{background:var(--bad-soft);border-color:var(--bad)}
 
 /* campo de data + seletor de rolagem */
-.wheels.inl{height:44px;margin:0;border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:1px 6px}   /* roda embutida: só a linha atual (sem a anterior e a próxima) */
-.wheels.inl::before{display:none}
-.wheels.inl::after{display:none}
-.wheels.inl .wheel{height:40px;padding:0}
-.wheels.inl .wheel div,.wheels.inl .wheel div.sel{color:var(--text);font-weight:400;font-size:16px}   /* sem negrito */
-.wheels.inl{grid-template-columns:.8fr 1.6fr 1fr}   /* mês por extenso precisa de mais espaço */
 .dbtn{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:16px;text-align:left;cursor:pointer;font-variant-numeric:tabular-nums}
 .dbtn svg{color:var(--muted);width:18px;height:18px}
 .dbtn:focus-visible{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
@@ -1334,7 +1328,7 @@ SAFRAS.forEach(s => CURRENCIES.forEach(c => TABLES.push({
 const I18N = {
 pt:{
   app:'Força de Vendas', orders:'Pedidos', approvals:'Aprovação', approvals_title:'Para aprovação', new_order:'Novo pedido', seller:'Gestor de Venda', approver:'Aprovador',
-  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_qfc:'Qtd fat. + cart.', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', pv_map:'Faturamento por cidade', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', lv_title:'Tempo e câmbio', lv_loading:'Carregando tempo e câmbio…', lv_off:'Tempo e câmbio indisponíveis agora (sem internet ou bloqueado)', w_clear:'Céu limpo', w_partly:'Parcialmente nublado', w_cloudy:'Nublado', w_fog:'Neblina', w_drizzle:'Garoa', w_rain:'Chuva', w_snow:'Neve', w_showers:'Pancadas de chuva', w_storm:'Tempestade', w_minmax:'mín {0}° · máx {1}°', w_rain_p:'chuva {0}%', fx_usd:'Dólar comercial', fx_usdt:'Dólar turismo', fx_eur:'Euro', fx_buy:'compra', fx_sell:'venda', dt_day:'Dia', dt_month:'Mês', dt_year:'Ano', search:'Buscar pedido', all:'Todos', mine:'Meus',
+  profile_switched:'Entrou como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'Em andamento', d_orders:'Pedidos', d_prods:'Produtos', d_clients:'Clientes', d_ticket:'Ticket médio', d_margin:'Margem', d_disc:'Desconto', d_appr:'Aprovação', d_biggest:'Maior pedido', d_qty_orders:'Qtd. de pedidos', d_evol:'Evolução', d_by_day:'por dia', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque numa barra para ver o detalhe', d_by_month:'por mês', d_status:'Situação', d_mix:'Mix por linha', d_top:'Top 5', d_top_p:'Top produtos', d_top_c:'Top clientes', d_sellers:'Gestores de Venda', d_comp:'Empresas', d_units:'Filiais', d_safras:'Projetos', d_scatter:'Margem × desconto', d_bubble:'bolha = valor', d_ins:'Destaques', d_vs:'vs período anterior', d_p30:'30 dias', d_p90:'90 dias', d_all:'Tudo', d_all_sellers:'Todos os gestores', d_clear:'Limpar', d_empty:'Sem pedidos no período', d_n_orders:'{0} pedidos', d_ins_line:'{0} responde por {1} das vendas', d_ins_low:'{0} pedidos com margem abaixo de {1}', d_ins_client:'Maior cliente: {0} ({1})', d_ins_appr:'Taxa de aprovação de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planejado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Faturado', pv_cart:'Carteira', pv_fc:'Faturado + Carteira', pv_fc_s:'Fat. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venda', pv_part:'Participação no faturado', pv_by_line:'Por linha', pv_evol:'Faturamento por mês', pv_qf:'Qtd fat.', pv_qc:'Qtd cart.', pv_pm:'P. méd.', pv_qp:'Qtd plan.', pv_qt:'Qtd total', pv_qfc:'Qtd fat. + cart.', pv_more:'Ver mais {0}', pv_cliprod:'Clientes × produtos faturados', pv_cliprod_s:'nº de clientes', pv_nprod:'produtos diferentes faturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Faturamento por projeto', pv_note:'Faturamento e metas fictícios (protótipo)', pv_map:'Faturamento por cidade', d_fx_s:'Cotação', d_fx_lbl:'Cotação do dólar', d_qty_p:'Quantidade por produto', d_n_prods:'{0} produtos', lv_title:'Tempo e câmbio', lv_loading:'Carregando tempo e câmbio…', lv_off:'Tempo e câmbio indisponíveis agora (sem internet ou bloqueado)', w_clear:'Céu limpo', w_partly:'Parcialmente nublado', w_cloudy:'Nublado', w_fog:'Neblina', w_drizzle:'Garoa', w_rain:'Chuva', w_snow:'Neve', w_showers:'Pancadas de chuva', w_storm:'Tempestade', w_minmax:'mín {0}° · máx {1}°', w_rain_p:'chuva {0}%', fx_usd:'Dólar comercial', fx_usdt:'Dólar turismo', fx_eur:'Euro', fx_buy:'compra', fx_sell:'venda', search:'Buscar pedido', all:'Todos', mine:'Meus',
   st_aberto:'Em aberto', st_correcao:'Em correção', st_aprovacao:'Bloqueado', st_aprovado:'Aprovado', st_reprovado:'Reprovado',
   order_n:'Nº Pedido {0}', step1:'Cabeçalho', step2:'Produtos', step3:'Fechamento',
   number:'Nº pedido', date:'Data', status:'Situação', unit:'Filial', client:'Cliente', neg_type:'Tipo de negociação',
@@ -1381,7 +1375,7 @@ pt:{
 },
 es:{
   app:'Fuerza de Ventas', orders:'Pedidos', approvals:'Aprobación', approvals_title:'Para aprobación', new_order:'Nuevo pedido', seller:'Gestor de Venta', approver:'Aprobador',
-  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_qfc:'Cant. fact. + cart.', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', pv_map:'Facturación por ciudad', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', lv_title:'Clima y cambio', lv_loading:'Cargando clima y cambio…', lv_off:'Clima y cambio no disponibles ahora (sin internet o bloqueado)', w_clear:'Despejado', w_partly:'Parcialmente nublado', w_cloudy:'Nublado', w_fog:'Niebla', w_drizzle:'Llovizna', w_rain:'Lluvia', w_snow:'Nieve', w_showers:'Chubascos', w_storm:'Tormenta', w_minmax:'mín {0}° · máx {1}°', w_rain_p:'lluvia {0}%', fx_usd:'Dólar comercial', fx_usdt:'Dólar turismo', fx_eur:'Euro', fx_buy:'compra', fx_sell:'venta', dt_day:'Día', dt_month:'Mes', dt_year:'Año', search:'Buscar pedido', all:'Todos', mine:'Míos',
+  profile_switched:'Entró como {0}', dash:'Dashboard', d_sold:'Vendido', d_pipe:'En curso', d_orders:'Pedidos', d_prods:'Productos', d_clients:'Clientes', d_ticket:'Ticket medio', d_margin:'Margen', d_disc:'Descuento', d_appr:'Aprobación', d_biggest:'Mayor pedido', d_qty_orders:'Cant. de pedidos', d_evol:'Evolución', d_by_day:'por día', d_by_week:'por semana', d_mg_s:'Marg.', d_evol_tap:'Toque una barra para ver el detalle', d_by_month:'por mes', d_status:'Situación', d_mix:'Mix por línea', d_top:'Top 5', d_top_p:'Top productos', d_top_c:'Top clientes', d_sellers:'Gestores de Venta', d_comp:'Empresas', d_units:'Sucursales', d_safras:'Proyectos', d_scatter:'Margen × descuento', d_bubble:'burbuja = valor', d_ins:'Destacados', d_vs:'vs período anterior', d_p30:'30 días', d_p90:'90 días', d_all:'Todo', d_all_sellers:'Todos los gestores', d_clear:'Limpiar', d_empty:'Sin pedidos en el período', d_n_orders:'{0} pedidos', d_ins_line:'{0} representa {1} de las ventas', d_ins_low:'{0} pedidos con margen debajo de {1}', d_ins_client:'Mayor cliente: {0} ({1})', d_ins_appr:'Tasa de aprobación de {0}', d_fx:'USD 1 = BRL {0}', pv_title:'Planificado × Realizado', pv_total:'Total', pv_obj:'Objetivo', pv_fat:'Facturado', pv_cart:'Cartera', pv_fc:'Facturado + Cartera', pv_fc_s:'Fact. + Cart.', pv_cli:'Clientes', pv_cli_s:'Cli.', pv_by_seller:'Por Gestor de Venta', pv_part:'Participación en lo facturado', pv_by_line:'Por línea', pv_evol:'Facturación por mes', pv_qf:'Cant. fact.', pv_qc:'Cant. cart.', pv_pm:'P. med.', pv_qp:'Cant. plan.', pv_qt:'Cant. total', pv_qfc:'Cant. fact. + cart.', pv_more:'Ver {0} más', pv_cliprod:'Clientes × productos facturados', pv_cliprod_s:'nº de clientes', pv_nprod:'productos diferentes facturados por cliente', pv_detail:'Por cliente', pv_by_saf:'Facturación por proyecto', pv_note:'Facturación y metas ficticias (prototipo)', pv_map:'Facturación por ciudad', d_fx_s:'Cotiz.', d_fx_lbl:'Cotización del dólar', d_qty_p:'Cantidad por producto', d_n_prods:'{0} productos', lv_title:'Clima y cambio', lv_loading:'Cargando clima y cambio…', lv_off:'Clima y cambio no disponibles ahora (sin internet o bloqueado)', w_clear:'Despejado', w_partly:'Parcialmente nublado', w_cloudy:'Nublado', w_fog:'Niebla', w_drizzle:'Llovizna', w_rain:'Lluvia', w_snow:'Nieve', w_showers:'Chubascos', w_storm:'Tormenta', w_minmax:'mín {0}° · máx {1}°', w_rain_p:'lluvia {0}%', fx_usd:'Dólar comercial', fx_usdt:'Dólar turismo', fx_eur:'Euro', fx_buy:'compra', fx_sell:'venta', search:'Buscar pedido', all:'Todos', mine:'Míos',
   st_aberto:'Abierto', st_correcao:'En corrección', st_aprovacao:'Bloqueado', st_aprovado:'Aprobado', st_reprovado:'Rechazado',
   order_n:'Nº Pedido {0}', step1:'Encabezado', step2:'Productos', step3:'Cierre',
   number:'Nº pedido', date:'Fecha', status:'Situación', unit:'Sucursal', client:'Cliente', neg_type:'Tipo de negociación',
@@ -1922,39 +1916,6 @@ function dateField(id, f, val, label, {i = null, disabled = false} = {}){
       <span class="${val ? '' : 'muted'}">${val ? fmtDate(val) : (S.lang === 'es' ? 'dd/mm/aaaa' : 'dd/mm/aaaa')}</span>${IC.cal}</button>
     <input type="hidden" id="${id}-v" data-f="${f}" ${i != null ? `data-i="${i}"` : ''} value="${val || ''}">`;
 }
-// data direto na tela: a mesma roda de arrastar (dia, mês, ano) da janela, mas fixa no campo; ao parar de arrastar, grava a data
-function dateInline(id, f, val, {i = null} = {}){
-  const d = parseD(val || today()), yNow = new Date().getFullYear(), years = [];
-  for(let y = Math.min(yNow - 1, d.getFullYear()); y <= Math.max(yNow + 3, d.getFullYear()); y++) years.push(y);
-  const mon = [...Array(12)].map((_, k) => { const m = new Intl.DateTimeFormat(loc(), {month: 'long'}).format(new Date(2000, k, 1)); return m[0].toUpperCase() + m.slice(1); });   // mês por extenso
-  const dim = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
-  const cells = (items, sel) => items.map((x, k) => `<div data-k="${k}" class="${k === sel ? 'sel' : ''}">${x}</div>`).join('');
-  return `<div class="wheels inl" id="${id}" data-years="${years.join(',')}">
-      <div class="wheel" data-w="d" data-sel="${d.getDate() - 1}">${cells([...Array(dim)].map((_, k) => String(k + 1).padStart(2, '0')), d.getDate() - 1)}</div>
-      <div class="wheel" data-w="m" data-sel="${d.getMonth()}">${cells(mon, d.getMonth())}</div>
-      <div class="wheel" data-w="y" data-sel="${years.indexOf(d.getFullYear())}">${cells(years, years.indexOf(d.getFullYear()))}</div>
-      <input type="hidden" id="${id}-v" data-f="${f}" ${i != null ? `data-i="${i}"` : ''} value="${val || ''}"></div>`;
-}
-// liga as rodas embutidas depois de cada render: posição inicial, destaque e gravação ao parar de arrastar
-function initInlineWheels(){
-  const H = 40;
-  document.querySelectorAll('.wheels.inl').forEach(box => {
-    if(box.dataset.on) return; box.dataset.on = 1;
-    const years = box.dataset.years.split(',').map(Number), hid = box.querySelector('input[type=hidden]');
-    const W = {d: box.querySelector('[data-w=d]'), m: box.querySelector('[data-w=m]'), y: box.querySelector('[data-w=y]')};
-    Object.values(W).forEach(w => { w.scrollTop = +w.dataset.sel * H; });
-    const idx = w => Math.max(0, Math.min(w.children.length - 1, Math.round(w.scrollTop / H)));
-    const commit = () => {
-      const y = years[idx(W.y)], m = idx(W.m) + 1, max = new Date(y, m, 0).getDate(), dd = Math.min(idx(W.d) + 1, max);   // 31/02 vira o último dia do mês
-      const iso = `${y}-${String(m).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
-      if(iso !== hid.value){ hid.value = iso; hid.dispatchEvent(new Event('change', {bubbles: true})); }
-    };
-    Object.values(W).forEach(w => { let tm;
-      w.addEventListener('scroll', () => { clearTimeout(tm); tm = setTimeout(() => { const k = idx(w); [...w.children].forEach((c, j) => c.classList.toggle('sel', j === k)); commit(); }, 160); }, {passive: true});
-      w.addEventListener('click', e => { const c = e.target.closest('[data-k]'); if(c) w.scrollTo({top: +c.dataset.k * H, behavior: 'smooth'}); });
-    });
-  });
-}
 const field = (label, control, id='') => `<div class="field"><label class="lbl" ${id ? `for="${id}"` : ''}>${label}</label>${control}</div>`;
 const initials = n => n.split(' ').map(x => x[0]).slice(0, 2).join('');
 
@@ -2358,7 +2319,7 @@ function itemCard(o, it, i){
     ${field(t('delivery_unit'), `<select id="u-${it.id}" data-f="deliveryUnit" data-i="${i}">${opts(UNITS, it.deliveryUnit, u => u.name)}</select>`, 'u-'+it.id)}
     ${field(t('delivery_place'), `<div class="sel-in"><select id="dp-${it.id}" data-f="itemPlace" data-i="${i}" ${o.clientId ? '' : 'disabled'}>${opts(placesOf(o.clientId), it.deliveryPlace)}</select>
       <button type="button" class="inbtn mapbtn ${pinOf(it.deliveryPlace) ? 'on' : ''}" data-a="mappick" data-pid="${it.deliveryPlace || ''}" aria-label="${t('location')}" ${it.deliveryPlace ? '' : 'disabled'}>${IC.pin}</button></div>`, 'dp-'+it.id)}
-    ${field(t('delivery_date'), dateInline('dd-'+it.id, 'deliveryDate', it.deliveryDate, {i}), 'dd-'+it.id)}
+    ${field(t('delivery_date'), dateField('dd-'+it.id, 'deliveryDate', it.deliveryDate, t('delivery_date'), {i}), 'dd-'+it.id)}
     ${field(t('note_deliv'), `<textarea id="nd-${it.id}" data-f="itemNoteDeliv" data-i="${i}" rows="5" class="tall">${esc(it.noteDeliv || '')}</textarea>`, 'nd-'+it.id)}
     </div>` : ''); })()}
   </section>`;
@@ -2542,7 +2503,6 @@ function render(){
       if(window.ResizeObserver) new ResizeObserver(() => { if(!touched) toSel(); }).observe(strip); }
   }
   document.querySelectorAll('.qv input').forEach(fitQty);
-  initInlineWheels();
   if(S.view === 'dash' && !S.dashStill) dCountUp();
   if(S.view === 'editor' && S.errStep === S.step) stepErrors(S.draft, S.step).forEach(x => x.id && document.getElementById(x.id)?.classList.add('invalid'));
   const eh = document.getElementById('edhead');
