@@ -320,7 +320,7 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 .pv-hb{display:flex;flex-direction:column;gap:4px;width:100%;padding:8px 0;border:0;border-top:1px solid var(--border);background:none;color:inherit;font:inherit;font-size:13px;font-weight:600;text-align:left;cursor:pointer}
 .pv-hb:first-of-type{border-top:0}
 .pv-hbb{display:flex;align-items:center;gap:8px}
-.pv-hbb i{display:block;height:22px;border-radius:4px;background:var(--d5);transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
+.pv-hbb i{display:block;height:22px;border-radius:4px;background:var(--d1);transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
 .pv-hbb b{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-hb.on{background:var(--primary-soft);border-radius:8px}
 .pv .dtop{margin-bottom:8px}
@@ -454,7 +454,7 @@ select{-webkit-appearance:none;appearance:none;padding-right:40px;text-overflow:
   background-repeat:no-repeat;background-position:right 14px center;background-size:16px}
 select:disabled{opacity:.8}
 input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
-input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
+input:disabled,select:disabled{background-color:var(--surface-2);color:var(--muted)}  /* só a cor: o seletor bloqueado mantém a setinha */
 .invalid{border-color:var(--bad)!important;box-shadow:0 0 0 3px var(--bad-soft)!important}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .grid2 .field{margin-bottom:12px}
@@ -638,6 +638,7 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 /* faixa de dias agrupada por mês: o rótulo do mês anda com os dias e gruda na esquerda enquanto o mês aparece */
 .days-wrap{margin:-4px 0 2px}  /* faixa de dias a 12 px da busca, como entre um cartão e outro */
 .mgrp{display:flex;flex:none;align-items:stretch}
+.mgrp + .mgrp{margin-left:12px}  /* espacinho entre o último dia de um mês e o rótulo do mês seguinte */
 .days-mon{position:sticky;left:0;z-index:2;flex:none;width:46px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:11px;font-size:13px;font-weight:800;color:var(--text);white-space:nowrap;background:linear-gradient(90deg,var(--bg) 70%,transparent)}
 .days{scroll-padding-left:46px}
 .days{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px 0 6px}
@@ -1167,7 +1168,9 @@ html[data-theme=dark] .sig-img{filter:invert(1) hue-rotate(180deg);mix-blend-mod
 /* toast */
 #toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);z-index:60;max-width:calc(100% - 32px);padding:11px 16px;border-radius:12px;background:#1d2621;color:#fff;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:.2s}
 #toast.show{opacity:1;transform:translate(-50%,0)}
+#toast{width:calc(100% - 32px);max-width:528px;text-align:center;bottom:calc(112px + env(safe-area-inset-bottom,0px))}  /* avisos de baixo: largos, texto centralizado, acima do + */
 #toast.ok{background:var(--ok)} #toast.warn{background:#9a6a00} #toast.bad{background:var(--bad)} #toast.info{background:var(--info)}
+#toast.ok{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);color:var(--h2ink)}
 
 /* relatório do pedido: páginas A4 (SVG) na tela; na impressão só as páginas, uma por folha */
 .rpt-pages{padding:2px 0 8px}
@@ -2249,13 +2252,12 @@ function creditCard(o){
 function step1(){
   const o = S.draft;
   const co = SELLER(o.sellerId)?.company;
-  return `<section class="card ro-card">
-    <div class="ro-grid">
-      <div id="f-seller"><span>${t('seller')}</span><b>${esc(SELLER(o.sellerId).name)}</b></div>
-      <div id="f-company"><span>${t('company')}</span><b>${esc(companyOf(o))}</b></div>
-      <div id="f-unit"><span>${t('unit')}</span><b>${esc(UNIT(o.unit)?.name || '')}</b></div>
-    </div>
-    ${LOGOS[co] ? `<img class="co-logo" src="${LOGOS[co]}" alt="${esc(companyOf(o))}">` : ''}
+  // Gestor de Venda, Empresa e Filial: seletores bloqueados (como no início), já preenchidos e sem a logo da empresa
+  const lockSel = (id, v) => `<select id="${id}" disabled><option>${esc(v)}</option></select>`;
+  return `<section class="card">
+    ${field(t('seller'), lockSel('f-seller', SELLER(o.sellerId).name), 'f-seller')}
+    ${field(t('company'), lockSel('f-company', companyOf(o)), 'f-company')}
+    ${field(t('unit'), lockSel('f-unit', UNIT(o.unit)?.name || ''), 'f-unit')}
   </section>
   <section class="card">
     ${field(t('client'), `<select id="f-client" data-f="clientId">${opts(CLIENTS, o.clientId)}</select>`, 'f-client')}
@@ -2498,7 +2500,7 @@ function render(){
   const strip = document.getElementById('days');
   if(strip){
     // largura de cada dia: 7 dias no espaço ao lado do rótulo do mês
-    const fitDays = () => strip.style.setProperty('--dw', ((strip.clientWidth - 46) / 7).toFixed(2) + 'px');
+    const fitDays = () => strip.style.setProperty('--dw', ((strip.clientWidth - 46 - 12) / 7).toFixed(2) + 'px');   // 12 = espacinho antes do rótulo do mês seguinte
     fitDays();
     if(S.dayScroll != null){ strip.scrollLeft = S.dayScroll; S.dayScroll = null; }
     else { const on = strip.querySelector('.day.on');
@@ -3077,7 +3079,7 @@ function pvCliProd(R){
   const top = Math.max(1, ...cnt), W = 340, T = 16, ih = 110, H = T + ih + 30, cw = W / 10, bw = cw * .62;
   let s = `<line x1="0" x2="${W}" y1="${T + ih}" y2="${T + ih}" style="stroke:var(--border);stroke-width:1.5"/>`;
   cnt.forEach((c, i) => { const cx = i * cw + cw / 2, h = ih * c / top;
-    if(c) s += `<rect class="bar" x="${(cx - bw / 2).toFixed(1)}" y="${(T + ih - h).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" style="fill:var(--d5);animation-delay:${i * 30}ms"/>`;
+    if(c) s += `<rect class="bar" x="${(cx - bw / 2).toFixed(1)}" y="${(T + ih - h).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" style="fill:var(--d1);animation-delay:${i * 30}ms"/>`;
     s += `<text x="${cx.toFixed(1)}" y="${(T + ih - h - 4).toFixed(1)}" text-anchor="middle" style="fill:var(--text);font-weight:700;font-size:10px">${c}</text>
       <text x="${cx.toFixed(1)}" y="${T + ih + 13}" text-anchor="middle">${i === 9 ? '10+' : i + 1}</text>`; });
   s += `<text x="${W / 2}" y="${H - 2}" text-anchor="middle" class="dax">${t('pv_nprod')}</text>`;
