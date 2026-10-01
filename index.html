@@ -577,6 +577,8 @@ input:disabled,select:disabled{background:var(--surface-2);color:var(--muted)}
 .linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;padding:8px;display:block;margin:16px auto 0}
 .fab{position:fixed;bottom:84px;right:max(16px,calc(50% - 264px));z-index:15;height:54px;padding:0 22px;border-radius:14px;border:0;background:var(--primary);color:var(--primary-ink);font-size:16.5px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 6px 18px rgba(0,0,0,.2);cursor:pointer}
 .fab{width:58px;height:58px;padding:0;justify-content:center;border-radius:16px}  /* só o +, quadrado 1:1 */
+/* botão + com o mesmo verde em degradê (com brilho) do cartão do topo */
+.fab{background:radial-gradient(120% 90% at 92% -10%,var(--h2g1),transparent 55%),radial-gradient(90% 120% at -5% 110%,var(--h2g2),transparent 60%),linear-gradient(165deg,var(--h2a) 0%,var(--h2b) 100%);color:var(--h2ink)}
 .fab svg{width:28px !important;height:28px !important;stroke-width:2.4}
 .fab.solo{bottom:calc(24px + env(safe-area-inset-bottom,0px))}
 .fab svg{width:22px;height:22px}
