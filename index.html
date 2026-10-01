@@ -973,9 +973,10 @@ html.lockscroll main{padding-bottom:12px}
 .notice.bad{background:var(--bad-soft);border-color:var(--bad)}
 
 /* campo de data + seletor de rolagem */
-.dparts{display:grid;grid-template-columns:1fr 1.3fr 1.2fr;gap:8px}
-.dparts select{min-height:44px;padding:9px 8px;text-align:center;font-weight:600}
-.dparts.invalid{border:0!important;box-shadow:none!important} .dparts.invalid select{border-color:var(--bad);box-shadow:0 0 0 3px var(--bad-soft)}
+.wheels.inl{height:120px;margin:0;border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:0 6px}   /* roda embutida: 3 linhas visíveis */
+.wheels.inl::before{top:40px;left:6px;right:6px}
+.wheels.inl::after{border-radius:12px}
+.wheels.inl .wheel{height:118px;padding:39px 0}
 .dbtn{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:16px;text-align:left;cursor:pointer;font-variant-numeric:tabular-nums}
 .dbtn svg{color:var(--muted);width:18px;height:18px}
 .dbtn:focus-visible{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
@@ -1919,29 +1920,39 @@ function dateField(id, f, val, label, {i = null, disabled = false} = {}){
       <span class="${val ? '' : 'muted'}">${val ? fmtDate(val) : (S.lang === 'es' ? 'dd/mm/aaaa' : 'dd/mm/aaaa')}</span>${IC.cal}</button>
     <input type="hidden" id="${id}-v" data-f="${f}" ${i != null ? `data-i="${i}"` : ''} value="${val || ''}">`;
 }
-// data direto na tela: três seletores (dia, mês, ano) lado a lado, sem abrir janela; a data vale quando os três estão escolhidos
+// data direto na tela: a mesma roda de arrastar (dia, mês, ano) da janela, mas fixa no campo; ao parar de arrastar, grava a data
 function dateInline(id, f, val, {i = null} = {}){
-  const d = val ? parseD(val) : null, yNow = new Date().getFullYear(), years = [];
-  for(let y = Math.min(yNow - 1, d ? d.getFullYear() : yNow); y <= yNow + 3; y++) years.push(y);
+  const d = parseD(val || today()), yNow = new Date().getFullYear(), years = [];
+  for(let y = Math.min(yNow - 1, d.getFullYear()); y <= Math.max(yNow + 3, d.getFullYear()); y++) years.push(y);
   const mon = [...Array(12)].map((_, k) => { const m = new Intl.DateTimeFormat(loc(), {month: 'short'}).format(new Date(2000, k, 1)).replace('.', ''); return m[0].toUpperCase() + m.slice(1); });
-  const sel = (part, ph, opts, cur) => `<select data-dpart="${part}" aria-label="${ph}"><option value="">${ph}</option>${opts.map(([v, l]) => `<option value="${v}" ${v === cur ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
-  return `<div class="dparts" id="${id}">
-      ${sel('d', t('dt_day'), [...Array(31)].map((_, k) => [String(k + 1), String(k + 1).padStart(2, '0')]), d ? String(d.getDate()) : '')}
-      ${sel('m', t('dt_month'), mon.map((m, k) => [String(k + 1), m]), d ? String(d.getMonth() + 1) : '')}
-      ${sel('y', t('dt_year'), years.map(y => [String(y), String(y)]), d ? String(d.getFullYear()) : '')}
+  const dim = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  const cells = (items, sel) => items.map((x, k) => `<div data-k="${k}" class="${k === sel ? 'sel' : ''}">${x}</div>`).join('');
+  return `<div class="wheels inl" id="${id}" data-years="${years.join(',')}">
+      <div class="wheel" data-w="d" data-sel="${d.getDate() - 1}">${cells([...Array(dim)].map((_, k) => String(k + 1).padStart(2, '0')), d.getDate() - 1)}</div>
+      <div class="wheel" data-w="m" data-sel="${d.getMonth()}">${cells(mon, d.getMonth())}</div>
+      <div class="wheel" data-w="y" data-sel="${years.indexOf(d.getFullYear())}">${cells(years, years.indexOf(d.getFullYear()))}</div>
       <input type="hidden" id="${id}-v" data-f="${f}" ${i != null ? `data-i="${i}"` : ''} value="${val || ''}"></div>`;
 }
-document.addEventListener('change', e => {
-  const sl = e.target.closest('.dparts select'); if(!sl) return;
-  const box = sl.closest('.dparts'), v = k => box.querySelector(`[data-dpart="${k}"]`).value, hid = box.querySelector('input[type=hidden]');
-  let iso = '';
-  if(v('d') && v('m') && v('y')){
-    const max = new Date(+v('y'), +v('m'), 0).getDate(), dd = Math.min(+v('d'), max);   // 31/02 vira o último dia do mês
-    iso = `${v('y')}-${String(v('m')).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
-  }
-  if(iso === hid.value) return;
-  hid.value = iso; hid.dispatchEvent(new Event('change', {bubbles: true}));
-});
+// liga as rodas embutidas depois de cada render: posição inicial, destaque e gravação ao parar de arrastar
+function initInlineWheels(){
+  const H = 40;
+  document.querySelectorAll('.wheels.inl').forEach(box => {
+    if(box.dataset.on) return; box.dataset.on = 1;
+    const years = box.dataset.years.split(',').map(Number), hid = box.querySelector('input[type=hidden]');
+    const W = {d: box.querySelector('[data-w=d]'), m: box.querySelector('[data-w=m]'), y: box.querySelector('[data-w=y]')};
+    Object.values(W).forEach(w => { w.scrollTop = +w.dataset.sel * H; });
+    const idx = w => Math.max(0, Math.min(w.children.length - 1, Math.round(w.scrollTop / H)));
+    const commit = () => {
+      const y = years[idx(W.y)], m = idx(W.m) + 1, max = new Date(y, m, 0).getDate(), dd = Math.min(idx(W.d) + 1, max);   // 31/02 vira o último dia do mês
+      const iso = `${y}-${String(m).padStart(2, '0')}-${String(dd).padStart(2, '0')}`;
+      if(iso !== hid.value){ hid.value = iso; hid.dispatchEvent(new Event('change', {bubbles: true})); }
+    };
+    Object.values(W).forEach(w => { let tm;
+      w.addEventListener('scroll', () => { clearTimeout(tm); tm = setTimeout(() => { const k = idx(w); [...w.children].forEach((c, j) => c.classList.toggle('sel', j === k)); commit(); }, 160); }, {passive: true});
+      w.addEventListener('click', e => { const c = e.target.closest('[data-k]'); if(c) w.scrollTo({top: +c.dataset.k * H, behavior: 'smooth'}); });
+    });
+  });
+}
 const field = (label, control, id='') => `<div class="field"><label class="lbl" ${id ? `for="${id}"` : ''}>${label}</label>${control}</div>`;
 const initials = n => n.split(' ').map(x => x[0]).slice(0, 2).join('');
 
@@ -2529,6 +2540,7 @@ function render(){
       if(window.ResizeObserver) new ResizeObserver(() => { if(!touched) toSel(); }).observe(strip); }
   }
   document.querySelectorAll('.qv input').forEach(fitQty);
+  initInlineWheels();
   if(S.view === 'dash' && !S.dashStill) dCountUp();
   if(S.view === 'editor' && S.errStep === S.step) stepErrors(S.draft, S.step).forEach(x => x.id && document.getElementById(x.id)?.classList.add('invalid'));
   const eh = document.getElementById('edhead');
