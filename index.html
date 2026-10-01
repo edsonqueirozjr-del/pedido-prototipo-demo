@@ -1709,7 +1709,7 @@ function sigCard(o, editable, collect = false){
         <div class="sig-name">${esc(CLIENT(o.clientId)?.name || '')}</div></div>
       ${editable ? `<div class="maprow"><button type="button" class="btn sm" data-a="sign">${t('sign_redo')}</button><button type="button" class="btn sm ghost" data-a="sign-remove">${t('sign_remove')}</button></div>` : ''}
     </section>`;
-  return editable || collect ? `<button class="btn block addbtn" data-a="sign">${IC.pen}${t('sign_collect')}</button>` : '';
+  return editable || collect ? `<button class="btn block addbtn soft" data-a="sign">${IC.pen}${t('sign_collect')}</button>` : '';   // mesmo fundo do Salvar
 }
 // assinatura fictícia para os exemplos (traço ondulado)
 function fakeSignature(seedN){
