@@ -1898,13 +1898,13 @@ function header(){
     <div class="h2-t"><button class="h2-name" data-a="profile">${esc(name)}</button>
       ${isAppr ? `<span class="h2-unit h2-role">${esc(t(APPROVERS.find(a => a.id === APPR)?.role || ''))}</span>`
         : `<button class="h2-unit" data-a="unitpick" aria-label="${t('unit')}">${IC.office}<span>${esc(un)}</span>${IC.chev}</button>`}</div>
-    <button class="icon-btn h2-bell h2-dash ${S.view === 'dash' ? 'on' : ''}" data-a="dashbtn" aria-label="${t('dash')}" aria-pressed="${S.view === 'dash'}" title="${t('dash')}">${IC.chart}</button>
+    <button class="icon-btn h2-bell h2-dash" data-a="dashbtn" aria-label="${S.view === 'dash' ? t('d_orders') : t('dash')}" title="${S.view === 'dash' ? t('d_orders') : t('dash')}">${S.view === 'dash' ? IC.list : IC.chart}</button>
     <button class="icon-btn h2-bell" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
   </header>`;
   }
   return `<header class="top">
     <div class="brand"><img class="brand-logo" src="${LOGOS.somax}" alt="Somax"><span>${t('app')}</span></div>
-    <button class="icon-btn h2-dash ${S.view === 'dash' ? 'on' : ''}" data-a="dashbtn" aria-label="${t('dash')}" aria-pressed="${S.view === 'dash'}" title="${t('dash')}">${IC.chart}</button>
+    <button class="icon-btn h2-dash" data-a="dashbtn" aria-label="${S.view === 'dash' ? t('d_orders') : t('dash')}" title="${S.view === 'dash' ? t('d_orders') : t('dash')}">${S.view === 'dash' ? IC.list : IC.chart}</button>
     <button class="icon-btn" data-a="notifs" aria-label="${t('notifications')}">${IC.bell}${unread ? `<span class="badge">${unread}</span>` : ''}</button>
     <button class="profile-btn ${isAppr ? 'appr' : ''}" data-a="profile" title="${esc(name)}" aria-label="${esc(name)}">${avatarHtml(isAppr ? APPR : ME, name)}</button>
   </header>`;
@@ -3097,7 +3097,7 @@ function dashGo(on){
 }
 const ACT = {
   notifs: () => openNotifs(),
-  dashbtn: () => dashGo(S.view !== 'dash'),   // símbolo do Dashboard no topo: abre; tocando de novo volta para os pedidos
+  dashbtn: () => dashGo(S.view !== 'dash'),   // no topo: símbolo do Dashboard abre o Dashboard; lá, vira o símbolo de Pedidos e volta para os pedidos
   // dashboard: bolinhas de página, período, moeda, filtros tocando nos gráficos, barra escolhida na evolução
   pg: b => dashGo(b.dataset.v === 'dash'),
   dper: b => { S.dash.per = b.dataset.v; S.dash.sel = null; render(); },
