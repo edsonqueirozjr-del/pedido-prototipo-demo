@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exploração UI/UX · Força de Vendas</title>
+<style>
+/* ================= Comparador (fora das prévias) ================= */
+:root{
+  --ink:#064e3b;--ink2:#0a6b51;--champ:#f8e7c9;
+  --bg:#f4efe4;--surface:#fffdf8;--surface-2:#f8f2e6;--border:#e6dac2;--text:#14261f;--muted:#5e675c;
+  --focus:#c8641c;--ok:#0b7a55;--warn:#a96f0e;--bad:#c43a31;
+  --r:14px;--shadow:0 1px 2px rgba(6,78,59,.06),0 6px 20px -8px rgba(6,78,59,.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,select,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.app-top{position:sticky;top:0;z-index:30;background:linear-gradient(165deg,#043428,#0a6b51);color:var(--champ);box-shadow:0 4px 18px -8px rgba(0,0,0,.4)}
+.app-top .in{max-width:1400px;margin:0 auto;padding:12px 18px 0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 22px}
+.brand{display:flex;align-items:center;gap:10px;padding-bottom:12px;margin-right:auto}
+.brand .mk{width:34px;height:34px;border-radius:10px;background:var(--champ);color:var(--ink);display:grid;place-items:center;font-weight:900}
+.brand b{display:block;font-size:16px}
+.brand span{font-size:12px;opacity:.8}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs button{border:0;background:none;color:rgba(248,231,201,.78);padding:10px 14px 12px;font-weight:700;font-size:14px;border-radius:10px 10px 0 0;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--bg);color:var(--ink)}
+.wrap{max-width:1400px;margin:0 auto;padding:22px 18px 60px}
+h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:19px;margin:0 0 10px}
+h3{font-size:15px;margin:0 0 6px}
+.lead{color:var(--muted);max-width:820px;margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.diag li{margin:4px 0}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;border-radius:999px;padding:3px 10px;background:var(--champ);color:var(--ink)}
+.pill.rec{background:var(--ink);color:var(--champ)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 16px;border-radius:11px;border:1px solid var(--border);background:var(--surface);font-weight:700;cursor:pointer}
+.btn.pri{background:var(--ink);color:var(--champ);border-color:var(--ink)}
+.btn.sm{min-height:34px;padding:0 12px;font-size:13px}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--champ);border-color:var(--ink)}
+.star{font-size:18px;line-height:1}
+.muted{color:var(--muted)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.gcard{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.gcard.rec{outline:3px solid var(--ink);outline-offset:-1px}
+.thumb{height:300px;overflow:hidden;background:#e9e1d1;position:relative;border-bottom:1px solid var(--border)}
+.thumb .P{overflow:hidden}
+.thumb .sc{position:absolute;left:50%;top:0;width:390px;height:720px;transform:translateX(-50%) scale(.48);transform-origin:top center;pointer-events:none}
+.gbody{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.gbody .n{font-size:12px;font-weight:800;color:var(--ink);letter-spacing:.06em}
+.gbody b{font-size:15.5px}
+.gbody p{margin:0;font-size:13px;color:var(--muted)}
+.gact{display:flex;gap:8px;margin-top:auto;padding-top:8px}
+/* palco das prévias */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;padding:7px 12px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+select{min-height:42px;border:1px solid var(--border);border-radius:11px;background:var(--surface);padding:0 10px;font-weight:700;max-width:100%}
+.stage{background:#e3dac8;border-radius:18px;padding:18px;overflow-x:auto;border:1px solid var(--border)}
+.dev{margin:0 auto;background:#111;border-radius:26px;padding:8px;width:max-content;box-shadow:0 16px 40px -18px rgba(0,0,0,.6)}
+.dev.d{border-radius:14px;padding:6px}
+.frame{container-type:inline-size;position:relative;height:720px;overflow:hidden;border-radius:19px;background:#f7efe0}
+.dev.d .frame{border-radius:9px}
+.single{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+@media (max-width:1100px){.single{grid-template-columns:1fr}}
+.expl h3{margin-top:14px}
+.expl ul{margin:4px 0 0;padding-left:18px}
+.expl li{margin:3px 0;font-size:14px}
+.effort{display:inline-block;font-weight:800;border-radius:8px;padding:2px 8px;font-size:12px}
+.e-baixo{background:#ddeee3;color:var(--ok)} .e-medio{background:#f8e9c4;color:var(--warn)} .e-alto{background:#f9e0da;color:var(--bad)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:980px){.cmp{grid-template-columns:1fr}}
+.cmp > div,.single > *{min-width:0}  /* a prévia rola dentro do palco; a página não rola para o lado */
+@media (max-width:480px){.wrap{padding:16px 12px 50px}.stage{padding:8px}.dev{padding:4px;border-radius:22px}h1{font-size:22px}}
+.cmp .head{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.cmp .head select{flex:1}
+textarea{width:100%;min-height:76px;border:1px solid var(--border);border-radius:11px;background:var(--surface);padding:10px;resize:vertical}
+.choice{display:grid;grid-template-columns:200px 1fr;gap:8px 14px;align-items:center}
+@media (max-width:640px){.choice{grid-template-columns:1fr}}
+.warnbox{border:1px solid #f0c9a4;background:#fdf1e4;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px}
+.okbox{border:1px solid #bfe0cc;background:#e9f5ee;border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px}
+.summary{white-space:pre-wrap;background:var(--surface-2);border:1px dashed var(--border);border-radius:12px;padding:12px;font-size:14px}
+.favs{display:flex;flex-wrap:wrap;gap:8px}
+.note-row{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:start;margin-bottom:10px}
+@media (max-width:640px){.note-row{grid-template-columns:1fr}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--champ);padding:10px 16px;border-radius:12px;font-weight:700;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ================= Base das prévias (o app, isolado) ================= */
+.P{--p-ink:#064e3b;--p-ink2:#0a6b51;--p-champ:#f8e7c9;--p-bg:#f7efe0;--p-s:#fffdf8;--p-s2:#fbf5ea;--p-b:#eadcc0;--p-t:#0d2a21;--p-m:#66705f;
+  --st-aberto:#b07414;--st-aberto-bg:#f8e9c4;--st-correcao:#c8641c;--st-correcao-bg:#f8e1cb;--st-aprovacao:#7b4bc4;--st-aprovacao-bg:#efe6fa;--st-aprovado:#0b7a55;--st-aprovado-bg:#ddeee3;--st-reprovado:#c43a31;--st-reprovado-bg:#f9e0da;
+  position:absolute;inset:0;overflow:auto;background:var(--p-bg);color:var(--p-t);font-size:14px;line-height:1.4;scrollbar-width:thin}
+.P *{box-sizing:border-box}
+.P button{font:inherit;color:inherit;cursor:pointer}
+.P .tag{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:11px;font-size:12px;font-weight:700;white-space:nowrap}
+.P .t-aberto{color:var(--st-aberto);background:var(--st-aberto-bg)} .P .t-correcao{color:var(--st-correcao);background:var(--st-correcao-bg)}
+.P .t-aprovacao{color:var(--st-aprovacao);background:var(--st-aprovacao-bg)} .P .t-aprovado{color:var(--st-aprovado);background:var(--st-aprovado-bg)} .P .t-reprovado{color:var(--st-reprovado);background:var(--st-reprovado-bg)}
+.P .av{width:40px;height:40px;border-radius:50%;background:var(--p-champ);color:var(--p-ink);display:grid;place-items:center;font-weight:800;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.P .ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.P .money{font-variant-numeric:tabular-nums;white-space:nowrap}
+.P .search{display:flex;align-items:center;gap:8px;height:44px;padding:0 12px;border:1px solid var(--p-b);border-radius:12px;background:var(--p-s);color:var(--p-m);flex:1;min-width:0}
+.P .search input{border:0;background:none;outline:none;flex:1;min-width:0;font:inherit;color:var(--p-t)}
+.P .icb{width:44px;height:44px;border-radius:12px;border:1px solid var(--p-b);background:var(--p-s);display:grid;place-items:center;flex:none;position:relative}
+.P .badge{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:9px;background:#c43a31;color:#fff;font-size:11px;font-weight:800;display:grid;place-items:center;padding:0 4px}
+.P .fab{position:sticky;float:right;bottom:18px;margin:-70px 16px 0 0;width:56px;height:56px;border-radius:16px;border:0;background:var(--p-ink);color:var(--p-champ);display:grid;place-items:center;box-shadow:0 10px 22px -8px rgba(6,78,59,.7);z-index:6}
+.P .fab .ic{width:26px;height:26px}
+.P .empty{padding:30px 10px;text-align:center;color:var(--p-m)}
+.P .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.P .chip{flex:none;height:32px;padding:0 12px;border-radius:16px;border:1px solid var(--p-b);background:var(--p-s);font-size:12.5px;font-weight:600;color:var(--p-m);display:inline-flex;align-items:center;gap:6px}
+.P .chip[aria-pressed="true"]{background:var(--p-ink);border-color:var(--p-ink);color:var(--p-champ)}
+.P .chip .n{font-size:11px;opacity:.8}
+/* detalhe do pedido (componente comum) */
+.P .det{background:var(--p-s);border:1px solid var(--p-b);border-radius:16px;padding:14px}
+.P .det h4{margin:0;font-size:16px}
+.P .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13px;margin-top:10px}
+.P .kv dt{color:var(--p-m)} .P .kv dd{margin:0;font-weight:600;text-align:right}
+.P .items{margin-top:10px;border-top:1px solid var(--p-b)}
+.P .it{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--p-b);font-size:13px}
+.P .it small{display:block;color:var(--p-m)}
+.P .note{margin-top:10px;background:#fdf3d8;border-radius:10px;padding:8px 10px;font-size:12.5px}
+.P .acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.P .ab{flex:1;min-width:96px;height:46px;border-radius:12px;border:0;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.P .ab.g{background:#ece4d3;color:var(--p-t)} .P .ab.p{background:var(--p-ink);color:var(--p-champ)} .P .ab.r{background:#fff;border:1px solid #f0c7c3;color:#c43a31} .P .ab.w{background:#25d366;color:#fff} .P .ab.y{background:var(--st-aberto-bg);color:var(--st-aberto)}
+/* folha (bottom sheet) para o detalhe no celular: camada própria por cima da prévia */
+.P.ovl{background:transparent;overflow:hidden;z-index:30}
+.P .scrim{position:absolute;inset:0;background:rgba(10,20,15,.45);z-index:19;border:0;width:100%}
+@container (min-width:760px){.P.ovl{display:none}}
+.P .sheet-in{position:absolute;left:0;right:0;bottom:0;max-height:88%;overflow:auto;background:var(--p-bg);border-radius:20px 20px 0 0;padding:10px 14px 16px;box-shadow:0 -10px 30px -10px rgba(0,0,0,.4);z-index:21}
+.P .grab{width:42px;height:5px;border-radius:3px;background:#cdbf9f;margin:2px auto 10px}
+/* mini dashboard (comum) */
+.P .mdash{padding:14px 16px 90px;display:flex;flex-direction:column;gap:12px}
+.P .mk{background:var(--p-s);border:1px solid var(--p-b);border-radius:14px;padding:12px}
+.P .mk .l{font-size:11.5px;color:var(--p-m);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.P .mk .v{font-size:22px;font-weight:800}
+.P .bar{height:10px;border-radius:5px;background:#efe5d2;overflow:hidden;display:flex;margin-top:8px}
+.P .bar i{display:block;height:100%}
+
+/* ---------- Modelo 0: atual (referência) ---------- */
+.m0 .hd{background:linear-gradient(165deg,#043428,#0a6b51);color:var(--p-champ);border-radius:0 0 26px 26px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.m0 .hd .who{flex:1;min-width:0} .m0 .hd b{display:block;font-size:16px} .m0 .hd small{opacity:.8}
+.m0 .body{padding:10px 16px 90px}
+.m0 .pager{display:flex;justify-content:center;gap:6px;margin:0 0 10px} .m0 .pager i{width:7px;height:7px;border-radius:4px;background:#e2d5b9} .m0 .pager i.on{width:20px;background:var(--p-ink)}
+.m0 .sr{display:flex;gap:8px;margin-bottom:12px}
+.m0 .days{display:flex;gap:6px;align-items:flex-end;margin-bottom:12px;overflow:hidden}
+.m0 .days b{font-size:12.5px;width:44px;flex:none} .m0 .day{flex:1;min-width:0;padding:0;text-align:center;font-size:10.5px;color:var(--p-m);font-weight:700}
+.m0 .day span{display:grid;place-items:center;width:32px;height:32px;margin:4px auto 0;border-radius:50%;border:1px solid var(--p-b);background:var(--p-s);color:var(--p-t);font-size:14px}
+.m0 .day.on span{background:var(--p-ink);color:var(--p-champ);border-color:var(--p-ink)}
+.m0 .oc{display:block;width:100%;text-align:left;border:1px solid var(--p-b);background:var(--p-s);border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.m0 .oc .h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start} .m0 .oc .h b{font-size:14px}
+.m0 .oc dl{margin:4px 0 0;font-size:13px;display:grid;gap:1px} .m0 .oc dt{display:inline;color:var(--p-m)} .m0 .oc dd{display:inline;margin:0}
+.m0 .oc .tot{font-weight:800}
+
+/* ---------- Modelo 1: Evolução refinada ---------- */
+.m1 .hd{background:linear-gradient(165deg,#043428,#0a6b51);color:var(--p-champ);border-radius:0 0 26px 26px;padding:12px 16px 14px}
+.m1 .hd .r{display:flex;align-items:center;gap:10px} .m1 .hd .who{flex:1;min-width:0} .m1 .hd b{display:block;font-size:16px} .m1 .hd small{opacity:.8}
+.m1 .hd .sum{display:flex;gap:18px;margin-top:12px;font-size:12px;opacity:.95} .m1 .hd .sum b{font-size:16px}
+.m1 .body{padding:12px 16px 90px;max-width:960px;margin:0 auto}
+.m1 .sr{display:flex;gap:8px;margin-bottom:10px}
+.m1 .list{display:grid;gap:10px}
+@container (min-width:700px){.m1 .list{grid-template-columns:1fr 1fr}}
+@container (min-width:1100px){.m1 .list{grid-template-columns:1fr 1fr 1fr}}
+.m1 .oc{display:flex;flex-direction:column;gap:6px;text-align:left;border:1px solid var(--p-b);background:var(--p-s);border-radius:16px;padding:12px 14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.m1 .oc .h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start} .m1 .oc .h b{font-size:14.5px;line-height:1.25}
+.m1 .oc .meta{font-size:12.5px;color:var(--p-m)}
+.m1 .oc .f{display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid var(--p-b);padding-top:8px;margin-top:2px}
+.m1 .oc .v{font-size:17px;font-weight:800}
+.m1 .oc .q{display:flex;gap:4px}
+.m1 .oc .q span{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--p-s2)}
+
+/* ---------- Modelo 2: Lista densa / tabela ---------- */
+.m2 .hd{background:var(--p-ink);color:var(--p-champ);padding:10px 14px;display:flex;align-items:center;gap:10px}
+.m2 .hd b{flex:1;font-size:15px}
+.m2 .body{padding:10px 12px 90px}
+.m2 .sr{display:flex;gap:8px;margin-bottom:8px}
+.m2 .grp{font-size:11.5px;font-weight:800;color:var(--p-m);text-transform:uppercase;letter-spacing:.06em;margin:12px 4px 4px;display:flex;justify-content:space-between}
+.m2 .tbl{background:var(--p-s);border:1px solid var(--p-b);border-radius:12px;overflow:hidden}
+.m2 .row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;width:100%;border:0;border-top:1px solid var(--p-b);background:none;text-align:left;padding:9px 12px}
+.m2 .row:first-child{border-top:0}
+.m2 .row > span{min-width:0}
+.m2 .row b{display:block;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m2 .row small{color:var(--p-m);font-size:12px;display:block}
+.m2 .row .v{font-weight:800;text-align:right}
+.m2 .th{display:none}
+@container (min-width:700px){
+  .m2 .th{display:grid;grid-template-columns:70px 1fr 150px 110px 130px;gap:10px;padding:8px 12px;font-size:11px;font-weight:800;color:var(--p-m);text-transform:uppercase;background:var(--p-s2)}
+  .m2 .row{grid-template-columns:70px 1fr 150px 110px 130px;align-items:center}
+  .m2 .row .c-n{order:-1}
+  .m2 .grp{display:none}
+}
+.m2 .row .c-n,.m2 .row .c-p,.m2 .row .c-s{display:none}
+@container (min-width:700px){.m2 .row .c-n,.m2 .row .c-p,.m2 .row .c-s{display:block} .m2 .row .c-m{display:none}}
+
+/* ---------- Modelo 3: Por situação (abas / quadro) ---------- */
+.m3 .hd{background:linear-gradient(165deg,#043428,#0a6b51);color:var(--p-champ);padding:12px 14px 0}
+.m3 .hd .r{display:flex;align-items:center;gap:10px;margin-bottom:10px} .m3 .hd b{flex:1;font-size:16px}
+.m3 .st{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.m3 .st button{flex:none;border:0;background:none;color:rgba(248,231,201,.75);padding:9px 10px 11px;font-weight:700;font-size:13px;border-bottom:3px solid transparent}
+.m3 .st button[aria-pressed="true"]{color:var(--p-champ);border-bottom-color:var(--p-champ)}
+.m3 .st .n{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:rgba(248,231,201,.2);font-size:11px;margin-left:4px}
+.m3 .body{padding:12px 14px 90px}
+.m3 .board{display:grid;gap:10px}
+.m3 .col h5{display:none}
+.m3 .cc{display:block;width:100%;text-align:left;border:1px solid var(--p-b);border-left:4px solid var(--c);background:var(--p-s);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.m3 .cc b{display:block;font-size:13.5px;line-height:1.25} .m3 .cc small{color:var(--p-m);font-size:12px} .m3 .cc .v{font-weight:800;margin-top:4px}
+@container (min-width:900px){
+  .m3 .st{display:none}
+  .m3 .board{grid-template-columns:repeat(5,minmax(0,1fr));align-items:start}
+  .m3 .col{background:var(--p-s2);border-radius:14px;padding:8px}
+  .m3 .col h5{display:flex;justify-content:space-between;margin:2px 4px 8px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--c)}
+  .m3 .col[hidden]{display:block}
+}
+
+/* ---------- Modelo 4: Barra de navegação ---------- */
+.m4{display:flex;flex-direction:column}
+.m4 .hd{padding:14px 16px 6px;display:flex;align-items:center;gap:10px} .m4 .hd b{flex:1;font-size:20px;color:var(--p-ink)}
+.m4 .hd .av{box-shadow:none}
+.m4 .main{flex:1;padding:4px 16px 100px}
+.m4 .sr{display:flex;gap:8px;margin-bottom:10px}
+.m4 .oc{display:flex;gap:12px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--p-b);background:none;padding:12px 0}
+.m4 .oc .ini{width:42px;height:42px;border-radius:12px;background:var(--p-s);border:1px solid var(--p-b);display:grid;place-items:center;font-weight:800;color:var(--p-ink);flex:none}
+.m4 .oc .tx{flex:1;min-width:0} .m4 .oc b{display:block;font-size:14px;line-height:1.25} .m4 .oc small{color:var(--p-m);font-size:12px}
+.m4 .oc .r{text-align:right} .m4 .oc .v{font-weight:800;display:block;margin-bottom:4px}
+.m4 .nav{position:sticky;bottom:0;margin-top:auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;background:var(--p-s);border-top:1px solid var(--p-b);padding:6px 4px 10px;z-index:8}
+.m4 .nav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;color:var(--p-m);padding:4px 0}
+.m4 .nav button[aria-current="page"]{color:var(--p-ink)}
+.m4 .nav .new{width:54px;height:54px;border-radius:18px;background:var(--p-ink);color:var(--p-champ);margin:-24px auto 0;justify-content:center;box-shadow:0 8px 18px -6px rgba(6,78,59,.7)}
+.m4 .nav .new .ic{width:26px;height:26px}
+.m4 .nb{position:relative}
+.m4 .nb .badge{top:-2px;right:calc(50% - 20px)}
+@container (min-width:900px){
+  .m4{flex-direction:row}
+  .m4 .nav{position:sticky;top:0;bottom:auto;height:720px;width:92px;flex:none;order:-1;grid-template-columns:1fr;grid-auto-rows:min-content;align-content:start;gap:14px;border-top:0;border-right:1px solid var(--p-b);padding:18px 6px}
+  .m4 .nav .new{margin:0 auto 10px;order:-1}
+  .m4 .col{flex:1;min-width:0}
+  .m4 .main{max-width:900px}
+}
+
+/* ---------- Modelo 5: Foco no dia ---------- */
+.m5 .hd{background:linear-gradient(165deg,#043428,#0a6b51);color:var(--p-champ);border-radius:0 0 26px 26px;padding:12px 16px 16px}
+.m5 .hd .r{display:flex;align-items:center;gap:10px} .m5 .hd .who{flex:1} .m5 .hd b{display:block;font-size:16px} .m5 .hd small{opacity:.8}
+.m5 .hd h3{font-size:13px;margin:14px 0 6px;font-weight:600;opacity:.85}
+.m5 .k{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.m5 .k div{background:rgba(248,231,201,.12);border-radius:12px;padding:8px 10px} .m5 .k span{display:block;font-size:11px;opacity:.85} .m5 .k b{font-size:16px}
+.m5 .body{padding:14px 16px 90px;max-width:1000px;margin:0 auto}
+.m5 .sec{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--p-m);margin:14px 2px 8px;display:flex;justify-content:space-between;align-items:center}
+.m5 .need{display:flex;gap:10px;width:100%;text-align:left;border:1px solid #f0c9a4;background:#fdf1e4;border-radius:14px;padding:12px;margin-bottom:8px}
+.m5 .need .tx{flex:1;min-width:0} .m5 .need b{display:block;font-size:14px} .m5 .need p{margin:4px 0 0;font-size:12.5px;color:#7a4a1c}
+.m5 .need .go{align-self:center;font-weight:800;color:var(--st-correcao);white-space:nowrap}
+.m5 .row{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:1px solid var(--p-b);background:var(--p-s);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.m5 .row .tx{flex:1;min-width:0} .m5 .row b{display:block;font-size:13.5px;line-height:1.25} .m5 .row small{color:var(--p-m);font-size:12px} .m5 .row .v{font-weight:800;text-align:right}
+.m5 .sr{display:flex;gap:8px}
+.m5 .two{display:grid;gap:0 16px}
+@container (min-width:800px){.m5 .two{grid-template-columns:1fr 1fr}}
+
+/* ---------- Modelo 6: Linha do tempo ---------- */
+.m6 .hd{padding:14px 16px 8px;background:var(--p-s);border-bottom:1px solid var(--p-b);display:flex;align-items:center;gap:10px}
+.m6 .hd b{flex:1;font-size:16px} .m6 .hd .av{box-shadow:none}
+.m6 .wk{display:flex;gap:4px;padding:10px 16px;background:var(--p-s);border-bottom:1px solid var(--p-b);overflow-x:auto;scrollbar-width:none}
+.m6 .wk button{flex:1;min-width:42px;border:0;background:none;border-radius:12px;padding:6px 0;font-size:11px;font-weight:700;color:var(--p-m)}
+.m6 .wk button b{display:block;font-size:16px;color:var(--p-t)}
+.m6 .wk button[aria-pressed="true"]{background:var(--p-ink);color:var(--p-champ)} .m6 .wk button[aria-pressed="true"] b{color:var(--p-champ)}
+.m6 .wk i{display:block;width:5px;height:5px;border-radius:50%;background:currentColor;margin:3px auto 0;opacity:.6}
+.m6 .body{padding:10px 16px 90px;max-width:800px;margin:0 auto}
+.m6 .sr{display:flex;gap:8px;margin:6px 0 12px}
+.m6 .tl{position:relative;padding-left:58px}
+.m6 .tl::before{content:'';position:absolute;left:46px;top:6px;bottom:6px;width:2px;background:var(--p-b)}
+.m6 .ev{position:relative;display:block;width:100%;text-align:left;border:1px solid var(--p-b);background:var(--p-s);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.m6 .ev .tm{position:absolute;left:-58px;top:10px;width:40px;text-align:right;font-size:12px;font-weight:800;color:var(--p-m)}
+.m6 .ev::before{content:'';position:absolute;left:-17px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px var(--p-bg)}
+.m6 .ev b{display:block;font-size:13.5px} .m6 .ev small{color:var(--p-m);font-size:12px}
+.m6 .ev .f{display:flex;justify-content:space-between;align-items:center;margin-top:6px} .m6 .ev .v{font-weight:800}
+
+/* ---------- Modelo 7: Lista + detalhe ---------- */
+.m7{display:flex;flex-direction:column}
+.m7 .hd{background:linear-gradient(165deg,#043428,#0a6b51);color:var(--p-champ);padding:10px 16px;display:flex;align-items:center;gap:10px;flex:none}
+.m7 .hd b{flex:1;font-size:16px}
+.m7 .split{display:flex;flex:1;min-height:0}
+.m7 .lst{flex:1;min-width:0;padding:12px 14px 90px}
+.m7 .sr{display:flex;gap:8px;margin-bottom:10px}
+.m7 .oc{display:grid;grid-template-columns:1fr auto;gap:2px 8px;width:100%;text-align:left;border:1px solid var(--p-b);background:var(--p-s);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.m7 .oc[aria-current="true"]{border-color:var(--p-ink);box-shadow:0 0 0 2px var(--p-ink) inset}
+.m7 .oc b{font-size:13.5px;line-height:1.25} .m7 .oc small{color:var(--p-m);font-size:12px} .m7 .oc .v{font-weight:800;text-align:right}
+.m7 .pane{display:none}
+@container (min-width:760px){
+  .m7 .lst{flex:0 0 46%;max-width:420px;border-right:1px solid var(--p-b);overflow:auto;height:calc(720px - 60px)}
+  .m7 .pane{display:block;flex:1;min-width:0;padding:16px 20px;overflow:auto;height:calc(720px - 60px)}
+  
+}
+
+/* ---------- Modelo 8: Agrupado por cliente ---------- */
+.m8 .hd{background:linear-gradient(165deg,#043428,#0a6b51);color:var(--p-champ);padding:12px 16px 40px}
+.m8 .hd .r{display:flex;align-items:center;gap:10px} .m8 .hd b{flex:1;font-size:16px}
+.m8 .body{margin-top:-28px;padding:0 14px 90px}
+.m8 .sr{display:flex;gap:8px;margin-bottom:12px}
+.m8 .sr .search,.m8 .sr .icb{box-shadow:0 6px 16px -8px rgba(0,0,0,.35)}
+.m8 .grid{display:grid;gap:10px}
+@container (min-width:700px){.m8 .grid{grid-template-columns:1fr 1fr}}
+.m8 .cl{background:var(--p-s);border:1px solid var(--p-b);border-radius:16px;padding:12px}
+.m8 .cl .h{display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.m8 .cl .lg{width:38px;height:38px;border-radius:10px;background:var(--p-champ);color:var(--p-ink);display:grid;place-items:center;font-weight:800;flex:none}
+.m8 .cl .h b{display:block;font-size:14px;line-height:1.25} .m8 .cl .h small{color:var(--p-m);font-size:12px}
+.m8 .cl .tot{margin-left:auto;text-align:right;font-weight:800}
+.m8 .po{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;border:0;border-top:1px dashed var(--p-b);background:none;padding:8px 2px;text-align:left;font-size:13px}
+
+/* ---------- Modelo 9: Calendário ---------- */
+.m9 .hd{background:var(--p-ink);color:var(--p-champ);padding:12px 16px;display:flex;align-items:center;gap:10px}
+.m9 .hd b{flex:1;font-size:16px}
+.m9 .lay{display:grid;gap:12px;padding:12px 14px 90px}
+@container (min-width:800px){.m9 .lay{grid-template-columns:360px 1fr;align-items:start}}
+.m9 .cal{background:var(--p-s);border:1px solid var(--p-b);border-radius:16px;padding:12px}
+.m9 .cal .t{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin-bottom:8px}
+.m9 .cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.m9 .cg span{font-size:10.5px;color:var(--p-m);font-weight:700}
+.m9 .cg button{border:0;border-radius:10px;aspect-ratio:1;background:var(--p-s2);font-weight:700;font-size:13px;position:relative}
+.m9 .cg button.h1{background:#dbe9df} .m9 .cg button.h2{background:#a9cdb6} .m9 .cg button.h3{background:#5e9c7c;color:#fff}
+.m9 .cg button[aria-pressed="true"]{outline:2px solid var(--p-ink);outline-offset:1px}
+.m9 .cg button:disabled{opacity:.35;background:none}
+.m9 .lg{display:flex;gap:10px;font-size:11px;color:var(--p-m);margin-top:8px;align-items:center}
+.m9 .lg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-2px}
+.m9 .day .sr{display:flex;gap:8px;margin-bottom:10px}
+.m9 .day h4{margin:0 0 8px;display:flex;justify-content:space-between;font-size:14px}
+.m9 .oc{display:flex;gap:10px;justify-content:space-between;width:100%;text-align:left;border:1px solid var(--p-b);background:var(--p-s);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.m9 .oc b{display:block;font-size:13.5px;line-height:1.25} .m9 .oc small{color:var(--p-m);font-size:12px} .m9 .oc .v{font-weight:800;text-align:right}
+
+/* ---------- Modelo 10: Busca primeiro ---------- */
+.m10 .hd{padding:16px 16px 4px;display:flex;align-items:center;gap:10px}
+.m10 .hd b{flex:1;font-size:15px;color:var(--p-m);font-weight:600}
+.m10 .hd .av{box-shadow:none}
+.m10 .hero{padding:4px 16px 12px}
+.m10 .hero h2{font-size:24px;margin:0 0 10px;line-height:1.2;color:var(--p-ink)}
+.m10 .big{display:flex;align-items:center;gap:10px;height:54px;padding:0 16px;border-radius:16px;background:var(--p-s);border:2px solid var(--p-ink);box-shadow:0 10px 24px -14px rgba(6,78,59,.6)}
+.m10 .big input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:16px;color:var(--p-t)}
+.m10 .qf{margin-top:10px}
+.m10 .body{padding:0 16px 90px;max-width:900px}
+.m10 .res{font-size:12px;color:var(--p-m);margin:4px 2px 8px}
+.m10 .oc{display:grid;grid-template-columns:1fr auto;gap:2px 10px;width:100%;text-align:left;border:0;border-bottom:1px solid var(--p-b);background:none;padding:12px 2px}
+.m10 .oc b{font-size:14px;line-height:1.25} .m10 .oc small{color:var(--p-m);font-size:12px} .m10 .oc .v{font-weight:800;text-align:right}
+.m10 mark{background:#f8e7c9;color:inherit;border-radius:3px;padding:0 1px}
+.m10 .recent{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+@container (min-width:900px){.m10 .hero,.m10 .body{max-width:820px;margin-left:auto;margin-right:auto} .m10 .hero h2{font-size:30px}}
+</style>
+</head>
+<body>
+<header class="app-top">
+  <div class="in">
+    <div class="brand"><span class="mk" aria-hidden="true">FV</span><div><b>Força de Vendas · Exploração UI/UX</b><span>10 propostas para comparar e escolher — nada aqui altera o app</span></div></div>
+    <nav class="tabs" role="tablist" aria-label="Seções">
+      <button role="tab" id="t-ov" aria-selected="true" aria-controls="s-ov" data-tab="ov">Visão geral</button>
+      <button role="tab" id="t-one" aria-selected="false" aria-controls="s-one" data-tab="one">Ver um modelo</button>
+      <button role="tab" id="t-cmp" aria-selected="false" aria-controls="s-cmp" data-tab="cmp">Comparar</button>
+      <button role="tab" id="t-ch" aria-selected="false" aria-controls="s-ch" data-tab="ch">Minhas escolhas</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- Visão geral -->
+  <section id="s-ov" role="tabpanel" aria-labelledby="t-ov">
+    <h1>Diagnóstico e 10 caminhos de evolução</h1>
+    <p class="lead">Recorte escolhido: o fluxo principal do <b>Gestor de Venda</b> — <b>lista de pedidos do dia → abrir um pedido → agir</b> (editar, reabrir, enviar), com acesso ao <b>Novo pedido</b> e ao <b>Dashboard</b>. Os 10 modelos usam os mesmos 8 pedidos de exemplo (dados fictícios) para a comparação ser justa. Toque nas prévias: elas são navegáveis.</p>
+    <div class="grid2" style="margin-bottom:18px">
+      <div class="card diag">
+        <h2>O que a plataforma é</h2>
+        <ul>
+          <li><b>App mobile</b> de pedido de venda para o agro (Somax/Corteva), usado em campo pelo <b>Gestor de Venda</b>; o <b>Diretor</b> aprova por margem.</li>
+          <li>Tarefas mais frequentes: ver os pedidos do dia, <b>resolver os que voltaram para correção</b>, criar pedido, enviar PDF/WhatsApp ao cliente, acompanhar meta (Planejado × Realizado).</li>
+          <li>Regras a preservar: 5 situações e suas cores (Em aberto, Em correção, Bloqueado, Aprovado, Reprovado); só Em aberto/Em correção são editáveis; Bloqueado pode ser reaberto; gestor nunca vê margem; filial do gestor; PT/ES.</li>
+        </ul>
+      </div>
+      <div class="card diag">
+        <h2>O que encontramos (UI + UX)</h2>
+        <ul>
+          <li><b>Cartão longo e uniforme</b>: 7 linhas "rótulo: valor" iguais; o valor total e a situação disputam atenção com dados secundários (empresa, projeto).</li>
+          <li><b>O que pede ação não se destaca</b>: um pedido Em correção aparece igual aos outros; só a etiqueta muda.</li>
+          <li><b>Navegação escondida</b>: o Dashboard abre arrastando a tela (as bolinhas são a única pista); "Novo pedido" é só um "+".</li>
+          <li><b>Filtro por dia</b> esconde pedidos de outros dias até usar busca/situação; tablet e computador apenas esticam a lista.</li>
+          <li>Funciona bem e deve ficar: identidade Emerald Ink + Champagne, etiquetas de situação, busca + filtros, ações PDF/WhatsApp, painel do topo com foto e filial.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:18px">
+      <span class="pill rec">★ Recomendado</span>
+      <h2 style="margin-top:8px">Modelo 05 — Foco no dia, como base</h2>
+      <p class="muted" style="margin:0">Responde primeiro à pergunta do gestor ao abrir o app (<i>"o que precisa de mim hoje?"</i>): correções em destaque com o comentário do diretor, resumo do dia no painel verde que já existe, e o resto da lista enxuta. Complementos sugeridos: <b>navegação do 04</b> (barra com Pedidos, Dashboard e Novo pedido visíveis — resolve o gesto escondido), <b>detalhe do 07</b> em tablet/computador (lista + detalhe lado a lado) e <b>linhas compactas do 02</b> para listas longas.</p>
+    </div>
+    <h2>Galeria</h2>
+    <div class="gal" id="gal"></div>
+  </section>
+
+  <!-- Ver um modelo -->
+  <section id="s-one" role="tabpanel" aria-labelledby="t-one" hidden>
+    <div class="toolbar">
+      <label class="vh" for="one-sel">Modelo</label>
+      <select id="one-sel"></select>
+      <div class="seg" role="group" aria-label="Largura da prévia" id="one-dev"></div>
+      <button class="btn sm" id="one-fav" aria-pressed="false"><span class="star">☆</span> Favoritar</button>
+      <button class="btn sm" id="one-reset">Reiniciar prévia</button>
+    </div>
+    <div class="single">
+      <div class="stage"><div id="one-stage"></div></div>
+      <aside class="card expl" id="one-expl" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- Comparar -->
+  <section id="s-cmp" role="tabpanel" aria-labelledby="t-cmp" hidden>
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Largura das prévias" id="cmp-dev"></div>
+      <span class="muted" style="font-size:13px">Mesmo conteúdo e mesma largura nos dois lados. "00 · Atual" é a referência da interface de hoje.</span>
+    </div>
+    <div class="cmp">
+      <div><div class="head"><label class="vh" for="cmp-a">Modelo da esquerda</label><select id="cmp-a"></select></div><div class="stage"><div id="cmp-sa"></div></div></div>
+      <div><div class="head"><label class="vh" for="cmp-b">Modelo da direita</label><select id="cmp-b"></select></div><div class="stage"><div id="cmp-sb"></div></div></div>
+    </div>
+  </section>
+
+  <!-- Minhas escolhas -->
+  <section id="s-ch" role="tabpanel" aria-labelledby="t-ch" hidden>
+    <h1>Minhas escolhas</h1>
+    <p class="lead">Marque favoritos, escolha de qual modelo vem cada parte e anote observações. É uma <b>preferência para a próxima etapa</b> — não existe prévia automática da combinação. As escolhas ficam salvas neste navegador (quando ele permitir).</p>
+    <div class="grid2">
+      <div class="card">
+        <h2>Favoritos</h2>
+        <div class="favs" id="favs"></div>
+        <h2 style="margin-top:18px">Elementos por categoria</h2>
+        <div class="choice" id="cats"></div>
+        <div id="compat"></div>
+      </div>
+      <div class="card">
+        <h2>Resumo</h2>
+        <div class="summary" id="summary" aria-live="polite"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn pri" id="copy">Copiar resumo</button>
+          <button class="btn" id="dl">Baixar .txt</button>
+          <button class="btn" id="clear">Limpar escolhas</button>
+        </div>
+        <p class="muted" id="store-msg" style="font-size:12.5px;margin:10px 0 0"></p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>Observações por modelo</h2>
+      <div id="notes"></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ================= Dados de exemplo (fictícios e anonimizados) ================= */
+const USER = {name: 'Rafael Souza', ini: 'RS', unit: 'Paraná'};
+const ST = {aberto: 'Em aberto', correcao: 'Em correção', aprovacao: 'Bloqueado', aprovado: 'Aprovado', reprovado: 'Reprovado'};
+const STC = {aberto: '#b07414', correcao: '#c8641c', aprovacao: '#7b4bc4', aprovado: '#0b7a55', reprovado: '#c43a31'};
+const ORDERS = [
+  {n: 10053, cli: 'Agropecuária Santa Rita Ltda', city: 'Londrina/PR', st: 'aberto', v: 86400, tm: '11:20', d: 30, proj: 'Soja Verão 26/27', neg: 'Normal', co: 'Somax',
+    items: [['Flowzin 5 L', 'Flumioxazina 500', '600 L', 52800], ['Cappo 20 L', 'Mesotriona 480', '400 L', 33600]]},
+  {n: 10052, cli: 'Grupo Três Irmãos Agrícola Ltda — Unidade Castro', city: 'Castro/PR', st: 'aprovado', v: 1248300.75, tm: '10:15', d: 30, proj: 'Soja Verão 26/27', neg: 'Normal', co: 'Somax',
+    items: [['Glufosinato 20% 20 L', 'Glufosinato sal de amônio 200', '12.000 L', 612000], ['Fulltime 20 L', 'Diquate 200', '9.600 L', 403200], ['Azoxi Pro 5 L', 'Azoxistrobina + Ciproconazol', '1.950 L', 233100.75]]},
+  {n: 10051, cli: 'Fazenda Boa Esperança', city: 'Cascavel/PR', st: 'reprovado', v: 17350, tm: '09:10', d: 30, proj: 'Milho Safrinha 27/27', neg: 'Normal', co: 'Somax',
+    items: [['Flowzin 20 L', 'Flumioxazina 500', '300 L', 17350]], appr: 'Preço do Flowzin muito abaixo da tabela.'},
+  {n: 10040, cli: 'Agro Campos Gerais Ltda', city: 'Ponta Grossa/PR', st: 'aprovado', v: 24027.9, tm: '08:32', d: 30, proj: 'Milho Safrinha 27/27', neg: 'Normal', co: 'Somax',
+    items: [['S-Metolacloro 20 L', 'S-Metolacloro 960', '400 L', 24027.9]]},
+  {n: 10017, cli: 'Agrícola Horizonte Ltda', city: 'Guarapuava/PR', st: 'correcao', v: 58920, tm: '08:02', d: 30, proj: 'Soja Verão 26/27', neg: 'Normal', co: 'Somax',
+    items: [['Azoxi Pro 20 L', 'Azoxistrobina + Ciproconazol', '400 L', 47120], ['Imidacloprido 1 kg', 'Imidacloprido 700', '100 kg', 11800]], appr: 'Desconto do Azoxi Pro acima da política; rever o preço praticado.'},
+  {n: 10036, cli: 'Sementes Vale Verde S/A', city: 'Londrina/PR', st: 'aprovacao', v: 110474, tm: '07:39', d: 30, proj: 'Soja Verão 26/27', neg: 'Normal', co: 'Somax',
+    items: [['Glufosinato 20% 5 L', 'Glufosinato sal de amônio 200', '1.500 L', 66474], ['Cappo 5 L', 'Mesotriona 480', '500 L', 44000]]},
+  {n: 10045, cli: 'Cooperativa Vale do Pardo', city: 'Ponta Grossa/PR', st: 'aberto', v: 24036.5, tm: '07:37', d: 30, proj: 'Milho Safrinha 27/27', neg: 'Bonificação', co: 'Somax',
+    items: [['Tebuzol 20 L', 'Tebuconazol 200', '600 L', 24036.5]]},
+  {n: 10031, cli: 'Fazenda São Jorge', city: 'Cascavel/PR', st: 'correcao', v: 41200, tm: '16:45', d: 29, proj: 'Soja Verão 26/27', neg: 'Normal', co: 'Somax',
+    items: [['Mancozebe 25 kg', 'Mancozebe 750', '2.000 kg', 41200]], appr: 'Previsão de entrega antes do início da safra; conferir com o cliente.'}
+];
+const DASH = {obj: 11229024, fat: 8380000, cart: 449000};
+const fmt = v => 'BRL ' + v.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const fmtS = v => 'BRL ' + (v >= 1e6 ? (v / 1e6).toFixed(2).replace('.', ',') + ' mi' : (v / 1e3).toFixed(1).replace('.', ',') + ' mil');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'})[c]);
+const ini = s => s.split(/\s+/).filter(w => w.length > 2).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+const tag = st => `<span class="tag t-${st}">${ST[st]}</span>`;
+const I = {
+  search: '<svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  filter: '<svg class="ic" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>',
+  tagi: '<svg class="ic" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  bell: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
+  plus: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  back: '<svg class="ic" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>',
+  chart: '<svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>',
+  list: '<svg class="ic" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  users: '<svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  pdf: '<svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>',
+  wa: '<svg class="ic" viewBox="0 0 24 24"><path d="M3 21l1.7-4.6A8.5 8.5 0 1 1 8 19.6Z"/></svg>',
+  edit: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  unlock: '<svg class="ic" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.9-1"/></svg>',
+  cal: '<svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>'
+};
+
+/* ================= Modelos ================= */
+const MODELS = [
+  {id: 0, name: 'Atual (referência)', concept: 'A interface de hoje, para comparação.', ref: true},
+  {id: 1, name: 'Evolução refinada', concept: 'A tela de hoje com hierarquia corrigida: valor e situação em evidência, dados secundários numa linha só.',
+    ui: ['Cartão em 3 níveis: cliente + situação → linha de metadados (nº · hora · projeto) → rodapé com valor grande e ações PDF/WhatsApp.', 'Resumo do dia (nº de pedidos, valor, a corrigir) no painel verde que já existe.', 'Grade de 2–3 colunas em tablet/computador.'],
+    ux: ['Cartão ~40% mais curto: mais pedidos por tela sem perder informação.', 'Filtros rápidos por situação com contagem, logo abaixo da busca.', 'Ações diretas no cartão continuam (enviar sem abrir).'],
+    keep: ['Painel verde com foto e filial', 'Busca + filtro', 'Etiquetas de situação', 'Botão +'],
+    pros: 'Mudança segura, aprendizado zero, ganho imediato de leitura.', cons: 'Não resolve o Dashboard escondido nem destaca o que pede ação.', effort: ['baixo', 'Só reorganiza o cartão e o topo; mesmos dados e ações.'],
+    nav: 'top', content: 'cards'},
+  {id: 2, name: 'Lista densa', concept: 'Linhas compactas agrupadas por situação; no computador vira uma tabela de verdade.',
+    ui: ['Linha de 2 andares: cliente / nº · hora à esquerda, valor e situação à direita.', 'Grupos por situação com totais; no ≥ tablet, tabela com colunas Nº, Cliente, Projeto, Situação, Valor.', 'Topo sólido e baixo para dar altura à lista.'],
+    ux: ['Vê 2–3× mais pedidos por tela — bom para quem tem muitos pedidos por dia.', 'Agrupamento deixa claro quanto há em cada situação.', 'Tabela no computador permite comparar valores rapidamente.'],
+    keep: ['Busca + filtro', 'Cores das situações', 'Ordem por mais recente'],
+    pros: 'Máxima densidade e escaneabilidade.', cons: 'Menos "cara de app"; ações PDF/WhatsApp só dentro do pedido.', effort: ['baixo', 'Componente de linha + tabela responsiva.'],
+    nav: 'top', content: 'table'},
+  {id: 3, name: 'Por situação', concept: 'A situação vira a navegação principal: abas no celular, quadro de colunas no computador.',
+    ui: ['Abas com contagem no painel verde (Todos, Em aberto, Em correção, Bloqueado, Aprovado, Reprovado).', 'Cartão com faixa lateral na cor da situação.', 'No ≥ 900 px, quadro com 5 colunas lado a lado.'],
+    ux: ['Um toque para ver só o que está em correção ou bloqueado.', 'Visão de funil do dia no computador.', 'Substitui o botão de filtro por situação (menos um nível).'],
+    keep: ['Situações e cores', 'Cartões', 'Busca'],
+    pros: 'Organização clara pelo estado do pedido.', cons: 'Abas tiram espaço vertical; quadro só faz sentido em telas largas.', effort: ['medio', 'Abas + layout de quadro com container queries.'],
+    nav: 'tabs', content: 'kanban'},
+  {id: 4, name: 'Barra de navegação', concept: 'Navegação explícita: Pedidos, Clientes, Novo pedido (centro), Dashboard e Avisos sempre visíveis.',
+    ui: ['Barra inferior com 5 destinos e o Novo pedido em destaque no centro.', 'Topo claro e leve (título grande + foto); lista em linhas com iniciais do cliente.', 'No computador, a barra vira menu lateral.'],
+    ux: ['Dashboard e notificações a um toque (hoje: gesto de arrastar e sino).', 'Novo pedido com rótulo e posição fixa e previsível.', 'Padrão conhecido de apps de celular — baixa curva de aprendizado.'],
+    keep: ['Lista e busca', 'Situações', 'Dashboard existente'],
+    pros: 'Resolve a navegação escondida.', cons: 'Muda a identidade do topo (sem o painel verde); barra ocupa ~64 px.', effort: ['medio', 'Nova navegação global e rotas; telas internas iguais.'],
+    nav: 'bottom', content: 'rows'},
+  {id: 5, name: 'Foco no dia', concept: 'Abre respondendo "o que precisa de mim hoje": correções primeiro, depois o restante.', rec: true,
+    ui: ['Painel verde com o resumo do dia: valor, pedidos e a corrigir.', 'Seção "Precisa de você" em laranja suave, com o comentário do diretor visível.', 'Restante em linhas enxutas; 2 colunas em telas largas.'],
+    ux: ['Prioriza a tarefa mais importante (corrigir e reenviar) sem procurar.', 'Comentário do diretor visível antes de abrir o pedido.', 'Pedidos de outros dias que precisam de ação também aparecem (não somem pelo filtro de dia).'],
+    keep: ['Painel verde, foto e filial', 'Busca', 'Situações', 'Botão +'],
+    pros: 'Alinha a tela ao objetivo real do gestor.', cons: 'Ordem deixa de ser só cronológica; precisa regra clara de "pede ação".', effort: ['medio', 'Nova seção e regra de prioridade; componentes simples.'],
+    nav: 'top', content: 'priority'},
+  {id: 6, name: 'Linha do tempo', concept: 'O dia como agenda: pedidos na ordem dos horários, com semana navegável.',
+    ui: ['Semana no topo com pontinho nos dias com pedidos.', 'Linha vertical com a hora à esquerda e o pedido à direita (bolinha na cor da situação).', 'Topo claro e discreto.'],
+    ux: ['Contexto temporal: "o que fiz de manhã", visitas em sequência.', 'Troca de dia em 1 toque sem esconder o mês.', 'Leitura natural de cima para baixo.'],
+    keep: ['Faixa de dias (evoluída)', 'Situações', 'Busca'],
+    pros: 'Ótimo para quem trabalha por rota/visita.', cons: 'Menos útil para buscar pedidos antigos.', effort: ['medio', 'Novo layout de lista; dados iguais.'],
+    nav: 'top', content: 'timeline'},
+  {id: 7, name: 'Lista + detalhe', concept: 'No celular, o pedido abre numa folha por cima da lista; no tablet/computador, lado a lado.',
+    ui: ['Lista estreita à esquerda e o detalhe completo à direita (≥ 760 px).', 'No celular, folha que sobe de baixo, sem perder a posição da lista.', 'Pedido selecionado marcado na lista.'],
+    ux: ['Abrir e voltar sem recarregar a lista (menos toques, contexto preservado).', 'Aproveita telas grandes de verdade.', 'Revisar vários pedidos em sequência fica muito mais rápido.'],
+    keep: ['Cartões', 'Ações do pedido', 'Busca'],
+    pros: 'Melhor uso de tablet e computador.', cons: 'Detalhe em folha tem menos espaço que a tela cheia de hoje.', effort: ['alto', 'Muda o padrão de navegação entre lista e pedido.'],
+    nav: 'top', content: 'split'},
+  {id: 8, name: 'Por cliente', concept: 'Pedidos agrupados por cliente, com o total de cada um — pensado na carteira.',
+    ui: ['Cartão por cliente com sigla, cidade e total; pedidos como linhas dentro.', 'Busca flutuando sobre o painel verde.', 'Grade de 2 colunas em telas largas.'],
+    ux: ['Responde "quanto vendi para este cliente" sem somar de cabeça.', 'Bom para visitas: tudo do cliente num lugar.', 'Nomes longos quebram em 2 linhas sem cortar.'],
+    keep: ['Painel verde', 'Busca', 'Situações'],
+    pros: 'Visão de carteira/relacionamento.', cons: 'Um cliente com muitos pedidos gera cartões altos.', effort: ['medio', 'Agrupamento e novo cartão.'],
+    nav: 'top', content: 'grouped'},
+  {id: 9, name: 'Calendário', concept: 'O mês em mapa de calor (valor por dia) e a lista do dia escolhido ao lado.',
+    ui: ['Calendário mensal com intensidade pelo valor vendido.', 'Lista do dia escolhido; no computador, calendário e lista lado a lado.', 'Legenda de intensidade.'],
+    ux: ['Vê o ritmo do mês e acha dias sem venda.', 'Navegação por data mais rápida que a faixa de 7 dias.', 'Total do dia junto do título.'],
+    keep: ['Seleção por dia', 'Situações', 'Cartões'],
+    pros: 'Visão de ritmo e planejamento.', cons: 'Calendário ocupa metade da tela no celular.', effort: ['medio', 'Componente de calendário + agregação por dia.'],
+    nav: 'top', content: 'calendar'},
+  {id: 10, name: 'Busca primeiro', concept: 'Uma busca grande e filtros rápidos no centro; resultados destacando o termo.',
+    ui: ['Campo grande com borda Emerald, saudação curta.', 'Filtros rápidos (situação, hoje, semana) em pílulas.', 'Resultados com o termo destacado; buscas recentes.'],
+    ux: ['Encontra qualquer pedido (nº, cliente, cidade, projeto) em 1 passo, de qualquer dia.', 'Menos telas e menos decisões.', 'Recentes evitam digitar de novo.'],
+    keep: ['Busca (ampliada)', 'Situações', 'Botão +'],
+    pros: 'Muito rápido para quem sabe o que procura.', cons: 'Menos panorâmico do dia; depende de digitar.', effort: ['baixo', 'Busca ampliada sobre a mesma lista.'],
+    nav: 'top', content: 'search'}
+];
+const CATS = [['base', 'Base do layout'], ['cab', 'Cabeçalho'], ['nav', 'Navegação'], ['org', 'Organização do conteúdo'], ['card', 'Cartões / tabelas'], ['btn', 'Botões e ações'], ['vis', 'Estilo visual']];
+
+/* ================= Renderização das prévias ================= */
+const visible = (s, list) => list.filter(o => {
+  const q = (s.q || '').toLowerCase().trim();
+  if(q && !(String(o.n).includes(q) || o.cli.toLowerCase().includes(q) || o.city.toLowerCase().includes(q) || o.proj.toLowerCase().includes(q))) return false;
+  if(s.f && s.f !== 'all' && o.st !== s.f) return false;
+  return true;
+});
+const today = s => ORDERS.filter(o => o.d === (s.day || 30));
+const detail = o => {
+  const ed = o.st === 'aberto' || o.st === 'correcao';
+  return `<div class="det"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div><small style="color:var(--p-m)">Nº ${o.n} · ${o.d}/09 ${o.tm}</small><h4>${esc(o.cli)}</h4></div>${tag(o.st)}</div>
+    ${o.appr && (o.st === 'correcao' || o.st === 'reprovado') ? `<div class="note"><b>Diretor:</b> ${esc(o.appr)}</div>` : ''}
+    <dl class="kv"><dt>Cidade</dt><dd>${esc(o.city)}</dd><dt>Projeto</dt><dd>${esc(o.proj)}</dd><dt>Negociação</dt><dd>${o.neg}</dd><dt>Empresa</dt><dd>${o.co}</dd></dl>
+    <div class="items">${o.items.map(it => `<div class="it"><div><b>${esc(it[0])}</b><small>${esc(it[1])} · ${it[2]}</small></div><span class="money">${fmt(it[3])}</span></div>`).join('')}
+    <div class="it" style="border:0"><b>Valor total</b><b class="money">${fmt(o.v)}</b></div></div>
+    <div class="acts">${ed ? `<button class="ab p" data-act="toast" data-msg="Abriria a edição (demonstração)">${I.edit}Editar</button>` : o.st === 'aprovacao' ? `<button class="ab y" data-act="toast" data-msg="Reabrir pede confirmação (demonstração)">${I.unlock}Reabrir</button>` : ''}
+      <button class="ab r" data-act="toast" data-msg="Geraria o PDF (demonstração)">${I.pdf}PDF</button><button class="ab w" data-act="toast" data-msg="Abriria o WhatsApp (demonstração)">${I.wa}WhatsApp</button></div></div>`;
+};
+const sheet = (s, o) => o ? `<div class="scrim" data-act="close"></div><div class="sheet-in" role="dialog" aria-label="Pedido ${o.n}"><div class="grab"></div>
+  <button class="ab g" style="height:38px;flex:none;width:auto;padding:0 12px;margin-bottom:8px" data-act="close">${I.back}Voltar</button>${detail(o)}</div>` : '';
+const mdash = back => `<div class="mdash">${back ? `<button class="ab g" style="flex:none;width:max-content;padding:0 14px" data-act="tab" data-v="list">${I.back}Pedidos</button>` : ''}
+  <h3 style="margin:0">Planejado × Realizado · 2026</h3>
+  <div class="mk"><div class="l">Objetivo</div><div class="v money">${fmt(DASH.obj)}</div><div class="bar"><i style="width:${DASH.fat / DASH.obj * 100}%;background:var(--p-ink)"></i><i style="width:${DASH.cart / DASH.obj * 100}%;background:#d9c49a"></i></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="mk"><div class="l">Faturado</div><div class="v">8,38 mi <small style="color:#b07414;font-size:13px">75%</small></div></div><div class="mk"><div class="l">Carteira</div><div class="v">449 mil</div></div></div>
+  <p style="color:var(--p-m);font-size:12.5px;margin:0">Dashboard completo como no app atual (resumido aqui).</p></div>`;
+const srow = (s, extra = '') => `<div class="sr"><label class="search">${I.search}<input data-act="q" value="${esc(s.q || '')}" placeholder="Buscar pedido" aria-label="Buscar pedido"></label>${extra}</div>`;
+const stChips = (s, list) => `<div class="chips" role="group" aria-label="Situação">${[['all', 'Todos']].concat(Object.entries(ST)).map(([k, l]) => `<button class="chip" data-act="f" data-v="${k}" aria-pressed="${(s.f || 'all') === k}">${l}<span class="n">${k === 'all' ? list.length : list.filter(o => o.st === k).length}</span></button>`).join('')}</div>`;
+const fab = `<button class="fab" data-act="toast" data-msg="Abriria um novo pedido (demonstração)" aria-label="Novo pedido">${I.plus}</button>`;
+const sel = (s) => ORDERS.find(o => o.n === s.open);
+
+const R = {};
+R[0] = s => { // atual
+  if(s.tab === 'dash') return `<div class="P m0"><div class="hd"><span class="av">${USER.ini}</span><div class="who"><b>${USER.name}</b><small>${USER.unit} ▾</small></div>${I.bell}</div><div class="body"><div class="pager"><i></i><i class="on"></i></div>${mdash(true)}</div></div>`;
+  const o = sel(s); if(o) return `<div class="P m0"><div class="body" style="padding-top:14px"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const list = visible(s, today(s));
+  return `<div class="P m0"><div class="hd"><span class="av">${USER.ini}</span><div class="who"><b>${USER.name}</b><small>${USER.unit} ▾</small></div><span style="position:relative">${I.bell}<span class="badge">3</span></span></div>
+    <div class="body"><div class="pager" title="Arraste para o lado para abrir o Dashboard"><i class="on"></i><button aria-label="Dashboard" data-act="tab" data-v="dash" style="border:0;background:none;padding:0"><i></i></button></div>
+    ${srow(s, `<button class="icb" aria-label="Situação">${I.tagi}</button><button class="icb" aria-label="Filtros">${I.filter}</button>`)}
+    <div class="days"><b>Set/26</b>${['QUI 24', 'SEX 25', 'SÁB 26', 'DOM 27', 'SEG 28', 'TER 29', 'QUA 30'].map(d => { const [w, n] = d.split(' '); return `<button class="day ${+n === (s.day || 30) ? 'on' : ''}" style="border:0;background:none" data-act="day" data-v="${n}">${w}<span>${n}</span></button>`; }).join('')}</div>
+    ${list.map(o => `<button class="oc" data-act="open" data-v="${o.n}"><div class="h"><b>${esc(o.cli)}</b>${tag(o.st)}</div><dl><div><dt>Empresa: </dt><dd>${o.co}</dd></div><div><dt>Nº pedido: </dt><dd>${o.n}</dd></div><div><dt>Data movimento: </dt><dd>${o.d}/09/2026 ${o.tm}</dd></div><div><dt>Gestor de Venda: </dt><dd>${USER.name}</dd></div><div><dt>Tipo de negociação: </dt><dd>${o.neg}</dd></div><div><dt>Projeto: </dt><dd>${o.proj}</dd></div><div class="tot"><dt style="color:inherit">Valor total: </dt><dd>${fmt(o.v)}</dd></div></dl></button>`).join('') || '<div class="empty">Nenhum pedido neste dia.</div>'}
+    ${fab}</div></div>`;
+};
+R[1] = s => {
+  if(s.tab === 'dash') return `<div class="P m1">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m1"><div class="body"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const all = today(s), list = visible(s, all), tot = all.reduce((a, x) => a + x.v, 0);
+  return `<div class="P m1"><div class="hd"><div class="r"><span class="av">${USER.ini}</span><div class="who"><b>${USER.name}</b><small>${USER.unit} ▾</small></div><span style="position:relative">${I.bell}<span class="badge">3</span></span></div>
+    <div class="sum"><div>Hoje<br><b>${all.length} pedidos</b></div><div>Valor<br><b>${fmtS(tot)}</b></div><div>A corrigir<br><b>${all.filter(x => x.st === 'correcao').length}</b></div><button data-act="tab" data-v="dash" style="margin-left:auto;align-self:center;border:1px solid rgba(248,231,201,.4);background:none;color:inherit;border-radius:10px;padding:6px 10px;font-weight:700">${I.chart}</button></div></div>
+    <div class="body">${srow(s, `<button class="icb" aria-label="Filtros">${I.filter}</button>`)}${stChips(s, all)}<div style="height:10px"></div>
+    <div class="list">${list.map(o => `<div class="oc"><button data-act="open" data-v="${o.n}" style="border:0;background:none;padding:0;text-align:left;display:flex;flex-direction:column;gap:4px"><div class="h"><b>${esc(o.cli)}</b>${tag(o.st)}</div><div class="meta">Nº ${o.n} · ${o.tm} · ${esc(o.proj)}</div></button>
+      <div class="f"><span class="v money">${fmt(o.v)}</span><span class="q"><span role="button" tabindex="0" aria-label="PDF" data-act="toast" data-msg="PDF (demonstração)" style="color:#c43a31">${I.pdf}</span><span role="button" tabindex="0" aria-label="WhatsApp" data-act="toast" data-msg="WhatsApp (demonstração)" style="color:#1da851">${I.wa}</span></span></div></div>`).join('') || '<div class="empty">Nenhum pedido encontrado.</div>'}</div>${fab}</div></div>`;
+};
+R[2] = s => {
+  if(s.tab === 'dash') return `<div class="P m2"><div class="hd"><b>Dashboard</b></div>${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m2"><div class="hd"><button data-act="close" style="border:0;background:none;color:inherit" aria-label="Voltar">${I.back}</button><b>Pedido ${o.n}</b></div><div class="body">${detail(o)}</div></div>`;
+  const all = today(s), list = visible(s, all);
+  const row = o => `<button class="row" data-act="open" data-v="${o.n}"><span class="c-n"><b>${o.n}</b></span><span><b>${esc(o.cli)}</b><small class="c-m">Nº ${o.n} · ${o.tm} · ${o.proj}</small></span><span class="c-p"><small>${o.proj}</small></span><span class="c-s">${tag(o.st)}</span><span class="v money">${fmt(o.v)}<br><span class="c-m">${tag(o.st)}</span></span></button>`;
+  const groups = Object.keys(ST).map(k => [k, list.filter(o => o.st === k)]).filter(g => g[1].length);
+  return `<div class="P m2"><div class="hd"><b>Pedidos · 30/09</b><button data-act="tab" data-v="dash" style="border:0;background:none;color:inherit" aria-label="Dashboard">${I.chart}</button><span style="position:relative">${I.bell}<span class="badge">3</span></span></div>
+    <div class="body">${srow(s, `<button class="icb" aria-label="Situação">${I.tagi}</button><button class="icb" aria-label="Filtros">${I.filter}</button>`)}
+    <div class="th"><span>Nº</span><span>Cliente</span><span>Projeto</span><span>Situação</span><span style="text-align:right">Valor</span></div>
+    ${groups.map(([k, g]) => `<div class="grp"><span>${ST[k]} · ${g.length}</span><span>${fmtS(g.reduce((a, x) => a + x.v, 0))}</span></div><div class="tbl">${g.map(row).join('')}</div>`).join('') || '<div class="empty">Nenhum pedido encontrado.</div>'}
+    ${fab}</div></div>`;
+};
+R[3] = s => {
+  if(s.tab === 'dash') return `<div class="P m3">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m3"><div class="body"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const all = visible({q: s.q}, today(s)), f = s.f || 'all';
+  const cc = o => `<button class="cc" style="--c:${STC[o.st]}" data-act="open" data-v="${o.n}"><b>${esc(o.cli)}</b><small>Nº ${o.n} · ${o.tm}</small><div class="v money">${fmt(o.v)}</div></button>`;
+  return `<div class="P m3"><div class="hd"><div class="r"><span class="av">${USER.ini}</span><b>Pedidos</b><button data-act="tab" data-v="dash" style="border:0;background:none;color:inherit" aria-label="Dashboard">${I.chart}</button>${I.bell}</div>
+    <div class="st" role="tablist">${[['all', 'Todos']].concat(Object.entries(ST)).map(([k, l]) => `<button data-act="f" data-v="${k}" aria-pressed="${f === k}">${l}<span class="n">${k === 'all' ? all.length : all.filter(o => o.st === k).length}</span></button>`).join('')}</div></div>
+    <div class="body">${srow(s)}<div class="board">${Object.keys(ST).map(k => { const g = all.filter(o => o.st === k); return `<div class="col" style="--c:${STC[k]}" ${f !== 'all' && f !== k ? 'hidden' : ''}><h5><span>${ST[k]}</span><span>${g.length}</span></h5>${g.map(cc).join('')}</div>`; }).join('')}</div>${all.length ? '' : '<div class="empty">Nenhum pedido encontrado.</div>'}${fab}</div></div>`;
+};
+R[4] = s => {
+  const navb = `<nav class="nav" aria-label="Navegação principal">${[['list', 'Pedidos', I.list], ['cli', 'Clientes', I.users], ['new', 'Novo', I.plus], ['dash', 'Dashboard', I.chart], ['not', 'Avisos', I.bell]].map(([k, l, ic]) => k === 'new' ? `<button class="new" data-act="toast" data-msg="Abriria um novo pedido (demonstração)" aria-label="Novo pedido">${ic}</button>` : `<button class="nb" data-act="tab" data-v="${k}" ${(s.tab || 'list') === k ? 'aria-current="page"' : ''}>${ic}${l}${k === 'not' ? '<span class="badge">3</span>' : ''}</button>`).join('')}</nav>`;
+  let main;
+  if(s.tab === 'dash') main = mdash(false);
+  else if(s.tab === 'cli' || s.tab === 'not') main = `<div class="main"><div class="empty">${s.tab === 'cli' ? 'Carteira de clientes (fora do recorte desta exploração).' : '3 notificações: 2 correções e 1 aprovação.'}</div></div>`;
+  else { const o = sel(s);
+    if(o) main = `<div class="main"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin:6px 0 10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div>`;
+    else { const list = visible(s, today(s));
+      main = `<div class="hd"><b>Pedidos</b><span class="av">${USER.ini}</span></div><div class="main">${srow(s, `<button class="icb" aria-label="Filtros">${I.filter}</button>`)}${stChips(s, today(s))}
+        ${list.map(o => `<button class="oc" data-act="open" data-v="${o.n}"><span class="ini">${ini(o.cli)}</span><span class="tx"><b>${esc(o.cli)}</b><small>Nº ${o.n} · ${o.tm} · ${o.city}</small></span><span class="r"><span class="v money">${fmtS(o.v)}</span>${tag(o.st)}</span></button>`).join('') || '<div class="empty">Nenhum pedido encontrado.</div>'}</div>`; } }
+  return `<div class="P m4"><div class="col">${main}</div>${navb}</div>`;
+};
+R[5] = s => {
+  if(s.tab === 'dash') return `<div class="P m5">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m5"><div class="body"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const all = today(s), tot = all.reduce((a, x) => a + x.v, 0);
+  const need = visible(s, ORDERS.filter(x => x.st === 'correcao')), rest = visible(s, all.filter(x => x.st !== 'correcao'));
+  return `<div class="P m5"><div class="hd"><div class="r"><span class="av">${USER.ini}</span><div class="who"><b>${USER.name}</b><small>${USER.unit} ▾</small></div><span style="position:relative">${I.bell}<span class="badge">3</span></span></div>
+    <h3>Seu dia · quarta, 30/09</h3><div class="k"><div><span>Vendido hoje</span><b>${fmtS(tot)}</b></div><div><span>Pedidos</span><b>${all.length}</b></div><div><span>A corrigir</span><b>${need.length}</b></div></div></div>
+    <div class="body">${srow(s, `<button class="icb" aria-label="Dashboard" data-act="tab" data-v="dash">${I.chart}</button>`)}
+    ${need.length ? `<div class="sec"><span>Precisa de você · ${need.length}</span></div>${need.map(o => `<button class="need" data-act="open" data-v="${o.n}"><span class="tx"><b>${esc(o.cli)}</b><small style="color:#7a4a1c">Nº ${o.n} · ${o.d === 30 ? 'hoje' : o.d + '/09'} · ${fmt(o.v)}</small><p>“${esc(o.appr)}”</p></span><span class="go">Corrigir ›</span></button>`).join('')}` : ''}
+    <div class="sec"><span>Hoje · ${rest.length}</span>${stChips(s, all).replace('class="chips"', 'class="chips" style="max-width:62%"')}</div>
+    <div class="two">${rest.map(o => `<button class="row" data-act="open" data-v="${o.n}"><span class="tx"><b>${esc(o.cli)}</b><small>Nº ${o.n} · ${o.tm}</small></span><span><span class="v money" style="display:block">${fmtS(o.v)}</span>${tag(o.st)}</span></button>`).join('')}</div>
+    ${!need.length && !rest.length ? '<div class="empty">Nenhum pedido encontrado.</div>' : ''}${fab}</div></div>`;
+};
+R[6] = s => {
+  if(s.tab === 'dash') return `<div class="P m6">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m6"><div class="body"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin:10px 0" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const list = visible(s, today(s)).sort((a, b) => a.tm.localeCompare(b.tm));
+  return `<div class="P m6"><div class="hd"><b>Agenda de pedidos</b><button data-act="tab" data-v="dash" style="border:0;background:none" aria-label="Dashboard">${I.chart}</button><span class="av">${USER.ini}</span></div>
+    <div class="wk" role="group" aria-label="Dia">${[['QUI', 24], ['SEX', 25], ['SÁB', 26], ['DOM', 27], ['SEG', 28], ['TER', 29], ['QUA', 30]].map(([w, n]) => `<button data-act="day" data-v="${n}" aria-pressed="${n === (s.day || 30)}">${w}<b>${n}</b>${ORDERS.some(x => x.d === n) ? '<i></i>' : ''}</button>`).join('')}</div>
+    <div class="body">${srow(s)}<div class="tl">${list.map(o => `<button class="ev" style="--c:${STC[o.st]}" data-act="open" data-v="${o.n}"><span class="tm">${o.tm}</span><b>${esc(o.cli)}</b><small>Nº ${o.n} · ${esc(o.city)}</small><div class="f"><span class="v money">${fmt(o.v)}</span>${tag(o.st)}</div></button>`).join('') || '<div class="empty" style="margin-left:-58px">Nenhum pedido neste dia.</div>'}</div>${fab}</div></div>`;
+};
+R[7] = s => {
+  if(s.tab === 'dash') return `<div class="P m7"><div class="hd"><b>Dashboard</b></div>${mdash(true)}</div>`;
+  const list = visible(s, today(s)), o = sel(s);
+  return `<div class="P m7"><div class="hd"><span class="av">${USER.ini}</span><b>${USER.name}</b><button data-act="tab" data-v="dash" style="border:0;background:none;color:inherit" aria-label="Dashboard">${I.chart}</button>${I.bell}</div>
+    <div class="split"><div class="lst">${srow(s, `<button class="icb" aria-label="Filtros">${I.filter}</button>`)}${list.map(x => `<button class="oc" data-act="open" data-v="${x.n}" ${o && o.n === x.n ? 'aria-current="true"' : ''}><b>${esc(x.cli)}</b><span class="v money">${fmtS(x.v)}</span><small>Nº ${x.n} · ${x.tm}</small><span style="text-align:right">${tag(x.st)}</span></button>`).join('') || '<div class="empty">Nenhum pedido encontrado.</div>'}${fab}</div>
+    <div class="pane">${o ? detail(o) : '<div class="empty" style="padding-top:120px">Escolha um pedido na lista para ver o detalhe aqui.</div>'}</div></div>
+    </div>${o ? `<div class="P ovl">${sheet(s, o)}</div>` : ''}`;
+};
+R[8] = s => {
+  if(s.tab === 'dash') return `<div class="P m8">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m8"><div class="body" style="margin:0;padding-top:14px"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const list = visible(s, ORDERS.filter(x => x.d >= 29)), by = {};
+  list.forEach(x => (by[x.cli] = by[x.cli] || []).push(x));
+  return `<div class="P m8"><div class="hd"><div class="r"><span class="av">${USER.ini}</span><b>Clientes e pedidos</b><button data-act="tab" data-v="dash" style="border:0;background:none;color:inherit" aria-label="Dashboard">${I.chart}</button>${I.bell}</div></div>
+    <div class="body">${srow(s, `<button class="icb" aria-label="Filtros">${I.filter}</button>`)}<div class="grid">${Object.entries(by).sort((a, b) => b[1].reduce((x, y) => x + y.v, 0) - a[1].reduce((x, y) => x + y.v, 0)).map(([c, os]) => `<div class="cl"><div class="h"><span class="lg">${ini(c)}</span><span><b>${esc(c)}</b><small>${esc(os[0].city)} · ${os.length} pedido${os.length > 1 ? 's' : ''}</small></span><span class="tot money">${fmtS(os.reduce((a, x) => a + x.v, 0))}</span></div>
+      ${os.map(x => `<button class="po" data-act="open" data-v="${x.n}"><span>Nº ${x.n} · ${x.d === 30 ? 'hoje' : '29/09'} ${x.tm}</span><span style="display:flex;gap:8px;align-items:center">${tag(x.st)}<b class="money">${fmtS(x.v)}</b></span></button>`).join('')}</div>`).join('') || '<div class="empty">Nenhum cliente encontrado.</div>'}</div>${fab}</div></div>`;
+};
+R[9] = s => {
+  if(s.tab === 'dash') return `<div class="P m9">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m9"><div class="lay"><div><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div></div>`;
+  const day = s.day || 30, heat = {1: 1, 2: 2, 3: 1, 7: 3, 8: 2, 9: 1, 10: 2, 14: 1, 15: 3, 16: 2, 17: 1, 21: 2, 22: 1, 23: 3, 24: 2, 25: 1, 28: 2, 29: 2, 30: 3};
+  const list = visible(s, ORDERS.filter(x => x.d === day));
+  return `<div class="P m9"><div class="hd"><span class="av">${USER.ini}</span><b>Pedidos</b><button data-act="tab" data-v="dash" style="border:0;background:none;color:inherit" aria-label="Dashboard">${I.chart}</button>${I.bell}</div>
+    <div class="lay"><div class="cal"><div class="t"><span>‹</span><span>Setembro 2026</span><span>›</span></div><div class="cg">${['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map(d => `<span>${d}</span>`).join('')}<button disabled></button><button disabled></button>${Array.from({length: 30}, (_, i) => i + 1).map(d => `<button class="${heat[d] ? 'h' + heat[d] : ''}" data-act="day" data-v="${d}" aria-pressed="${d === day}" aria-label="${d} de setembro">${d}</button>`).join('')}</div>
+      <div class="lg">Valor no dia: <span><i style="background:#dbe9df"></i>baixo</span><span><i style="background:#a9cdb6"></i>médio</span><span><i style="background:#5e9c7c"></i>alto</span></div></div>
+      <div class="day">${srow(s)}<h4><span>${day}/09 · ${list.length} pedido${list.length === 1 ? '' : 's'}</span><span class="money">${fmtS(list.reduce((a, x) => a + x.v, 0))}</span></h4>${list.map(x => `<button class="oc" data-act="open" data-v="${x.n}"><span><b>${esc(x.cli)}</b><small>Nº ${x.n} · ${x.tm}</small></span><span><span class="v money" style="display:block">${fmtS(x.v)}</span>${tag(x.st)}</span></button>`).join('') || '<div class="empty">Sem pedidos neste dia (exemplo: só 29 e 30 têm pedidos).</div>'}${fab}</div></div></div>`;
+};
+R[10] = s => {
+  if(s.tab === 'dash') return `<div class="P m10">${mdash(true)}</div>`;
+  const o = sel(s); if(o) return `<div class="P m10"><div class="body" style="padding-top:14px"><button class="ab g" style="flex:none;width:auto;padding:0 12px;margin-bottom:10px" data-act="close">${I.back}Voltar</button>${detail(o)}</div></div>`;
+  const q = (s.q || '').trim(), base = s.f === 'today' ? ORDERS.filter(x => x.d === 30) : ORDERS;
+  const list = visible({q, f: ['all', 'today'].includes(s.f || 'all') ? 'all' : s.f}, base);
+  const hl = t => q ? esc(t).replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig'), '<mark>$1</mark>') : esc(t);
+  return `<div class="P m10"><div class="hd"><b>Força de Vendas</b><button data-act="tab" data-v="dash" style="border:0;background:none" aria-label="Dashboard">${I.chart}</button><span style="position:relative">${I.bell}<span class="badge">3</span></span><span class="av">${USER.ini}</span></div>
+    <div class="hero"><h2>Bom dia, ${USER.name.split(' ')[0]}.<br>O que você procura?</h2><label class="big">${I.search}<input data-act="q" value="${esc(q)}" placeholder="Nº, cliente, cidade ou projeto" aria-label="Buscar pedido"></label>
+      <div class="chips qf" role="group" aria-label="Filtros rápidos">${[['all', 'Todos'], ['today', 'Hoje'], ['correcao', 'Em correção'], ['aprovacao', 'Bloqueado'], ['aprovado', 'Aprovado']].map(([k, l]) => `<button class="chip" data-act="f" data-v="${k}" aria-pressed="${(s.f || 'all') === k}">${l}</button>`).join('')}</div>
+      ${q ? '' : `<div class="recent"><span style="font-size:12px;color:var(--p-m);align-self:center">Recentes:</span>${['Santa Rita', '10017', 'Ponta Grossa'].map(r => `<button class="chip" data-act="qset" data-v="${r}">${r}</button>`).join('')}</div>`}</div>
+    <div class="body"><div class="res">${list.length} resultado${list.length === 1 ? '' : 's'}</div>${list.map(x => `<button class="oc" data-act="open" data-v="${x.n}"><b>${hl(x.cli)}</b><span class="v money">${fmtS(x.v)}</span><small>Nº ${hl(String(x.n))} · ${hl(x.city)} · ${x.d === 30 ? 'hoje' : '29/09'}</small><span style="text-align:right">${tag(x.st)}</span></button>`).join('') || '<div class="empty">Nada encontrado. Tente o nº do pedido ou parte do nome do cliente.</div>'}${fab}</div></div>`;
+};
+
+/* ================= Estado das prévias e interação ================= */
+const PV = {}; // id do palco -> {model, dev, st}
+const DEV = {m: ['Celular', 390], t: ['Tablet', 820], d: ['Computador', 1280]};
+function mount(stageId, model, dev, keep){
+  const p = PV[stageId] = PV[stageId] && keep ? Object.assign(PV[stageId], {model, dev}) : {model, dev, st: {}};
+  const el = document.getElementById(stageId);
+  el.innerHTML = `<div class="dev ${dev === 'd' ? 'd' : ''}"><div class="frame" style="width:${DEV[dev][1]}px" data-stage="${stageId}">${R[model](p.st)}</div></div>`;
+}
+function rerender(stageId, focusSel){
+  const p = PV[stageId], fr = document.querySelector(`[data-stage="${stageId}"]`);
+  const sc = fr.querySelector('.P')?.scrollTop || 0;
+  fr.innerHTML = R[p.model](p.st);
+  const P = fr.querySelector('.P'); if(P && p.keepScroll) P.scrollTop = sc;
+  if(focusSel){ const f = fr.querySelector(focusSel); if(f){ f.focus(); const v = f.value; f.value = ''; f.value = v; } }
+}
+document.addEventListener('click', e => {
+  const fr = e.target.closest('[data-stage]'); if(!fr) return;
+  const b = e.target.closest('[data-act]'); if(!b || b.dataset.act === 'q') return;
+  const id = fr.dataset.stage, st = PV[id].st, a = b.dataset.act, v = b.dataset.v;
+  PV[id].keepScroll = false;
+  if(a === 'open'){ st.open = +v; if(PV[id].model === 7) PV[id].keepScroll = true; }
+  else if(a === 'close'){ st.open = null; }
+  else if(a === 'tab'){ st.tab = v; st.open = null; }
+  else if(a === 'f'){ st.f = v; PV[id].keepScroll = true; }
+  else if(a === 'day'){ st.day = +v; st.open = null; PV[id].keepScroll = true; }
+  else if(a === 'qset'){ st.q = v; }
+  else if(a === 'toast'){ toast(b.dataset.msg); return; }
+  rerender(id);
+});
+document.addEventListener('keydown', e => { // botões feitos de span (ações do cartão) também respondem ao teclado
+  if((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-stage] [role="button"]')){ e.preventDefault(); e.target.click(); }
+});
+document.addEventListener('input', e => {
+  if(!e.target.matches('[data-stage] [data-act="q"]')) return;
+  const id = e.target.closest('[data-stage]').dataset.stage; PV[id].st.q = e.target.value; PV[id].keepScroll = true; rerender(id, '[data-act="q"]');
+});
+
+/* ================= Comparador: abas, galeria, um modelo, comparar ================= */
+let tm;
+function toast(m){ const t = document.getElementById('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(tm); tm = setTimeout(() => t.classList.remove('on'), 1800); }
+const tabs = [...document.querySelectorAll('[role=tab]')];
+function showTab(k){ tabs.forEach(t => { const on = t.dataset.tab === k; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+  if(k === 'ch') renderChoices(); window.scrollTo(0, 0); }
+tabs.forEach((t, i) => { t.addEventListener('click', () => showTab(t.dataset.tab));
+  t.addEventListener('keydown', e => { if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){ const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; n.focus(); showTab(n.dataset.tab); } }); });
+const label = m => `${String(m.id).padStart(2, '0')} · ${m.name}${m.rec ? ' ★ recomendado' : ''}`;
+
+// persistência (pode não existir: navegação privada, arquivo local bloqueado etc.)
+const KEY = 'fv-exploracao-uiux';
+let SAVE = {fav: [], cats: {}, notes: {}}, canStore = true;
+try{ const raw = localStorage.getItem(KEY); if(raw) SAVE = Object.assign(SAVE, JSON.parse(raw)); }catch(e){ canStore = false; }
+function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(SAVE)); canStore = true; }catch(e){ canStore = false; } }
+const isFav = id => SAVE.fav.includes(id);
+function toggleFav(id){ SAVE.fav = isFav(id) ? SAVE.fav.filter(x => x !== id) : [...SAVE.fav, id]; persist(); renderGallery(); syncOneFav(); }
+
+function renderGallery(){
+  document.getElementById('gal').innerHTML = MODELS.filter(m => !m.ref).map(m => `<article class="gcard ${m.rec ? 'rec' : ''}">
+    <div class="thumb" aria-hidden="true"><div class="sc"><div class="frame" style="width:390px;height:720px;border-radius:0">${R[m.id]({})}</div></div></div>
+    <div class="gbody"><span class="n">MODELO ${String(m.id).padStart(2, '0')} ${m.rec ? '· <span class="pill rec">★ recomendado</span>' : ''}</span><b>${m.name}</b><p>${m.concept}</p>
+      <p>Esforço: <span class="effort e-${m.effort[0]}">${m.effort[0] === 'medio' ? 'médio' : m.effort[0]}</span></p>
+      <div class="gact"><button class="btn sm pri" data-open="${m.id}">Ver modelo</button><button class="btn sm" data-fav="${m.id}" aria-pressed="${isFav(m.id)}" aria-label="${isFav(m.id) ? 'Remover dos favoritos' : 'Favoritar'} modelo ${m.id}"><span class="star">${isFav(m.id) ? '★' : '☆'}</span></button></div></div></article>`).join('');
+}
+document.getElementById('gal').addEventListener('click', e => { const o = e.target.closest('[data-open]'), f = e.target.closest('[data-fav]');
+  if(o){ oneSel.value = o.dataset.open; showTab('one'); renderOne(); } if(f) toggleFav(+f.dataset.fav); });
+
+const oneSel = document.getElementById('one-sel'), cmpA = document.getElementById('cmp-a'), cmpB = document.getElementById('cmp-b');
+[oneSel, cmpA, cmpB].forEach(s => s.innerHTML = MODELS.map(m => `<option value="${m.id}">${label(m)}</option>`).join(''));
+oneSel.value = 5; cmpA.value = 0; cmpB.value = 5;
+const devSeg = (id, cur, fn) => { const el = document.getElementById(id); el.innerHTML = Object.entries(DEV).map(([k, [l, w]]) => `<button data-dev="${k}" aria-pressed="${k === cur}">${l} <span class="muted" style="font-weight:500">${w}</span></button>`).join('');
+  el.onclick = e => { const b = e.target.closest('[data-dev]'); if(!b) return; el.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); fn(b.dataset.dev); }; };
+let oneDev = 'm', cmpDev = 'm';
+devSeg('one-dev', 'm', d => { oneDev = d; mount('one-stage', +oneSel.value, d, true); });
+devSeg('cmp-dev', 'm', d => { cmpDev = d; renderCmp(true); });
+function syncOneFav(){ const b = document.getElementById('one-fav'), id = +oneSel.value, m = MODELS[id];
+  b.hidden = !!m.ref; b.setAttribute('aria-pressed', isFav(id)); b.innerHTML = `<span class="star">${isFav(id) ? '★' : '☆'}</span> ${isFav(id) ? 'Favorito' : 'Favoritar'}`; }
+function renderOne(){
+  const m = MODELS[+oneSel.value]; mount('one-stage', m.id, oneDev); syncOneFav();
+  document.getElementById('one-expl').innerHTML = m.ref
+    ? `<span class="pill">Referência</span><h2 style="margin-top:8px">00 · Interface atual</h2><p class="muted">Reconstrução fiel da lista de pedidos de hoje (cabeçalho Modelo 1, tema Somax), com os mesmos dados de exemplo. O Dashboard abre pela segunda bolinha (no app, arrastando a tela).</p>`
+    : `<span class="pill ${m.rec ? 'rec' : ''}">${m.rec ? '★ Recomendado' : 'Modelo ' + String(m.id).padStart(2, '0')}</span><h2 style="margin-top:8px">${String(m.id).padStart(2, '0')} · ${m.name}</h2><p class="muted" style="margin:0">${m.concept}</p>
+      <h3>Decisões de UI</h3><ul>${m.ui.map(x => `<li>${x}</li>`).join('')}</ul>
+      <h3>Melhorias de UX</h3><ul>${m.ux.map(x => `<li>${x}</li>`).join('')}</ul>
+      <h3>Preserva da versão atual</h3><ul>${m.keep.map(x => `<li>${x}</li>`).join('')}</ul>
+      <h3>Benefícios e limitações</h3><ul><li><b>Benefício:</b> ${m.pros}</li><li><b>Limitação:</b> ${m.cons}</li></ul>
+      <h3>Esforço de implementação</h3><p style="margin:4px 0 0"><span class="effort e-${m.effort[0]}">${m.effort[0] === 'medio' ? 'médio' : m.effort[0]}</span> ${m.effort[1]}</p>
+      <h3>Experimente</h3><ul><li>Toque num pedido para abrir; use a busca e os filtros.</li><li>Abra o Dashboard pelo ícone de gráfico${m.nav === 'bottom' ? ' ou pela barra' : ''}.</li><li>Troque Celular / Tablet / Computador acima.</li></ul>
+      <h3>Observação</h3><textarea data-note="${m.id}" aria-label="Observação sobre o modelo ${m.id}" placeholder="Anote o que gostou ou não…">${esc(SAVE.notes[m.id] || '')}</textarea>`;
+}
+oneSel.onchange = renderOne;
+document.getElementById('one-fav').onclick = () => toggleFav(+oneSel.value);
+document.getElementById('one-reset').onclick = () => { PV['one-stage'] = null; renderOne(); };
+function renderCmp(keep){ mount('cmp-sa', +cmpA.value, cmpDev, keep); mount('cmp-sb', +cmpB.value, cmpDev, keep); }
+cmpA.onchange = cmpB.onchange = () => renderCmp(false);
+document.addEventListener('input', e => { if(e.target.matches('[data-note]')){ SAVE.notes[e.target.dataset.note] = e.target.value; persist(); if(!document.getElementById('s-ch').hidden) renderSummary(); } });
+
+/* ================= Escolhas: favoritos, categorias, compatibilidade, resumo ================= */
+function renderChoices(){
+  const pick = MODELS.filter(m => !m.ref);
+  document.getElementById('favs').innerHTML = pick.map(m => `<button class="btn sm" data-favc="${m.id}" aria-pressed="${isFav(m.id)}"><span class="star">${isFav(m.id) ? '★' : '☆'}</span>${String(m.id).padStart(2, '0')}</button>`).join('');
+  document.getElementById('cats').innerHTML = CATS.map(([k, l]) => `<label for="cat-${k}"><b>${l}</b></label><select id="cat-${k}" data-cat="${k}"><option value="">— sem preferência —</option>${pick.map(m => `<option value="${m.id}" ${+SAVE.cats[k] === m.id ? 'selected' : ''}>${label(m)}</option>`).join('')}</select>`).join('');
+  document.getElementById('notes').innerHTML = pick.map(m => `<div class="note-row"><label for="nt-${m.id}"><b>${String(m.id).padStart(2, '0')}</b> ${m.name}</label><textarea id="nt-${m.id}" data-note="${m.id}" placeholder="Observação…">${esc(SAVE.notes[m.id] || '')}</textarea></div>`).join('');
+  renderSummary();
+}
+document.getElementById('s-ch').addEventListener('click', e => { const f = e.target.closest('[data-favc]'); if(f){ toggleFav(+f.dataset.favc); renderChoices(); } });
+document.getElementById('s-ch').addEventListener('change', e => { if(e.target.dataset.cat){ const k = e.target.dataset.cat; if(e.target.value) SAVE.cats[k] = +e.target.value; else delete SAVE.cats[k]; persist(); renderSummary(); } });
+function conflicts(){
+  const c = SAVE.cats, M = id => MODELS[id], out = [];
+  if(c.nav === 4 && c.btn && c.btn !== 4) out.push(['Navegação do 04 (barra com "Novo" no centro) + botões do ' + String(c.btn).padStart(2, '0') + ' (botão + flutuante): os dois "Novo pedido" disputariam o mesmo canto da tela.', 'Usar o "Novo" central da barra do 04 e tirar o botão flutuante.']);
+  if(c.org === 3 && c.card === 2) out.push(['Organização do 03 (colunas por situação) + tabela do 02: no quadro as colunas são estreitas demais para linhas de tabela.', 'No quadro, usar os cartões do 03; a tabela do 02 só na visão de lista.']);
+  if(c.org === 9 && (c.cab === 5 || c.cab === 1)) out.push(['Calendário do 09 + cabeçalho com resumo do ' + String(c.cab).padStart(2, '0') + ': no celular, resumo + calendário ocupam quase a tela toda antes dos pedidos.', 'Recolher o resumo do cabeçalho quando o calendário estiver aberto, ou mostrar o calendário só no tablet/computador.']);
+  if(c.nav === 3 && c.org && c.org !== 3 && M(c.org).content !== 'cards' && M(c.org).content !== 'priority') out.push(['Navegação por abas de situação (03) + organização do ' + String(c.org).padStart(2, '0') + ': as duas dividem a lista de jeitos diferentes.', 'Manter as abas e, dentro de cada aba, a organização escolhida (ou trocar as abas por filtros rápidos).']);
+  if(c.cab === 4 && c.vis && c.vis !== 4) out.push(['Cabeçalho claro do 04 + estilo visual do ' + String(c.vis).padStart(2, '0') + ' (painel verde): o topo perde a identidade do painel.', 'Escolher um dos dois: topo claro (04) com acentos verdes, ou painel verde do estilo escolhido.']);
+  if(c.base === 7 && c.org === 6) out.push(['Base 07 (lista + detalhe lado a lado) + linha do tempo do 06: a lista estreita do 07 comprime a hora e o cartão da agenda.', 'Usar a linha do tempo só no celular e a lista compacta do 07 no tablet/computador.']);
+  return out;
+}
+function summaryText(){
+  const c = SAVE.cats, n = id => String(id).padStart(2, '0'), lines = [];
+  const base = c.base;
+  let main = base ? `Modelo ${n(base)} (${MODELS[base].name}) como base` : 'Sem modelo base escolhido';
+  const parts = CATS.filter(([k]) => k !== 'base' && c[k] && c[k] !== base).map(([k, l]) => `${l.toLowerCase()} do ${n(c[k])}`);
+  if(parts.length) main += ', ' + parts.join(', ');
+  lines.push(main + '.');
+  const same = CATS.filter(([k]) => k !== 'base' && c[k] && c[k] === base).map(([, l]) => l.toLowerCase());
+  if(same.length) lines.push(`Do próprio modelo base: ${same.join(', ')}.`);
+  lines.push(`Favoritos: ${SAVE.fav.length ? SAVE.fav.sort((a, b) => a - b).map(id => `${n(id)} ${MODELS[id].name}`).join('; ') : 'nenhum'}.`);
+  const cf = conflicts(); if(cf.length) lines.push('', 'Atenção:', ...cf.map(([p, s]) => `- ${p} Sugestão: ${s}`));
+  const notes = Object.entries(SAVE.notes).filter(([, v]) => v && v.trim());
+  if(notes.length) lines.push('', 'Observações:', ...notes.map(([id, v]) => `- ${n(+id)} ${MODELS[id].name}: ${v.trim()}`));
+  return lines.join('\n');
+}
+function renderSummary(){
+  document.getElementById('summary').textContent = summaryText();
+  const cf = conflicts();
+  document.getElementById('compat').innerHTML = cf.length ? cf.map(([p, s]) => `<div class="warnbox"><b>Incompatibilidade:</b> ${p}<br><b>Sugestão:</b> ${s}</div>`).join('') : (Object.keys(SAVE.cats).length ? '<div class="okbox">As escolhas combinam entre si.</div>' : '');
+  document.getElementById('store-msg').textContent = canStore ? 'Escolhas salvas neste navegador.' : 'Este navegador não permite salvar: as escolhas valem só enquanto a página estiver aberta. Copie ou baixe o resumo.';
+}
+document.getElementById('copy').onclick = async () => { const t = summaryText();
+  try{ await navigator.clipboard.writeText(t); toast('Resumo copiado'); }
+  catch(e){ const s = document.getElementById('summary'), r = document.createRange(); r.selectNodeContents(s); const g = getSelection(); g.removeAllRanges(); g.addRange(r); toast('Selecionei o texto: use Ctrl+C / Copiar'); } };
+document.getElementById('dl').onclick = () => { try{ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([summaryText()], {type: 'text/plain;charset=utf-8'})); a.download = 'escolhas-ui-ux.txt'; document.body.appendChild(a); a.click(); a.remove(); toast('Arquivo baixado'); }catch(e){ toast('Não foi possível baixar aqui; use Copiar'); } };
+document.getElementById('clear').onclick = () => { SAVE = {fav: [], cats: {}, notes: {}}; persist(); renderChoices(); renderGallery(); toast('Escolhas limpas'); };
+
+renderGallery(); renderOne(); renderCmp(false);
+</script>
+</body>
+</html>
