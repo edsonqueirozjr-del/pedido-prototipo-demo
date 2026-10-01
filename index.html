@@ -2740,9 +2740,16 @@ async function decide(o, kind){
 }
 
 // pedido em aberto do próprio vendedor abre direto na edição; os demais abrem o detalhe
+// aprovação (aprovador): tudo já aberto — Pedido, Cliente, Observação, Negociação, Locais, Produtos, cada produto e os dados de entrega
+function apprOpenAll(o){
+  S.openA = {gp: true}; S.openD = {};
+  if(S.profile !== 'aprovador' || !o) return;
+  ['g0', 'g1', 'gn', 'g2', 'g3'].forEach(k => S.openA[k] = true);
+  o.items.forEach(it => { S.openA[it.id] = true; S.openD['v' + it.id] = true; });
+}
 function openOrder(id){
   const o = ORDER(id); if(!o) return;
-  S.orderId = id; S.openA = {gp: true};   // aprovação: cartão Produtos já vem aberto
+  S.orderId = id; apprOpenAll(o);   // aprovação: tudo aberto; demais: cartão Produtos já vem aberto
   if(canEdit(o)){ S.draft = clone(o); S.draft0 = JSON.stringify(S.draft); S.isNew = false; S.open = {}; S.step = 1; S.errStep = 0; go('editor'); }
   else go('detail');
 }
@@ -3555,7 +3562,7 @@ const ACT = {
       addHist(o, 'edited_appr', apprName()); commit(o);
       notify({to: 'vendedor', sellerId: o.sellerId, type: 'edited', orderId: o.id, by: apprName()}); persist(); toast(t('t_edited_appr'), 'ok');
     }
-    S.orderId = o.id; S.draft = null; S.draft0 = null; S.apprEdit = false; S.openA = {gp: true}; S.view = 'detail'; render(); window.scrollTo(0, 0);
+    S.orderId = o.id; S.draft = null; S.draft0 = null; S.apprEdit = false; apprOpenAll(o); S.view = 'detail'; render(); window.scrollTo(0, 0);
   },
   approve: () => decide(ORDER(S.orderId), 'approve'),
   reject: () => decide(ORDER(S.orderId), 'reject'),
