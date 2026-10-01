@@ -238,11 +238,12 @@ main.in-next{animation:inNext .28s ease} main.in-prev{animation:inPrev .28s ease
 /* Planejado × Realizado */
 :root{--pv-prev:#b9c7bd} [data-theme="dark"]{--pv-prev:#6f8277} [data-theme="somax"]{--pv-prev:#fbc51f} [data-theme="emerald"]{--pv-prev:#d9c49a}
 .pv-hero{border-radius:18px;padding:14px 14px 12px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
-.pv-h1{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pv-h1{display:flex;flex-direction:column;align-items:flex-start;gap:2px}  /* "Objetivo" em cima, valor embaixo, à esquerda */
 .pv-h1 > span{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .pv-h1 b{font-size:27px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pv-h1 b small{font-size:13px;color:inherit}  /* BRL/USD na cor do número */
-.pv-bar{display:flex;height:12px;border-radius:6px;background:var(--gray-soft);overflow:hidden;margin:10px 0 12px}
+.pv-bar{position:relative;display:flex;height:26px;border-radius:13px;background:var(--gray-soft);overflow:hidden;margin:12px 0 2px}  /* barra grossa com o % do faturado escrito em cima */
+.pv-bp{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);font-variant-numeric:tabular-nums}
 .pv-bar i{display:block;height:100%;transform-origin:left;animation:dGrow .9s cubic-bezier(.2,.7,.2,1) both}
 .pv-bar i.f,.pv-kg i.f{background:var(--d1)} .pv-bar i.c,.pv-kg i.c{background:var(--pv-prev)}
 .pv-kg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}  /* cada indicador no seu cartão, 3 por linha */
@@ -3040,8 +3041,7 @@ function viewPlan(head){
     ${isAppr ? `<div class="co-chips pv-co">${Object.entries(COMPANIES).map(([id, nm]) => `<button type="button" class="co-chip co-${id} ${D.f.comp === id ? 'on' : ''}" data-a="dfil" data-k="comp" data-v="${id}" aria-pressed="${D.f.comp === id}"><img class="co-ic" src="${LOGOS[id]}" alt="">${esc(nm)}</button>`).join('')}</div>` : ''}
     <section class="pv-hero">
       <div class="pv-h1"><span>${t('pv_obj')}</span><b><small>${D.cur}</small> ${dCount(P)}</b></div>
-      <div class="pv-bar"><i class="f" style="width:${w(F, P)}"></i><i class="c" style="width:${w(C, P)}"></i></div>
-      <div class="pv-leg"><span><i class="f"></i>${t('pv_fat')} ${pvPctHtml(pf)}</span><span><i class="c"></i>${t('pv_cart')}</span><span>${t('pv_fc_s')} ${pvPctHtml(pfc)}</span></div>
+      <div class="pv-bar"><i class="f" style="width:${w(F, P)}"></i><i class="c" style="width:${w(C, P)}"></i><b class="pv-bp">${pf == null ? '–' : fmtNum(pf * 100, 0) + '%'}</b></div>
     </section>
     <div class="pv-kg">
         <div><span><i class="f"></i>${t('pv_fat')}</span><b>${fmtShort(F)}</b>${pvPctHtml(pf)}</div>

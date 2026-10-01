@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modelos · Cabeçalho</title>
+<style>
+:root{--ink:#064e3b;--ink2:#0a6b51;--champ:#f8e7c9;--bg:#f7efe0;--s:#fffdf8;--b:#eadcc0;--t:#0d2a21;--m:#66705f;--bad:#c43a31}
+*{box-sizing:border-box}
+body{margin:0;background:#efe7d6;color:var(--t);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1300px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:22px;margin:0 0 4px}
+.lead{color:var(--m);margin:0 0 18px;font-size:13.5px;max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--champ);background:var(--ink);border-radius:6px;padding:2px 7px}
+.m h2{display:inline;font-size:15px;margin-left:6px}
+.m p{font-size:12.5px;color:var(--m);margin:4px 0 10px;min-height:34px}
+.ph{width:100%;max-width:340px;margin:0 auto;border-radius:28px;background:#111;padding:7px;box-shadow:0 14px 34px -16px rgba(0,0,0,.55)}
+.sc{height:300px;border-radius:22px;overflow:hidden;background:var(--bg);position:relative}
+svg.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.av{border-radius:50%;background:var(--champ);color:var(--ink);display:grid;place-items:center;font-weight:800;flex:none}
+.bi{position:relative;display:inline-grid;place-items:center}
+.badge{position:absolute;top:-5px;right:-7px;min-width:17px;height:17px;border-radius:9px;background:var(--bad);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;padding:0 4px}
+.body{padding:12px 14px}
+.sr{display:flex;gap:8px;margin-bottom:10px}
+.sr .s{flex:1;height:40px;border:1px solid var(--b);border-radius:12px;background:var(--s);display:flex;align-items:center;padding:0 12px;color:var(--m);font-size:13px}
+.sr .i{width:40px;height:40px;border:1px solid var(--b);border-radius:12px;background:var(--s)}
+.oc{background:var(--s);border:1px solid var(--b);border-radius:14px;height:78px;margin-bottom:9px}
+.grad{background:radial-gradient(120% 90% at 92% -10%,rgba(248,231,201,.3),transparent 55%),linear-gradient(165deg,#043428,#0a6b51);color:var(--champ)}
+.nm b{display:block;font-size:15px;line-height:1.2} .nm small{font-size:12px;opacity:.85;display:inline-flex;align-items:center;gap:3px}
+/* 1 */ .h1{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:0 0 24px 24px}
+.h1 .av{width:44px;height:44px;box-shadow:0 0 0 2px rgba(255,255,255,.5)} .h1 .nm{flex:1} .h1 .bt{width:40px;height:40px;border-radius:50%;background:rgba(248,231,201,.14);display:grid;place-items:center}
+/* 2 */ .h2{padding:14px 16px 16px;border-radius:0 0 24px 24px}
+.h2 .r{display:flex;align-items:center;gap:10px} .h2 .g{flex:1} .h2 .g small{opacity:.8;font-size:12px} .h2 .g b{display:block;font-size:19px}
+.h2 .av{width:46px;height:46px;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.h2 .acts .badge{top:-6px;right:-8px}
+.h2 .acts{display:flex;gap:8px;margin-top:12px} .h2 .acts > span{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:17px;background:rgba(248,231,201,.14);font-size:12.5px;font-weight:700}
+/* 3 */ .h3{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;background:var(--s);border-bottom:1px solid var(--b)}
+.h3 .av{width:44px;height:44px;box-shadow:0 0 0 2px var(--ink)} .h3 .nm{flex:1;color:var(--t)} .h3 .nm small{color:var(--m)}
+.h3 .bt{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--b);display:grid;place-items:center;color:var(--ink)}
+/* 4 */ .h4wrap{padding:10px 10px 0} .h4{display:flex;align-items:center;gap:10px;padding:12px;border-radius:20px;box-shadow:0 10px 22px -12px rgba(6,78,59,.8)}
+.h4 .av{width:42px;height:42px;box-shadow:0 0 0 2px rgba(255,255,255,.5)} .h4 .nm{flex:1} .h4 .bt{width:38px;height:38px;display:grid;place-items:center}
+/* 5 */ .h5{border-radius:0 0 24px 24px;padding:10px 14px 14px}
+.h5 .top{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;opacity:.95} .h5 .top .lg{width:22px;height:22px;border-radius:6px;background:var(--champ);color:var(--ink);display:grid;place-items:center;font-size:11px}
+.h5 .top .sp{flex:1} .h5 .top .bt{width:34px;height:34px;display:grid;place-items:center}
+.h5 .me{display:flex;align-items:center;gap:10px;margin-top:10px;background:rgba(248,231,201,.1);border-radius:14px;padding:8px 10px} .h5 .me .av{width:38px;height:38px}
+/* 6 */ .h6{border-radius:0 0 28px 28px;padding:12px 14px 14px;text-align:center;position:relative}
+.h6 .bl,.h6 .br{position:absolute;top:12px;width:38px;height:38px;display:grid;place-items:center;border-radius:50%;background:rgba(248,231,201,.14)} .h6 .bl{left:14px} .h6 .br{right:14px}
+.h6 .av{width:60px;height:60px;margin:0 auto 6px;font-size:18px;box-shadow:0 0 0 3px rgba(248,231,201,.6)} .h6 .nm small{justify-content:center}
+/* 7 */ .h7{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:0 0 24px 24px}
+.h7 .av{width:44px;height:44px;box-shadow:0 0 0 2px rgba(255,255,255,.5)} .h7 .nm{flex:1}
+.h7 .grp{display:flex;align-items:center;background:rgba(248,231,201,.14);border-radius:22px;padding:4px} .h7 .grp > span{width:36px;height:36px;display:grid;place-items:center} .h7 .grp i{width:1px;height:20px;background:rgba(248,231,201,.35)}
+/* 8 */ .h8{height:58px;border-radius:0 0 22px 22px;display:flex;justify-content:flex-end;align-items:flex-start;gap:4px;padding:10px 12px}
+.h8 .bt{width:36px;height:36px;display:grid;place-items:center}
+.h8me{display:flex;align-items:flex-end;gap:10px;margin:-36px 16px 6px;position:relative}
+.h8me .nm{padding-top:40px}
+.h8me .av{width:64px;height:64px;font-size:19px;box-shadow:0 0 0 4px var(--bg)} .h8me .nm{color:var(--t);padding-bottom:4px} .h8me .nm small{color:var(--m)}
+/* 9 */ .h9{display:flex;align-items:center;gap:10px;padding:12px 14px 14px;border-radius:0 0 24px 24px;box-shadow:inset 0 -3px 0 var(--champ)}
+.h9 .av{width:46px;height:46px;box-shadow:0 0 0 2px var(--champ)} .h9 .nm{flex:1} .h9 .nm small{background:rgba(248,231,201,.16);border-radius:10px;padding:1px 8px;margin-top:3px}
+.h9 .bt{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;border:1px solid rgba(248,231,201,.35)}
+/* 10 */ .h10{display:flex;align-items:center;gap:10px;padding:12px 14px 10px}
+.h10 .av{width:40px;height:40px;background:var(--ink);color:var(--champ)} .h10 .nm{flex:1;color:var(--t)} .h10 .nm small{color:var(--m)}
+.h10 .lb{display:inline-flex;flex-direction:column;align-items:center;gap:1px;font-size:10px;font-weight:700;color:var(--ink);width:56px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Cabeçalho — 10 modelos</h1>
+  <p class="lead">Todos com a <b>foto</b>, o <b>nome</b>, a <b>filial</b> (tocar troca) e os botões <b>Dashboard</b> e <b>Notificações</b> (com contador). Abaixo de cada um, o começo da lista de pedidos para ver o conjunto. Tema Somax.</p>
+  <div class="grid" id="g"></div>
+</div>
+<script>
+const I = {
+  chart: '<svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>',
+  bell: '<span class="bi"><svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="badge">6</span></span>',
+  office: '<svg class="ic" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M10 6h4M10 10h4M10 14h4"/></svg>'
+};
+const NM = (cls = '') => `<div class="nm ${cls}"><b>Marcelo Grotti</b><small>${I.office}Paraná ▾</small></div>`;
+const AV = '<span class="av">MG</span>';
+const BODY = '<div class="body"><div class="sr"><span class="s">Buscar pedido</span><span class="i"></span><span class="i"></span></div><div class="oc"></div><div class="oc"></div></div>';
+const M = [
+  ['Painel com botões redondos', 'O painel verde de hoje, mais baixo; Dashboard e sino em círculos translúcidos, fáceis de tocar.', `<div class="grad h1">${AV}${NM()}<span class="bt">${I.chart}</span><span class="bt">${I.bell}</span></div>`],
+  ['Saudação + atalhos', '"Bom dia, Marcelo" com a filial; os botões viram pílulas com nome (Dashboard, Avisos).', `<div class="grad h2"><div class="r"><div class="g"><small>Bom dia,</small><b>Marcelo Grotti</b><small>${I.office}Paraná ▾</small></div>${AV}</div><div class="acts"><span>${I.chart}Dashboard</span><span>${I.bell}Avisos</span></div></div>`],
+  ['Claro com contorno', 'Topo claro (sem o verde), foto com anel verde e botões contornados — mais leve.', `<div class="h3">${AV}${NM()}<span class="bt">${I.chart}</span><span class="bt">${I.bell}</span></div>`],
+  ['Cartão verde flutuante', 'O cabeçalho vira um cartão verde solto das bordas, com sombra.', `<div class="h4wrap"><div class="grad h4">${AV}${NM()}<span class="bt">${I.chart}</span><span class="bt">${I.bell}</span></div></div>`],
+  ['Duas linhas: marca e pessoa', 'Em cima "Força de Vendas" e os botões; embaixo, a pessoa e a filial num bloco próprio.', `<div class="grad h5"><div class="top"><span class="lg">FV</span>Força de Vendas<span class="sp"></span><span class="bt">${I.chart}</span><span class="bt">${I.bell}</span></div><div class="me">${AV}${NM()}</div></div>`],
+  ['Perfil centralizado', 'Foto grande no centro com nome e filial embaixo; Dashboard e sino nos cantos.', `<div class="grad h6"><span class="bl">${I.chart}</span><span class="br">${I.bell}</span>${AV.replace('class="av"', 'class="av"')}${NM()}</div>`],
+  ['Botões agrupados', 'Dashboard e sino juntos numa pílula com um risquinho entre eles, à direita.', `<div class="grad h7">${AV}${NM()}<span class="grp"><span>${I.chart}</span><i></i><span>${I.bell}</span></span></div>`],
+  ['Foto saindo da faixa', 'Faixa verde fina com os botões; a foto grande "sai" da faixa e o nome fica ao lado, no fundo claro.', `<div class="grad h8"><span class="bt">${I.chart}</span><span class="bt">${I.bell}</span></div><div class="h8me"><span class="av">MG</span>${NM()}</div>`],
+  ['Filete champagne', 'Painel verde com filete champagne embaixo, filial num selo e botões quadrados com contorno.', `<div class="grad h9">${AV}${NM()}<span class="bt">${I.chart}</span><span class="bt">${I.bell}</span></div>`],
+  ['Mínimo com rótulos', 'Sem painel: foto verde, nome e filial; botões com o nome embaixo (Dashboard, Avisos).', `<div class="h10">${AV}${NM()}<span class="lb">${I.chart}Dashboard</span><span class="lb">${I.bell}Avisos</span></div>`]
+];
+document.getElementById('g').innerHTML = M.map(([t, d, h], i) => `<section class="m"><span class="tag">MODELO ${i + 1}</span><h2>${t}</h2><p>${d}</p><div class="ph"><div class="sc">${h}${BODY}</div></div></section>`).join('');
+</script>
+</body>
+</html>
