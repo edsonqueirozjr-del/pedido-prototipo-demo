@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modelos · Barra inferior</title>
+<style>
+:root{--ink:#064e3b;--ink2:#0a6b51;--champ:#f8e7c9;--bg:#f7efe0;--s:#fffdf8;--s2:#fbf5ea;--b:#eadcc0;--t:#0d2a21;--m:#66705f;--bad:#c43a31}
+*{box-sizing:border-box}
+body{margin:0;background:#efe7d6;color:var(--t);font:14px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1300px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:22px;margin:0 0 4px}
+.lead{color:var(--m);margin:0 0 18px;font-size:13.5px;max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px}
+.m .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--champ);background:var(--ink);border-radius:6px;padding:2px 7px}
+.m h2{display:inline;font-size:15px;margin-left:6px}
+.m p{font-size:12.5px;color:var(--m);margin:4px 0 10px;min-height:34px}
+.ph{position:relative;width:100%;max-width:340px;height:560px;margin:0 auto;border-radius:30px;background:#111;padding:7px;box-shadow:0 14px 34px -16px rgba(0,0,0,.55)}
+.sc{position:relative;height:100%;border-radius:24px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+svg.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* tela de fundo (lista de pedidos atual, cabeçalho Modelo 1) */
+.hd{flex:none;background:radial-gradient(120% 90% at 92% -10%,rgba(248,231,201,.3),transparent 55%),linear-gradient(165deg,#043428,#0a6b51);color:var(--champ);border-radius:0 0 24px 24px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.hd .av{width:42px;height:42px;border-radius:50%;background:var(--champ);color:var(--ink);display:grid;place-items:center;font-weight:800;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.hd b{display:block;font-size:15px} .hd small{opacity:.8;font-size:12px}
+.body{flex:1;overflow:hidden;padding:12px 14px 0;position:relative}
+.sr{display:flex;gap:8px;margin-bottom:10px}
+.sr .s{flex:1;height:40px;border:1px solid var(--b);border-radius:12px;background:var(--s);display:flex;align-items:center;gap:8px;padding:0 12px;color:var(--m);font-size:13px}
+.sr .i{width:40px;height:40px;border:1px solid var(--b);border-radius:12px;background:var(--s)}
+.oc{background:var(--s);border:1px solid var(--b);border-radius:14px;padding:10px 12px;margin-bottom:9px}
+.oc .h{display:flex;justify-content:space-between;gap:8px} .oc b{font-size:13px}
+.oc small{display:block;color:var(--m);font-size:11.5px;margin-top:2px}
+.oc .v{font-weight:800;font-size:13px;margin-top:4px}
+.tg{font-size:10.5px;font-weight:700;border-radius:10px;padding:2px 8px;white-space:nowrap;height:fit-content}
+.t1{background:#f8e9c4;color:#b07414} .t2{background:#f8e1cb;color:#c8641c} .t3{background:#ddeee3;color:#0b7a55}
+.view{position:absolute;inset:12px 14px 0;display:none}
+.view h3{margin:4px 0 10px;font-size:16px}
+.view .card{background:var(--s);border:1px solid var(--b);border-radius:14px;padding:12px;margin-bottom:10px;font-size:13px}
+.badge{position:absolute;top:-4px;right:-8px;min-width:17px;height:17px;border-radius:9px;background:var(--bad);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;padding:0 4px;border:2px solid var(--bgb,#fffdf8)}
+.bi{position:relative;display:inline-grid}
+.toast{position:absolute;left:50%;top:44%;transform:translateX(-50%);background:var(--ink);color:var(--champ);padding:8px 14px;border-radius:10px;font-weight:700;font-size:12.5px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap;z-index:9}
+.toast.on{opacity:1}
+
+/* ====== 10 barras ====== */
+.nav{flex:none;position:relative;z-index:5}
+.nav button{border:0;background:none}
+/* 1 clássica */
+.n1{display:grid;grid-template-columns:repeat(5,1fr);background:var(--s);border-top:1px solid var(--b);padding:6px 2px 10px}
+.n1 button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;color:var(--m);padding:4px 0}
+.n1 button.on{color:var(--ink)}
+/* 2 botão central elevado */
+.n2{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;background:var(--s);border-top:1px solid var(--b);padding:6px 2px 10px}
+.n2 button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;color:var(--m)}
+.n2 button.on{color:var(--ink)}
+.n2 .new{width:58px;height:58px;border-radius:50%;background:var(--ink);color:var(--champ);margin:-30px auto 0;justify-content:center;box-shadow:0 0 0 5px var(--bg),0 10px 20px -6px rgba(6,78,59,.7)}
+.n2 .new svg{width:28px;height:28px}
+/* 3 flutuante em pílula */
+.n3{position:absolute;left:12px;right:12px;bottom:12px;display:grid;grid-template-columns:repeat(5,1fr);background:var(--s);border-radius:22px;padding:8px 4px;box-shadow:0 12px 30px -10px rgba(0,0,0,.35);border:1px solid var(--b)}
+.n3 button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;color:var(--m)}
+.n3 button.on{color:var(--ink)}
+.n3 .new{color:var(--champ)} .n3 .new span.ib{width:42px;height:42px;border-radius:14px;background:var(--ink);display:grid;place-items:center}
+/* 4 escura Emerald */
+.n4{display:grid;grid-template-columns:repeat(5,1fr);background:linear-gradient(165deg,#043428,#0a6b51);padding:8px 4px 12px;border-radius:22px 22px 0 0;--bgb:#064e3b}
+.n4 button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:700;color:rgba(248,231,201,.7)}
+.n4 button .ib{display:grid;place-items:center;width:52px;height:30px;border-radius:15px}
+.n4 button.on{color:var(--champ)} .n4 button.on .ib{background:var(--champ);color:var(--ink)}
+.n4 .new .ib{background:rgba(248,231,201,.16);color:var(--champ)}
+/* 5 ícones; ativo expande com rótulo */
+.n5{display:flex;justify-content:space-between;align-items:center;background:var(--s);border-top:1px solid var(--b);padding:10px 10px 14px;gap:4px}
+.n5 button{display:flex;align-items:center;gap:6px;height:42px;padding:0 12px;border-radius:21px;color:var(--m);font-weight:800;font-size:12.5px;transition:background .2s}
+.n5 button span.l{display:none}
+.n5 button.on{background:#dff0e3;color:var(--ink)} .n5 button.on span.l{display:inline}
+.n5 .new{background:var(--ink);color:var(--champ);width:42px;padding:0;justify-content:center}
+/* 6 linha no topo do ativo */
+.n6{display:grid;grid-template-columns:repeat(5,1fr);background:var(--s);border-top:1px solid var(--b);padding:0 2px 10px}
+.n6 button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:700;color:var(--m);padding:9px 0 2px;border-top:3px solid transparent;margin:0 8px}
+.n6 button.on{color:var(--ink);border-top-color:var(--ink)}
+.n6 .new{color:var(--ink)} .n6 .new .ib{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;border:2px solid var(--ink)}
+/* 7 botão largo "Novo pedido" */
+.n7{display:grid;grid-template-columns:1fr 1fr 2.3fr 1fr 1fr;align-items:center;background:var(--s);border-top:1px solid var(--b);padding:8px 6px 12px;gap:2px}
+.n7 button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;color:var(--m)}
+.n7 button.on{color:var(--ink)}
+.n7 .new{flex-direction:row;justify-content:center;gap:4px;height:44px;border-radius:14px;background:var(--ink);color:var(--champ);font-size:12px;font-weight:800;white-space:nowrap;padding:0 6px}
+/* 8 recorte para o botão */
+.n8{height:66px;background:transparent}
+.n8 .shape{position:absolute;inset:0;filter:drop-shadow(0 -2px 6px rgba(0,0,0,.08))}
+.n8 .shape svg{width:100%;height:100%;display:block}
+.n8 .items{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr 74px 1fr 1fr;align-items:center;padding:0 2px 6px}
+.n8 button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;font-weight:700;color:var(--m)}
+.n8 button.on{color:var(--ink)}
+.n8 .new{position:absolute;left:50%;top:-24px;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--champ);display:grid;place-items:center;box-shadow:0 8px 18px -6px rgba(6,78,59,.7)}
+/* 9 indicador em bolha (estilo Material) */
+.n9{display:grid;grid-template-columns:repeat(5,1fr);background:var(--s2);padding:10px 2px 12px;border-top:1px solid var(--b)}
+.n9 button{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;min-width:0;font-weight:600;color:var(--m)}
+.n9 button .ib{display:grid;place-items:center;width:48px;height:30px;border-radius:15px}
+.n9 button.on{color:var(--t);font-weight:800} .n9 button.on .ib{background:#cfe8d8;color:var(--ink)}
+.n9 .new .ib{background:var(--ink);color:var(--champ)}
+/* 10 compacta com botão separado à direita */
+.n10{display:flex;align-items:center;gap:10px;padding:8px 12px 14px;background:transparent}
+.n10 .bar{flex:1;display:grid;grid-template-columns:repeat(4,1fr);background:var(--s);border:1px solid var(--b);border-radius:20px;padding:6px 2px;box-shadow:0 10px 24px -12px rgba(0,0,0,.3)}
+.n10 .bar button{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:10px;font-weight:700;color:var(--m)}
+.n10 .bar button.on{color:var(--ink)}
+.n10 .new{width:56px;height:56px;border-radius:18px;background:var(--ink);color:var(--champ);display:grid;place-items:center;flex:none;box-shadow:0 10px 22px -8px rgba(6,78,59,.75)}
+.n10 .new svg{width:26px;height:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Barra inferior — 10 modelos</h1>
+  <p class="lead">A barra substitui o "arrastar para o lado": <b>Pedidos</b>, <b>Clientes</b>, <b>Novo pedido</b>, <b>Dashboard</b> e <b>Notificações</b> (com o contador). Toque nos botões de cada prévia: o item escolhido fica marcado e a tela troca. A tela de fundo é a lista de pedidos de hoje (tema Somax, cabeçalho Modelo 1); com a barra, o sino sai do topo e o botão "+" flutuante deixa de existir.</p>
+  <div class="grid" id="g"></div>
+</div>
+<script>
+const I = {
+  list: '<svg class="ic" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  users: '<svg class="ic" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  plus: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  chart: '<svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>',
+  bell: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
+  search: '<svg class="ic" viewBox="0 0 24 24" style="width:16px;height:16px"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'
+};
+const ITEMS = [['ped', 'Pedidos', I.list], ['cli', 'Clientes', I.users], ['new', 'Novo pedido', I.plus], ['dash', 'Dashboard', I.chart], ['not', 'Avisos', I.bell]];
+const bell = (ic) => `<span class="bi">${ic}<span class="badge">3</span></span>`;
+const icon = k => { const it = ITEMS.find(x => x[0] === k); return k === 'not' ? bell(it[2]) : it[2]; };
+const lbl = k => ITEMS.find(x => x[0] === k)[1];
+const btn = (k, inner, extra = '') => `<button data-k="${k}" class="${k === 'new' ? 'new' : ''} ${k === 'ped' ? 'on' : ''}" aria-label="${lbl(k)}" ${extra}>${inner}</button>`;
+const std = k => btn(k, `${icon(k)}<span>${k === 'new' ? 'Novo' : lbl(k)}</span>`);
+const M = [
+  ['Clássica', 'Cinco itens iguais com ícone e rótulo; o ativo fica verde. A mais simples e conhecida.', () => `<nav class="nav n1">${ITEMS.map(([k]) => std(k)).join('')}</nav>`],
+  ['Botão central elevado', 'O "Novo pedido" vira um círculo verde maior, saltando da barra — a ação principal salta aos olhos.', () => `<nav class="nav n2">${ITEMS.map(([k]) => k === 'new' ? btn(k, I.plus) : std(k)).join('')}</nav>`],
+  ['Flutuante em pílula', 'Barra solta da borda, com cantos redondos e sombra; deixa o conteúdo "passar" por baixo.', () => `<nav class="nav n3">${ITEMS.map(([k]) => k === 'new' ? btn(k, `<span class="ib">${I.plus}</span>`) : std(k)).join('')}</nav>`],
+  ['Escura Emerald', 'Barra no verde do painel do topo (fecha a tela em cima e embaixo); ativo numa pílula champagne.', () => `<nav class="nav n4">${ITEMS.map(([k]) => btn(k, `<span class="ib">${icon(k)}</span><span>${k === 'new' ? 'Novo' : lbl(k)}</span>`)).join('')}</nav>`],
+  ['Ícones que se abrem', 'Só ícones; o item ativo abre uma pílula com o nome. Visual limpo, rótulo só onde você está.', () => `<nav class="nav n5">${ITEMS.map(([k]) => k === 'new' ? btn(k, I.plus) : btn(k, `${icon(k)}<span class="l">${lbl(k)}</span>`)).join('')}</nav>`],
+  ['Traço no ativo', 'Barra clara com um traço verde em cima do item ativo; "Novo" com ícone de contorno.', () => `<nav class="nav n6">${ITEMS.map(([k]) => k === 'new' ? btn(k, `<span class="ib">${I.plus}</span><span>Novo</span>`) : std(k)).join('')}</nav>`],
+  ['Botão "Novo pedido" escrito', 'No centro, um botão largo com o texto "Novo pedido" — não há dúvida do que ele faz.', () => `<nav class="nav n7">${ITEMS.map(([k]) => k === 'new' ? btn(k, `${I.plus}<span>Novo pedido</span>`) : std(k)).join('')}</nav>`],
+  ['Recorte para o botão', 'A barra tem um encaixe curvo onde o botão redondo de novo pedido se apoia.', () => `<nav class="nav n8"><div class="shape"><svg viewBox="0 0 326 66" preserveAspectRatio="none"><path d="M0 0 H121 C131 0 133 30 163 30 C193 30 195 0 205 0 H326 V66 H0 Z" fill="#fffdf8" stroke="#eadcc0"/></svg></div><div class="items">${ITEMS.map(([k]) => k === 'new' ? '<span></span>' : std(k)).join('')}</div>${btn('new', I.plus)}</nav>`],
+  ['Bolha no ativo', 'Estilo dos apps Android atuais: o ativo ganha uma bolha suave atrás do ícone; rótulos sempre visíveis.', () => `<nav class="nav n9">${ITEMS.map(([k]) => btn(k, `<span class="ib">${icon(k)}</span><span>${k === 'new' ? 'Novo' : lbl(k)}</span>`)).join('')}</nav>`],
+  ['Barra + botão separado', 'Quatro destinos numa barra flutuante e o "+" separado à direita, onde o polegar alcança.', () => `<nav class="nav n10"><div class="bar">${ITEMS.filter(([k]) => k !== 'new').map(([k]) => std(k)).join('')}</div>${btn('new', I.plus)}</nav>`]
+];
+const SCREEN = {
+  ped: `<div class="sr"><span class="s">${I.search}Buscar pedido</span><span class="i"></span><span class="i"></span></div>
+    <div class="oc"><div class="h"><b>Agropecuária Santa Rita Ltda</b><span class="tg t1">Em aberto</span></div><small>Nº 10053 · 11:20 · Soja Verão 26/27</small><div class="v">BRL 86.400,00</div></div>
+    <div class="oc"><div class="h"><b>Agrícola Horizonte Ltda</b><span class="tg t2">Em correção</span></div><small>Nº 10017 · 08:02 · Soja Verão 26/27</small><div class="v">BRL 58.920,00</div></div>
+    <div class="oc"><div class="h"><b>Agro Campos Gerais Ltda</b><span class="tg t3">Aprovado</span></div><small>Nº 10040 · 08:32 · Milho Safrinha 27/27</small><div class="v">BRL 24.027,90</div></div>
+    <div class="oc"><div class="h"><b>Cooperativa Vale do Pardo</b><span class="tg t1">Em aberto</span></div><small>Nº 10045 · 07:37 · Milho Safrinha 27/27</small><div class="v">BRL 24.036,50</div></div>`,
+  cli: `<h3>Clientes</h3><div class="card"><b>Agropecuária Santa Rita Ltda</b><br><small style="color:#66705f">Londrina/PR · 3 pedidos no ano</small></div><div class="card"><b>Agrícola Horizonte Ltda</b><br><small style="color:#66705f">Guarapuava/PR · 2 pedidos no ano</small></div><div class="card"><b>Agro Campos Gerais Ltda</b><br><small style="color:#66705f">Ponta Grossa/PR · 4 pedidos no ano</small></div>`,
+  dash: `<h3>Planejado × Realizado</h3><div class="card"><small style="color:#66705f;font-weight:700">OBJETIVO</small><div style="font-size:20px;font-weight:800">BRL 11.229.024</div><div style="height:10px;border-radius:5px;background:#efe5d2;margin-top:8px;overflow:hidden"><div style="width:75%;height:100%;background:#064e3b"></div></div></div><div class="card">Faturado <b>8,38 mi</b> · Carteira <b>449 mil</b></div>`,
+  not: `<h3>Notificações</h3><div class="card"><b>Correção no pedido Nº 10017</b><br><small style="color:#66705f">Jefferson · Desconto acima da política</small></div><div class="card"><b>Pedido Nº 10040 aprovado</b><br><small style="color:#66705f">Andrey · hoje 11:40</small></div><div class="card"><b>Correção no pedido Nº 10031</b><br><small style="color:#66705f">Jefferson · ontem</small></div>`
+};
+document.getElementById('g').innerHTML = M.map(([t, d, nav], i) => `<section class="m"><span class="tag">MODELO ${i + 1}</span><h2>${t}</h2><p>${d}</p>
+  <div class="ph"><div class="sc" data-m="${i}"><div class="hd"><span class="av">RS</span><div><b>Rafael Souza</b><small>Paraná ▾</small></div></div>
+  <div class="body">${Object.entries(SCREEN).map(([k, h]) => `<div class="view" data-v="${k}" style="${k === 'ped' ? 'display:block' : ''}">${h}</div>`).join('')}<div class="toast">Abriria um novo pedido</div></div>${nav()}</div></div></section>`).join('');
+document.addEventListener('click', e => {
+  const b = e.target.closest('.sc button[data-k]'); if(!b) return;
+  const sc = b.closest('.sc'), k = b.dataset.k;
+  if(k === 'new'){ const t = sc.querySelector('.toast'); t.classList.add('on'); setTimeout(() => t.classList.remove('on'), 1200); return; }
+  sc.querySelectorAll('button[data-k]').forEach(x => x.classList.toggle('on', x.dataset.k === k));
+  sc.querySelectorAll('.view').forEach(v => v.style.display = v.dataset.v === k ? 'block' : 'none');
+});
+</script>
+</body>
+</html>
