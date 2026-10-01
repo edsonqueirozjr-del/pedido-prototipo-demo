@@ -977,7 +977,8 @@ html.lockscroll main{padding-bottom:12px}
 .wheels.inl::before{display:none}
 .wheels.inl::after{display:none}
 .wheels.inl .wheel{height:40px;padding:0}
-.wheels.inl .wheel div{color:var(--text);font-weight:700}
+.wheels.inl .wheel div,.wheels.inl .wheel div.sel{color:var(--text);font-weight:400;font-size:16px}   /* sem negrito */
+.wheels.inl{grid-template-columns:.8fr 1.6fr 1fr}   /* mês por extenso precisa de mais espaço */
 .dbtn{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:16px;text-align:left;cursor:pointer;font-variant-numeric:tabular-nums}
 .dbtn svg{color:var(--muted);width:18px;height:18px}
 .dbtn:focus-visible{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
@@ -1925,7 +1926,7 @@ function dateField(id, f, val, label, {i = null, disabled = false} = {}){
 function dateInline(id, f, val, {i = null} = {}){
   const d = parseD(val || today()), yNow = new Date().getFullYear(), years = [];
   for(let y = Math.min(yNow - 1, d.getFullYear()); y <= Math.max(yNow + 3, d.getFullYear()); y++) years.push(y);
-  const mon = [...Array(12)].map((_, k) => { const m = new Intl.DateTimeFormat(loc(), {month: 'short'}).format(new Date(2000, k, 1)).replace('.', ''); return m[0].toUpperCase() + m.slice(1); });
+  const mon = [...Array(12)].map((_, k) => { const m = new Intl.DateTimeFormat(loc(), {month: 'long'}).format(new Date(2000, k, 1)); return m[0].toUpperCase() + m.slice(1); });   // mês por extenso
   const dim = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
   const cells = (items, sel) => items.map((x, k) => `<div data-k="${k}" class="${k === sel ? 'sel' : ''}">${x}</div>`).join('');
   return `<div class="wheels inl" id="${id}" data-years="${years.join(',')}">
