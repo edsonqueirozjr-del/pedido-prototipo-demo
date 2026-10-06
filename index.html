@@ -1332,9 +1332,8 @@ const PRODUCT_BASE = [
 // um produto por embalagem (ex.: "Cappo - 5 L" e "Cappo - 20 L"); a de 20 L sai 3% mais barata por litro
 const PRODUCTS = PRODUCT_BASE.flatMap(b => (b.packs || [5, 20]).map((v, k) => ({...b, id: b.id + '-' + v, base: b.id, name: `${b.name} - ${v} ${b.um}`, pack: v,
   price: k ? Math.round(b.price * 97) / 100 : b.price})));
-// dose recomendada por hectare (fictícia, só para o protótipo), na unidade do produto (L/ha ou kg/ha)
-const DOSE = {cap: .3, flo: .12, ful: 2, g20: 2, g200: 2, sme: 1.5, azp: .3, teb: .5, man: 2, imi: .15, lam: .15, acf: 1};
-const doseOf = p => p ? DOSE[p.base] ?? null : null;
+// dose por hectare (receituário agronômico): calculada = quantidade ÷ área tratada, na unidade do produto (L/ha ou kg/ha)
+const doseOf = it => (+it.qty > 0 && +it.area > 0) ? +it.qty / +it.area : null;
 // exemplos antigos -> catálogo atual (mantém a variedade dos pedidos de exemplo)
 const PMAP = {g1:'flo-5', g2:'g20-20', g3:'ful-20', a1:'cap-5', a2:'sme-20', a3:'g200-20', m1:'g20-5', m2:'cap-20', m3:'sme-20', z1:'azp-5', z2:'teb-20', z3:'azp-20', i1:'imi-1', i2:'lam-5', i3:'imi-10', d1:'g200-5', d2:'ful-20', d3:'g20-20', t1:'lam-1', t2:'acf-1', t3:'man-25'};
 // tabela de preço = safra + moeda
@@ -2318,7 +2317,7 @@ function itemCard(o, it, i){
       <div class="field"><label class="lbl" for="ar-${it.id}">${t('area')}</label>
         <div class="unit-in"><input id="ar-${it.id}" type="text" inputmode="decimal" data-f="itemArea" data-i="${i}" value="${it.area ? fmtNum(it.area, it.area % 1 ? 2 : 0) : ''}" placeholder="0" ${p ? '' : 'disabled'}><em>ha</em></div></div>
       <div class="field"><label class="lbl" for="ds2-${it.id}">${t('dose')}</label>
-        <div class="unit-in"><input id="ds2-${it.id}" type="text" value="${p && doseOf(p) != null ? fmtNum(doseOf(p), 2) : ''}" disabled><em>${p ? p.um + '/ha' : ''}</em></div></div>
+        <div class="unit-in"><input id="ds2-${it.id}" type="text" value="${p && doseOf(it) != null ? fmtNum(doseOf(it), 2) : ''}" placeholder="${p ? '—' : ''}" disabled><em>${p ? p.um + '/ha' : ''}</em></div></div>
       <div class="field"><label class="lbl" for="q-${it.id}">${t('qty')}</label>
         <div class="stepper-in">
           <button class="icon-btn" data-a="qty-step" data-i="${i}" data-d="-1" aria-label="-" ${p ? '' : 'disabled'}>${IC.minus}</button>
