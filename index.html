@@ -3715,7 +3715,32 @@ document.addEventListener('input', e => {
     const digits = e.target.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
     e.target.value = digits ? fmtNum(parseInt(digits, 10) / 100, 2) : '';
   }
+  if(e.target.matches('[data-f="qty"], [data-f="price"], [data-f="itemArea"], [data-f="itemDose"]')) liveItem(e.target);
+  if(e.target.id === 'd-fx') liveFx(e.target);
 });
+/* cálculos na hora, enquanto digita (sem esperar sair do campo): grava no pedido e atualiza só os campos que dependem dele */
+function liveItem(el){
+  const o = S.draft, it = o && o.items[+el.dataset.i]; if(!it) return;
+  const f = el.dataset.f, v = el.value, $ = id => document.getElementById(id + it.id);
+  if(f === 'qty') it.qty = parseDec(v) || '';
+  if(f === 'price'){ const pv = r2(parseDec(v)), adj = adjPrice(o, it); it.price = pv; it.manual = adj == null || Math.abs(pv - adj) > 0.004; }
+  if(f === 'itemArea') it.area = parseDec(v);
+  if(f === 'itemDose'){ const d = parseDec(v); if(d > 0 && +it.qty > 0) it.area = Math.round(+it.qty / d * 100) / 100; }
+  const ic = itemCalc(o, it), set = (el2, val) => { if(el2 && el2 !== el){ el2.value = val; fitQty(el2); } };
+  set($('tt-'), fmtNum(ic.total, 2));
+  set($('ds-'), ic.adj ? pctDisc(ic.price / ic.adj - 1) : '');
+  set($('ar-'), +it.area > 0 ? fmtNum(it.area, it.area % 1 ? 2 : 0) : '');
+  const dz = $('ds2-'); if(dz){ dz.disabled = !(+it.qty > 0); set(dz, doseOf(it) != null ? fmtNum(doseOf(it), 2) : ''); }
+  const sm = el.closest('.item')?.querySelector('.item-head .sem'); if(sm) sm.outerHTML = sem(ic.margin);
+  const ts = document.querySelector('.totstick'); if(ts){ ts.innerHTML = totBarHtml(o); fitTot(); }
+}
+// cotação do Dashboard: recalcula a tela a cada tecla e devolve o cursor ao campo
+function liveFx(el){
+  const v = parseFloat(el.value.replace(/\./g, '').replace(',', '.')); if(!(v > 0)) return;
+  const raw = el.value, pos = el.selectionStart;
+  S.dash.fx = Math.round(v * 10000) / 10000; render();
+  const n = document.getElementById('d-fx'); if(n){ n.value = raw; n.focus(); try{ n.setSelectionRange(pos, pos); }catch(e){} }
+}
 
 /* ---------- Alterações de campos do pedido ---------- */
 document.addEventListener('change', async e => {
