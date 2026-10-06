@@ -817,6 +817,14 @@ input:disabled,select:disabled{background-color:var(--surface-2);color:var(--mut
 .stepper-in .qv input{flex:none;max-width:100%;text-align:center;padding-left:0 !important;padding-right:0 !important}
 .grid2 .area-f{grid-column:1}   /* área e dose começam numa linha nova, depois do desconto */
 .unit-in{position:relative}   /* campo com a unidade ao lado do número (ha, L/ha, kg/ha) */
+/* padrão dos campos do produto, igual à Quantidade: número e unidade (BRL, ha, L/ha) juntos e centralizados no campo */
+.grid2 .money,.grid2 .unit-in{display:flex;align-items:center;justify-content:center;gap:5px;min-height:44px;border:1px solid var(--border);border-radius:10px;background:var(--surface);position:relative}
+.grid2 .money:has(input:disabled),.grid2 .unit-in:has(input:disabled){background:var(--surface-2)}
+.grid2 .money:focus-within,.grid2 .unit-in:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.grid2 .money > span,.grid2 .unit-in > em{position:static !important;transform:none !important;order:2;pointer-events:none}
+.grid2 .money input,.grid2 .unit-in input{border:0 !important;background:transparent !important;box-shadow:none !important;padding:0 !important;min-height:40px;text-align:right;flex:none}
+.grid2 .field > input[id^=ds-]{text-align:center}   /* desconto centralizado também */
+.grid2 .money.has-in{padding:0 30px}   /* com o ícone do histórico: centraliza no espaço livre, sem encostar no ícone */
 .unit-in input{padding-right:58px}
 .unit-in em{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-style:normal;font-size:16px;color:var(--text);pointer-events:none}
 .unit-in input:disabled + em{color:var(--muted)}
@@ -2531,6 +2539,7 @@ function render(){
       if(window.ResizeObserver) new ResizeObserver(() => { if(!touched) toSel(); }).observe(strip); }
   }
   document.querySelectorAll('.qv input').forEach(fitQty);
+  fitUnits();
   if(S.view === 'dash' && !S.dashStill) dCountUp();
   if(S.view === 'editor' && S.errStep === S.step) stepErrors(S.draft, S.step).forEach(x => x.id && document.getElementById(x.id)?.classList.add('invalid'));
   const eh = document.getElementById('edhead');
@@ -2665,8 +2674,10 @@ async function leaveEditor(){
 const fitCtx = document.createElement('canvas').getContext('2d');
 function fitQty(el){
   const cs = getComputedStyle(el); fitCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-  el.style.width = Math.ceil(fitCtx.measureText(el.value || '0').width) + 2 + 'px';
+  el.style.width = Math.ceil(fitCtx.measureText(el.value || el.placeholder || '0').width) + 2 + 'px';
 }
+// campos do produto (preços, total, área, dose): o número na largura do texto, para a unidade ficar logo depois dele
+const fitUnits = () => document.querySelectorAll('.grid2 .money input, .grid2 .unit-in input').forEach(fitQty);
 
 // estoque do produto por unidade (a unidade de entrega marcada); em cima, botões com os produtos do mesmo princípio ativo que têm estoque disponível
 function stockSheet(it){
@@ -3698,7 +3709,7 @@ document.addEventListener('change', e => {
 
 document.addEventListener('input', e => {
   if(e.target.matches('[data-search]')){ S.q = e.target.value; render(); }
-  if(e.target.matches('.qv input')) fitQty(e.target);
+  if(e.target.matches('.qv input, .grid2 .money input, .grid2 .unit-in input')) fitQty(e.target);
   // máscara de dinheiro no preço praticado: os dígitos entram pela direita (3250 → 32,50)
   if(e.target.matches('[data-f="price"]')){
     const digits = e.target.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
