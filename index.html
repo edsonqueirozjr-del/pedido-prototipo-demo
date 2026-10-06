@@ -1528,7 +1528,7 @@ let DB, S;
 function loadPrefs(){ try{ return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; }catch(e){ return {}; } }
 // tv = versão da regra de tema: com tv 2 o padrão passou a ser o tema Somax (quem já tinha escolhido antes recebe o Somax uma vez)
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify({lang:S.lang, theme:S.theme, hdr:S.hdr, me:ME, appr:APPR, tv:2})); }catch(e){} }
-function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 32 && d.day === today()) return d; var old = d; }catch(e){} const s = seed(); keepUserOrders(old, s); persist(s); return s; }
+function loadDB(){ try{ const d = JSON.parse(localStorage.getItem(DB_KEY)); if(d && d.v === 33 && d.day === today()) return d; var old = d; }catch(e){} const s = seed(); keepUserOrders(old, s); persist(s); return s; }
 // ao trocar a versão da base, os exemplos são recriados; os pedidos que o usuário criou no aparelho (id que não é de exemplo)
 // passam para a base nova com as notificações deles, e a numeração continua depois do último
 function keepUserOrders(old, s){
@@ -1768,8 +1768,10 @@ function setProduct(o, it, pid){
 const NOTE_ORDER = ['Cliente pediu para faturar só depois do dia 10.', 'Negociação feita junto com o pedido de fertilizante.', 'Enviar boleto para o e-mail do financeiro.', 'Cliente vai retirar parte no armazém.', 'Conferir limite antes de liberar a entrega.', 'Pedido complementar ao da safra passada.'];
 const NOTE_PROD = ['Embalagem de 20 L, se houver.', 'Cliente quer o mesmo lote da última compra.', 'Preço fechado por telefone com o gerente.', 'Aplicação prevista para a primeira quinzena.', 'Confirmar disponibilidade antes de faturar.', 'Produto para área nova, sem histórico.', 'Substituir por similar se faltar.'];
 const NOTE_DELIV = ['Entregar no período da manhã.', 'Avisar o caseiro com um dia de antecedência.', 'Acesso pela estrada da cooperativa.', 'Descarregar no galpão de defensivos.', 'Sem entrega aos sábados.', 'Ponte com limite de 20 t.'];
+// área de exemplo: dose típica (0,5 a 3 por ha) escolhida de forma fixa; área = quantidade ÷ dose, em ha inteiros
+const seedArea = (qty, k) => Math.max(1, Math.round(qty / [0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3][k % 8]));
 function seed(){
-  const db = {v:32, day:today(), seq:10019, orders:[], notifs:[], pins:{}};   // day: refeita a cada dia, para sempre ter pedidos de hoje
+  const db = {v:33, day:today(), seq:10019, orders:[], notifs:[], pins:{}};   // day: refeita a cada dia, para sempre ter pedidos de hoje
   // [vendedor, cliente, safra, moeda, condição, status, dias atrás, itens [produto, qtd, fator preço]]
   const defs = [
     ['s1','c1','SV2627','BRL','safra','aprovado',  14, [['g1',2000],['z1',300],['i1',200]]],
@@ -1848,6 +1850,7 @@ function seed(){
       const p = PROD(pid); qty = Math.ceil(qty / p.pack) * p.pack;   // múltiplo da embalagem
       const it = {id:uid(), activeId:p.active, group:p.group, productId:pid, qty, price:0, manual:false, deliveryUnit:o.unit, deliveryDate:addDays(date, 20 + j*5), deliveryPlace:o.billing};
       recalcItem(o, it);
+      it.area = seedArea(qty, i * 5 + j * 3);   // área tratada de exemplo (a dose sai de quantidade ÷ área)
       if(f){ it.price = r2(it.price * f); it.manual = true; }
       // observações espalhadas de forma fixa (pseudo-aleatória) pelos exemplos
       const k = i * 7 + j * 3;
@@ -1899,7 +1902,7 @@ function seed(){
       const alt = k === 1 && PRODUCTS.find(x => x.id !== bit.productId && x.active === PROD(bit.productId).active);
       if(alt) bit = {...bit, productId: alt.id};
       const pr = PROD(bit.productId), qty = Math.max(pr.pack, Math.round(bit.qty * (.35 + ((j + k) % 4) * .2) / pr.pack) * pr.pack);
-      const it = {...bit, id: uid(), qty, manual: false, note: '', noteDeliv: '', deliveryDate: addDays(date, 20 + j * 4)};
+      const it = {...bit, id: uid(), qty, manual: false, note: '', noteDeliv: '', deliveryDate: addDays(date, 20 + j * 4), area: seedArea(qty, bi + j * 3 + k)};
       recalcItem(o, it);
       it.price = r2(it.price * [.96, 1, .93][k] * (1 - ((j * 7 + k * 3) % 5) * .01)); it.manual = true;
       o.items.push(it); });
@@ -3726,7 +3729,7 @@ function liveItem(el){
   if(f === 'price'){ const pv = r2(parseDec(v)), adj = adjPrice(o, it); it.price = pv; it.manual = adj == null || Math.abs(pv - adj) > 0.004; }
   if(f === 'itemArea') it.area = parseDec(v);
   if(f === 'itemDose'){ const d = parseDec(v); if(d > 0 && +it.qty > 0) it.area = Math.round(+it.qty / d * 100) / 100; }
-  const ic = itemCalc(o, it), set = (el2, val) => { if(el2 && el2 !== el){ el2.value = val; fitQty(el2); } };
+  const ic = itemCalc(o, it), set = (el2, val) => { if(el2 && el2 !== el){ el2.value = val; if(el2.closest('.money, .unit-in')) fitQty(el2); } };
   set($('tt-'), fmtNum(ic.total, 2));
   set($('ds-'), ic.adj ? pctDisc(ic.price / ic.adj - 1) : '');
   set($('ar-'), +it.area > 0 ? fmtNum(it.area, it.area % 1 ? 2 : 0) : '');
